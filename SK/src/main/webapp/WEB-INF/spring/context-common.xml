@@ -43,7 +43,7 @@
     </beans:bean>                             
     
     <!-- Log4jdbc -->
-    <beans:bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+    <!-- <beans:bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
     <beans:constructor-arg ref="dataSourceSpied"/>
 		<beans:property name="logFormatter">
 			<beans:bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
@@ -51,7 +51,7 @@
 				<beans:property name="sqlPrefix" value="SQL         :  "/>
 			</beans:bean>
 		</beans:property>
-	</beans:bean>
+	</beans:bean> -->
     
     <!-- 이메일 관련 -->
    <beans:bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
@@ -77,12 +77,12 @@
    </beans:bean>
    
    <!-- mybatis -->
-   <beans:bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
+   <!-- <beans:bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<beans:property name="dataSource" ref="dataSource" />
 		<beans:property name="mapperLocations" value="classpath:/mapper/**/*_SQL.xml" />
-	</beans:bean>
+	</beans:bean> -->
 	
-	<beans:bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+	<!-- <beans:bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
         <beans:constructor-arg index="0" ref="sqlSession"/>
-    </beans:bean>  
+    </beans:bean>  --> 
 </beans:beans>
