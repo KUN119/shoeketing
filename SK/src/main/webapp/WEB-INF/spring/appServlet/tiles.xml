@@ -13,7 +13,6 @@
 	
 	<!-- ############################################################################################################ -->
 	
-<<<<<<< HEAD
 	
 	<definition name="test" extends="default1">
    	  <put-attribute name="body1" value="/WEB-INF/views/goodsWriteForm.jsp" />
@@ -23,7 +22,6 @@
    <definition name="myPageMain" extends="default1">
    	  <put-attribute name="body1" value="/WEB-INF/views/member/myPage/main.jsp" />
    </definition>
-=======
 	<!-- 메인 페이지 -->
 	<definition name="main" extends="default1">
    	  <put-attribute name="body1" value="/WEB-INF/views/main/main.jsp" />
@@ -33,6 +31,5 @@
 	<definition name="loginSelect" extends="default1">
    	  <put-attribute name="body1" value="/WEB-INF/views/login/select.jsp" />
     </definition>
->>>>>>> master
 
 </tiles-definitions>
