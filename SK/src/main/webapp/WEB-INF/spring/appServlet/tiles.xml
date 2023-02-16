@@ -16,5 +16,10 @@
 	<definition name="test" extends="default1">
    	  <put-attribute name="body1" value="/WEB-INF/views/goodsWriteForm.jsp" />
    </definition>
+   
+   <!-- 개인 회원 마이페이지 메인 -->
+   <definition name="myPageMain" extends="default1">
+   	  <put-attribute name="body1" value="/WEB-INF/views/member/myPage/main.jsp" />
+   </definition>
 
 </tiles-definitions>
