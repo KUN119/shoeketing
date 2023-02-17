@@ -12,7 +12,6 @@
 	</definition>
 	
 	
-	
 	<definition name="test" extends="default1">
    	  <put-attribute name="body1" value="/WEB-INF/views/goodsWriteForm.jsp" />
    </definition>
@@ -32,4 +31,5 @@
    	  <put-attribute name="body1" value="/WEB-INF/views/member/myPage/account/accountDeleteForm.jsp" />
    </definition>
    
+      <!-- 개인 회원 마이페이지 회원 탈퇴 -->
 </tiles-definitions>

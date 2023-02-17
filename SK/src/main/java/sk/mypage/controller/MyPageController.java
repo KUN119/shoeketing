@@ -30,7 +30,7 @@ public class MyPageController {
 	@GetMapping(value="/accountDeleteForm")
 	public ModelAndView accountDeleteForm(@RequestParam Map<String, Object> map) throws Exception {
 		ModelAndView mv = new ModelAndView("accountDeleteForm");
-	 
+	 //dd
 	 return mv;
 	}
 }
