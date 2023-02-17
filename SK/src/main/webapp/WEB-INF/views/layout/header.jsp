@@ -3,17 +3,17 @@ pageEncoding="UTF-8"%>
 <!-- ======= Header ======= -->
 <header id="header" class="ms-5 me-5 mt-2 mb-1">
   <div class="container d-flex align-items-center justify-content-between">
-    <h1 class="logo fs-1"><a href="index.html">SHOEKETING</a></h1>
+    <h1 class="logo fs-1"><a href="/sk/main">SHOEKETING</a></h1>
 
     <nav id="navbar" class="navbar justify-content-end">
       <ul>
         <li>
-          <a class="nav-link scrollto" href="#hero" style="font-size: 13px"
+          <a class="nav-link scrollto" href="/sk/myPage" style="font-size: 13px"
             >마이페이지</a
           >
         </li>
         <li>
-          <a class="nav-link scrollto" href="#about" style="font-size: 13px"
+          <a class="nav-link scrollto" href="/sk/loginSelect/member" style="font-size: 13px"
             >로그인</a
           >
         </li>

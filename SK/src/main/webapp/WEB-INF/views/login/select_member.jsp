@@ -99,13 +99,13 @@
             <div class="row mb-3">
                 <ul class="nav nav-tabs justify-content-center">
                     <li class="nav-item">
-                      <a class="nav-link active" href="#">일반회원</a>
+                      <a class="nav-link active" href="/sk/loginSelect/member">일반회원</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link text-dark" href="#">매장회원</a>
+                      <a class="nav-link text-dark" href="/sk/loginSelect/shop">매장회원</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link text-dark" href="#">브랜드회원</a>
+                      <a class="nav-link text-dark" href="/sk/loginSelect/brand">브랜드회원</a>
                     </li>
                   </ul>
             </div>
@@ -129,11 +129,13 @@
                     <div class="form-group mt-4 mb-3">
                         <button type="button" class="btn btn-dark" style="width: 100px;" data-bs-toggle="modal" data-bs-target="#findIdModal">ID찾기</button>
                         <button type="button" class="btn btn-dark" style="width: 100px;" data-bs-toggle="modal" data-bs-target="#reissuePwModal">PW재발급</button>
-                        <button type="button" class="btn btn-dark" style="width: 100px;">회원가입</button>
+                        <button type="button" name="memberJoin" class="btn btn-dark" style="width: 100px;" onclick="location.href='/sk/memberJoinForm'">회원가입</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
   </body>
+  
+
 </html>
