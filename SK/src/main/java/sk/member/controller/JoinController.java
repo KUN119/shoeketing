@@ -20,4 +20,19 @@ public class JoinController {
 		ModelAndView mv = new ModelAndView("memberJoinForm");
 		return mv;
 	}
+
+	@GetMapping(value = "/brandJoinForm")
+	public ModelAndView brandJoinForm(@RequestParam Map<String, Object> map) throws Exception {
+		log.debug("###### 브랜드 회원가입 폼 ######");
+		ModelAndView mv = new ModelAndView("brandJoinForm");
+		return mv;
+	}
+
+	@GetMapping(value = "/shopJoinForm")
+	public ModelAndView shopJoinForm(@RequestParam Map<String, Object> map) throws Exception {
+		log.debug("###### 매장 회원가입 폼 ######");
+		ModelAndView mv = new ModelAndView("shopJoinForm");
+		return mv;
+	}
+
 }

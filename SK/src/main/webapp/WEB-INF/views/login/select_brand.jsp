@@ -43,7 +43,7 @@
                         <button type="button" class="btn btn-dark" style="width: 300px;">로그인</button>
                     </div>
                     <div class="form-group mt-4 mb-3">
-                        <button type="button" class="btn btn-dark" style="width: 100px;">회원가입</button>
+                        <button type="button" class="btn btn-dark" style="width: 100px;" onclick="location.href='/sk/brandJoinForm'">회원가입</button>
                     </div>
                 </form>
             </div>
