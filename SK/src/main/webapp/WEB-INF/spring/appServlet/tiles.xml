@@ -10,16 +10,22 @@
 	   <put-attribute name="header" value="/WEB-INF/views/layout/header.jsp" />
 	   <put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp" />
 	</definition>
-	
-	
-	<definition name="test" extends="default1">
-   	  <put-attribute name="body1" value="/WEB-INF/views/goodsWriteForm.jsp" />
-   </definition>
+
    
    <!-- 개인 회원 마이페이지 메인 -->
    <definition name="myPageMain" extends="default1">
    	  <put-attribute name="body1" value="/WEB-INF/views/member/myPage/main.jsp" />
    </definition>
+
+	<!-- 메인 페이지 -->
+	<definition name="main" extends="default1">
+   	  <put-attribute name="body1" value="/WEB-INF/views/main/main.jsp" />
+    </definition>
+   
+    <!-- 로그인 선택창 -->
+	<definition name="loginSelect" extends="default1">
+   	  <put-attribute name="body1" value="/WEB-INF/views/login/select.jsp" />
+    </definition>
 
    <!-- 개인 회원 마이페이지 회원 정보 수정 -->
    <definition name="accountModifyForm" extends="default1">
@@ -31,5 +37,4 @@
    	  <put-attribute name="body1" value="/WEB-INF/views/member/myPage/account/accountDeleteForm.jsp" />
    </definition>
    
-      <!-- 개인 회원 마이페이지 회원 탈퇴 -->
 </tiles-definitions>
