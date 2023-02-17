@@ -16,20 +16,36 @@
 	
 	<definition name="test" extends="default1">
    	  <put-attribute name="body1" value="/WEB-INF/views/goodsWriteForm.jsp" />
-   </definition>
+    </definition>
    
-   <!-- 개인 회원 마이페이지 메인 -->
-   <definition name="myPageMain" extends="default1">
-   	  <put-attribute name="body1" value="/WEB-INF/views/member/myPage/main.jsp" />
-   </definition>
+    <!-- 개인 회원 마이페이지 메인 -->
+    <definition name="myPageMain" extends="default1">
+    	  <put-attribute name="body1" value="/WEB-INF/views/member/myPage/main.jsp" />
+    </definition>
+   
 	<!-- 메인 페이지 -->
 	<definition name="main" extends="default1">
    	  <put-attribute name="body1" value="/WEB-INF/views/main/main.jsp" />
     </definition>
    
-    <!-- 로그인 선택창 -->
-	<definition name="loginSelect" extends="default1">
-   	  <put-attribute name="body1" value="/WEB-INF/views/login/select.jsp" />
+    <!-- 일반회원 로그인 선택창 -->
+	<definition name="loginSelectMember" extends="default1">
+   	  <put-attribute name="body1" value="/WEB-INF/views/login/select_member.jsp" />
+    </definition>
+    
+    <!-- 매장회원 로그인 선택창 -->
+	<definition name="loginSelectShop" extends="default1">
+   	  <put-attribute name="body1" value="/WEB-INF/views/login/select_shop.jsp" />
+    </definition>
+    
+    <!-- 브랜드회원 로그인 선택창 -->
+	<definition name="loginSelectBrand" extends="default1">
+   	  <put-attribute name="body1" value="/WEB-INF/views/login/select_brand.jsp" />
+    </definition>
+    
+    <!-- 일반회원 회원가입 폼 -->
+	<definition name="memberJoinForm" extends="default1">
+   	  <put-attribute name="body1" value="/WEB-INF/views/member/join/joinForm.jsp" />
     </definition>
 
 </tiles-definitions>
