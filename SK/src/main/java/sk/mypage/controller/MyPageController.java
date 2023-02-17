@@ -26,4 +26,11 @@ public class MyPageController {
 	 
 	 return mv;
 	}
+	
+	@GetMapping(value="/accountDeleteForm")
+	public ModelAndView accountDeleteForm(@RequestParam Map<String, Object> map) throws Exception {
+		ModelAndView mv = new ModelAndView("accountDeleteForm");
+	 
+	 return mv;
+	}
 }

@@ -22,4 +22,14 @@
    	  <put-attribute name="body1" value="/WEB-INF/views/member/myPage/main.jsp" />
    </definition>
 
+   <!-- 개인 회원 마이페이지 회원 정보 수정 -->
+   <definition name="accountModifyForm" extends="default1">
+   	  <put-attribute name="body1" value="/WEB-INF/views/member/myPage/account/accountModifyForm.jsp" />
+   </definition>
+   
+   <!-- 개인 회원 마이페이지 회원 탈퇴 -->
+   <definition name="accountDeleteForm" extends="default1">
+   	  <put-attribute name="body1" value="/WEB-INF/views/member/myPage/account/accountDeleteForm.jsp" />
+   </definition>
+   
 </tiles-definitions>
