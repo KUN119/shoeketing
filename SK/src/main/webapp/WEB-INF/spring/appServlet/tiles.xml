@@ -37,4 +37,18 @@
    	  <put-attribute name="body1" value="/WEB-INF/views/member/myPage/account/accountDeleteForm.jsp" />
    </definition>
    
+   <!-- 개인 회원 찜목록 reservationList-->
+   <definition name="goodsLikeList" extends="default1">
+   	  <put-attribute name="body1" value="/WEB-INF/views/member/myPage/goodsLikeList.jsp" />
+   </definition>
+   
+   <!-- 개인 회원 픽업 예약 목록 -->
+   <definition name="reservationList" extends="default1">
+   	  <put-attribute name="body1" value="/WEB-INF/views/member/myPage/reservation/reservationList.jsp" />
+   </definition>
+   
+   <!-- 개인 회원 픽업 예약 상세 -->
+   <definition name="reservationDetail" extends="default1">
+   	  <put-attribute name="body1" value="/WEB-INF/views/member/myPage/reservation/reservationDetail.jsp" />
+   </definition>
 </tiles-definitions>
