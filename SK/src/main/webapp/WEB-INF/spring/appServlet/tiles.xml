@@ -12,6 +12,11 @@
 	</definition>
 	
 	<!-- ############################################################################################################ -->
+	<!-- 브랜드 회원 마이페이지 메인 -->
+    <definition name="brandPageMain" extends="default1">
+    	  <put-attribute name="body1" value="/WEB-INF/views/yunjeongTest.jsp" />
+    </definition>
+	
 	
 	
 	<definition name="test" extends="default1">
