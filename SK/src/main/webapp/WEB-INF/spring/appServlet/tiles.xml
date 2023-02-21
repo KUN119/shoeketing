@@ -51,4 +51,28 @@
    <definition name="reservationDetail" extends="default1">
    	  <put-attribute name="body1" value="/WEB-INF/views/member/myPage/reservation/reservationDetail.jsp" />
    </definition>
+   
+   <!-- 개인 회원 마이 페이지 나의 문의 내역 -->
+   <definition name="csList" extends="default1">
+   	  <put-attribute name="body1" value="/WEB-INF/views/member/myPage/cs/csList.jsp" />
+   </definition>
+  
+   <!-- 개인 회원 마이 페이지 나의 문의 작성하기 -->
+   <definition name="csWriteForm" extends="default1">
+   	  <put-attribute name="body1" value="/WEB-INF/views/member/myPage/cs/csWriteForm.jsp" />
+   </definition>
+   
 </tiles-definitions>
+
+
+
+
+
+
+
+
+
+
+
+
+

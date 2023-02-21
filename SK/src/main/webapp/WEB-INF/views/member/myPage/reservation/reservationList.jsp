@@ -7,14 +7,110 @@
 <title>Insert title here</title>
 </head>
 <body>
- <div class="py-5 row" style="background-color: black;" >
+ <body>
+<!-- 모달 -->
+<div class="modal fade" id="reviewWrite" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width:600px; height: auto;">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">상품 후기 작성</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mt-4 ms-3 row-cols-md-1">
+          <table>
+          <tr>
+            <td>
+              <p style="font-weight: bolder; font-size: medium;">상품 만족도</p>
+            </td>
+            <td>
+              <form class="mb-3" name="myform" id="myform" method="post">
+                <fieldset>
+                  <input type="radio" name="reviewStar" value="5" id="rate1"><label
+                    for="rate1">★</label>
+                  <input type="radio" name="reviewStar" value="4" id="rate2"><label
+                    for="rate2">★</label>
+                  <input type="radio" name="reviewStar" value="3" id="rate3"><label
+                    for="rate3">★</label>
+                  <input type="radio" name="reviewStar" value="2" id="rate4"><label
+                    for="rate4">★</label>
+                  <input type="radio" name="reviewStar" value="1" id="rate5"><label
+                    for="rate5">★</label>
+                </fieldset>
+              </form>
+            </td>
+            <td></td>
+            <td></td>
+          </tr>
+
+          <tr style="height: 70px;">
+            <td>
+              <fieldset>
+              <p style="font-weight: bolder; font-size: medium; margin-bottom: 0;">사이즈</p>
+            </td>
+              <td>
+                <input type="radio" name="size" value="1" id="size1" style="font-size: medium;">  정사이즈보다 작음
+              </td>
+              <td>  
+              <input type="radio" name="size" value="4" id="size2">  정사이즈
+              </td>
+              <td>  
+              <input type="radio" name="size" value="3" id="size3">  정사이즈보다 큼
+              </td>
+          </tr>
+
+          <tr style="height: 70px;">
+            <td>
+              <p style="font-weight: bolder; font-size: medium; margin-bottom: 0;">착화감</p>
+            </td>
+            <td>
+              <input type="radio" name="size" value="1" id="size1">&nbsp;&nbsp;나&nbsp;&nbsp;쁨
+            </td>
+            <td>  
+            <input type="radio" name="size" value="4" id="size2">&nbsp;&nbsp;보&nbsp;&nbsp;통
+            </td>
+            <td>  
+            <input type="radio" name="size" value="3" id="size3">&nbsp;&nbsp;좋&nbsp;음
+            </td>
+          </tr>
+
+          <tr style="height: 70px;">
+            <td>
+              <p style="font-weight: bolder; font-size: medium; margin-bottom: 0;">색상</p>
+            </td>
+            <td>
+              <input type="radio" name="size" value="1" id="size1" style="font-size: medium;">  화면보다 어두움
+            </td>
+            <td>  
+            <input type="radio" name="size" value="4" id="size2">  화면과 동일함
+            </td>
+            <td>  
+            <input type="radio" name="size" value="3" id="size3">  화면보다 밝음
+            </td>
+          </tr>
+        </table>
+          </div>
+          <br>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary">후기 작성</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+          </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- 모달 끝 -->
+
+
+    <div class="py-5 row" style="background-color: black;" >
         <div class="col align-self-center ms-5" style="margin-left: 100px;">
             <h1 class="mb-0 fs-1" style="color: rgb(255, 255, 255);">김성택님</h1>   
     
         </div>
         <div class="col text-end" style="margin-right: 100px;">
-            <h1 class="mb-0 fs-1" style="color: rgb(255, 255, 255);">다이아</h1>
-            <h1 class="mb-0 fs-5" style="color: rgb(255, 255, 255);">등급혜택</h1>
+            <h1 class="mb-0 fs-1" style="color: rgb(255, 255, 255);">다이아</h2>
+            <h1 class="mb-0 fs-5" style="color: rgb(255, 255, 255);">등급혜택</h2>
         </div>
        </div>
 
@@ -134,7 +230,7 @@
                     <td style="font-weight: bolder; text-align: center;">
                         <br>
                         <p></p>
-                        <button type="button" class="btn btn-primary btn-sm">후기 작성</button>
+                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#reviewWrite">후기 작성</button>
                         <br>
                     </td>
                   </tr>
@@ -158,7 +254,7 @@
                      <td style="font-weight: bolder; text-align: center;">
                          <br>
                          <p></p>
-                         <button type="button" class="btn btn-primary btn-sm">후기 작성</button>
+                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#reviewWrite">후기 작성</button>
                          <br>
                      </td>
                    </tr>
