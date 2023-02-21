@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="basket">
+
+<!-- 장바구니 상품 리스트 -->
+<select id="selectBasketList" parameterType="hashmap" resultType="hashmap"> 
+	<![CDATA[
+		SELECT
+         B.BASKET_NUM,
+	     B.BASKET_PRONUM,
+	     B.BASKET_MEM_NUM,
+	     B.BASKET_SHOP_NUM,
+	     B.BASKET_SIZE,
+	     TG.TOTAL_GOODS_NUM,
+	     TG.TOTAL_GOODS_BRAND,
+	     TG.TOTAL_GOODS_NAME,
+	     TG.TOTAL_GOODS_MODEL,
+	     TG.TOTAL_GOODS_PRICE,
+	     S.SHOP_NUM,
+	     S.SHOP_NAME,
+	     S.SHOP_ADD,
+        		GI.GOODS_IMAGE_STD,
+         		BR.BRAND_NAME
+
+               FROM 
+                        TOTAL_GOODS TG, SHOP S, BASKET B, GOODS_IMAGE GI, BRAND BR
+               WHERE  TG.TOTAL_GOODS_NUM = B.BASKET_PRONUM AND B.BASKET_SHOP_NUM = S.SHOP_NUM
+                        AND TG.TOTAL_GOODS_NUM = GI.GOODS_IMAGE_PARENT
+                        AND TG.TOTAL_GOODS_BRAND = BR.BRAND_NUM
+		AND TG.TOTAL_GOODS_DEL_GB = 'N'
+	     AND B.BASKET_MEM_NUM = #{BASKET_MEM_NUM}
+	     AND B.BASKET_DEL_GB = 'N'
+	     AND S.SHOP_DEL_GB = 'N'
+         AND GI.GOODS_IMAGE_ORDER = 1
+	]]>
+</select>
+
+
+
+</mapper>

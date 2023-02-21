@@ -1,4 +1,4 @@
-package sk.member.controller;
+package sk.user.controller;
 
 import java.util.Map;
 

@@ -1,4 +1,4 @@
-package sk.member.service;
+package sk.user.service;
 
 public interface MailService {
 
