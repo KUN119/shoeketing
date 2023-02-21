@@ -20,4 +20,11 @@ public class MainController {
 		ModelAndView mv = new ModelAndView("main");
 		return mv;
 	}
+	
+	@GetMapping(value="/totalSearch")
+	public ModelAndView totalSearch(@RequestParam Map<String, Object> map)throws Exception{
+		log.debug("###### totalSearch ######");
+		ModelAndView mv = new ModelAndView("totalSearch");
+		return mv;
+	}
 }
