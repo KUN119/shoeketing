@@ -1,18 +1,24 @@
 package sk.myPage.controller;
 
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import sk.myPage.service.BrandPageService;
 
 
 @Controller
 public class BrandPageController {
 	Logger log = LoggerFactory.getLogger(this.getClass());
+	
+	@Resource(name="brandPageService")
+	private BrandPageService brandPageService;
 	
 	@GetMapping(value = "/brandPage")
 	public ModelAndView brandPage(Map<String, Object> map) throws Exception {
@@ -24,7 +30,14 @@ public class BrandPageController {
 	@GetMapping(value = "/brandPage/accountModifyForm")
 	public ModelAndView brandModifyForm(Map<String, Object> map) throws Exception {
 		log.debug("###### 브랜드 기본 정보 수정 폼 ######");
-		ModelAndView mv = new ModelAndView("");
+		ModelAndView mv = new ModelAndView("testMain");
+		
+		map.put("BRAND_NUM", 1);
+		
+		// 기본 정보 수정폼에 브랜드 정보 조회해서 출력
+		brandPageService.selectBrandInfo(map);
+		System.out.println("brand 정보조회 map 확인 : " + map);
+		
 		return mv;
 	}
 	
