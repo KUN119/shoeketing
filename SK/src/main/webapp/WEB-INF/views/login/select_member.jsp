@@ -56,14 +56,14 @@
             <h5 class="text-center mt-5 mb-5">spvpt44@naver.com</h5>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reissuePwModal">PW재발급</button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- findIdModal -->
+    <!-- reissuePwModal -->
     <div class="modal fade" id="reissuePwModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">

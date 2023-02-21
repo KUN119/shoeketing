@@ -22,7 +22,7 @@
     <definition name="myPageMain" extends="default1">
     	  <put-attribute name="body1" value="/WEB-INF/views/member/myPage/main.jsp" />
     </definition>
-   
+    
 	<!-- 메인 페이지 -->
 	<definition name="main" extends="default1">
    	  <put-attribute name="body1" value="/WEB-INF/views/main/main.jsp" />
@@ -46,6 +46,16 @@
     <!-- 일반회원 회원가입 폼 -->
 	<definition name="memberJoinForm" extends="default1">
    	  <put-attribute name="body1" value="/WEB-INF/views/member/join/joinForm.jsp" />
+    </definition>
+    
+    <!-- 매장회원 회원가입 폼 -->
+	<definition name="shopJoinForm" extends="default1">
+   	  <put-attribute name="body1" value="/WEB-INF/views/shop/join/joinForm.jsp" />
+    </definition>
+    
+    <!-- 브랜드회원 회원가입 폼 -->
+	<definition name="brandJoinForm" extends="default1">
+   	  <put-attribute name="body1" value="/WEB-INF/views/brand/join/joinForm.jsp" />
     </definition>
 
 </tiles-definitions>
