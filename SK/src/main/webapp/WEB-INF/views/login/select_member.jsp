@@ -56,14 +56,14 @@
             <h5 class="text-center mt-5 mb-5">spvpt44@naver.com</h5>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reissuePwModal">PW재발급</button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- findIdModal -->
+    <!-- reissuePwModal -->
     <div class="modal fade" id="reissuePwModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -124,7 +124,7 @@
                         </label>
                     </div>
                     <div class="form-group mt-5 mb-5">
-                        <button type="button" class="btn btn-dark" style="width: 300px;">로그인</button>
+                        <button type="button" name="login" class="btn btn-dark" style="width: 300px;">로그인</button>
                     </div>
                     <div class="form-group mt-4 mb-3">
                         <button type="button" class="btn btn-dark" style="width: 100px;" data-bs-toggle="modal" data-bs-target="#findIdModal">ID찾기</button>
@@ -137,5 +137,19 @@
     </div>
   </body>
   
+<script type="text/javascript">
+  $(document).ready(function() {
+	
+	$("button[name='login']").on("click", function(e) {  // ID/PW로 시작하기
+		e.preventDefault();
+		fn_loginForm();
+	});
+	
+	function fn_loginForm() {
+		var comSubmit = new ComSubmit();
+		comSubmit.setUrl("/sk/loginSelect/member");
+		comSubmit.submit();
+	};
+</script>
 
 </html>

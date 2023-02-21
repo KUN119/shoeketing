@@ -64,7 +64,7 @@
 
           <div class="mb-3">
             <label
-              for="exampleFormControlInput1"
+              for="MEM_NAME"
               class="form-label"
               style="font-size: large; font-weight: bolder"
               >이름</label
@@ -80,7 +80,7 @@
 
           <div class="mb-3">
             <label
-              for="exampleFormControlInput1"
+              for="MEM_PHONE"
               class="form-label"
               style="font-size: large; font-weight: bolder"
               >휴대전화</label
