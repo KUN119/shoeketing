@@ -10,7 +10,6 @@
 	   <put-attribute name="header" value="/WEB-INF/views/layout/header.jsp" />
 	   <put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp" />
 	</definition>
-<<<<<<< HEAD
 
    
    <!-- 개인 회원 마이페이지 메인 -->
@@ -18,7 +17,6 @@
    	  <put-attribute name="body1" value="/WEB-INF/views/member/myPage/main.jsp" />
    </definition>
 
-=======
 	
 	<!-- ############################################################################################################ -->
 	
@@ -32,7 +30,6 @@
     	  <put-attribute name="body1" value="/WEB-INF/views/member/myPage/main.jsp" />
     </definition>
     
->>>>>>> master
 	<!-- 메인 페이지 -->
 	<definition name="main" extends="default1">
    	  <put-attribute name="body1" value="/WEB-INF/views/main/main.jsp" />
