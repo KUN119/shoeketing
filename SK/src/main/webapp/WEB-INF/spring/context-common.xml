@@ -36,8 +36,8 @@
     
     <!-- JDBC -->
     <beans:bean id="dataSourceSpied" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-        <beans:property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
-        <beans:property name="url" value="jdbc:oracle:thin:@localhost:1521:XE"/>
+        <beans:property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"/>
+        <beans:property name="url" value="jdbc:log4jdbc:oracle:thin:@localhost:1521:XE"/>
 		<beans:property name="username" value="SK" />
 		<beans:property name="password" value="SK" />
     </beans:bean>                             
@@ -77,12 +77,12 @@
    </beans:bean>
    
    <!-- mybatis -->
-   <!-- <beans:bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<beans:property name="dataSource" ref="dataSource" />
+   <beans:bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<beans:property name="dataSource" ref="dataSourceSpied" />
 		<beans:property name="mapperLocations" value="classpath:/mapper/**/*_SQL.xml" />
-	</beans:bean> -->
+	</beans:bean>
 	
-	<!-- <beans:bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+	<beans:bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
         <beans:constructor-arg index="0" ref="sqlSession"/>
-    </beans:bean>  --> 
+    </beans:bean>
 </beans:beans>
