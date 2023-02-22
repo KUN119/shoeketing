@@ -71,10 +71,10 @@ public class BrandPageDAO extends AbstractDAO{
 	
 	// 브랜드가 입점한 매장 삭제(탈퇴) - update()
 	// 트리거 사용해서 상품 테이블에 있는 해당 매장 상품들도 모두 삭제
-	public void deleteShop(Map<String, Object> map) throws Exception {
+	public int deleteShop(Map<String, Object> map) throws Exception {
 		System.out.println("deleteShop 파라미터 : " + map);
 
-		update("brandPage.deleteShop", map);
+		return (int) update("brandPage.deleteShop", map);
 	}
 	
 	// 브랜드 입점 매장 위치 조회 - selectOne()
