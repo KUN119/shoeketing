@@ -29,4 +29,11 @@ public class MainController {
 		System.out.println(resultMap.toString());
 		return mv;
 	}
+	
+	@GetMapping(value="/totalSearch")
+	public ModelAndView totalSearch(@RequestParam Map<String, Object> map)throws Exception{
+		log.debug("###### totalSearch ######");
+		ModelAndView mv = new ModelAndView("totalSearch");
+		return mv;
+	}
 }

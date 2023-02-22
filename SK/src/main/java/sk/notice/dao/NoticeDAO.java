@@ -1,0 +1,23 @@
+package sk.notice.dao;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.stereotype.Repository;
+
+import sk.common.dao.AbstractDAO;
+
+@Repository("noticeDAO")
+public class NoticeDAO extends AbstractDAO{
+	
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> selectNoticeList(Map<String, Object> map) throws Exception{
+		System.out.println("selectNoticeList : " + map);
+		return (List<Map<String, Object>>) selectList("notice.selectNoticeList", map);
+	}
+	
+	public int selectNoticeCount(Map<String, Object> map) throws Exception {
+		System.out.println("selectNoticeCount : " + map);
+		return (int) selectOne("notice.selectNoticeCount", map);
+	}
+}

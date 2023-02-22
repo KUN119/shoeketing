@@ -124,7 +124,7 @@
                         </label>
                     </div>
                     <div class="form-group mt-5 mb-5">
-                        <button type="button" class="btn btn-dark" style="width: 300px;">로그인</button>
+                        <button type="button" name="login" class="btn btn-dark" style="width: 300px;">로그인</button>
                     </div>
                     <div class="form-group mt-4 mb-3">
                         <button type="button" class="btn btn-dark" style="width: 100px;" data-bs-toggle="modal" data-bs-target="#findIdModal">ID찾기</button>
@@ -137,5 +137,19 @@
     </div>
   </body>
   
+<script type="text/javascript">
+  $(document).ready(function() {
+	
+	$("button[name='login']").on("click", function(e) {  // ID/PW로 시작하기
+		e.preventDefault();
+		fn_loginForm();
+	});
+	
+	function fn_loginForm() {
+		var comSubmit = new ComSubmit();
+		comSubmit.setUrl("/sk/loginSelect/member");
+		comSubmit.submit();
+	};
+</script>
 
 </html>
