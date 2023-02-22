@@ -1,4 +1,4 @@
-package sk.mypage.controller;
+package sk.myPage.controller;
 
 import java.util.Map;
 

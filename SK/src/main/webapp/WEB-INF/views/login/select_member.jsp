@@ -112,7 +112,7 @@
             <div class="row">
                 <form class="php-email-form" id="loginForm">
                     <div class="form-group mt-3 mb-3">
-                        <input type="email" class="form-control" id="MEM_EMAIL" name="MEM_EMAIM" placeholder="email" required/>
+                        <input type="email" class="form-control" id="MEM_EMAIL" name="MEM_EMAIL" placeholder="email" required/>
                     </div>
                     <div class="form-group mb-3">
                         <input type="password" class="form-control" id="MEM_PW" name="MEM_PW" placeholder="password" required/>
@@ -138,18 +138,33 @@
   </body>
   
 <script type="text/javascript">
-  $(document).ready(function() {
+$(document).ready(function() {
 	
-	$("button[name='login']").on("click", function(e) {  // ID/PW로 시작하기
+	$("button[name='login']").on("click", function(e) {
 		e.preventDefault();
 		fn_loginForm();
 	});
 	
 	function fn_loginForm() {
-		var comSubmit = new ComSubmit();
-		comSubmit.setUrl("/sk/loginSelect/member");
-		comSubmit.submit();
+		var formData = new FormData();
+		formData.append('MEM_EMAIL', $('#MEM_EMAIL').val());
+		formData.append('MEM_PW', $('#MEM_PW').val());
+		
+		$.ajax({
+			url: '/sk/memberLogin',
+			type: 'POST',
+			data: formData,
+			processData: false,
+			contentType: false,
+			success: function(response) {
+				// handle response
+			},
+			error: function(xhr, status, error) {
+				// handle error
+			}
+		});
 	};
+});
 </script>
 
 </html>
