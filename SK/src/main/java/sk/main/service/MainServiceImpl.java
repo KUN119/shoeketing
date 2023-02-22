@@ -1,6 +1,8 @@
 package sk.main.service;
 
+
 import java.util.List;
+
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -37,6 +39,7 @@ public class MainServiceImpl implements MainService{
 	public List<Map<String, Object>> GoodsSearch(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
 		return mainDAO.GoodsSearch(map);
+
 	}
 
 }

@@ -1,13 +1,16 @@
 package sk.main.dao;
 
+
 import java.util.List;
+
 import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
 import sk.common.dao.AbstractDAO;
 
-@Repository
+
+@Repository("mainDAO")
 public class MainDAO extends AbstractDAO{
 	
 	// 브랜드 검색
@@ -40,4 +43,5 @@ public class MainDAO extends AbstractDAO{
 	}
 	
 	
+
 }
