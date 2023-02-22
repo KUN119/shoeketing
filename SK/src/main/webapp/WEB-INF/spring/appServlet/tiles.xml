@@ -19,6 +19,11 @@
 
 	
 	<!-- ############################################################################################################ -->
+	<!-- 테스트용 -->
+    <definition name="testMain" extends="default1">
+    	  <put-attribute name="body1" value="/WEB-INF/views/yunjeongTest.jsp" />
+    </definition>
+	
 	
 	
 	<definition name="test" extends="default1">
