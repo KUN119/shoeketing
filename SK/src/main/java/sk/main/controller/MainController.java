@@ -4,8 +4,8 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,7 +19,7 @@ public class MainController {
 	@Resource(name = "mainService")
 	private MainService mainService;
 
-	Logger log = LogManager.getLogger(MainController.class);
+	Log log = LogFactory.getLog(this.getClass());
 
 	@GetMapping(value = "/main")
 	public ModelAndView main(@RequestParam Map<String, Object> map) throws Exception {

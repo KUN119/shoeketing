@@ -2,8 +2,8 @@ package sk.member.controller;
 
 import java.util.Map;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class LoginController {
 
-	Logger log = LogManager.getLogger(LoginController.class);
+	Log log = LogFactory.getLog(this.getClass());
 
 	@GetMapping(value = "/loginSelect/member")
 	public ModelAndView loginSelectMember(@RequestParam Map<String, Object> map) throws Exception {
