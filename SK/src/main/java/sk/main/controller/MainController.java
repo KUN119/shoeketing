@@ -25,13 +25,11 @@ public class MainController {
 	public ModelAndView main(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("###### SHOEKETING 메인페이지 ######");
 		ModelAndView mv = new ModelAndView("main");
-		Map<String, Object> resultMap = mainService.testMapper(map);
-		System.out.println(resultMap.toString());
 		return mv;
 	}
-	
-	@GetMapping(value="/totalSearch")
-	public ModelAndView totalSearch(@RequestParam Map<String, Object> map)throws Exception{
+
+	@GetMapping(value = "/totalSearch")
+	public ModelAndView totalSearch(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("###### totalSearch ######");
 		ModelAndView mv = new ModelAndView("totalSearch");
 		return mv;
