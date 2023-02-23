@@ -4,18 +4,25 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
 import sk.myPage.dao.MemberPageDAO;
 
 @Service("memberPageService")
 public class MemberPageServiceImpl implements MemberPageService {
-	Logger log = LoggerFactory.getLogger("memberPageService");
+	Log log = LogFactory.getLog(this.getClass());
 	
 	@Resource(name="memberPageDAO")
 	private MemberPageDAO memberPageDAO;
+
+	//회원정보 가져오기
+	@Override
+	public Map<String, Object> selectAccountInfo(Map<String, Object> map) throws Exception {
+		System.out.println("selectAccountInfo 서비스 파라미터 : " + map);
+		return (Map<String, Object>) memberPageDAO.selectAccountInfo(map);
+	}
 
 	//회원정보 수정
 	@Override
@@ -27,7 +34,7 @@ public class MemberPageServiceImpl implements MemberPageService {
 	
 	//비밀번호 확인
 	@Override
-	public int pwCheck(Map<String, Object> map) throws Exception {
+	public Map<String, Object> pwCheck(Map<String, Object> map) throws Exception {
 		System.out.println("selectPwCheck 서비스 파라미터 : " + map);
 		return memberPageDAO.selectPwCheck(map);
 	}
