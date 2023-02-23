@@ -25,7 +25,7 @@
           <ul>
             <li class="list-group-item d-flex justify-content-between lh-sm">
               <div>
-                <h4>회원 정보 수정</h4>
+                <h4><a href="#">회원 정보 수정</a></h4>
                 <small class="text-muted">  </small>
               </div>
             </li>
