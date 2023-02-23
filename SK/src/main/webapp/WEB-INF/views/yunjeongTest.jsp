@@ -54,10 +54,24 @@
 		</c:forEach>
 	</c:when>
 </c:choose>
-
-
+<br>
 
 <!-- 브랜드관 인기상품 5개 -->
+브랜드관 인기상품<br>
+<c:choose>
+	<c:when test="${fn:length(rankingGoodsList) > 0 }">
+		<c:forEach items="${rankingGoodsList}" var="rankingGoods" varStatus="status">
+			<tr>  
+		      <td>상품 이름 : ${rankingGoods.TOTAL_GOODS_NAME }</td>
+		      <td>상품 모델명 : ${rankingGoods.TOTAL_GOODS_MODEL }</td>
+		      <td>상품 가격 : ${rankingGoods.TOTAL_GOODS_PRICE}</td>
+		      <td>최신상품 이미지 : ${rankingGoodsThumbnailList[status.index].GOODS_IMAGE_STD} </td>
+		      <br>
+  		 	</tr>
+		</c:forEach>
+	</c:when>
+</c:choose>
+
 rankingGoodsList
 
 </body>
