@@ -13,6 +13,9 @@ public interface MemberPageService {
 	//비밀번호 확인
 	Map<String, Object> pwCheck(Map<String, Object> map) throws Exception;
 	
+	//예약상태 확인
+	int selectReservationStatus(Map<String, Object> map) throws Exception;
+	
 	//회원 탈퇴처리(N->Y)
 	void deleteAccount(Map<String, Object> map) throws Exception;
 	 

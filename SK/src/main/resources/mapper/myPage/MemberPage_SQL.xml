@@ -42,6 +42,18 @@ WHERE MEM_NUM = #{MEM_NUM}
 ]]>
 </select>
 
+<!-- 예약상태 가져오기 (탈퇴 전) -->
+<select id="selectReservationStatus" resultType="int" parameterType="hashmap">
+<![CDATA[
+	SELECT
+			COUNT(*) AS RESERVATION_COUNT
+	FROM RESERVATION
+	WHERE RESERVATION_USER = #{MEM_NUM}
+		  AND RESERVATION_DEL_GB = 'N'
+		  AND RESERVATION_STATUS = '픽업 대기중'
+]]>
+</select>
+
 <!-- 회원 탈퇴 -->
 <update id="deleteAccount" parameterType="hashmap">
 <![CDATA[
