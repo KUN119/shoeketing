@@ -26,6 +26,11 @@ public class MemberPageDAO extends AbstractDAO {
 		return (Map<String, Object>) selectOne("memberPage.selectPw", map);
 	}
 	
+	//예약상태 확인 (탈퇴 전)
+	public int selectReservationStatus(Map<String, Object> map) throws Exception {
+		return (int)selectOne("memberPage.selectReservationStatus", map);
+	}
+	
 	//회원 탈퇴 처리
 	public void deleteAccount(Map<String, Object> map) throws Exception {
 		update("memberPage.deleteAccount", map);

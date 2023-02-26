@@ -122,9 +122,13 @@ $(document).ready(function() {
 			data:JSON.stringify(jsonPw),
 			success:function(data) {
 				if(data.result == "success") {
-					fn_deleteAccount();
-				} else if(data.result == "fail") {
+					if(confirm("회원을 탈퇴하시겠습니까?")) {
+						fn_deleteAccount();
+					} else { return false; }
+				} else if(data.result == "pwfail") {
 					alert("비밀번호가 일치하지 않습니다.");
+				} else if(data.result == "deleteFail") {
+					alert("진행중인 거래가 존재하므로 탈퇴하실 수 없습니다.");
 				}
 			},
 			error:function() {
@@ -137,10 +141,12 @@ $(document).ready(function() {
 		
 		$.ajax({
 			url:"/sk/myPage/accountDelete",
-			type:'post'
+			type:'post',
+			success:function() {
+				 location.href="/sk/main";
+			}
 		});
 	};
-	
 });
 </script> 
 </body>

@@ -59,13 +59,14 @@ public class MemberPageController {
 		
 		ModelAndView mv = new ModelAndView("accountModifyForm");
 		Map<String, Object> resultMap = new HashMap<>();
-//		//세션영역에 저장된 이름에 따라 mem_info 수정 필요
-//		if(session.getAttribute("mem_info") == null) {
-//			mv.addObject("mem_info", session.getAttribute("mem_info"));
-//		}
+
+		if(session != null) {
+			map.put("MEM_NUM", session.getAttribute("S_MEM_NUM"));
 		resultMap = memberPageService.selectAccountInfo(map);
+		}
+		
 		System.out.println("selectAccountInfo 조회결과 : "+ resultMap);
-		//폼에서 mem_num 전달하거나 세션에서 가져오는 코드 작성 예정
+		//폼에서 mem_num 전달하거나 세션에서 가져오는 코드 추가 필요
 		return mv;
 	}
 	
@@ -98,6 +99,7 @@ public class MemberPageController {
 		log.debug("----------- 일반회원 회원 비밀번호 확인 ----------");
 		String dbPw = ""; 
 		String pw ="";
+		int count = 0;
 		Map<String, Object> result = new HashMap<>();
 		map.put("MEM_EMAIL", (String)session.getAttribute("S_MEM_EMAIL"));
 		
@@ -108,13 +110,22 @@ public class MemberPageController {
 			System.out.println("DB 비밀번호 : " + dbPw + ", 입력한 비밀번호 : " + pw);
 			
 			if(dbPw.equals(pw)) { //비밀번호가 일치하면
-			result.put("result", "success");
+				
+				//예약상태가 픽업대기중인 건이 있는지 확인
+				map.put("MEM_NUM", session.getAttribute("S_MEM_NUM"));
+				count = memberPageService.selectReservationStatus(map);
+				
+					if(count>0) { //픽업대기중인 예약건이 있다면 탈퇴 불가
+					result.put("result", "deleteFail" );
+					} else { //픽업대기중인 예약건이 없다면 탈퇴 가능
+						result.put("result", "success");
+					}
+				
 			} else if(!dbPw.equals(pw)) { //비밀번호가 일치하지 않으면
-				result.put("result", "fail");
+				result.put("result", "pwfail");
 			}
+			
 			System.out.println(result.get("result").toString());
-		//모든 상품의 예약 상태가 예약 대기중, 픽업완료, 픽업취소인 경우인지 체크하는 쿼리 작성 필요..
-		//메인으로 리다이렉트 안 되는 거 해결하기
 			
 		return result;
 	}
@@ -122,9 +133,9 @@ public class MemberPageController {
 	//탈퇴 처리
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/myPage/accountDelete")
-	public ModelAndView accountDelete(HttpServletRequest request, HttpSession session) throws Exception {
+	public void accountDelete(HttpServletRequest request, HttpSession session) throws Exception {
 		log.debug("----------- 일반회원 회원 탈퇴 처리 ----------");
-		ModelAndView mv = new ModelAndView("redirect:/main");
+	//	ModelAndView mv = new ModelAndView("redirect:/main");
 		Map<String, Object> mem_num = new HashMap<>();
 			
 		if(session != null) {
@@ -132,11 +143,6 @@ public class MemberPageController {
 			memberPageService.deleteAccount(mem_num); //탈퇴 처리
 			session.invalidate();//탈퇴 후 로그아웃 처리
 		}
-		return mv;
-	}
-		
-
-
-
-
+	//	return mv;
+	}	
 }

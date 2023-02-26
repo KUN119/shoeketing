@@ -39,6 +39,12 @@ public class MemberPageServiceImpl implements MemberPageService {
 		return memberPageDAO.selectPwCheck(map);
 	}
 
+	//예약상태 확인 (탈퇴 전)
+	@Override
+	public int selectReservationStatus(Map<String, Object> map) throws Exception {
+		System.out.println("selectReservationStatus 서비스 파라미터 : " + map);
+		return memberPageDAO.selectReservationStatus(map);
+	}
 
 	//회원탈퇴
 	@Override
