@@ -58,6 +58,7 @@ public class AbstractDAO {
 	}
 
 	// 페이징 세부사항 수정이 필요할 수 있음
+
 //	@SuppressWarnings("unchecked")
 //	public Object selectPagingList(String queryId, Object params) {
 //		printQueryId(queryId);
@@ -82,3 +83,4 @@ public class AbstractDAO {
 //		return sqlSession.selectList(queryId, map);
 //	}
 }
+
