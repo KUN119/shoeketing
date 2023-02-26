@@ -106,11 +106,11 @@
    </definition>
    
     <!-- 브랜드 회원 마이페이지 메인 accountModifyForm-->
-   <definition name="brandPage" extends="default1">
+   <definition name="brandPageMain" extends="default1">
    	  <put-attribute name="body1" value="/WEB-INF/views/brand/brandPage/main.jsp" />
    </definition>
    
-    <!-- 브랜드 회원 마이페이지 기본 정보 수정 goodsList -->
+    <!-- 브랜드 회원 마이페이지 기본 정보 수정 -->
    <definition name="brandModifyForm" extends="default1">
    	  <put-attribute name="body1" value="/WEB-INF/views/brand/brandPage/account/accountModifyForm.jsp" />
    </definition>

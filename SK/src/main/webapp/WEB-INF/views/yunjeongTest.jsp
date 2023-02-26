@@ -72,7 +72,57 @@
 	</c:when>
 </c:choose>
 
-rankingGoodsList
+rankingGoodsList <br><br>
+
+ 
+<!-- 매장 정보조회 --> 
+매장 아이디 : ${shopInfoMap.SHOP_ID} <br>
+지점명 : ${shopInfoMap.SHOP_NAME} <br>
+매장 연락처 : ${shopInfoMap.SHOP_TEL} <br>
+매장 영업 시간 : ${shopInfoMap.SHOP_START_TIME} ~ ${shopInfoMap.SHOP_END_TIME} <br>
+매장주소 :  ${shopInfoMap.SHOP_ADD} <br>
+ 
+<!-- 매장 정보 수정결과 -->
+매장 정보 수정결과 : ${updateResultMap.result}
+
+<!-- 매장 문의내역 리스트 (답변여부까지) -->
+매장 문의 토탈개수 : ${shopCSCount} <br>
+매장 문의 리스트<br>
+<c:choose>
+	<c:when test="${fn:length(shopCSList) > 0 }">
+		<c:forEach items="${shopCSList}" var="shopCS" varStatus="status">
+			<tr>  
+		      <td>작성자 : ${shopCS.MEM_NUM}</td>
+		      <td>제목 : ${shopCS.CS_TITLE}</td>
+		      <td>작성날짜 : ${shopCS.CS_DATE}</td>
+		      <td>답변 처리상태 : ${csReplyStatusList[status.index].csReplyStatus}</td>
+		      <br>
+  		 	</tr>
+		</c:forEach>
+	</c:when>
+</c:choose>
+
+<br>
+<!-- 매장 문의 상세보기 -->
+문의 제목 : ${csDetailMap.CS_TITLE} <br>
+문의 작성자 : ${csDetailMap.MEM_EMAIL} <br>
+문의 작성일자 : ${csDetailMap.CS_DATE}<br>
+문의 내용 : ${csDetailMap.CS_CONTENT} <br>
+답변 상태 : ${csReplyStatus}<br>
+<br>
+문의 댓글 : ${csReplyMap.CS_REPLY_CONTENT} <br>
+
+
+<!-- 매장 정보 상세조회 -->
+shopInfoMap
+매장명 : ${shopInfoMap.SHOP_NAME} 
+매장 주소 :  ${shopInfoMap.SHOP_ADD}
+매장 전화번호 :  ${shopInfoMap.SHOP_TEL}
+
+<!-- 매장 상품번호, 사이즈에 해당하는 재고수량 -->
+shopGoodsAmount
+재고수량 : ${shopGoodsAmount}
+
 
 </body>
 </html>
