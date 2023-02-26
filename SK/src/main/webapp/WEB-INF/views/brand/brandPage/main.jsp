@@ -25,7 +25,7 @@
           <ul>
             <li class="list-group-item d-flex justify-content-between lh-sm">
               <div>
-                <h5><a href="#">기본 정보 수정</a></h5>
+                <h5><a href="#" name="brandInfoModify" data-brandNum="2">기본 정보 수정</a></h5> <!-- 추후 data-brandNum 세션에서 꺼낸 BRAND_NUM 값으로 전송 -->
                 <small class="text-muted">  </small>
               </div>
             </li>
@@ -53,13 +53,52 @@
         <div class="col-ms-7 col-lg-8" style="margin-top: 0px;">
             <h3 style="margin-left: 30px; color: black; font-weight: bolder;">브랜드 회원 마이페이지</h3>
 
-              <h4 style="margin-left: 30px; margin-top: 60px; color: black; font-weight: bolder; text-align: center;"><a href="">기본 정보 수정</a></h4>
+			  <!-- 추후 data-brandNum 세션에서 꺼낸 BRAND_NUM 값으로 전송 -->
+              <h4 style="margin-left: 30px; margin-top: 60px; color: black; font-weight: bolder; text-align: center;"><a href="#" name="brandInfoModify" data-brandNum="2">기본 정보 수정</a></h4> 
 
               <h4 style="margin-left: 30px; margin-top: 70px; color: black; font-weight: bolder; text-align: center;"><a href="">상품 관리</a></h4>
 
               <h4 style="margin-left: 30px; margin-top: 70px; color: black; font-weight: bolder; text-align: center;"><a href="">매장 관리</a></h4>
             </div>
         </div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$("a[name='brandInfoModify']").on("click", function(e) {  // 브랜드 기본정보 수정
+		e.preventDefault();
+	
+		const brandNum = $(this).attr("data-brandNum");
+		location.href="/sk/brandPage/accountModifyForm?BRAND_NUM=" + brandNum;
+		
+		//fn_brandInfoModify(brandNum);
+	});
+	
+	/* //ajax로 왜 안될까... url 요청은 잘 가는데 Controller에서 ModelAndView 동작이 안된당,, 나중에 방법 찾기,, 
+	function fn_brandInfoModify(brandNum){
+		
+		var brandNum1 = brandNum;
+		
+		var params = {
+				"BRAND_NUM" : brandNum1
+		}
+		
+		$.ajax({
+			type : 'post',
+			url : '/sk/brandPage/accountModifyForm',
+			data : JSON.stringify(params),
+			contentType : "application/json; charset=utf-8",
+			 success : function(data){
+				 console.log(data);
+			},
+			error : function(){
+				alert("오류 발생");
+			}
+			
+		});
+	}  */
+});
+
+</script>
 
 </body>
 </html>

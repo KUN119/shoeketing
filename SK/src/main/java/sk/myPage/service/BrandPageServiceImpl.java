@@ -26,7 +26,7 @@ public class BrandPageServiceImpl implements BrandPageService{
 		//세션에 로그인한 브랜드 회원의 정보중 BRAND_NUM 꺼내와서 map에 넣어주기 (추후 세션 구현되면 수정필요)
 		HttpSession session = request.getSession();
 		session.getAttribute("session_BRAND_NUM");  //추후 수정
-		map.put("BRAND_NUM", 1);  //추후 수정(임시로 브랜드번호 1로 넣기)
+		//map.put("BRAND_NUM", 1);  //추후 수정(임시로 브랜드번호 1로 넣기)
 		//map.put("BRAND_NUM", "session_BRAND_NUM");
 		
 		return brandPageDAO.selectBrandInfo(map);
@@ -34,22 +34,20 @@ public class BrandPageServiceImpl implements BrandPageService{
 
 	// 브랜드 기본정보 수정
 	@Override
-	public void updateBrandInfo(Map<String, Object> map) throws Exception {
-		//임시로 BRAND_PW, BRAND_ADD, BRAND_LOGO_FILE, BRAND_INFO, BRAND_NUM
-		//나이키브랜드 기본정보 수정
-		map.put("BRAND_PW", "password123");
-		map.put("BRAND_ADD", "서울특별시 주소 수정");
-		map.put("BRAND_LOGO_FILE", "로고파일수정.jpg");
-		map.put("BRAND_INFO", "나이키 브랜드소개말 수정수정");
-		map.put("BRAND_NUM", 1);
+	public Map<String, Object> updateBrandInfo(Map<String, Object> map) throws Exception {
+		Map<String, Object> resultMap = new HashMap<>();
 
-//		map.put("BRAND_PW", map.get("BRAND_PW"));
-//		map.put("BRAND_ADD", map.get("BRAND_ADD"));
-//		map.put("BRAND_LOGO_FILE", map.get("BRAND_LOGO_FILE"));
-//		map.put("BRAND_INFO", map.get("BRAND_INFO"));
-//		map.put("BRAND_NUM", map.get("BRAND_NUM"));
+		int updateResult = brandPageDAO.updateBrandInfo(map);
+
+		if(updateResult == 1) {
+			resultMap.put("updateResult", "pass");
+		}else {
+			resultMap.put("updateResult", "fail");
+		}
 		
 		brandPageDAO.updateBrandInfo(map);
+		
+		return resultMap;
 	}
 
 	// 브랜드 입점 매장 리스트(5줄)

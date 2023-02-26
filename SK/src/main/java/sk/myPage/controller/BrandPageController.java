@@ -12,6 +12,10 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import sk.myPage.service.BrandPageService;
@@ -29,11 +33,11 @@ public class BrandPageController {
 		ModelAndView mv = new ModelAndView("brandPageMain");
 		return mv;
 	}
-
+	
 	@GetMapping(value = "/brandPage/accountModifyForm")
-	public ModelAndView brandModifyForm(Map<String, Object> map, HttpServletRequest request) throws Exception {
+	public ModelAndView brandModifyForm(@RequestParam Map<String, Object> map, HttpServletRequest request) throws Exception {
 		log.debug("###### 브랜드 기본 정보 수정 폼 ######");
-		ModelAndView mv = new ModelAndView("testMain"); // 추후 수정
+		ModelAndView mv = new ModelAndView("brandModifyForm"); // 추후 수정
 
 		// 로직 서비스에 있음(나중에 주석 삭제)
 		Map<String, Object> brandInfoMap = brandPageService.selectBrandInfo(map, request);
@@ -46,18 +50,20 @@ public class BrandPageController {
 		return mv;
 	}
 
-	@GetMapping(value = "/brandPage/accountModify")
-	public ModelAndView brandModify(Map<String, Object> map) throws Exception {
+	// ajax 구현완료
+	@ResponseBody
+	@PostMapping(value = "/brandPage/accountModify")
+	public Map<String, Object> brandModify(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("###### 브랜드 기본 정보 수정 ######");
-		// 화면구현 되면 추후 ajax로 구현 - 기본정보 수정하고 수정버튼 누르면 alert창 띄워주고, 브랜드 마이페이지 메인으로 ajax처리
-		ModelAndView mv = new ModelAndView("testMain");
-
+		
+		System.out.println("map 확인 : " + map);
+		
 		// 로직 서비스에 있음(나중에 주석 삭제)
-		brandPageService.updateBrandInfo(map);
+		Map<String, Object> resultMap = brandPageService.updateBrandInfo(map);
 
-		return mv;
+		return resultMap;
 	}
-
+	
 	@GetMapping(value = "/brandPage/shopList")
 	public ModelAndView shopList(Map<String, Object> map, HttpServletRequest request) throws Exception {
 		log.debug("###### 브랜드 입점 매장 리스트 ######");

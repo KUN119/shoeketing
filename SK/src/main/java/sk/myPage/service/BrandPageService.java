@@ -11,7 +11,7 @@ public interface BrandPageService {
 	public Map<String, Object> selectBrandInfo(Map<String, Object> map, HttpServletRequest request) throws Exception;
 	
 	// 브랜드 기본정보 수정
-	public void updateBrandInfo(Map<String, Object> map) throws Exception;
+	public Map<String, Object> updateBrandInfo(Map<String, Object> map) throws Exception;
 	
 	// 브랜드 입점 매장 리스트(5줄)
 	public List<Map<String, Object>> selectShopList(Map<String, Object> map, HttpServletRequest request) throws Exception;
