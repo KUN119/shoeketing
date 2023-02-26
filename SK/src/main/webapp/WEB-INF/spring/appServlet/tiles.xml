@@ -23,12 +23,6 @@
     <definition name="testMain" extends="default1">
     	  <put-attribute name="body1" value="/WEB-INF/views/yunjeongTest.jsp" />
     </definition>
-	
-	
-	
-	<definition name="test" extends="default1">
-   	  <put-attribute name="body1" value="/WEB-INF/views/goodsWriteForm.jsp" />
-    </definition>
    
     <!-- 개인 회원 마이페이지 메인 -->
     <definition name="myPageMain" extends="default1">
@@ -38,6 +32,11 @@
 	<!-- 메인 페이지 -->
 	<definition name="main" extends="default1">
    	  <put-attribute name="body1" value="/WEB-INF/views/main/main.jsp" />
+    </definition>
+    
+	<!-- 전체 상품 조회 -->
+	<definition name="allGoodsList" extends="default1">
+   	  <put-attribute name="body1" value="/WEB-INF/views/goods/goodsTotalList.jsp" />
     </definition>
    
     <!-- 일반회원 로그인 선택창 -->
