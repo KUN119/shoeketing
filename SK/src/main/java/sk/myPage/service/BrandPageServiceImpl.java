@@ -123,7 +123,7 @@ public class BrandPageServiceImpl implements BrandPageService{
 	@Override
 	public Map<String, Object> deleteShop(Map<String, Object> map) throws Exception {
 		//브랜드가 입점 매장 삭제시, 해당 매장에 등록되어 있던 상품 모두 함께 삭제(트리거)
-		//SHOP_NUM 추후 수정. 로직도 서비스로 이동예정
+		//SHOP_NUM 추후 수정.
 		map.put("SHOP_NUM", 1);
 		//map.put("SHOP_NUM", map.get("SHOP_NUM"));
 		
@@ -173,7 +173,7 @@ public class BrandPageServiceImpl implements BrandPageService{
 	// 브랜드관 랭킹 5인 상품 리스트 (인기 상품 5개)
 	@Override
 	public List<Map<String, Object>> selectGoodsRankingList(Map<String, Object> map) throws Exception {
-		map.put("BRAND_NUM", "1");	
+		map.put("BRAND_NUM", "5");	
 //		map.put("BRAND_NUM", map.get("BRAND_NUM"));
 		
 		return brandPageDAO.selectGoodsRankingList(map);
