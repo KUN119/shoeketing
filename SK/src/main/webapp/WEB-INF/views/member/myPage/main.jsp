@@ -45,6 +45,7 @@
                 <br>
                 <h6 class="text-muted" style="margin-left: 25px;"><a href="/sk/myPage/csList">나의 문의 내역</a></h6>
                 <h6 class="text-muted" style="margin-left: 25px;"><a href="/sk/myPage/csWriteForm">문의 작성하기</a></h6>
+          	 </div>
             </li>
 
             <li class="list-group-item d-flex justify-content-between bg-light mt-4">
@@ -102,19 +103,5 @@
               <h6 style="margin-left: 30px; color: rgb(83, 83, 83);">최근 1년 동안 픽업 완료 횟수 기준으로 매월 1일에 멤버십 등급에 반영됩니다.</h6>
             </div>
         </div>
-        
-        
-<script type="text/javascript">
-$(document).ready(function() {
-	
-	function fn_checkPw() {
-		
-	
-	}
-	
-})
-
-
-</script>
 </body>
 </html>

@@ -10,7 +10,7 @@ public interface CSService {
 	
 	//나의 문의 개수 가져오기
 	public int SelectCSCount(Map<String, Object> map) throws Exception;
-	
+	 
 	//지점 리스트 가져오기
 	public List<Map<String, Object>> selectShopList(Map<String, Object> map) throws Exception;	
 	

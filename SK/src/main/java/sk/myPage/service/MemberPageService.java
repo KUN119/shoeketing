@@ -7,7 +7,7 @@ public interface MemberPageService {
 
 	//회원정보 가져오기
 	Map<String, Object> selectAccountInfo(Map<String, Object> map) throws Exception;
-	
+	 
 	//회원정보수정
 	void accountModify(Map<String, Object> map) throws Exception;
 	

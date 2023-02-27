@@ -47,7 +47,7 @@ public class CSServiceImpl implements CSService {
 	public void insertCS(Map<String, Object> map) throws Exception {
 		CSDAO.insertCS(map);
 	}
-
+ 
 	//문의글 상세
 	@Override
 	public Map<String, Object> selectCSDetail(Map<String, Object> map) throws Exception {

@@ -1,6 +1,6 @@
 package sk.myPage.controller;
 
-
+ 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,6 +52,7 @@ public class MemberPageController {
 		session.setAttribute("S_MEM_PHONE", "01054734234");
 		session.setAttribute("S_MEM_INFORM_AGREE", "N");
 		session.setAttribute("S_MEM_ADMIN", "N");
+		session.setAttribute("S_MEM_PICKUP_COUNT", 3);
 		
 //		//로그인 구현 시 실제로 사용할 코드
 //		if(session != null) {

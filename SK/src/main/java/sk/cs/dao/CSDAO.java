@@ -6,7 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Repository;
 
 import sk.common.dao.AbstractDAO;
-
+ 
 @Repository("CSDAO")
 public class CSDAO extends AbstractDAO {
 

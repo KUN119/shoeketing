@@ -91,7 +91,7 @@ WHERE MEM_NUM=#{MEM_NUM}
 </select>
 
 
-<!-- 찜 목록 개수 가져오기 -->
+<!-- 찜 목록 개수 가져오기 --> 
 <select id="selectGoodsLikeCount" parameterType="hashmap" resultType="int">
 <![CDATA[
 	SELECT
