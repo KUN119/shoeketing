@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 </head>
 <body>
-    
     <!-- findIdModal -->
     <div class="modal fade" id="findIdModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
@@ -18,11 +18,11 @@
           <div class="modal-body">
             <form class="php-email-form mb-5">
                 <div class="form-floating mb-3">
-                  <input type="email" class="form-control" id="findIdEmail" placeholder="1">
-                  <label for="floatingInput">아이디(email)를 입력해주세요</label>
+                  <input type="text" name="MEM_NAME" class="form-control" id="findIdName" placeholder="1">
+                  <label for="floatingInput">이름을 입력해주세요</label>
                 </div>
                 <div class="form-floating d-flex">
-                  <input type="text" class="form-control" id="findIdPhone" placeholder="1">
+                  <input type="text" name="MEM_PHONE" class="form-control" id="findIdPhone" placeholder="1">
                   <label for="floatingPassword">전화번호를 입력해주세요</label>
                   <button class="btn btn-outline-secondary" type="button" id="button-addon2" style="font-size: 15px; width: 120px;">본인인증</button>
                 </div>
@@ -114,6 +114,7 @@
                     <div class="form-group mt-3 mb-3">
                         <input type="email" class="form-control" id="MEM_EMAIL" name="MEM_EMAIL" placeholder="email" required/>
                     </div>
+                    
                     <div class="form-group mb-3">
                         <input type="password" class="form-control" id="MEM_PW" name="MEM_PW" placeholder="password" required/>
                     </div>
@@ -146,9 +147,13 @@ $(document).ready(function() {
 	});
 	
 	function fn_loginForm() {
+		
 		var formData = new FormData();
-		formData.append('MEM_EMAIL', $('#MEM_EMAIL').val());
-		formData.append('MEM_PW', $('#MEM_PW').val());
+		var MEM_EMAIL = $('#MEM_EMAIL').val();
+		var MEM_PW = $('#MEM_PW').val();
+		
+		formData.append("MEM_EMAIL", MEM_EMAIL);
+		formData.append("MEM_PW", MEM_PW);
 		
 		$.ajax({
 			url: '/sk/memberLogin',
@@ -156,15 +161,76 @@ $(document).ready(function() {
 			data: formData,
 			processData: false,
 			contentType: false,
-			success: function(response) {
-				// handle response
+			success: function(data) {
+				alert(data);
+				if(data == "emailfail"){
+					alert("존재하지 않는 아이디입니다.");
+				}else if(data == "pwfail"){
+					alert("비밀번호가 일치하지 않습니다.");
+				}else if(data == "success"){
+					location.href='/sk/main';
+				}
 			},
 			error: function(xhr, status, error) {
-				// handle error
+				console.log('실패');
 			}
 		});
 	};
+	
+	function fn_findId() { //아이디찾기
+		
+	       var MEM_NAME = $('#MEM_NAME').val();
+	       var MEM_PHONE = $('#MEM_PHONE').val();
+	       var findData = {"MEM_NAME" : MEM_NAME, "MEM_PHONE": MEM_PHONE};
+	         
+	        $.ajax({
+	            url:"<c:url value='/findId'/>",
+	            type:'post',
+	            data:findData,
+	            success:function(data) {
+	            	if(data != null) {
+	            		$(".findIdResultDiv").empty();
+	            		$(".findIdResultDiv").append(MEM_NAME+"님의 아이디는 "+data["MEM_EMAIL"]+" 입니다.");
+	            		$("#findIdModal").modal("hide");
+	            		$("#findIdResultModal").modal("show");
+	            	}
+	            },
+	            error:function() {
+	            	$(".findIdResultDiv").empty();
+         			$(".findIdResultDiv").append("입력하신 정보와 일치한 회원정보가 없습니다.");
+         			$("#findIdModal").modal("hide");
+         			$("#findIdResultModal").modal("show");
+	            }
+	         }); 
+	};
+		
+	function fn_findPw() { //비밀번호찾기
+		
+	       var MEM_NAME = $('#MEM_NAME2').val();
+	       var MEM_EMAIL = $('#MEM_EMAIL').val();
+	       var findData = {"MEM_NAME" : MEM_NAME, "MEM_EMAIL": MEM_EMAIL};
+	         
+	        $.ajax({
+	            url:"<c:url value='/findPw'/>",
+	            type:'post',
+	            data:findData,
+	            success:function(data) {
+	            	if(data != null) {
+	            		$(".findPwResultDiv").empty();
+	            		$(".findPwResultDiv").append(MEM_NAME+"님의 비밀번호는 "+data["MEM_PW"]+" 입니다.");
+	            		$("#findPwModal").modal("hide");
+	            		$("#findPwResultModal").modal("show");
+	            	}
+	            },
+	            error:function() {
+	            	$(".findPwResultDiv").empty();
+         		$(".findPwResultDiv").append("입력하신 정보와 일치한 회원정보가 없습니다.");
+         		$("#findPwModal").modal("hide");
+         		$("#findPwResultModal").modal("show");
+	            }
+	            
+	         }); 
+	};
 });
 </script>
-
 </html>

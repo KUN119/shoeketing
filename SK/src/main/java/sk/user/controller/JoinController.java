@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import sk.user.service.JoinService;
 
-@Controller
+@RestController
 public class JoinController {
 
 	Log log = LogFactory.getLog(this.getClass());
@@ -29,7 +29,7 @@ public class JoinController {
 
 	// 회원가입 폼 띄우기
 	@RequestMapping(value = "/memberJoinForm")
-	public ModelAndView memberJoinForm(Map Map) throws Exception {
+	public ModelAndView memberJoinForm(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("###### 회원가입 ######");
 
 		ModelAndView mv = new ModelAndView("memberJoinForm"); // tiles이름 (tiles.xml에서 이름에 해당하는 jsp 주소를 확인할 수 있음
@@ -37,21 +37,23 @@ public class JoinController {
 		return mv;
 	}
 
-	@GetMapping(value = "/memberJoin/emailCheck")
-	public @ResponseBody String emailCheck(String email) throws Exception {
+	@RequestMapping(value = "/memberJoin/emailCheck")
+	public @ResponseBody String emailCheck(String MEM_EMAIL) throws Exception {
 		log.debug("###### 이메일 중복 확인 ######");
 		Map<String, Object> emailMap = new HashMap<>();
-		emailMap.put("MEM_EMAIL", email);
+		emailMap.put("MEM_EMAIL", MEM_EMAIL);
+		
+		System.out.println(emailMap);
 
 		String result = ""; // 이메일 중복확인 후 결과를 해당 변수에 받아온다
 
-//		Map<String, Object> map = joinService.selectEmailCheck(emailMap);
+		Map<String, Object> map = joinService.selectEmailCheck(emailMap);
 
-//		if (map != null) {
-//			result = "fail";
-//		} else {
-//			result = "success";
-//		}
+		if (map != null) {
+			result = "fail";
+		} else {
+			result = "success";
+		}
 
 		return result;
 	}
@@ -120,9 +122,10 @@ public class JoinController {
 		return mv;
 	}
 
-	@GetMapping(value = "/brand/bNumAuth")
+	@RequestMapping(value = "/brand/bNumAuth")
 	public ModelAndView bNumAuth(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("###### 사업자 등록번호 인증 ######");
+		System.out.println("map: " + map);
 		ModelAndView mv = new ModelAndView("bNumAuth");
 		return mv;
 	}

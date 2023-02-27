@@ -29,7 +29,7 @@
 	              placeholder="abcde@gmail.com"
 	              required
 	            />
-	            <button class="btn btn-outline-secondary" type="button" id="button-addon2" style="font-size: 15px; width: 100px;">중복확인</button>
+	            <button class="btn btn-outline-secondary" name="idCheck" type="button" id="button-addon2" style="font-size: 15px; width: 100px;">중복확인</button>
             </div>
           </div>
 
@@ -135,4 +135,37 @@
       </div>
     </div>
 </body>
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	$("button[name='idCheck']").on("click", function(e) { // 닉네임 중복확인
+		e.preventDefault();
+		fn_idCheck();
+	});
+	
+		 	//alert가 fail까지 표시되어 두번 뜸
+	function fn_idCheck() { //함수를 ajax 형식으로 수정 필요
+		      
+	var MEM_EMAIL = $('#MEM_EMAIL').val();
+	alert(MEM_EMAIL);
+		         
+		$.ajax({
+			  url:'/sk/memberJoin/emailCheck?MEM_EMAIL=' + MEM_EMAIL,
+			  type:'get',
+			  success:function(data) {
+			       if(data == 'fail') {
+			            alert("아이디가 중복되었습니다.")
+			       } else if(data == 'success') {
+			            alert("success")
+			       }
+			  },
+			  error:function() {
+			        alert("에러입니다.");
+			  }
+		});
+	};
+});  
+</script>
 </html>

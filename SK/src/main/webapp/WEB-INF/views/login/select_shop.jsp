@@ -40,7 +40,7 @@
                         </label>
                     </div>
                     <div class="form-group mt-5 mb-5">
-                        <button type="button" class="btn btn-dark" style="width: 300px;">로그인</button>
+                        <button type="button" name="login" class="btn btn-dark" style="width: 300px;">로그인</button>
                     </div>
                     <div class="form-group mt-4 mb-3">
                         <button type="button" class="btn btn-dark" style="width: 100px;" onclick="location.href='/sk/shopJoinForm'">회원가입</button>
@@ -50,4 +50,45 @@
         </div>
     </div>
 </body>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	$("button[name='login']").on("click", function(e) {
+		e.preventDefault();
+		fn_loginForm();
+	});
+	
+	function fn_loginForm() {
+		
+		var formData = new FormData();
+		var SHOP_ID = $('#SHOP_ID').val();
+		var SHOP_PW = $('#SHOP_PW').val();
+		
+		formData.append("SHOP_ID", SHOP_ID);
+		formData.append("SHOP_PW", SHOP_PW);
+		
+		$.ajax({
+			url: '/sk/shopLogin',
+			type: 'POST',
+			data: formData,
+			processData: false,
+			contentType: false,
+			success: function(data) {
+				alert(data);
+				if(data == "idfail"){
+					alert("존재하지 않는 아이디입니다.");
+				}else if(data == "pwfail"){
+					alert("비밀번호가 일치하지 않습니다.");
+				}else if(data == "success"){
+					location.href='/sk/main';
+				}
+			},
+			error: function(xhr, status, error) {
+				console.log('실패');
+			}
+		});
+	};
+});
+</script>
 </html>

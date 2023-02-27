@@ -1,6 +1,5 @@
 package sk.user.controller;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -11,16 +10,17 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import sk.user.service.LoginService;
 
-@Controller
+@RestController
 public class LoginController {
 
 	Log log = LogFactory.getLog(this.getClass());
@@ -63,13 +63,13 @@ public class LoginController {
 		return mv;
 	}
 
-	@GetMapping(value = "/memberLogin")
-	public @ResponseBody Map<String, Object> login(@RequestBody Map<String, Object> map, HttpServletRequest request, HttpServletResponse response)
+	@PostMapping(value="/memberLogin")
+	public String login(@RequestParam Map<String, Object> map, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 
 		log.debug("###### 로그인 ######");
-		// ModelAndView mv = new ModelAndView("loginForm");
-		Map<String, Object> result = new HashMap<String, Object>();
+		//ModelAndView mv = new ModelAndView("jsonView");
+		String result = "";
 		System.out.println("로그인 요청에 들어온 Map : " + map.toString());
 
 		// 입력받은 아이디를 꺼내 변수 id에 저장
@@ -79,16 +79,10 @@ public class LoginController {
 		HttpSession session = request.getSession();
 
 		if (member == null) { // 가져온 데이터가 없으면
-			result.put("result", "emailfail");
-
+			result = "emailfail";
 			log.debug("맵이 비어있음");
-
 		} else { // 가져온 데이터가 있으면
-
-			if (member.get("MEM_STATUS").toString().equals("N")) { // 정지된 회원이 아니면
-
 				if (member.get("MEM_PW").equals(map.get("MEM_PW"))) { // 비밀번호 비교
-
 					// 세션영역에 회원정보 올리기
 					session.setAttribute("session_MEM_ID", map.get("MEM_EMAIL"));
 					session.setAttribute("session_MEM_PW", map.get("MEM_PW"));
@@ -118,28 +112,23 @@ public class LoginController {
 							response.addCookie(cookies[i]);
 						}
 					}
-
-					result.put("result", "succeess");
-
+					result="success";
+					
 					log.debug("로그인 통과, 세션에 저장");
 
 				} else { // 비밀번호가 일치하지 않을 때
-					result.put("result", "prwfail");
+					result="pwfail";
 
 					log.debug("비밀번호 틀림");
 				}
 
-			} else if (member.get("MEM_STATUS").equals("Y")) { // 정지된 회원이면
-				result.put("result", "suspend");
-			}
-
-		}
+			} 
 		// result 출력
 		log.debug(result);
 
-		// mv.addObject("result", result);
+		//mv.addObject("result", result);
 
-		// return mv;
+		//return mv;
 		return result;
 	}
 
@@ -150,11 +139,49 @@ public class LoginController {
 		return mv;
 	}
 
-	@GetMapping(value = "/brandLogin")
-	public ModelAndView brandLogin(@RequestParam Map<String, Object> map) throws Exception {
-		log.debug("###### 브랜드 회원 로그인 ######");
-		ModelAndView mv = new ModelAndView("brandLogin");
-		return mv;
+	@RequestMapping(value = "/brandLogin")
+	public String brandLogin(@RequestParam Map<String, Object> map, HttpServletRequest request, HttpServletResponse response) 
+			throws Exception {
+		
+				log.debug("###### 브랜드 회원 로그인 ######");
+				//ModelAndView mv = new ModelAndView("jsonView");
+				String result = "";
+				System.out.println("로그인 요청에 들어온 Map : " + map.toString());
+
+				// 입력받은 아이디를 꺼내 변수 id에 저장
+				Map<String, Object> brand = loginService.selectIdBrand(map);
+				log.debug("아이디 : " + (String) map.get("BRAND_ID"));
+
+				HttpSession session = request.getSession();
+
+				if (brand == null) { // 가져온 데이터가 없으면
+					result = "idfail";
+					log.debug("맵이 비어있음");
+				} else { // 가져온 데이터가 있으면
+						if (brand.get("BRAND_PW").equals(map.get("BRAND_PW"))) { // 비밀번호 비교
+							// 세션영역에 회원정보 올리기
+							session.setAttribute("session_BRAND_ID", map.get("BRAND_ID"));
+							session.setAttribute("session_BRAND_PW", map.get("BRAND_PW"));
+							session.setAttribute("session_BRNAD_INFO", brand);
+
+							result="success";
+							
+							log.debug("로그인 통과, 세션에 저장");
+
+						} else { // 비밀번호가 일치하지 않을 때
+							result="pwfail";
+
+							log.debug("비밀번호 틀림");
+						}
+
+					} 
+				// result 출력
+				log.debug(result);
+
+				//mv.addObject("result", result);
+
+				//return mv;
+				return result;
 	}
 
 	@GetMapping(value = "/shopLoginForm")
@@ -164,18 +191,70 @@ public class LoginController {
 		return mv;
 	}
 
-	@GetMapping(value = "/shopLogin")
-	public ModelAndView shopLogin(@RequestParam Map<String, Object> map) throws Exception {
+	@RequestMapping(value = "/shopLogin")
+	public String shopLogin(@RequestParam Map<String, Object> map, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		log.debug("###### 매장 회원 로그인 ######");
-		ModelAndView mv = new ModelAndView("shopLogin");
-		return mv;
+		//ModelAndView mv = new ModelAndView("jsonView");
+		String result = "";
+		System.out.println("로그인 요청에 들어온 Map : " + map.toString());
+
+		// 입력받은 아이디를 꺼내 변수 id에 저장
+		Map<String, Object> shop = loginService.selectIdShop(map);
+		log.debug("아이디 : " + (String) map.get("SHOP_ID"));
+
+		HttpSession session = request.getSession();
+
+		if (shop == null) { // 가져온 데이터가 없으면
+			result = "idfail";
+			log.debug("맵이 비어있음");
+		} else { // 가져온 데이터가 있으면
+				if (shop.get("SHOP_PW").equals(map.get("SHOP_PW"))) { // 비밀번호 비교
+					// 세션영역에 회원정보 올리기
+					session.setAttribute("session_SHOP_ID", map.get("SHOP_ID"));
+					session.setAttribute("session_SHOP_PW", map.get("SHOP_PW"));
+					session.setAttribute("session_SHOP_INFO", shop);
+
+					result="success";
+					
+					log.debug("로그인 통과, 세션에 저장");
+
+				} else { // 비밀번호가 일치하지 않을 때
+					result="pwfail";
+
+					log.debug("비밀번호 틀림");
+				}
+			} 
+		log.debug(result);
+		return result;
 	}
 
-	@GetMapping(value = "/logout")
-	public ModelAndView logout(@RequestParam Map<String, Object> map) throws Exception {
+	@RequestMapping(value = "/logout")
+	public void logout(@CookieValue(value = "emailCookie", required = false) Cookie emailCookie,
+			@CookieValue(value = "pwCookie", required = false) Cookie pwCookie, @RequestParam Map<String, Object> map,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		log.debug("###### 로그아웃 ######");
-		ModelAndView mv = new ModelAndView("logout");
-		return mv;
+		ModelAndView mv = new ModelAndView("redirect:/main");
+		HttpSession session = request.getSession();
+		if (session != null) {
+			// 로그아웃 시 쿠키 삭제하기
+			if ((emailCookie != null) && (pwCookie != null)) { // 쿠키가 존재하면
+				System.out.println("#########쿠키 삭제하기 #######");
+				Cookie cookie1 = new Cookie("emailCookie", ""); // 쿠키의 값을 비움
+				Cookie cookie2 = new Cookie("pwCookie", "");
+
+				System.out.println("삭제할 쿠키 : " + emailCookie.toString() + ", " + pwCookie.toString());
+
+				Cookie[] cookies = { cookie1, cookie2 };
+				for (int i = 0; i < cookies.length; i++) {
+					cookies[i].setMaxAge(0);
+					// 쿠키의 유효시간을 0으로 지정하면 쿠키가 삭제됨
+					cookies[i].setPath("/");
+					// 쿠키 경로 설정. 쿠키를 생성할 때와 똑같이 지정해야만 삭제가 된다.
+					response.addCookie(cookies[i]);
+				}
+			}
+			session.invalidate();
+		}
 	}
 
 	@GetMapping(value = "/findId")

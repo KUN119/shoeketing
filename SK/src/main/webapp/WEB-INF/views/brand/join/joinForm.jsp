@@ -100,6 +100,7 @@
                   id="button-addon2"
                   class="btn btn-outline-primary"
                   type="button"
+                  name="businessNo"
                   style="font-size: 12px; width: 200px"
                 >
                   사업자 등록번호 확인
@@ -146,4 +147,54 @@
       </div>
     </div>
 </body>
+<script type="text/javascript">
+
+$(document).ready(function() {
+	
+	$("button[name='businessNo']").on("click", function(e) {
+		e.preventDefault();
+		fn_businessNo();
+	});
+	
+	function fn_businessNo() {
+		var data = {
+			"b_no" : [ $('#BRAND_BUSINESS_NUM').val() ]
+		// 사업자번호 조회 "b_no" : []의 의미가 뭘까?
+		};  
+		
+		//var formData = new FormData(data);
+		
+		$.ajax({
+				url : "https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey=oQxZdiXR8K8U%2BsFvOZJxW8bP%2FIs0tqBThPnNxNt0FJrjgOZXM537iVGIyUfCPX86eghuF4HLzRaQ7t4I5gfiPQ%3D%3D", // serviceKey 값을 xxxxxx에 입력
+				type : "POST",
+				data : JSON.stringify(data), // json 을 string으로 변환하여 전송
+				dataType : "JSON",
+				contentType : "application/json",
+				accept : "application/json",
+				success : function(result) {
+					console.log(result);
+				},
+				error : function(result) {
+					console.log(result.responseText); //responseText의 에러메세지 확인
+				}
+		});
+		
+		/* $.ajax({
+			url : "/sk/brand/bNumAuth"
+			type : "POST",
+			data : formData, // json 을 string으로 변환하여 전송
+			dataType : "JSON",
+			contentType : "application/json",
+			accept : "application/json",
+			success : function(result) {
+				console.log(result);
+			},
+			error : function(result) {
+				console.log(result.responseText); //responseText의 에러메세지 확인
+			}
+		}); */
+	}
+});
+	
+</script>
 </html>
