@@ -4,6 +4,21 @@
 <mapper namespace="memberPage">
 
 
+<!-- 회원정보 가져오기 -->
+<select id="selectAccountInfo" parameterType="hashmap" resultType="hashmap">
+<![CDATA[
+	SELECT
+			MEM_NAME,
+			MEM_PHONE,
+			MEM_INFORM_AGREE,
+			MEM_GRADE
+FROM MEMBER
+WHERE MEM_NUM=#{MEM_NUM}
+	  AND MEM_DEL_GB = 'N'
+]]>
+</select>
+
+
 <!-- 회원 정보 수정 -->
 <update id="updateAccountModify" parameterType="hashmap">
 
@@ -17,14 +32,25 @@ WHERE MEM_NUM = #{MEM_NUM}
 </update>
 
 <!-- 탈퇴 전 비밀번호 확인 -->
-<select id="selectPw" parameterType="hashmap" resultType="int">
+<select id="selectPw" parameterType="hashmap" resultType="hashmap">
 <![CDATA[
 	SELECT
 			MEM_PW
 	FROM MEMBER
 	WHERE MEM_EMAIL = #{MEM_EMAIL}
-		  AND MEM_PW = #{MEM_PW}
 		  AND MEM_DEL_GB='N'
+]]>
+</select>
+
+<!-- 예약상태 가져오기 (탈퇴 전) -->
+<select id="selectReservationStatus" resultType="int" parameterType="hashmap">
+<![CDATA[
+	SELECT
+			COUNT(*) AS RESERVATION_COUNT
+	FROM RESERVATION
+	WHERE RESERVATION_USER = #{MEM_NUM}
+		  AND RESERVATION_DEL_GB = 'N'
+		  AND RESERVATION_STATUS = '픽업 대기중'
 ]]>
 </select>
 
@@ -33,14 +59,11 @@ WHERE MEM_NUM = #{MEM_NUM}
 <![CDATA[
 UPDATE MEMBER
 SET
-	MEM_DEL_GB = 'Y'
+	MEM_DEL_GB = 'Y',
+	MEM_DEL_TIME = SYSDATE
 WHERE MEM_NUM=#{MEM_NUM}
 ]]>
 </update>
-
-
-
-
 
 
 </mapper>
