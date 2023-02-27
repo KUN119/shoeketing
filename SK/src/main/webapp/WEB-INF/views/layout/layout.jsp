@@ -16,7 +16,7 @@
         width: 1000px;
         max-width: none!important;
       }
-body {
+body, pre {
   font-family: 'Noto Sans KR', sans-serif;
 }
 </style>
