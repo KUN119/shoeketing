@@ -9,11 +9,11 @@
 <body>
  <div class="py-5 row" style="background-color: black;" >
         <div class="col align-self-center ms-5" style="margin-left: 100px;">
-            <h1 class="mb-0 fs-1" style="color: rgb(255, 255, 255);">김성택님</h1>   
+            <h1 class="mb-0 fs-1" style="color: rgb(255, 255, 255);">${S_MEM_NAME}님</h1>   
     
         </div>
         <div class="col text-end" style="margin-right: 100px;">
-            <h1 class="mb-0 fs-1" style="color: rgb(255, 255, 255);">다이아</h2>
+            <h1 class="mb-0 fs-1" style="color: rgb(255, 255, 255);">${S_MEM_GRADE}</h2>
             <h1 class="mb-0 fs-5" style="color: rgb(255, 255, 255);">등급혜택</h2>
         </div>
        </div>
@@ -33,8 +33,8 @@
               <div>
                 <h5 class="my-0">나의 정보</h5>
                 <br>
-                <h6 class="text-muted" style="margin-left: 25px;">찜 목록</h6>
-                <h6 class="text-muted" style="margin-left: 25px;">픽업 예약 목록</h6>
+                <h6 class="text-muted" style="margin-left: 25px;"><a href="/sk/myPage/goodsLikeList">찜 목록</a></h6>
+                <h6 class="text-muted" style="margin-left: 25px;"><a href="/sk/myPage/reservationList">픽업 예약 목록</a></h6>
               </div>
             
             </li>
@@ -43,13 +43,13 @@
               <div>
                 <h5 class="my-0">매장 문의</h5>
                 <br>
-                <h6 class="text-muted" style="margin-left: 25px;">나의 문의 내역</h6>
-                <h6 class="text-muted" style="margin-left: 25px;">문의 작성하기</h6>
+                <h6 class="text-muted" style="margin-left: 25px;"><a href="/sk/myPage/csList">나의 문의 내역</a></h6>
+                <h6 class="text-muted" style="margin-left: 25px;"><a href="/sk/myPage/csWriteForm">문의 작성하기</a></h6>
             </li>
 
             <li class="list-group-item d-flex justify-content-between bg-light mt-4">
               <div class="text-success">
-                <h5 class="my-0">장바구니</h5>
+                <h5 class="my-0"><a href="/sk/basket/basketList">장바구니</a></h5>
               </div>
             </li>
 
@@ -66,7 +66,7 @@
             <div class="row g-2">
                 <div class="py-3 row" style="background-color: rgb(74, 74, 74); margin-left: 20%; width: 70%;" >
                     <div class="col align-self-center ms-5" style="margin-left: 100px;">
-                        <h1 class="mb-0 fs-1" style="color: rgb(255, 255, 255); text-align: center;">김성택님의 회원 등급은 다이아입니다.</h1>   
+                        <h1 class="mb-0 fs-1" style="color: rgb(255, 255, 255); text-align: center;">${S_MEM_NAME}님의 회원 등급은 다이아입니다.</h1>   
                     </div>
                    </div>
               </div>

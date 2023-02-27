@@ -1,7 +1,9 @@
 package sk.myPage.controller;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -15,9 +17,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import sk.common.service.CommonService;
 import sk.myPage.service.MemberPageService;
 
 @RestController
@@ -27,8 +31,11 @@ public class MemberPageController {
 
 	@Resource(name = "memberPageService")
 	private MemberPageService memberPageService;
-
-
+	
+	@Resource(name="sessionService")
+	private CommonService sessionService;
+	
+	
 	//마이페이지 메인
 	@RequestMapping(value="/myPage")
 	public ModelAndView myPageMain(Map<String, Object> map, HttpServletRequest request, HttpSession session) throws Exception {
@@ -42,11 +49,13 @@ public class MemberPageController {
 		session.setAttribute("S_MEM_EMAIL", "user1@naver.com");
 		session.setAttribute("S_MEM_PW", "asdasd123!");
 		session.setAttribute("S_MEM_GRADE", "골드");
+		session.setAttribute("S_MEM_PHONE", "01054734234");
+		session.setAttribute("S_MEM_INFORM_AGREE", "N");
+		session.setAttribute("S_MEM_ADMIN", "N");
 		
-			
-//		//세션영역에 저장된 이름에 따라 mem_info 수정 필요
-//		if(session.getAttribute("mem_info") != null) {
-//			mv.addObject("mem_info", session.getAttribute("mem_info"));
+//		//로그인 구현 시 실제로 사용할 코드
+//		if(session != null) {
+//			mv.addObject("MEM_INFO", session.getAttribute("session_MEM_INFO"));
 //		}
 		
 		return mv;
@@ -59,27 +68,53 @@ public class MemberPageController {
 		
 		ModelAndView mv = new ModelAndView("accountModifyForm");
 		Map<String, Object> resultMap = new HashMap<>();
-
-		if(session != null) {
-			map.put("MEM_NUM", session.getAttribute("S_MEM_NUM"));
-		resultMap = memberPageService.selectAccountInfo(map);
-		}
-		
+				
+		map.put("MEM_NUM", sessionService.getSession(session, "MEM_NUM")); //세션의 회원번호를 map에 저장
+		resultMap = memberPageService.selectAccountInfo(map); //쿼리실행
 		System.out.println("selectAccountInfo 조회결과 : "+ resultMap);
-		//폼에서 mem_num 전달하거나 세션에서 가져오는 코드 추가 필요
+		
+		//출력할 때 폰번호 자리 나누기
+		String phone = (String)resultMap.get("MEM_PHONE");
+		String phone1 = phone.substring(0, 3);
+		String phone2 = phone.substring(3, 7);
+		String phone3 = phone.substring(7, 11);
+		String phoneNum = phone1+"-"+phone2+"-"+phone3;
+		System.out.println("출력될 폰 번호 : " + phoneNum);
+		
+		mv.addObject("MEM_PHONE", phoneNum);
+		
+		//getSessions 메소드 테스트코드
+		String[] keys = {"MEM_ADMIN", "MEM_GRADE", "MEM_NAME"};
+		Map<String, Object> sessionMap = sessionService.getSessions(session, keys);
+		String admin = (String) sessionMap.get("MEM_ADMIN");
+		String grade = (String) sessionMap.get("MEM_GRADE");
+		
+		System.out.println("세션 메소드 실행결과 : " + sessionMap);
+		System.out.println("세션 메소드 실행결과 admin : " + admin);
+		System.out.println("세션 메소드 실행결과 grade : " + grade);
+		
 		return mv;
 	}
 	
 	//회원정보 수정
-	@RequestMapping(value="/myPage/accountModify")
-	public ModelAndView accountModify(Map<String, Object> map, HttpServletRequest request) throws Exception {
+	@PostMapping(value="/myPage/accountModify")
+	public void accountModify(@RequestParam(value="agreeCheck", required=false) boolean check, @RequestParam Map<String, Object> map, HttpServletRequest request) throws Exception {
 		log.debug("----------- 일반회원 회원정보 수정 처리 ----------");
 		
-		ModelAndView mv = new ModelAndView("redirect:/myPage/main");
+	//	ModelAndView mv = new ModelAndView("redirect:/myPage");
+		
+		//알림 동의 체크박스
+		if(check) { //체크했으면
+			map.put("MEM_INFORM_AGREE", "Y");
+		} else {
+			map.put("MEM_INFORM_AGREE", "N");
+		}
+		
+		System.out.println("수정처리 파라미터 : " + map);
 		
 		memberPageService.accountModify(map);
 		
-		return mv;
+		//return mv;
 	}
 
 	//회원 탈퇴 폼
@@ -101,7 +136,8 @@ public class MemberPageController {
 		String pw ="";
 		int count = 0;
 		Map<String, Object> result = new HashMap<>();
-		map.put("MEM_EMAIL", (String)session.getAttribute("S_MEM_EMAIL"));
+		map.put("MEM_EMAIL", (String)session.getAttribute("S_MEM_EMAIL")); //임시로직
+//		map.put("MEM_EMAIL", (String)session.getAttribute("session_MEM_EMAIL")); 실사용
 		
 			//DB에서 비밀번호 꺼내오기
 			dbPw = String.valueOf(memberPageService.pwCheck(map).get("MEM_PW"));
@@ -111,9 +147,10 @@ public class MemberPageController {
 			
 			if(dbPw.equals(pw)) { //비밀번호가 일치하면
 				
-				//예약상태가 픽업대기중인 건이 있는지 확인
-				map.put("MEM_NUM", session.getAttribute("S_MEM_NUM"));
-				count = memberPageService.selectReservationStatus(map);
+				//예약상태가 픽업대기중인 건의 개수를 확인
+				map.put("MEM_NUM", sessionService.getSession(session, "MEM_NUM"));
+				
+				count = memberPageService.selectReservationStatus(map); //쿼리실행
 				
 					if(count>0) { //픽업대기중인 예약건이 있다면 탈퇴 불가
 					result.put("result", "deleteFail" );
@@ -136,13 +173,38 @@ public class MemberPageController {
 	public void accountDelete(HttpServletRequest request, HttpSession session) throws Exception {
 		log.debug("----------- 일반회원 회원 탈퇴 처리 ----------");
 	//	ModelAndView mv = new ModelAndView("redirect:/main");
-		Map<String, Object> mem_num = new HashMap<>();
+		Map<String, Object> map= new HashMap<>();
 			
 		if(session != null) {
-			mem_num.put("MEM_NUM", session.getAttribute("S_MEM_NUM")); //임시로직이므로 수정예정
-			memberPageService.deleteAccount(mem_num); //탈퇴 처리
+			map.put("MEM_NUM", sessionService.getSession(session, "MEM_NUM"));
+			memberPageService.deleteAccount(map); //탈퇴 처리
 			session.invalidate();//탈퇴 후 로그아웃 처리
 		}
 	//	return mv;
-	}	
+	}
+	
+	//찜목록
+	@RequestMapping(value="/myPage/goodsLikeList")
+	public ModelAndView goodsListList(HttpServletRequest request, HttpSession session) throws Exception {
+		log.debug("----------- 찜 목록 ----------");
+		ModelAndView mv = new ModelAndView("goodsLikeList");
+		Map<String, Object> map = new HashMap<>();
+		List<Map<String, Object>> goodsLikeList = new ArrayList<>();
+		
+//		if(session != null) {
+			map.put("MEM_NUM", sessionService.getSession(session, "MEM_NUM"));
+			map.put("START", 1);
+			map.put("END", 10);
+			goodsLikeList = memberPageService.goodsLikeList(map);
+			mv.addObject("goodsLikeList", goodsLikeList);
+//		}
+		
+		//찜 개수
+		int count = memberPageService.goodsLikeCount(map);
+		mv.addObject("goodsLikeCount", count);
+		
+		return mv;
+	}
+	
+	
 }
