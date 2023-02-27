@@ -14,6 +14,14 @@ public class GoodsController {
 
 	Log log = LogFactory.getLog(this.getClass());
 
+	// 브랜드 회원 정보 전체 상품 리스트
+	@GetMapping(value = "/goodsList")
+	public ModelAndView goodsList(@RequestParam Map<String, Object> map) throws Exception {
+		ModelAndView mv = new ModelAndView("goodsList");
+
+		return mv;
+	}
+
 	@GetMapping(value = "/goods/totalList")
 	public ModelAndView allGoodsList(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("###### allGoodsList ######");

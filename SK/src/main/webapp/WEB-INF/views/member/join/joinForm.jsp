@@ -25,17 +25,18 @@
               style="font-size: large; font-weight: bolder"
               >아이디(이메일)</label
             >
-            <input
-              class="form-control"
-              type="email"
-              id="MEM_EMAIL"
-              name="MEM_EMAIL"
-              placeholder="abcde@gmail.com"
-              pattern="^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$"
-              required
-            />
-            
-            
+            <div class="d-flex">
+	            <input
+	              class="form-control"
+	              type="email"
+	              id="MEM_EMAIL"
+	              name="MEM_EMAIL"
+	              placeholder="abcde@gmail.com"
+                pattern="^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$"
+	              required
+	            />
+	            <button class="btn btn-outline-secondary" type="button" id="button-addon2" style="font-size: 15px; width: 100px;">중복확인</button>
+            </div>
           </div>
 
           <div class="mb-3">
@@ -97,14 +98,16 @@
               style="font-size: large; font-weight: bolder"
               >휴대전화</label
             >
-            <input
-              class="form-control"
-              type="text"
-              id="MEM_PHONE"
-              name="MEM_PHONE"
-              
-              required
-            />
+            <div class="d-flex">
+	            <input
+	              class="form-control"
+	              type="text"
+	              id="MEM_PHONE"
+	              name="MEM_PHONE"
+	              required
+	            />
+	            <button class="btn btn-outline-secondary" type="button" id="button-addon2" style="font-size: 15px; width: 100px;">본인인증</button>
+            </div>
           </div>
 
           <div

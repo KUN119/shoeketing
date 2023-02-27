@@ -25,7 +25,7 @@
           <ul>
             <li class="list-group-item d-flex justify-content-between lh-sm">
               <div>
-                <h4><a href="#">회원 정보 수정</a></h4>
+                <h4><a href="/sk/myPage/accountModifyForm">회원 정보 수정</a></h4>
                 <small class="text-muted">  </small>
               </div>
             </li>
@@ -54,7 +54,7 @@
             </li>
 
             <li class="list-group-item d-flex justify-content-between mt-5">
-                <h5 class="my-0">회원 탈퇴</h5>
+                <h5 class="my-0"><a href="/sk/myPage/accountDeleteForm">회원 탈퇴</a></h5>
             </li>
           </ul>
         </div>
@@ -102,5 +102,19 @@
               <h6 style="margin-left: 30px; color: rgb(83, 83, 83);">최근 1년 동안 픽업 완료 횟수 기준으로 매월 1일에 멤버십 등급에 반영됩니다.</h6>
             </div>
         </div>
+        
+        
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	function fn_checkPw() {
+		
+	
+	}
+	
+})
+
+
+</script>
 </body>
 </html>

@@ -22,7 +22,7 @@ public class BasketController {
 
 	@SuppressWarnings("unused")
 	@RequestMapping(value = "/basket/basketList")
-	public ModelAndView basketList(Map Map) throws Exception {
+	public ModelAndView basketList(Map<String, Object> Map) throws Exception {
 		log.debug("###### 장바구니 리스트 ######");
 		ModelAndView mv = new ModelAndView("basketList");
 		return mv;

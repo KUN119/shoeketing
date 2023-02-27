@@ -9,11 +9,11 @@
 <body>
  <div class="py-5 row" style="background-color: black;" >
         <div class="col align-self-center ms-5" style="margin-left: 100px;">
-            <h1 class="mb-0 fs-1" style="color: rgb(255, 255, 255);">김성택님</h1>   
+            <h1 class="mb-0 fs-1" style="color: rgb(255, 255, 255);">${S_MEM_NAME}님</h1>   
     
         </div>
         <div class="col text-end" style="margin-right: 100px;">
-            <h1 class="mb-0 fs-1" style="color: rgb(255, 255, 255);">다이아</h1>
+            <h1 class="mb-0 fs-1" style="color: rgb(255, 255, 255);">${S_MEM_GRADE}</h1>
             <h1 class="mb-0 fs-5" style="color: rgb(255, 255, 255);">등급혜택</h1>
         </div>
        </div>
@@ -90,13 +90,64 @@
 
             <br>
             <div class="d-grid gap-2 d-md-flex justify-content-md-start mt-4">
-                <form class="col-5 mb-3 mb-lg-0 me-lg-3" role="search" style="width: 20%; margin-left:30px;">
-                <input type="search" class="form-control form-control-bright text-bg-bright" placeholder="비밀번호를 입력해 주세요." aria-label="Search">
-                </form>             
-                <button type="button" class="btn btn-warning">회원 탈퇴</button>
+                <form class="col-5 mb-3 mb-lg-0 me-lg-3" name="pwForm" role="search" style="width: 20%; margin-left:30px; margin-bottom:30px;">
+                <input type="search" class="form-control form-control-bright text-bg-bright" placeholder="비밀번호를 입력해 주세요." aria-label="Search" id="MEM_PW" name="MEM_PW">
+                <input type="hidden" id="MEM_NUM" name="MEM_NUM" value="2">
+                <button type="button" name="delete" class="btn btn-warning">회원 탈퇴</button>
+                </form>   
             </div>
         </div>
         
       </div>
+      
+      
+<script type="text/javascript">
+
+$(document).ready(function() {
+	
+	$("button[name='delete']").on("click", function(e) { //회원 탈퇴 버튼을 누르면
+	 e.preventDefault();
+	 fn_checkPw();
+	});
+	
+	function fn_checkPw() { //비밀번호 확인 함수 
+		//stringify : 일반 문자열을 JSON문자열로 변환해주는 함수
+		var inputPw = $("#MEM_PW").val();
+		var jsonPw = {"MEM_PW":inputPw};
+		
+		$.ajax({
+			url:"/sk/myPage/accountDeleteForm",
+			method:'post',
+			contentType:"application/json; charset=utf-8",
+			data:JSON.stringify(jsonPw),
+			success:function(data) {
+				if(data.result == "success") {
+					if(confirm("회원을 탈퇴하시겠습니까?")) {
+						fn_deleteAccount();
+					} else { return false; }
+				} else if(data.result == "pwfail") {
+					alert("비밀번호가 일치하지 않습니다.");
+				} else if(data.result == "deleteFail") {
+					alert("진행중인 거래가 존재하므로 탈퇴하실 수 없습니다.");
+				}
+			},
+			error:function() {
+				alert("잠시 후 다시 시도해주세요.");
+			}	
+		});
+	}
+	
+	function fn_deleteAccount() { //회원 탈퇴 처리
+		
+		$.ajax({
+			url:"/sk/myPage/accountDelete",
+			type:'post',
+			success:function() {
+				 location.href="/sk/main";
+			}
+		});
+	};
+});
+</script> 
 </body>
 </html>

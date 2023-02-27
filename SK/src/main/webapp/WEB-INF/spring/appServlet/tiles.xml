@@ -23,12 +23,6 @@
     <definition name="testMain" extends="default1">
     	  <put-attribute name="body1" value="/WEB-INF/views/yunjeongTest.jsp" />
     </definition>
-	
-	
-	
-	<definition name="test" extends="default1">
-   	  <put-attribute name="body1" value="/WEB-INF/views/goodsWriteForm.jsp" />
-    </definition>
    
     <!-- 개인 회원 마이페이지 메인 -->
     <definition name="myPageMain" extends="default1">
@@ -38,6 +32,11 @@
 	<!-- 메인 페이지 -->
 	<definition name="main" extends="default1">
    	  <put-attribute name="body1" value="/WEB-INF/views/main/main.jsp" />
+    </definition>
+    
+	<!-- 전체 상품 조회 -->
+	<definition name="allGoodsList" extends="default1">
+   	  <put-attribute name="body1" value="/WEB-INF/views/goods/goodsTotalList.jsp" />
     </definition>
    
     <!-- 일반회원 로그인 선택창 -->
@@ -94,4 +93,43 @@
    <definition name="reservationDetail" extends="default1">
    	  <put-attribute name="body1" value="/WEB-INF/views/member/myPage/reservation/reservationDetail.jsp" />
    </definition>
+   
+   <!-- 개인 회원 마이 페이지 나의 문의 내역 -->
+   <definition name="csList" extends="default1">
+   	  <put-attribute name="body1" value="/WEB-INF/views/member/myPage/cs/csList.jsp" />
+   </definition>
+  
+   <!-- 개인 회원 마이 페이지 나의 문의 작성하기 -->
+   <definition name="csWriteForm" extends="default1">
+   	  <put-attribute name="body1" value="/WEB-INF/views/member/myPage/cs/csWriteForm.jsp" />
+   </definition>
+   
+    <!-- 브랜드 회원 마이페이지 메인 accountModifyForm-->
+   <definition name="brandPageMain" extends="default1">
+   	  <put-attribute name="body1" value="/WEB-INF/views/brand/brandPage/main.jsp" />
+   </definition>
+   
+    <!-- 브랜드 회원 마이페이지 기본 정보 수정 -->
+   <definition name="brandModifyForm" extends="default1">
+   	  <put-attribute name="body1" value="/WEB-INF/views/brand/brandPage/account/accountModifyForm.jsp" />
+   </definition>
+   
+    <!-- 브랜드 회원 마이페이지 전체 상품 리스트  -->
+   <definition name="goodsList" extends="default1">
+   	  <put-attribute name="body1" value="/WEB-INF/views/brand/goods/goodsList.jsp" />
+   </definition>
+   
 </tiles-definitions>
+
+
+
+
+
+
+
+
+
+
+
+
+
