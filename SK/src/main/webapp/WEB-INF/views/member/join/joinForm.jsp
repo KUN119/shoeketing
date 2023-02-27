@@ -8,10 +8,15 @@
 </head>
 <body>
 <div class="container" style="width: 600px;">
+
+<form id="memberJoinForm" class="needs-validation" novalidate>
+
       <div class="box-shadow-full" style="margin-top: 100px">
         <div class="row mb-4 text-center">
           <h1>SHOEKETING</h1>
         </div>
+        
+         
         <div class="row">
           <div class="mb-3">
             <label
@@ -20,14 +25,18 @@
               style="font-size: large; font-weight: bolder"
               >아이디(이메일)</label
             >
-            <input
-              class="form-control"
-              type="email"
-              id="MEM_EMAIL"
-              name="MEM_EMAIL"
-              placeholder="abcde@gmail.com"
-              required
-            />
+            <div class="d-flex">
+	            <input
+	              class="form-control"
+	              type="email"
+	              id="MEM_EMAIL"
+	              name="MEM_EMAIL"
+	              placeholder="abcde@gmail.com"
+                pattern="^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$"
+	              required
+	            />
+	            <button class="btn btn-outline-secondary" type="button" id="button-addon2" style="font-size: 15px; width: 100px;">중복확인</button>
+            </div>
           </div>
 
           <div class="mb-3">
@@ -38,10 +47,12 @@
               >비밀번호*</label
             >
             <input
-              type="text"
+              type="password"
               class="form-control"
               id="MEM_PW"
               name="MEM_PW"
+              pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,16}$"
+              placeholder="특수문자, 문자, 숫자 포함 형태의 8~16자리 이내"
               required
             />
           </div>
@@ -54,12 +65,14 @@
               >비밀번호 확인*</label
             >
             <input
-              type="email"
+              type="password"
               class="form-control"
               id="MEM_PW2"
               name="MEM_PW2"
+              pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,16}$"
               required
             />
+           
           </div>
 
           <div class="mb-3">
@@ -85,13 +98,16 @@
               style="font-size: large; font-weight: bolder"
               >휴대전화</label
             >
-            <input
-              class="form-control"
-              type="text"
-              id="MEM_PHONE"
-              name="MEM_PHONE"
-              required
-            />
+            <div class="d-flex">
+	            <input
+	              class="form-control"
+	              type="text"
+	              id="MEM_PHONE"
+	              name="MEM_PHONE"
+	              required
+	            />
+	            <button class="btn btn-outline-secondary" type="button" id="button-addon2" style="font-size: 15px; width: 100px;">본인인증</button>
+            </div>
           </div>
 
           <div
@@ -109,6 +125,7 @@
             >
           </div>
         </div>
+        
 
         <h6 style="color: rgb(83, 83, 83)">
           네이버에서 제공하는 이벤트/혜택 등 다양한 정보를 휴대전화(네이버앱
@@ -127,6 +144,35 @@
           가입하기
         </button>
       </div>
+      </form>
     </div>
+    
+    <script type="text/javascript">
+    
+   
+    $(document).ready(function() {
+    $.ajax({
+			url:"/sk/memberJoin/emailCheck?email="+email,
+			type:'get',
+			success:function(data) {
+				if(data == 'fail') {
+	                  alert("이미 가입된 이메일입니다.");
+	               } else if(data == 'success') {
+	            	   $('#exampleModal').unbind();
+	            	   $('#exampleModal').modal('show');
+	            	   $('#exampleModal').on('show.bs.modal', function (e) {
+		                	  e.preventDefault();
+		              	  });
+	            	   emailAuth();
+	               }
+			},
+			error:function() {
+				alert("에러입니다.");
+			}
+		});
+    });
+    </script>
+    
+    
 </body>
 </html>

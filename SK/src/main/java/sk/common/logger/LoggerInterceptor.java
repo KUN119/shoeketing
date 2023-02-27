@@ -17,8 +17,10 @@ public class LoggerInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 
+		String URICheck = request.getRequestURI();
+
 		// 로그 메세지 출력
-		if (log.isDebugEnabled()) {
+		if (log.isDebugEnabled() && URICheck.indexOf("/sk/assets/") == -1 && URICheck != null && URICheck != "") {
 			log.debug(
 					"======================================          START         ======================================");
 			log.debug(" Request URI \t:  " + request.getRequestURI());
@@ -31,7 +33,10 @@ public class LoggerInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
-		if (log.isDebugEnabled()) {
+
+		String URICheck = request.getRequestURI();
+
+		if (log.isDebugEnabled() && URICheck.indexOf("/sk/assets/") == -1 && URICheck != null && URICheck != "") {
 			log.debug(
 					"======================================           END          ======================================\n");
 		}
