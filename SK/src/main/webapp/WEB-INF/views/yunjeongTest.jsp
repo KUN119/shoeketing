@@ -115,13 +115,35 @@ rankingGoodsList <br><br>
 
 <!-- 매장 정보 상세조회 -->
 shopInfoMap
-매장명 : ${shopInfoMap.SHOP_NAME} 
-매장 주소 :  ${shopInfoMap.SHOP_ADD}
-매장 전화번호 :  ${shopInfoMap.SHOP_TEL}
+매장명 : ${shopInfoMap.SHOP_NAME} <br>
+매장 주소 :  ${shopInfoMap.SHOP_ADD} <br>
+매장 전화번호 :  ${shopInfoMap.SHOP_TEL} <br>
 
 <!-- 매장 상품번호, 사이즈에 해당하는 재고수량 -->
-shopGoodsAmount
-재고수량 : ${shopGoodsAmount}
+shopGoodsAmount <br>
+재고수량 : ${shopGoodsAmount} <br>
+
+
+<!--  매장 상품 재고 리스트 -->
+shopStockList <br>
+<c:choose>
+	<c:when test="${fn:length(shopStockList) > 0 }">
+		<c:forEach items="${shopStockList}" var="shopStock">
+			<tr>  
+		      <td>브랜드명 : ${shopStock.SHOP_BRAND}</td>
+		      <td>상품명 : ${shopStock.TOTAL_GOODS_NAME}</td>
+		      <td>상품 모델명  : ${shopStock.TOTAL_GOODS_MODEL}</td>
+		      <td>상품 사이즈 : ${shopStock.SHOP_GOODS_SIZE}</td>
+		      <td>상품 재고수량 : ${shopStock.SHOP_GOODS_AMOUNT}</td>
+		      <br>
+  		 	</tr>
+		</c:forEach>
+	</c:when>
+</c:choose>
+해당 매장 상품 토탈개수 : ${stockCount}
+
+<!-- 매장 재고수량 업데이트 결과 -->
+재고수량 업데이트 결과 : ${updateResult}
 
 
 </body>
