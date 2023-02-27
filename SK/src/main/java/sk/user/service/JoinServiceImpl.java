@@ -43,8 +43,8 @@ public class JoinServiceImpl implements JoinService {
 		return joinDAO.selectDelGB(map);
 	}
 	
-	@Override
 	// 회원가입 성공
+	@Override
 	public void insertMember(Map<String, Object> map) throws Exception {
 		
 		joinDAO.insertMember(map);
@@ -56,8 +56,8 @@ public class JoinServiceImpl implements JoinService {
 		return joinDAO.selectbNumAuth(map);
 	}
 	
-	@Override
 	// 브래드 회원가입 성공
+	@Override
 	public void insertBrand(Map<String, Object> map) throws Exception {
 		
 		joinDAO.insertBrand(map);
@@ -70,8 +70,8 @@ public class JoinServiceImpl implements JoinService {
 		return joinDAO.selectshopLocationInfo(map);
 	}
 	
-	@Override
 	// 매장 회원가입 성공
+	@Override
 	public void insertShop(Map<String, Object> map) throws Exception {
 		
 		joinDAO.insertShop(map);
