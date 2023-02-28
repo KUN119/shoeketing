@@ -1,4 +1,4 @@
-package sk.myPage.service;
+package sk.mypage.service;
 
 import java.util.List;
 import java.util.Map;

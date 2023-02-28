@@ -134,11 +134,15 @@
    	  <put-attribute name="body1" value="/WEB-INF/views/brand/brandPage/account/accountModifyForm.jsp" />
    </definition>
    
-    <!-- 브랜드 회원 마이페이지 전체 상품 리스트  -->
+    <!-- 브랜드 회원 마이페이지 전체 상품 리스트  goodsWriteForm -->
    <definition name="goodsList" extends="default1">
    	  <put-attribute name="body1" value="/WEB-INF/views/brand/goods/goodsList.jsp" />
    </definition>
-   
+
+    <!-- 브랜드 회원 마이페이지 상품 등록  goodsWriteForm -->
+   <definition name="goodsWriteForm" extends="default1">
+   	  <put-attribute name="body1" value="/WEB-INF/views/brand/goods/goodsWriteForm.jsp" />
+   </definition> 
 </tiles-definitions>
 
 
