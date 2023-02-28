@@ -38,6 +38,26 @@
 	<definition name="allGoodsList" extends="default1">
    	  <put-attribute name="body1" value="/WEB-INF/views/goods/goodsTotalList.jsp" />
     </definition>
+    
+    <!-- 통합 검색 -->
+	<definition name="totalSearch" extends="default1">
+   	  <put-attribute name="body1" value="/WEB-INF/views/main/totalSearch.jsp" />
+    </definition>
+    
+    <!-- 장바구니 -->
+	<definition name="basketList" extends="default1">
+   	  <put-attribute name="body1" value="/WEB-INF/views/member/myPage/basket/basketList.jsp" />
+    </definition>
+    
+    <!-- 공지사항 리스트 -->
+	<definition name="noticeList" extends="default1">
+   	  <put-attribute name="body1" value="/WEB-INF/views/notice/noticeList.jsp" />
+    </definition>
+    
+    <!-- 공지사항 상세보기 -->
+	<definition name="noticeDetail" extends="default1">
+   	  <put-attribute name="body1" value="/WEB-INF/views/notice/noticeDetail.jsp" />
+    </definition>
    
     <!-- 일반회원 로그인 선택창 -->
 	<definition name="loginSelectMember" extends="default1">
@@ -114,11 +134,15 @@
    	  <put-attribute name="body1" value="/WEB-INF/views/brand/brandPage/account/accountModifyForm.jsp" />
    </definition>
    
-    <!-- 브랜드 회원 마이페이지 전체 상품 리스트  -->
+    <!-- 브랜드 회원 마이페이지 전체 상품 리스트  goodsWriteForm -->
    <definition name="goodsList" extends="default1">
    	  <put-attribute name="body1" value="/WEB-INF/views/brand/goods/goodsList.jsp" />
    </definition>
-   
+
+    <!-- 브랜드 회원 마이페이지 상품 등록  goodsWriteForm -->
+   <definition name="goodsWriteForm" extends="default1">
+   	  <put-attribute name="body1" value="/WEB-INF/views/brand/goods/goodsWriteForm.jsp" />
+   </definition> 
 </tiles-definitions>
 
 

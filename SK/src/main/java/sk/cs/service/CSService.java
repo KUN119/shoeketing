@@ -5,6 +5,21 @@ import java.util.Map;
 
 public interface CSService {
 
+	//나의 문의 리스트 가져오기
+	public List<Map<String, Object>> selectCSList(Map<String, Object> map) throws Exception;
+	
+	//나의 문의 개수 가져오기
+	public int SelectCSCount(Map<String, Object> map) throws Exception;
+	 
+	//지점 리스트 가져오기
+	public List<Map<String, Object>> selectShopList(Map<String, Object> map) throws Exception;	
+	
+	//지점 총 개수 가져오기
+	public int selectShopCount(Map<String, Object> map) throws Exception;
+	
+	//문의글 작성
+	public void insertCS (Map<String, Object> map) throws Exception;
+	
 	// 매장 문의내역 리스트(10줄)
 	public List<Map<String, Object>> selectShopCSList(Map<String, Object> map) throws Exception;
 	

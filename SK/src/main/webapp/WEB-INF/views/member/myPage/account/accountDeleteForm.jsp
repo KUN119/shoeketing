@@ -25,7 +25,7 @@
           <ul>
             <li class="list-group-item d-flex justify-content-between lh-sm">
               <div>
-                <h4><a href="#">회원 정보 수정</a></h4>
+                <h4><a href="/sk/myPage/accountModifyForm">회원 정보 수정</a></h4>
                 <small class="text-muted">  </small>
               </div>
             </li>
@@ -143,9 +143,10 @@ $(document).ready(function() {
 			url:"/sk/myPage/accountDelete",
 			type:'post',
 			success:function() {
+				alert("회원탈퇴가 완료되었습니다.");
 				 location.href="/sk/main";
 			}
-		});
+		}); 
 	};
 });
 </script> 

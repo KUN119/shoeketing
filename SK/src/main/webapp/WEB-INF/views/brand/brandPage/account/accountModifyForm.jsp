@@ -85,11 +85,15 @@
                 </div>             
                 
                 <div class="mb-3" style="width: 45%; margin-left: 30%;">
-                    
-					<label for="BRAND_LOGO_FILE" class="form-label" style="font-size: large; font-weight: bolder;">브랜드 대표 사진</label>
-					<input style="width: 100%;" type="file" class="form-control" id="BRAND_LOGO_FILE" name="BRAND_LOGO_FILE">
-                    <p class="mt-2" style="font-size:13px">기존 파일명 : ${brandInfoMap.BRAND_LOGO_FILE} </p>
-                    
+                    <table>
+                        <label for="exampleFormControlInput1" class="form-label" style="font-size: large; font-weight: bolder;">브랜드 대표 사진</label>
+                        <tr>
+                        <td style="width: 60%;">
+                            <div class="mb-3">
+                                <input class="form-control" type="file" id="formFile">
+                              </div>
+                        </tr>
+                    </table>
                 </div>  
                 
                 <div class="mb-3" style="width: 45%; margin-left: 30%;">
