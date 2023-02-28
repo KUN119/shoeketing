@@ -93,13 +93,7 @@ VALUES (CS_SEQ.NETVAL,
 	<include refid="shopSearch"/>
 </select>
 
-
-
-
-<!-- 삭제는 트리거 작성 후 추가 예정  -->
-<mapper namespace="cs">
-
-	<!-- 매장 문의내역 리스트 -->
+<!-- 매장 문의내역 리스트 -->
 	<select id="selectShopCSList" parameterType="hashmap" resultType="hashmap">
 		<![CDATA[
 			SELECT *
