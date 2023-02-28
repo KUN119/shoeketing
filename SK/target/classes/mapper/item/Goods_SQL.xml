@@ -49,12 +49,15 @@
 	</select>
 
 	<sql id="orderOption">
-			<if test="orderType != null">
-			<if test="orderType == '최신순'.toString()">ROW_NUMBER() OVER (ORDER BY TOTAL_GOODS_NUM DESC) AS NUM,</if>
-			<if test="orderType == '낮은가격순'.toString()">ROW_NUMBER() OVER (ORDER BY TOTAL_GOODS_PRICE) AS NUM,</if>
-			<if test="orderType == '높은가격순'.toString()">ROW_NUMBER() OVER (ORDER BY TOTAL_GOODS_PRICE DESC) AS NUM,</if>
-			<if test="orderType == '별점순'.toString()">ROW_NUMBER() OVER (ORDER BY TOTAL_GOODS_SCORE_AVG) AS NUM,</if>
-			<if test="orderType == '찜순'.toString()">ROW_NUMBER() OVER (ORDER BY TOTAL_GOODS_LIKE_COUNT DESC) AS NUM,</if>
+			<if test="listType == null">
+				ROW_NUMBER() OVER (ORDER BY TOTAL_GOODS_NUM DESC) AS NUM,
+			</if>
+			<if test="listType != null">
+			<if test="listType == '최신순'.toString()">ROW_NUMBER() OVER (ORDER BY TOTAL_GOODS_NUM DESC) AS NUM,</if>
+			<if test="listType == '낮은가격순'.toString()">ROW_NUMBER() OVER (ORDER BY TOTAL_GOODS_PRICE) AS NUM,</if>
+			<if test="listType == '높은가격순'.toString()">ROW_NUMBER() OVER (ORDER BY TOTAL_GOODS_PRICE DESC) AS NUM,</if>
+			<if test="listType == '별점순'.toString()">ROW_NUMBER() OVER (ORDER BY TOTAL_GOODS_SCORE_AVG) AS NUM,</if>
+			<if test="listType == '찜순'.toString()">ROW_NUMBER() OVER (ORDER BY TOTAL_GOODS_LIKE_COUNT DESC) AS NUM,</if>
 			</if>
 	</sql>
 
