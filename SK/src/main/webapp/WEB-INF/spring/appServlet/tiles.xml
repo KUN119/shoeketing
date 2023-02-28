@@ -23,12 +23,6 @@
     <definition name="testMain" extends="default1">
     	  <put-attribute name="body1" value="/WEB-INF/views/yunjeongTest.jsp" />
     </definition>
-	
-	
-	
-	<definition name="test" extends="default1">
-   	  <put-attribute name="body1" value="/WEB-INF/views/goodsWriteForm.jsp" />
-    </definition>
    
     <!-- 개인 회원 마이페이지 메인 -->
     <definition name="myPageMain" extends="default1">
@@ -38,6 +32,31 @@
 	<!-- 메인 페이지 -->
 	<definition name="main" extends="default1">
    	  <put-attribute name="body1" value="/WEB-INF/views/main/main.jsp" />
+    </definition>
+    
+	<!-- 전체 상품 조회 -->
+	<definition name="allGoodsList" extends="default1">
+   	  <put-attribute name="body1" value="/WEB-INF/views/goods/goodsTotalList.jsp" />
+    </definition>
+    
+    <!-- 통합 검색 -->
+	<definition name="totalSearch" extends="default1">
+   	  <put-attribute name="body1" value="/WEB-INF/views/main/totalSearch.jsp" />
+    </definition>
+    
+    <!-- 장바구니 -->
+	<definition name="basketList" extends="default1">
+   	  <put-attribute name="body1" value="/WEB-INF/views/member/myPage/basket/basketList.jsp" />
+    </definition>
+    
+    <!-- 공지사항 리스트 -->
+	<definition name="noticeList" extends="default1">
+   	  <put-attribute name="body1" value="/WEB-INF/views/notice/noticeList.jsp" />
+    </definition>
+    
+    <!-- 공지사항 상세보기 -->
+	<definition name="noticeDetail" extends="default1">
+   	  <put-attribute name="body1" value="/WEB-INF/views/notice/noticeDetail.jsp" />
     </definition>
    
     <!-- 일반회원 로그인 선택창 -->
@@ -106,11 +125,11 @@
    </definition>
    
     <!-- 브랜드 회원 마이페이지 메인 accountModifyForm-->
-   <definition name="brandPage" extends="default1">
+   <definition name="brandPageMain" extends="default1">
    	  <put-attribute name="body1" value="/WEB-INF/views/brand/brandPage/main.jsp" />
    </definition>
    
-    <!-- 브랜드 회원 마이페이지 기본 정보 수정 goodsList -->
+    <!-- 브랜드 회원 마이페이지 기본 정보 수정 -->
    <definition name="brandModifyForm" extends="default1">
    	  <put-attribute name="body1" value="/WEB-INF/views/brand/brandPage/account/accountModifyForm.jsp" />
    </definition>

@@ -19,10 +19,10 @@ public class BrandPageDAO extends AbstractDAO{
 	}
 	
 	// 브랜드 기본정보 수정 - update()
-	public void updateBrandInfo(Map<String, Object> map) throws Exception {
+	public int updateBrandInfo(Map<String, Object> map) throws Exception {
 		System.out.println("updateBrandInfo 파라미터 : " + map);
 
-		update("brandPage.updateBrandInfo", map);
+		return (int) update("brandPage.updateBrandInfo", map);
 	}
 	
 	// 브랜드 입점 매장 리스트(5줄) - selectList()

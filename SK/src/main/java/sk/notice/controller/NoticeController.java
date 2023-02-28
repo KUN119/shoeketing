@@ -20,4 +20,11 @@ public class NoticeController {
 		ModelAndView mv = new ModelAndView("noticeList");
 		return mv;
 	}
+
+	@GetMapping(value = "/noticeDetail")
+	public ModelAndView noticeDetail(@RequestParam Map<String, Object> map) throws Exception {
+		log.debug("###### noticeList ######");
+		ModelAndView mv = new ModelAndView("noticeDetail");
+		return mv;
+	}
 }
