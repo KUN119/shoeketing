@@ -7,34 +7,34 @@ import org.springframework.stereotype.Repository;
 
 import sk.common.dao.AbstractDAO;
 
-@Repository("CSDAO")
+@Repository("csDAO")
 public class CSDAO extends AbstractDAO {
 
 	// 나의 문의 리스트 가져오기
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> selectCSList(Map<String, Object> map) throws Exception {
-		return selectList("CS.selectCSList", map);
+		return selectList("cs.selectCSList", map);
 	}
 
 	// 나의 문의 개수 가져오기
 	public int SelectCSCount(Map<String, Object> map) throws Exception {
-		return (int) selectOne("CS.selectCSCount", map);
+		return (int) selectOne("cs.selectCSCount", map);
 	}
 
 	// 지점 리스트 가져오기
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> selectShopList(Map<String, Object> map) throws Exception {
-		return selectList("CS.selectShopList", map);
+		return selectList("cs.selectShopList", map);
 	}
 
 	// 지점 총 개수 가져오기
 	public int selectShopCount(Map<String, Object> map) throws Exception {
-		return (int) selectOne("CS.selectShopCount", map);
+		return (int) selectOne("cs.selectShopCount", map);
 	}
 
 	// 문의글 작성처리
 	public void insertCS(Map<String, Object> map) throws Exception {
-		insert("CS.insertCS", map);
+		insert("cs.insertCS", map);
 	}
 
 	// 매장 문의내역 리스트(10줄) - selectList()
