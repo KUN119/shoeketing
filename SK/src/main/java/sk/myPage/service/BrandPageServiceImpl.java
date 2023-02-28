@@ -1,4 +1,4 @@
-package sk.myPage.service;
+package sk.mypage.service;
 
 import java.util.HashMap;
 import java.util.List;
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
 
-import sk.myPage.dao.BrandPageDAO;
+import sk.mypage.dao.BrandPageDAO;
 
 //BrandPageService 구현클래스
 

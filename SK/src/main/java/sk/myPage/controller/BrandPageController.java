@@ -1,4 +1,4 @@
-package sk.myPage.controller;
+package sk.mypage.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import sk.myPage.service.BrandPageService;
+import sk.mypage.service.BrandPageService;
 
 @Controller
 public class BrandPageController {

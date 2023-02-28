@@ -88,12 +88,10 @@
                     <table>
                         <label for="exampleFormControlInput1" class="form-label" style="font-size: large; font-weight: bolder;">브랜드 대표 사진</label>
                         <tr>
-                        <td style="width: 80%;">
-                        <input style="width: 100%;" type="email" name="MEM_PW" class="form-control" placeholder="파일 첨부" id="exampleFormControlInput1">
-                        </td>
-                        <td>
-                        <button type="button" style="width: 90px; margin-left: 35%;" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#findFile">파일 찾기</button>
-                        </td>
+                        <td style="width: 60%;">
+                            <div class="mb-3">
+                                <input class="form-control" type="file" id="formFile">
+                              </div>
                         </tr>
                     </table>
                 </div>  

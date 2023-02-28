@@ -1,4 +1,4 @@
-package sk.myPage.dao;
+package sk.mypage.dao;
 
 import java.util.Map;
 
