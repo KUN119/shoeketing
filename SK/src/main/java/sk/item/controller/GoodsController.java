@@ -65,4 +65,10 @@ public class GoodsController {
 		ModelAndView mv = new ModelAndView("goodsDetail");
 		return mv;
 	}
+
+	@GetMapping(value = "/goodsWriteForm")
+	public ModelAndView goodsWriteForm(Map<String, Object> map) throws Exception {
+		ModelAndView mv = new ModelAndView("goodsWriteForm");
+		return mv;
+	}
 }
