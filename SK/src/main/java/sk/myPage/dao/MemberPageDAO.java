@@ -1,5 +1,6 @@
 package sk.myPage.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Repository;
@@ -36,7 +37,15 @@ public class MemberPageDAO extends AbstractDAO {
 		update("memberPage.deleteAccount", map);
 	}
 	
+	//찜목록 리스트 가져오기
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> selectGoodsLikeList(Map<String, Object> map) throws Exception {
+		return selectList("memberPage.selectGoodsLikeList", map);
+	}
 
-	
+	//찜목록 개수 가져오기
+	public int selectGoodsLikeCount(Map<String, Object> map) throws Exception {
+		return (int) selectOne("memberPage.selectGoodsLikeCount", map);
+	}
 	
 }

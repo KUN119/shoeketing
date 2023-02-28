@@ -1,5 +1,6 @@
 package sk.myPage.service;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -7,7 +8,7 @@ import javax.annotation.Resource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
-
+ 
 import sk.myPage.dao.MemberPageDAO;
 
 @Service("memberPageService")
@@ -52,6 +53,21 @@ public class MemberPageServiceImpl implements MemberPageService {
 		System.out.println("deleteAccount 서비스 파라미터 : " + map);
 		memberPageDAO.deleteAccount(map);
 	}
+
+	//찜목록 리스트
+	@Override
+	public List<Map<String, Object>> goodsLikeList(Map<String, Object> map) throws Exception {
+		System.out.println("goodsLikeList 서비스 파라미터 : " + map);
+		return memberPageDAO.selectGoodsLikeList(map);
+	}
+
+	//찜목록 개수
+	@Override
+	public int goodsLikeCount(Map<String, Object> map) throws Exception {
+		System.out.println("goodsLikeCount 서비스 파라미터 : " + map);
+		return memberPageDAO.selectGoodsLikeCount(map);
+	}
+	
 	
 	
 }

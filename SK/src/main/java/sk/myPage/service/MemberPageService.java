@@ -1,12 +1,13 @@
 package sk.myPage.service;
 
+import java.util.List;
 import java.util.Map;
 
 public interface MemberPageService {
 
 	//회원정보 가져오기
 	Map<String, Object> selectAccountInfo(Map<String, Object> map) throws Exception;
-	
+	 
 	//회원정보수정
 	void accountModify(Map<String, Object> map) throws Exception;
 	
@@ -19,4 +20,9 @@ public interface MemberPageService {
 	//회원 탈퇴처리(N->Y)
 	void deleteAccount(Map<String, Object> map) throws Exception;
 	 
+	//찜목록 리스트
+	List<Map<String, Object>> goodsLikeList(Map<String, Object> map) throws Exception;
+	
+	//찜목록 개수
+	int goodsLikeCount(Map<String, Object> map) throws Exception;
 }
