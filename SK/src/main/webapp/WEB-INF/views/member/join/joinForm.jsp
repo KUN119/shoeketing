@@ -32,11 +32,21 @@
 	              id="MEM_EMAIL"
 	              name="MEM_EMAIL"
 	              placeholder="abcde@gmail.com"
-                pattern="^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$"
+	              pattern="^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$"
 	              required
 	            />
+	            
 	            <button class="btn btn-outline-secondary" name="idCheck" type="button" id="button-addon2" style="font-size: 15px; width: 100px;">중복확인</button>
+           
             </div>
+             <div id="email-null" class="invalid-feedback">
+		      이메일을 입력해주세요
+		  	</div>
+            <div id="email-type" class="invalid-feedback">
+		      이메일 형식을 확인해주세요
+		  	</div>
+           
+             
           </div>
 
           <div class="mb-3">
@@ -55,6 +65,12 @@
               placeholder="특수문자, 문자, 숫자 포함 형태의 8~16자리 이내"
               required
             />
+            <div id="pw-null" class="invalid-feedback">
+		      비밀번호를 입력해주세요
+		  	</div>
+		  	<div id="pw-type" class="invalid-feedback">
+		      비밀번호 형식이 올바르지 않습니다
+		  	</div>
           </div>
 
           <div class="mb-3">
@@ -72,6 +88,12 @@
               pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,16}$"
               required
             />
+            <div id="pw2-null" class="invalid-feedback">
+		      비밀번호 확인이 필요합니다
+		  	</div>
+            <div id="pw2-same" class="invalid-feedback">
+		      비밀번호가 일치하지 않습니다
+		  	</div>
            
           </div>
 
@@ -87,8 +109,12 @@
               type="text"
               id="MEM_NAME"
               name="MEM_NAME"
+              value=""
               required
             />
+            <div class="invalid-feedback">
+		      이름을 입력해주세요
+		  	</div>
           </div>
 
           <div class="mb-3">
@@ -102,12 +128,31 @@
 	            <input
 	              class="form-control"
 	              type="text"
-	              id="MEM_PHONE"
-	              name="MEM_PHONE"
+	              id="phone"
+	              name="phone"
+	              placeholder="휴대전화 입력"
 	              required
 	            />
-	            <button class="btn btn-outline-secondary" type="button" id="button-addon2" style="font-size: 15px; width: 100px;">본인인증</button>
+	            <button class="btn btn-outline-secondary" name="phoneCheck" type="button" id="button-addon2" style="font-size: 15px; width: 100px;">인증번호 보내기</button>
             </div>
+            
+            <div class="d-flex">
+	            <input
+	              class="form-control"
+	              type="text"
+	              id="phone2"
+	              name="phone2"
+	              placeholder="인증번호 입력"
+	              disabled
+	              required
+	            />
+	            <button class="btn btn-outline-secondary" name="phoneCheck2" type="button" id="button-addon2" style="font-size: 15px; width: 100px;">본인 인증</button>
+            </div>
+            <div class="point successPhoneChk">휴대폰 번호 입력후 인증번호 보내기를 해주십시오.</div>
+            <input
+            	type="hidden"
+            	id="phoneDoubleCheck"
+            	/>
           </div>
 
           <div
@@ -140,6 +185,7 @@
           class="btn btn-primary btn-lg"
           style="margin-left: 30%; width: 45%"
           type="submit"
+          name="join"
         >
           가입하기
         </button>
@@ -149,63 +195,167 @@
     
     <script type="text/javascript">
     
-   
+
+    
     $(document).ready(function() {
-    $.ajax({
-			url:"/sk/memberJoin/emailCheck?email="+email,
-			type:'get',
-			success:function(data) {
-				if(data == 'fail') {
-	                  alert("이미 가입된 이메일입니다.");
-	               } else if(data == 'success') {
-	            	   $('#exampleModal').unbind();
-	            	   $('#exampleModal').modal('show');
-	            	   $('#exampleModal').on('show.bs.modal', function (e) {
-		                	  e.preventDefault();
-		              	  });
-	            	   emailAuth();
-	               }
-			},
-			error:function() {
-				alert("에러입니다.");
-			}
-		});
+    	
+    	$("button[name='idCheck']").on("click", function(e) { // 이메일아이디 중복확인
+    		e.preventDefault();
+    		fn_idCheck();
+    	});
+    	
+    		 	//alert가 fail까지 표시되어 두번 뜸
+    	function fn_idCheck() { //함수를 ajax 형식으로 수정 필요
+    		      
+    	var MEM_EMAIL = $('#MEM_EMAIL').val();
+    	alert(MEM_EMAIL);
+    		         
+    		$.ajax({
+    			  url:'/sk/memberJoin/emailCheck?MEM_EMAIL=' + MEM_EMAIL,
+    			  type:'get',
+    			  success:function(data) {
+    			       if(data == 'fail') {
+    			            alert("아이디가 중복되었습니다.")
+    			       } else if(data == 'success') {
+    			            alert("success")
+    			       }
+    			  },
+    			  error:function() {
+    			        alert("에러입니다.");
+    			  }
+    		});
+    	};
     });
+    
+   //휴대폰 번호 인증
+    var code2 = "";
+    $("#phoneCheck").click(function(){
+    	alert("인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호 확인을 해주십시오.");
+    	var phone = $("#MEM_PHONE").val();
+    	$.ajax({
+            type:"GET",
+            url:"/sk//memberJoin/phoneAuth?phone=" + MEM_PHONE,
+            cache : false,
+            success:function(data){
+            	if(data == "error"){
+            		alert("휴대폰 번호가 올바르지 않습니다.")
+    				$(".successPhoneChk").text("유효한 번호를 입력해주세요.");
+    				$(".successPhoneChk").css("color","red");
+    				$("#MEM_PHONE").attr("autofocus",true);
+            	}else{	        		
+            		$("#MEM_PHONE2").attr("disabled",false);
+            		$("#phoneChk2").css("display","inline-block");
+            		$(".successPhoneChk").text("인증번호를 입력한 뒤 본인인증을 눌러주십시오.");
+            		$(".successPhoneChk").css("color","green");
+            		$("#MEM_PHONE2").attr("readonly",true);
+            		code2 = data;
+            	}
+            }
+        });
+    }); 
+    
+  //유효성검증
+	(() => {
+		  'use strict'
+
+		  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+		  const forms = document.querySelectorAll('.needs-validation')
+
+		  // Loop over them and prevent submission
+		  Array.from(forms).forEach(form => {
+		    form.addEventListener('submit', event => {
+		    	
+		    	var pass = true;
+		    	
+		      if (!form.checkValidity()) {
+		        event.preventDefault();
+		        event.stopPropagation();
+		        pass = false;
+		      }
+		      
+		      form.classList.add('was-validated')
+		      
+		      
+		      
+		      let pwdval = $('#MEM_PW').val()
+		      let pwdokval = $('#MEM_PW2').val()
+		      let pwdcheck = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,16}$/;
+		      
+		      if(pwdval == null || $.trim(pwdval) == "") {
+		    	  $("#pw-null").show();
+				  $("#pw-type").hide();
+			      $("#MEM_PW").focus();
+		      } else if(!pwdcheck.test(pwdval)) {
+		    	  $("#pw-null").hide();
+				  $("#pw-type").show();
+			      $("#MEM_PW").focus();
+		      } else {
+		    	  $("#pw-null").hide();
+				  $("#pw-type").hide();
+		      }
+		      
+		      if(pwdokval == null || $.trim(pwdokval) == "") {
+		    	  $("#pw2-null").show();
+				  $("#pw2-same").hide();
+			      $("#MEM_PW2").focus();
+		      } else if(pwdval!==pwdokval) {
+		    	  $("#pw2-null").hide();
+				  $("#pw2-same").show();
+			      $("#MEM_PW2").focus();
+		      }
+		      
+		      
+		      
+		   //  회원이름 전송
+			   function fn_sendMemName(){
+			      var comSubmit = new ComSubmit();
+			      var memName = $('#MEM_NAME').val();
+			 
+			      comSubmit.setUrl("/sk/memberJoinForm");  
+			      comSubmit.addParam("MEM_NAME", memName);
+			      comSubmit.submit();
+			   }
+		   
+			// 회원가입 가능한지 여부 확인 및 회원가입 폼 데이터 넘겨주기
+			  	function fn_checkMember() {
+			  		var memEmail = $('#MEM_EMAIL').val();
+			  		var memPw = $('#MEM_PW').val();
+			  		var memName = $('#MEM_NAME').val();
+			  		var memPhone = $('#MEM_PHONE').val();
+			  	
+			  	var formData = new FormData();
+			          formData.append("MEM_EMAIL", memEmail);
+			          formData.append("MEM_PW", memPw);
+			          formData.append("MEM_NAME", memName);
+			          formData.append("MEM_PHONE", memPhone);
+			   
+			          $.ajax({ 
+			              url:"/sk/joinAvailable",
+			              type:"post",
+			              data:formData,
+			              processData:false,
+			              contentType:false,
+			              success:function(data){
+			                 console.log("탈퇴이력 조회 성공");
+			                 
+			                 // 회원 탈퇴한지 7일 지나지 않았을 경우 경고창 띄우기
+			                 if(data == 'fail') {
+			                       alert("탈퇴 후 재가입은 7일 후에 가능합니다.");
+			                    } else if(data == 'success') {  // 회원 탈퇴한지 7일 지났을 경우 joinSuccess로 이동
+			                  	  fn_sendMemName();
+			                    }
+			                 },
+			  	            error:function() {
+			  	               alert("에러입니다.");
+			  	            }
+			  	  	 });
+			  	   }
+				}, false)
+			  })
+	})()
     </script>
     
     
 </body>
 
-
-<script type="text/javascript">
-$(document).ready(function() {
-	
-	$("button[name='idCheck']").on("click", function(e) { // 닉네임 중복확인
-		e.preventDefault();
-		fn_idCheck();
-	});
-	
-		 	//alert가 fail까지 표시되어 두번 뜸
-	function fn_idCheck() { //함수를 ajax 형식으로 수정 필요
-		      
-	var MEM_EMAIL = $('#MEM_EMAIL').val();
-	alert(MEM_EMAIL);
-		         
-		$.ajax({
-			  url:'/sk/memberJoin/emailCheck?MEM_EMAIL=' + MEM_EMAIL,
-			  type:'get',
-			  success:function(data) {
-			       if(data == 'fail') {
-			            alert("아이디가 중복되었습니다.")
-			       } else if(data == 'success') {
-			            alert("success")
-			       }
-			  },
-			  error:function() {
-			        alert("에러입니다.");
-			  }
-		});
-	};
-});  
-</script>
 </html>
