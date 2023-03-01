@@ -149,8 +149,8 @@
 </body>
 <script type="text/javascript">
 
+//https://www.data.go.kr/iim/api/selectAPIAcountView.do#/
 $(document).ready(function() {
-	
 	$("button[name='businessNo']").on("click", function(e) {
 		e.preventDefault();
 		fn_businessNo();
@@ -162,8 +162,6 @@ $(document).ready(function() {
 		// 사업자번호 조회 "b_no" : []의 의미가 뭘까?
 		};  
 		
-		//var formData = new FormData(data);
-		
 		$.ajax({
 				url : "https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey=oQxZdiXR8K8U%2BsFvOZJxW8bP%2FIs0tqBThPnNxNt0FJrjgOZXM537iVGIyUfCPX86eghuF4HLzRaQ7t4I5gfiPQ%3D%3D", // serviceKey 값을 xxxxxx에 입력
 				type : "POST",
@@ -172,27 +170,17 @@ $(document).ready(function() {
 				contentType : "application/json",
 				accept : "application/json",
 				success : function(result) {
-					console.log(result);
+					var success = result.data[0].b_stt_cd;
+					if(success == '01') {
+						alert('사업자 등록번호 확인 완료');
+					} else{
+						alert('사업장 등록번호를 다시 확인해주세요.');
+					}
 				},
 				error : function(result) {
 					console.log(result.responseText); //responseText의 에러메세지 확인
 				}
 		});
-		
-		/* $.ajax({
-			url : "/sk/brand/bNumAuth"
-			type : "POST",
-			data : formData, // json 을 string으로 변환하여 전송
-			dataType : "JSON",
-			contentType : "application/json",
-			accept : "application/json",
-			success : function(result) {
-				console.log(result);
-			},
-			error : function(result) {
-				console.log(result.responseText); //responseText의 에러메세지 확인
-			}
-		}); */
 	}
 });
 	

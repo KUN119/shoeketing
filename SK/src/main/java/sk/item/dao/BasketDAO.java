@@ -13,7 +13,7 @@ public class BasketDAO extends AbstractDAO{
 	//장바구니 상품리스트
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> selectBasketList(Map<String, Object> map) throws Exception {
-		return selectList("shop.selectBasketList", map);
+		return selectList("basket.selectBasketList", map);
 	}
 	
 	
