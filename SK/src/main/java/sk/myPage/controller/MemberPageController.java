@@ -38,33 +38,17 @@ public class MemberPageController {
 	
 	//마이페이지 메인
 	@RequestMapping(value="/myPage")
-	public ModelAndView myPageMain(Map<String, Object> map, HttpServletRequest request, HttpSession session) throws Exception {
+	public ModelAndView myPageMain(Map<String, Object> map, HttpSession session) throws Exception {
 		log.debug("----------- 일반회원 마이페이지 메인 ----------");
 		
 		ModelAndView mv = new ModelAndView("myPageMain");
-		
-		//임시로직
-		session.setAttribute("S_MEM_NUM", 2);
-		session.setAttribute("S_MEM_NAME", "홍길동");
-		session.setAttribute("S_MEM_EMAIL", "user1@naver.com");
-		session.setAttribute("S_MEM_PW", "asdasd123!");
-		session.setAttribute("S_MEM_GRADE", "골드");
-		session.setAttribute("S_MEM_PHONE", "01054734234");
-		session.setAttribute("S_MEM_INFORM_AGREE", "N");
-		session.setAttribute("S_MEM_ADMIN", "N");
-		session.setAttribute("S_MEM_PICKUP_COUNT", 3);
-		
-//		//로그인 구현 시 실제로 사용할 코드
-//		if(session != null) {
-//			mv.addObject("MEM_INFO", session.getAttribute("session_MEM_INFO"));
-//		}
 		
 		return mv;
 	}
 	
 	//회원정보 수정 폼
 	@RequestMapping(value="/myPage/accountModifyForm")
-	public ModelAndView accountModifyForm(Map<String, Object> map, HttpServletRequest request, HttpSession session) throws Exception {
+	public ModelAndView accountModifyForm(Map<String, Object> map, HttpSession session) throws Exception {
 		log.debug("----------- 일반회원 회원정보 수정 폼 ----------");
 		
 		ModelAndView mv = new ModelAndView("accountModifyForm");
@@ -81,25 +65,16 @@ public class MemberPageController {
 		String phone3 = phone.substring(7, 11);
 		String phoneNum = phone1+"-"+phone2+"-"+phone3;
 		System.out.println("출력될 폰 번호 : " + phoneNum);
+		resultMap.put("MEM_PHONE", phoneNum);
 		
-		mv.addObject("MEM_PHONE", phoneNum);
-		
-		//getSessions 메소드 테스트코드
-		String[] keys = {"MEM_ADMIN", "MEM_GRADE", "MEM_NAME"};
-		Map<String, Object> sessionMap = sessionService.getSessions(session, keys);
-		String admin = (String) sessionMap.get("MEM_ADMIN");
-		String grade = (String) sessionMap.get("MEM_GRADE");
-		
-		System.out.println("세션 메소드 실행결과 : " + sessionMap);
-		System.out.println("세션 메소드 실행결과 admin : " + admin);
-		System.out.println("세션 메소드 실행결과 grade : " + grade);
+		mv.addObject("MEM_INFO", resultMap);
 		
 		return mv;
 	}
 	
 	//회원정보 수정
 	@PostMapping(value="/myPage/accountModify")
-	public void accountModify(@RequestParam(value="agreeCheck", required=false) boolean check, @RequestParam Map<String, Object> map, HttpServletRequest request) throws Exception {
+	public void accountModify(@RequestParam(value="agreeCheck", required=false) boolean check, @RequestParam Map<String, Object> map) throws Exception {
 		log.debug("----------- 일반회원 회원정보 수정 처리 ----------");
 		
 	//	ModelAndView mv = new ModelAndView("redirect:/myPage");
@@ -120,7 +95,7 @@ public class MemberPageController {
 
 	//회원 탈퇴 폼
 	@GetMapping(value="/myPage/accountDeleteForm")
-	public ModelAndView accountDeleteForm(Map<String, Object> map, HttpServletRequest request, HttpSession session) throws Exception {
+	public ModelAndView accountDeleteForm(Map<String, Object> map, HttpSession session) throws Exception {
 		log.debug("----------- 일반회원 탈퇴 페이지 ----------");
 		ModelAndView mv = new ModelAndView("accountDeleteForm");
 		
@@ -131,7 +106,7 @@ public class MemberPageController {
 	//비밀번호 확인
 	@PostMapping(value="/myPage/accountDeleteForm", consumes = MediaType.APPLICATION_JSON_VALUE)
 	//consumes = 전송 받을 데이터 타입이 json
-	public Map<String, Object> checkPw(@RequestBody Map<String, Object> map, HttpServletRequest request, HttpSession session) throws Exception {
+	public Map<String, Object> checkPw(@RequestBody Map<String, Object> map, HttpSession session) throws Exception {
 		log.debug("----------- 일반회원 회원 비밀번호 확인 ----------");
 		String dbPw = ""; 
 		String pw ="";
@@ -171,7 +146,7 @@ public class MemberPageController {
 	//탈퇴 처리
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/myPage/accountDelete")
-	public void accountDelete(HttpServletRequest request, HttpSession session) throws Exception {
+	public void accountDelete(HttpSession session) throws Exception {
 		log.debug("----------- 일반회원 회원 탈퇴 처리 ----------");
 	//	ModelAndView mv = new ModelAndView("redirect:/main");
 		Map<String, Object> map= new HashMap<>();
@@ -206,6 +181,24 @@ public class MemberPageController {
 		
 		return mv;
 	}
+	
+	//찜취소
+	//아직 테스트 못함 (JSP 수정 후 예정)
+	@GetMapping(value="/myPage/goodsUnlike", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public void goodsUnlike(@RequestParam Map<String, Object> map, HttpSession session) throws Exception {
+		log.debug("----------- 찜 취소 ----------");
+
+		System.out.println("찜 취소 파라미터 : " + map);
+		
+		map.put("MEM_NUM", sessionService.getSession(session, "MEM_NUM"));
+		//찜 취소 처리 (delete처리)
+		memberPageService.deleteGoodsLike(map);
+		
+		//TOTAL_GOODS_LIKE_COUNT -1처리
+		memberPageService.updateGoodsLikeCountDecrease(map);
+		
+	}
+	
 	
 	
 }
