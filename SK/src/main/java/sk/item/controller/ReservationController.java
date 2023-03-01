@@ -1,16 +1,22 @@
 package sk.item.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import sk.common.service.CommonService;
 import sk.item.service.ReservationService;
 
 @RestController
@@ -21,31 +27,56 @@ public class ReservationController {
 	@Resource(name="reservationService")
 	private ReservationService reservationService;
 	
+	@Resource(name="sessionService")
+	private CommonService commonService;
+	
 	@GetMapping(value = "/myPage/reservationList")
-	public ModelAndView reservationList(Map<String, Object> map) throws Exception {
+	public ModelAndView reservationList(Map<String, Object> map, HttpSession session) throws Exception {
 		log.debug("###### 내가 픽업 예약한 리스트 ######");
-		ModelAndView mv = new ModelAndView("testMain");  // 추후 수정
+		ModelAndView mv = new ModelAndView("reservationList");
 		
+		List<Map<String, Object>> pickupList = reservationService.selectPickupList(map, session);
+		int pickupCount = reservationService.selectPickupCount(map, session);
+		
+		mv.addObject("pickupList", pickupList);
+		mv.addObject("pickupCount", pickupCount);
 		
 		return mv;
 	}
 	
 	@GetMapping(value = "/myPage/reservationDetail")
-	public ModelAndView reservationDetail(Map<String, Object> map) throws Exception {
+	public ModelAndView reservationDetail(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("###### 픽업 예약 상세보기 ######");
-		ModelAndView mv = new ModelAndView("testMain");  // 추후 수정
+		ModelAndView mv = new ModelAndView("reservationDetail");
+		System.out.println("map확인: " + map);
+		Map<String, Object> pickupDetailMap = reservationService.selectPickupDetail(map);
 		
+		mv.addObject("pickupDetailMap", pickupDetailMap);
 		
 		return mv;
 	}
 	
-	@GetMapping(value = "/myPage/reservationDelete")
-	public ModelAndView reservationDelete(Map<String, Object> map) throws Exception {
+	@PostMapping(value = "/myPage/reservationDelete")
+	public Map<String, Object> reservationDelete(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("###### 픽업 예약 취소 ######");
-		ModelAndView mv = new ModelAndView("testMain");  // 추후 수정
+		System.out.println("map 확인 : " + map);
 		
+		Map<String, Object> result = new HashMap<>();
 		
-		return mv;
+		// 픽업 상태가 "예약 대기중"일 경우
+		if(map.get("RESERVATION_STATUS").toString().equals("예약 대기중")){
+			result = reservationService.deleteReservation(map);
+		}
+		
+		// 픽업 상태가 "픽업 대기중"일 경우
+		if(map.get("RESERVATION_STATUS").toString().equals("픽업 대기중")){
+			result = reservationService.deletePickup(map);
+		}
+		
+		Map<String, Object> detailMap = reservationService.selectPickupDetail(map);
+		result.put("RESERVATION_STATUS", detailMap.get("RESERVATION_STATUS"));
+		
+		return result;
 	}
 	
 	@GetMapping(value = "/shopPage/reservationList")
