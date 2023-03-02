@@ -23,13 +23,14 @@ import sk.item.service.ReservationService;
 public class ReservationController {
 
 	Log log = LogFactory.getLog(this.getClass());
-	
-	@Resource(name="reservationService")
+
+	@Resource(name = "reservationService")
 	private ReservationService reservationService;
 	
 	@Resource(name="sessionService")
 	private CommonService commonService;
 	
+
 	@GetMapping(value = "/myPage/reservationList")
 	public ModelAndView reservationList(Map<String, Object> map, HttpSession session) throws Exception {
 		log.debug("###### 내가 픽업 예약한 리스트 ######");
@@ -43,7 +44,7 @@ public class ReservationController {
 		
 		return mv;
 	}
-	
+
 	@GetMapping(value = "/myPage/reservationDetail")
 	public ModelAndView reservationDetail(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("###### 픽업 예약 상세보기 ######");
@@ -78,62 +79,53 @@ public class ReservationController {
 		
 		return result;
 	}
-	
+
 	@GetMapping(value = "/shopPage/reservationList")
 	public ModelAndView shopReservationList(Map<String, Object> map) throws Exception {
 		log.debug("###### 매장 픽업 예약 요청 리스트 ######");
-		ModelAndView mv = new ModelAndView("testMain");  // 추후 수정
-		
-		
+		ModelAndView mv = new ModelAndView("testMain"); // 추후 수정
+
 		return mv;
 	}
-	
+
 	@GetMapping(value = "/shopPage/reservationApprove")
 	public ModelAndView shopReservationApprove(Map<String, Object> map) throws Exception {
 		log.debug("###### 매장 픽업 예약 승인 ######");
-		ModelAndView mv = new ModelAndView("testMain");  // 추후 수정
-		
-		
+		ModelAndView mv = new ModelAndView("testMain"); // 추후 수정
+
 		return mv;
 	}
-	
+
 	@GetMapping(value = "/shopPage/reservationCancel")
 	public ModelAndView shopReservationCancel(Map<String, Object> map) throws Exception {
 		log.debug("###### 매장 픽업 취소 ######");
-		ModelAndView mv = new ModelAndView("testMain");  // 추후 수정
-		
-		
+		ModelAndView mv = new ModelAndView("testMain"); // 추후 수정
+
 		return mv;
 	}
-	
+
 	@GetMapping(value = "/reservationForm")
 	public ModelAndView reservationForm(Map<String, Object> map) throws Exception {
 		log.debug("###### 매장 상품 재고 리스트 ######");
-		ModelAndView mv = new ModelAndView("testMain");  // 추후 수정
-		
-		
+		ModelAndView mv = new ModelAndView("testMain"); // 추후 수정
+
 		return mv;
 	}
-	
+
 	@GetMapping(value = "/makeReservation")
 	public ModelAndView makeReservation(Map<String, Object> map) throws Exception {
 		log.debug("###### 픽업 예약금 결제 ######");
-		ModelAndView mv = new ModelAndView("testMain");  // 추후 수정
-		
-		
+		ModelAndView mv = new ModelAndView("testMain"); // 추후 수정
+
 		return mv;
 	}
-	
+
 	@GetMapping(value = "/reservationSuccess")
 	public ModelAndView reservationSuccess(Map<String, Object> map) throws Exception {
 		log.debug("###### 픽업 예약금 결제 성공 ######");
-		ModelAndView mv = new ModelAndView("testMain");  // 추후 수정
-		
-		
+		ModelAndView mv = new ModelAndView("testMain"); // 추후 수정
+
 		return mv;
 	}
-	
-	
-	
-	
+
 }
