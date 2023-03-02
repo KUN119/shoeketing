@@ -25,4 +25,10 @@ public interface MemberPageService {
 	
 	//찜목록 개수
 	int goodsLikeCount(Map<String, Object> map) throws Exception;
+
+	//찜 취소
+	public void deleteGoodsLike(Map<String, Object> map) throws Exception;
+
+	//찜 취소 시 TOTAL_GOODS테이블의 TOTAL_LIKE_COUNT -1처리
+	public void updateGoodsLikeCountDecrease(Map<String, Object> map) throws Exception;
 }

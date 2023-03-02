@@ -336,12 +336,6 @@
 			<artifactId>spring-websocket</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-		
-		<dependency>
-			<groupId>net.nurigo</groupId>
-		    <artifactId>javaSDK</artifactId>
-		    <version>2.2</version>
-		</dependency>
 	</dependencies>
     <build>
         <plugins>

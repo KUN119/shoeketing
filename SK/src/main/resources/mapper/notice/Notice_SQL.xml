@@ -34,6 +34,17 @@
 		<include refid="noticeSearch"></include>
 </select>
 
-	
-
+<select id="selectNoticeDetail" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+		SELECT
+				NOTICE_NUM,
+				NOTICE_TITLE,
+				TO_CHAR(NOTICE_DATE, 'YYYY.MM.DD') AS NOTICE_DATE,
+				TO_CHAR(NOTICE_DATE, 'HH24:MI:SS') AS NOTICE_TIME,
+				NOTICE_CONTENT
+		FROM NOTICE
+		WHERE NOTICE_NUM = #{NOTICE_NUM}
+			AND NOTICE_DEL_GB='N'
+	]]>
+</select>
 </mapper>

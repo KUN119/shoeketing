@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- ======= Header ======= -->
 <header id="header" class="ms-5 me-5 mt-2 mb-1">
   <div class="container d-flex align-items-center justify-content-between">
@@ -13,9 +14,17 @@ pageEncoding="UTF-8"%>
           >
         </li>
         <li>
+        <c:choose>
+        <c:when test="${session_MEM_ID==null && session_BRAND_ID==null && session_SHOP_ID==null}">
           <a class="nav-link scrollto" href="/sk/loginSelect/member" style="font-size: 13px"
             >로그인</a
           >
+         </c:when>
+         <c:otherwise>
+          <a class="nav-link scrollto" name="logout" style="font-size: 13px"
+            >로그아웃</a>
+          </c:otherwise>
+          </c:choose>
         </li>
       </ul>
     </nav>
@@ -26,12 +35,12 @@ pageEncoding="UTF-8"%>
     <nav id="navbar" class="navbar">
       <ul>
         <li class="ps-0">
-          <a class="nav-link scrollto" href="#hero" style="font-size: 13px"
+          <a class="nav-link scrollto" href="/sk/goods/totalList" style="font-size: 13px"
             >제품 보기</a
           >
         </li>
         <li>
-          <a class="nav-link scrollto" href="#about" style="font-size: 13px"
+          <a class="nav-link scrollto" href="/sk/goods/stockSearchForm" style="font-size: 13px"
             >제품 찾기</a
           >
         </li>
@@ -42,7 +51,7 @@ pageEncoding="UTF-8"%>
     <nav id="navbar" class="navbar justify-content-end">
       <ul>
         <li>
-          <a class="nav-link scrollto" href="#hero"
+          <a class="nav-link scrollto" href="/sk/basket/basketList"
             ><svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
@@ -117,3 +126,22 @@ pageEncoding="UTF-8"%>
   </div>
 </header>
 <hr>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	$("a[name='logout']").on("click", function(e) { // 로그아웃
+		e.preventDefault();
+		fn_logout();
+	});
+	
+	function fn_logout() {
+		$.ajax({
+			url:'/sk/logout',
+			success: function() {
+				location.href='/sk/main';
+			}
+		});
+	};
+});
+</script>

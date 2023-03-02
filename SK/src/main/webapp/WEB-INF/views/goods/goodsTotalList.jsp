@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -951,28 +954,50 @@
             <nav class="navbar" style="width:1200px">
               <ul class="navbar justify-content-end" style="width:1200px">
                 <li class="nav-item pt-0">
-                  <a class="nav-link" style="font-weight: 400; font-size: 15px;" href="#">최신순</a>
+                  <a class="nav-link" name="listType" data-num="최신순" style="font-weight: 400; font-size: 15px;" href="#">최신순</a>
                 </li>
                 <li class="nav-item pt-0">
-                  <a class="nav-link" style="font-weight: 400; font-size: 15px;" href="#">낮은가격순</a>
+                  <a class="nav-link" name="listType" data-num="낮은가격순" style="font-weight: 400; font-size: 15px;" href="#">낮은가격순</a>
                 </li>
                 <li class="nav-item pt-0">
-                  <a class="nav-link" style="font-weight: 400; font-size: 15px;" href="#">높은가격순</a>
+                  <a class="nav-link" name="listType" data-num="높은가격순" style="font-weight: 400; font-size: 15px;" href="#">높은가격순</a>
                 </li>
                 <li class="nav-item pt-0">
-                  <a class="nav-link" style="font-weight: 400; font-size: 15px;" href="#">별점순</a>
+                  <a class="nav-link" name="listType" data-num="별점순" style="font-weight: 400; font-size: 15px;" href="#">별점순</a>
                 </li>
                 <li class="nav-item pt-0">
-                  <a class="nav-link" style="font-weight: 400; font-size: 15px;" href="#">찜순</a>
+                  <a class="nav-link" name="listType" data-num="찜순" style="font-weight: 400; font-size: 15px;" href="#">찜순</a>
                 </li>
               </ul>
             </nav>
           </div>
           <!--정렬 기준 nav 끝-->
 
-          <div class="row">
+          <div class="row" id="goodsListDiv">
           
-            <div class="card" style="width: 14rem; margin-left: 10px; margin-right: 10px; margin-bottom: 80px; border-style: none;">
+          <c:choose>
+          <c:when test="${fn:length(list)>0}">
+          	<c:forEach items="${list}" var="goods">
+          <div class="card" style="width: 14rem; margin-left: 10px; margin-right: 10px; margin-bottom: 80px; border-style: none;">
+              <a href="#" name="title" data-num="${goods.TOTAL_GOODS_NUM }">
+                <img src="<%=request.getContextPath() %>/assets/img/a7ae62bb0c3243a2af834df70e9b0d81.jpg" style="width:13rem; height: 11rem" class="card-img-top" alt="<%=request.getContextPath() %>.">
+                <div class="card-body" style="height:6rem;">
+                  <h6 class="card-title" style="font-size: 15px; font-weight: 700;">${goods.BRAND_NAME}</h6>
+                  <p class="card-text" style="font-size: 13px;">${goods.TOTAL_GOODS_NAME} / ${goods.TOTAL_GOODS_MODEL}</p>
+                </div>
+                <div class="card-body">
+                  <h6 class="card-title mb-0" style="font-size: 18px; font-weight: 700;"><fmt:formatNumber value="${goods.TOTAL_GOODS_PRICE }" type="number"/>원</h6>
+                </div>
+              </a>
+            </div>
+           </c:forEach>
+          </c:when>
+          <c:otherwise>
+          등록된 상품이 없습니다.
+          </c:otherwise>
+         </c:choose> 
+          
+            <%-- <div class="card" style="width: 14rem; margin-left: 10px; margin-right: 10px; margin-bottom: 80px; border-style: none;">
               <a href="#">
                 <img src="<%=request.getContextPath() %>/assets/img/a7ae62bb0c3243a2af834df70e9b0d81.jpg" style="width:13rem; height: 11rem" class="card-img-top" alt="<%=request.getContextPath() %>.">
                 <div class="card-body" style="height:6rem;">
@@ -1251,10 +1276,71 @@
                   <h6 class="card-title mb-0" style="font-size: 18px; font-weight: 700;">79,000</h6>
                 </div>
               </a>
-            </div>
+            </div> --%>
             
           </div>
         </div>
     </div>
   </body>
+  
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	$("a[name='title']").on("click", function(e) { // 상품 상세보기
+		e.preventDefault();
+		const num = $(this).attr("data-num");
+		fn_goodsDetail(num);
+	});
+	
+	function fn_goodsDetail(num) {
+		
+		var formData = new FormData();
+		
+		formData.append("GOODS_NUM", num);
+		
+		$.ajax({
+			url: '/sk/goods/goodsDetail',
+			type: 'POST',
+			data: formData,
+			processData: false,
+			contentType: false,
+			success: function(data) {
+			},
+			error: function(xhr, status, error) {
+				console.log('실패');
+			}
+		});
+	};
+	
+	$("a[name='listType']").on("click", function(e) { // 정렬 검색
+		e.preventDefault();
+		const listType = $(this).attr("data-num");
+		fn_listType(listType);
+	});
+	
+	function fn_listType(listType) {
+		var formData = new FormData();
+		formData.append("listType", listType);
+		
+		alert(listType);
+		
+		$.ajax({
+			url: '/sk/goods/totalList_ajax',
+			type: 'POST',
+			data: formData,
+			processData: false,
+			contentType: false,
+			success: function(data) {
+				$('#goodsListDiv').empty();
+				$('#goodsListDiv')[0].innerHTML=data;
+			},
+			error: function(xhr, status, error) {
+				console.log('실패');
+			}
+		});
+		
+	}
+	
+});
+</script>	
 </html>
