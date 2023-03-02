@@ -39,7 +39,7 @@
 	            <button class="btn btn-outline-secondary" name="idCheck" type="button" id="button-addon2" style="font-size: 15px; width: 100px;">중복확인</button>
            
             </div>
-             <div id="email-null" class="invalid-feedback">
+              <div id="email-null" class="invalid-feedback">
 		      이메일을 입력해주세요
 		  	</div>
             <div id="email-type" class="invalid-feedback">
@@ -65,12 +65,12 @@
               placeholder="특수문자, 문자, 숫자 포함 형태의 8~16자리 이내"
               required
             />
-            <div id="pw-null" class="invalid-feedback">
+            <!-- <div id="pw-null" class="invalid-feedback">
 		      비밀번호를 입력해주세요
 		  	</div>
 		  	<div id="pw-type" class="invalid-feedback">
 		      비밀번호 형식이 올바르지 않습니다
-		  	</div>
+		  	</div> -->
           </div>
 
           <div class="mb-3">
@@ -88,12 +88,12 @@
               pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,16}$"
               required
             />
-            <div id="pw2-null" class="invalid-feedback">
+            <!-- <div id="pw2-null" class="invalid-feedback">
 		      비밀번호 확인이 필요합니다
 		  	</div>
             <div id="pw2-same" class="invalid-feedback">
 		      비밀번호가 일치하지 않습니다
-		  	</div>
+		  	</div> -->
            
           </div>
 
@@ -136,7 +136,7 @@
 	            <button class="btn btn-outline-secondary" name="phoneCheck" type="button" id="button-addon2" style="font-size: 15px; width: 100px;">인증번호 보내기</button>
             </div>
             
-            <div class="d-flex">
+            <!-- <div class="d-flex">
 	            <input
 	              class="form-control"
 	              type="text"
@@ -152,7 +152,7 @@
             <input
             	type="hidden"
             	id="phoneDoubleCheck"
-            	/>
+            	/> -->
           </div>
 
           <div
@@ -185,7 +185,8 @@
           class="btn btn-primary btn-lg"
           style="margin-left: 30%; width: 45%"
           type="submit"
-          name="join"
+          id="userJoin"
+          name="userJoin"
         >
           가입하기
         </button>
@@ -193,17 +194,57 @@
       </form>
     </div>
     
-    <script type="text/javascript">
-    
+     <script type="text/javascript">
 
+     
+     // 회원가입
+		$(document).ready(function() {
+			  $("button[name='userJoin']").on("click", function(e) {  
+			    e.preventDefault();
+			    fn_userJoin();
+			  });
+			  
+			  function fn_userJoin() {
+			    var memEmail = $('#MEM_EMAIL').val();
+			    var memPw = $('#MEM_PW').val();
+			    var memName = $('#MEM_NAME').val();
+			    var memPhone = $('#MEM_PHONE').val();
+
+			    var formData = new FormData();
+			    formData.append("MEM_EMAIL", memEmail);
+			    formData.append("MEM_PW", memPw);
+			    formData.append("MEM_NAME", memName);
+			    formData.append("MEM_PHONE", memPhone);
+
+			    $.ajax({
+			      url:'/sk/memberJoin/joinSuccess',
+			      type:'POST',
+			      data:formData,
+			      processData:false,
+			      contentType:false,
+			      success:function(data) {
+			        if(data === 'fail'){
+			          alert("회원가입 실패");
+			        } else if (data === 'success'){
+			          alert("회원가입 성공");
+			        }
+			      },
+			      error:function() {
+			        alert("에러입니다.");
+			      }
+			    });
+			  }
+			});
     
-    $(document).ready(function() {
+		
+     //이메일 중복확인
+     $(document).ready(function() {
     	
     	$("button[name='idCheck']").on("click", function(e) { // 이메일아이디 중복확인
     		e.preventDefault();
     		fn_idCheck();
     	});
-    	
+
     		 	//alert가 fail까지 표시되어 두번 뜸
     	function fn_idCheck() { //함수를 ajax 형식으로 수정 필요
     		      
@@ -228,7 +269,8 @@
     });
     
    //휴대폰 번호 인증
-    var code2 = "";
+   
+    /* var code2 = "";
     $("#phoneCheck").click(function(){
     	alert("인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호 확인을 해주십시오.");
     	var phone = $("#MEM_PHONE").val();
@@ -252,7 +294,7 @@
             	}
             }
         });
-    }); 
+    });  
     
   //유효성검증
 	(() => {
@@ -352,8 +394,8 @@
 			  	   }
 				}, false)
 			  })
-	})()
-    </script>
+	})() */
+    </script> 
     
     
 </body>
