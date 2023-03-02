@@ -13,12 +13,18 @@ import sk.item.dao.BasketDAO;
 public class BasketServiceImpl implements BasketService {
 
 	@Resource(name = "basketDAO")
-	private BasketDAO shopDAO;
+	private BasketDAO basketDAO;
 
 	// 장바구니 리스트
 	@Override
 	public List<Map<String, Object>> selectBasketList(Map<String, Object> map) throws Exception {
-		return shopDAO.selectBasketList(map);
+		return basketDAO.selectBasketList(map);
+	}
+
+	// 장바구니 삭제 (DEL_GB를 Y로 변경)
+	@Override
+	public void deleteBasket(Map<String, Object> map) throws Exception {
+		basketDAO.deleteBasket(map);
 	}
 
 }

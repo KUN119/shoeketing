@@ -25,4 +25,8 @@ public class NoticeServiceImpl implements NoticeService{
 		return noticeDAO.selectNoticeCount(map);
 	}
 
+	@Override
+	public Map<String, Object> selectNoticeDetail(Map<String, Object> map) throws Exception {
+		return noticeDAO.selectNoticeDetail(map);
+	}
 }

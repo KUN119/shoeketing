@@ -67,7 +67,20 @@ public class MemberPageServiceImpl implements MemberPageService {
 		System.out.println("goodsLikeCount 서비스 파라미터 : " + map);
 		return memberPageDAO.selectGoodsLikeCount(map);
 	}
-	
+
+	//찜 취소(delete처리)
+	@Override
+	public void deleteGoodsLike(Map<String, Object> map) throws Exception {
+		System.out.println("deleteGoodsLike 서비스 파라미터 : " + map);
+		memberPageDAO.deleteGoodsLike(map);
+	}
+
+	//찜 취소 시, TOTAL_LIKE_COUNT -1처리
+	@Override
+	public void updateGoodsLikeCountDecrease(Map<String, Object> map) throws Exception {
+		System.out.println("updateGoodsLikeCountDecrease 서비스 파라미터 : " + map);
+		memberPageDAO.updateGoodsLikeCountDecrease(map);
+	}
 	
 	
 }

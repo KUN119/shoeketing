@@ -973,7 +973,7 @@
           </div>
           <!--정렬 기준 nav 끝-->
 
-          <div class="row">
+          <div class="row" id="goodsListDiv">
           
           <c:choose>
           <c:when test="${fn:length(list)>0}">
@@ -1325,12 +1325,14 @@ $(document).ready(function() {
 		alert(listType);
 		
 		$.ajax({
-			url: '/sk/goods/totalList',
+			url: '/sk/goods/totalList_ajax',
 			type: 'POST',
 			data: formData,
 			processData: false,
 			contentType: false,
 			success: function(data) {
+				$('#goodsListDiv').empty();
+				$('#goodsListDiv')[0].innerHTML=data;
 			},
 			error: function(xhr, status, error) {
 				console.log('실패');
