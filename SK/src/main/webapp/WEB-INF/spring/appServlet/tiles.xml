@@ -10,6 +10,12 @@
 	   <put-attribute name="header" value="/WEB-INF/views/layout/header.jsp" />
 	   <put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp" />
 	</definition>
+	
+	<definition name="myPageTemplate" template="/WEB-INF/views/layout/myPage/layout_myPage.jsp">
+	   <put-attribute name="header" value="/WEB-INF/views/layout/header.jsp" />
+	   <put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp" />
+	</definition>
+
    
    <!-- 개인 회원 마이페이지 메인 -->
    <definition name="myPageMain" extends="default1">
@@ -24,8 +30,10 @@
     </definition>
    
     <!-- 개인 회원 마이페이지 메인 -->
-    <definition name="myPageMain" extends="default1">
-    	  <put-attribute name="body1" value="/WEB-INF/views/member/myPage/main.jsp" />
+    <definition name="myPageMain" extends="myPageTemplate">
+    	  <put-attribute name="myPage_header" value="/WEB-INF/views/layout/myPage/member_myPage_header.jsp" />
+    	  <put-attribute name="myPage_side" value="/WEB-INF/views/layout/myPage/member_myPage_side.jsp" />
+    	  <put-attribute name="myPage_main" value="/WEB-INF/views/member/myPage/main.jsp" />
     </definition>
     
 	<!-- 메인 페이지 -->
@@ -41,6 +49,11 @@
 	<!-- 전체 상품 조회 -->
 	<definition name="allGoodsList_ajax" template="/WEB-INF/views/layout/layout_ajax.jsp">
    	  <put-attribute name="body_ajax" value="/WEB-INF/views/goods/goodsTotalList_ajax.jsp" />
+	</definition>
+	
+    <!-- 전체 상품 조회 -->
+	<definition name="goodsDetail" extends="default1">
+   	  <put-attribute name="body1" value="/WEB-INF/views/goods/goodsDetail.jsp" />
     </definition>
     
     <!-- 통합 검색 -->
@@ -94,59 +107,81 @@
     </definition>
 
    <!-- 개인 회원 마이페이지 회원 정보 수정 -->
-   <definition name="accountModifyForm" extends="default1">
-   	  <put-attribute name="body1" value="/WEB-INF/views/member/myPage/account/accountModifyForm.jsp" />
-   </definition>
+   <definition name="accountModifyForm" extends="myPageTemplate">
+    	  <put-attribute name="myPage_header" value="/WEB-INF/views/layout/myPage/member_myPage_header.jsp" />
+    	  <put-attribute name="myPage_side" value="/WEB-INF/views/layout/myPage/member_myPage_side.jsp" />
+    	  <put-attribute name="myPage_main" value="/WEB-INF/views/member/myPage/account/accountModifyForm.jsp" />
+    </definition>
    
    <!-- 개인 회원 마이페이지 회원 탈퇴 -->
-   <definition name="accountDeleteForm" extends="default1">
-   	  <put-attribute name="body1" value="/WEB-INF/views/member/myPage/account/accountDeleteForm.jsp" />
-   </definition>
+   <definition name="accountDeleteForm" extends="myPageTemplate">
+    	  <put-attribute name="myPage_header" value="/WEB-INF/views/layout/myPage/member_myPage_header.jsp" />
+    	  <put-attribute name="myPage_side" value="/WEB-INF/views/layout/myPage/member_myPage_side.jsp" />
+    	  <put-attribute name="myPage_main" value="/WEB-INF/views/member/myPage/account/accountDeleteForm.jsp" />
+    </definition>
    
    <!-- 개인 회원 찜목록 reservationList-->
-   <definition name="goodsLikeList" extends="default1">
-   	  <put-attribute name="body1" value="/WEB-INF/views/member/myPage/goodsLikeList.jsp" />
-   </definition>
+   <definition name="goodsLikeList" extends="myPageTemplate">
+    	  <put-attribute name="myPage_header" value="/WEB-INF/views/layout/myPage/member_myPage_header.jsp" />
+    	  <put-attribute name="myPage_side" value="/WEB-INF/views/layout/myPage/member_myPage_side.jsp" />
+    	  <put-attribute name="myPage_main" value="/WEB-INF/views/member/myPage/goodsLikeList.jsp" />
+    </definition>
    
    <!-- 개인 회원 픽업 예약 목록 -->
-   <definition name="reservationList" extends="default1">
-   	  <put-attribute name="body1" value="/WEB-INF/views/member/myPage/reservation/reservationList.jsp" />
-   </definition>
+   <definition name="reservationList" extends="myPageTemplate">
+    	  <put-attribute name="myPage_header" value="/WEB-INF/views/layout/myPage/member_myPage_header.jsp" />
+    	  <put-attribute name="myPage_side" value="/WEB-INF/views/layout/myPage/member_myPage_side.jsp" />
+    	  <put-attribute name="myPage_main" value="/WEB-INF/views/member/myPage/reservation/reservationList.jsp" />
+    </definition>
    
    <!-- 개인 회원 픽업 예약 상세 -->
-   <definition name="reservationDetail" extends="default1">
-   	  <put-attribute name="body1" value="/WEB-INF/views/member/myPage/reservation/reservationDetail.jsp" />
-   </definition>
+   <definition name="reservationDetail" extends="myPageTemplate">
+    	  <put-attribute name="myPage_header" value="/WEB-INF/views/layout/myPage/member_myPage_header.jsp" />
+    	  <put-attribute name="myPage_side" value="/WEB-INF/views/layout/myPage/member_myPage_side.jsp" />
+    	  <put-attribute name="myPage_main" value="/WEB-INF/views/member/myPage/reservation/reservationDetail.jsp" />
+    </definition>
    
    <!-- 개인 회원 마이 페이지 나의 문의 내역 -->
-   <definition name="csList" extends="default1">
-   	  <put-attribute name="body1" value="/WEB-INF/views/member/myPage/cs/csList.jsp" />
-   </definition>
+   <definition name="csList" extends="myPageTemplate">
+    	  <put-attribute name="myPage_header" value="/WEB-INF/views/layout/myPage/member_myPage_header.jsp" />
+    	  <put-attribute name="myPage_side" value="/WEB-INF/views/layout/myPage/member_myPage_side.jsp" />
+    	  <put-attribute name="myPage_main" value="/WEB-INF/views/member/myPage/cs/csList.jsp" />
+    </definition>
   
    <!-- 개인 회원 마이 페이지 나의 문의 작성하기 -->
-   <definition name="csWriteForm" extends="default1">
-   	  <put-attribute name="body1" value="/WEB-INF/views/member/myPage/cs/csWriteForm.jsp" />
-   </definition>
+   <definition name="csWriteForm" extends="myPageTemplate">
+    	  <put-attribute name="myPage_header" value="/WEB-INF/views/layout/myPage/member_myPage_header.jsp" />
+    	  <put-attribute name="myPage_side" value="/WEB-INF/views/layout/myPage/member_myPage_side.jsp" />
+    	  <put-attribute name="myPage_main" value="/WEB-INF/views/member/myPage/cs/csWriteForm.jsp" />
+    </definition>
    
     <!-- 브랜드 회원 마이페이지 메인 accountModifyForm-->
-   <definition name="brandPageMain" extends="default1">
-   	  <put-attribute name="body1" value="/WEB-INF/views/brand/brandPage/main.jsp" />
-   </definition>
+   <definition name="brandPageMain" extends="myPageTemplate">
+    	  <put-attribute name="myPage_header" value="/WEB-INF/views/layout/myPage/brand_myPage_header.jsp" />
+    	  <put-attribute name="myPage_side" value="/WEB-INF/views/layout/myPage/brand_myPage_side.jsp" />
+    	  <put-attribute name="myPage_main" value="/WEB-INF/views/brand/brandPage/main.jsp" />
+    </definition>
    
     <!-- 브랜드 회원 마이페이지 기본 정보 수정 -->
-   <definition name="brandModifyForm" extends="default1">
-   	  <put-attribute name="body1" value="/WEB-INF/views/brand/brandPage/account/accountModifyForm.jsp" />
-   </definition>
+   <definition name="brandModifyForm" extends="myPageTemplate">
+    	  <put-attribute name="myPage_header" value="/WEB-INF/views/layout/myPage/brand_myPage_header.jsp" />
+    	  <put-attribute name="myPage_side" value="/WEB-INF/views/layout/myPage/brand_myPage_side.jsp" />
+    	  <put-attribute name="myPage_main" value="/WEB-INF/views/brand/brandPage/account/accountModifyForm.jsp" />
+    </definition>
    
     <!-- 브랜드 회원 마이페이지 전체 상품 리스트  goodsWriteForm -->
-   <definition name="goodsList" extends="default1">
-   	  <put-attribute name="body1" value="/WEB-INF/views/brand/goods/goodsList.jsp" />
-   </definition>
+   <definition name="goodsList" extends="myPageTemplate">
+    	  <put-attribute name="myPage_header" value="/WEB-INF/views/layout/myPage/brand_myPage_header.jsp" />
+    	  <put-attribute name="myPage_side" value="/WEB-INF/views/layout/myPage/brand_myPage_side.jsp" />
+    	  <put-attribute name="myPage_main" value="/WEB-INF/views/brand/goods/goodsList.jsp" />
+    </definition>
 
     <!-- 브랜드 회원 마이페이지 상품 등록  goodsWriteForm -->
-   <definition name="goodsWriteForm" extends="default1">
-   	  <put-attribute name="body1" value="/WEB-INF/views/brand/goods/goodsWriteForm.jsp" />
-   </definition> 
+   <definition name="goodsWriteForm" extends="myPageTemplate">
+    	  <put-attribute name="myPage_header" value="/WEB-INF/views/layout/myPage/brand_myPage_header.jsp" />
+    	  <put-attribute name="myPage_side" value="/WEB-INF/views/layout/myPage/brand_myPage_side.jsp" />
+    	  <put-attribute name="myPage_main" value="/WEB-INF/views/brand/goods/goodsWriteForm.jsp" />
+    </definition>
 </tiles-definitions>
 
 

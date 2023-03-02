@@ -22,9 +22,9 @@ public class GoodsController {
 
 	@Resource(name = "goodsService")
 	private GoodsService goodsService;
-	
+
 	// 브랜드 회원 정보 전체 상품 리스트
-	@GetMapping(value = "/goodsList")
+	@GetMapping(value = "/brandPage/goodsList")
 	public ModelAndView goodsList(@RequestParam Map<String, Object> map) throws Exception {
 		ModelAndView mv = new ModelAndView("goodsList");
 		return mv;
@@ -35,19 +35,19 @@ public class GoodsController {
 		log.debug("###### allGoodsList ######");
 		ModelAndView mv = new ModelAndView("allGoodsList");
 		map.put("START", 1);
-		map.put("END",5);
-		
+		map.put("END", 5);
+
 		String listType = "";
-		if (map.get("listType") != null) { 
+		if (map.get("listType") != null) {
 			listType = (String) map.get("listType");
 			map.put("listType", listType);
 		}
-		
+
 		List<Map<String, Object>> list = goodsService.selectAllGoodsList(map);
-		
+
 		System.out.println("list: " + list);
 		System.out.println("map: " + map);
-		
+
 		mv.addObject("list", list);
 		return mv;
 	}
@@ -88,7 +88,7 @@ public class GoodsController {
 		return mv;
 	}
 
-	@GetMapping(value = "/goodsWriteForm")
+	@GetMapping(value = "/brandPage/goodsWriteForm")
 	public ModelAndView goodsWriteForm(Map<String, Object> map) throws Exception {
 		ModelAndView mv = new ModelAndView("goodsWriteForm");
 		return mv;

@@ -21,6 +21,21 @@
             <img src="<%=request.getContextPath() %>/assets/img/메인사진3.jpg" alt="" />
           </div>
         </div>
+        
+        <div
+          style="z-index: 9999; position: relative; bottom: 12rem; left: 45rem"
+        >
+          <div class="col-auto" style="display: inline-block;">
+            <a href="#">
+              <h1 style="color: white; display: inline-block;">실시간 재고검색</h1>
+              <i
+                class="bi bi-arrow-right-circle-fill align-self-center ms-3 mb-3"
+                style="font-size: 30px; color: white"
+              ></i>
+            </a>
+          </div>
+        </div>
+        
       </div>
     </div>
 </body>
