@@ -52,7 +52,7 @@
 
       <div class="row text-end">
         <div class="col-12">
-          <button type="button" onclick="location.href='/sk/noticeList'" class="btn btn-secondary">목록</button>
+          <button type="button" class="btn btn-secondary">목록</button>
         </div>
       </div>
     </div>

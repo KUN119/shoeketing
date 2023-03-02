@@ -74,9 +74,9 @@
       </beans:property>   
    </beans:bean>
 
-   <beans:bean id="mailService" class="sk.user.service.MailServiceImpl">
+   <!-- <beans:bean id="mailService" class="sk.member.service.MailServiceImpl">
       <beans:property name="javaMailSender" ref="mailSender" />
-   </beans:bean>
+   </beans:bean> -->
    
    <!-- mybatis -->
    <beans:bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
