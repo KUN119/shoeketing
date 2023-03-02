@@ -68,7 +68,7 @@ public class BrandPageController {
 	@GetMapping(value = "/brandPage/shopList")
 	public ModelAndView shopList(Map<String, Object> map, HttpSession session) throws Exception {
 		log.debug("###### 브랜드 입점 매장 리스트 ######");
-		ModelAndView mv = new ModelAndView("testMain"); // 추후 수정 (brand/shop/shopList.jsp)
+		ModelAndView mv = new ModelAndView("shopList"); // 추후 수정 (brand/shop/shopList.jsp)
 
 		// 로직 서비스에 있음(나중에 주석 삭제)
 		List<Map<String, Object>> shopList = brandPageService.selectShopList(map, session);
