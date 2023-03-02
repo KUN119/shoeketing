@@ -76,6 +76,7 @@ WHERE MEM_NUM=#{MEM_NUM}
 				T.TOTAL_GOODS_NAME,
 				T.TOTAL_GOODS_MODEL,
 				T.TOTAL_GOODS_PRICE,
+				T.TOTAL_GOODS_NUM,
 				GI.GOODS_IMAGE_STD,
 				ROW_NUMBER() OVER(ORDER BY GOODS_LIKE_NUM DESC) AS NUM
 				FROM BRAND B, TOTAL_GOODS T, GOODS_LIKE G, GOODS_IMAGE GI
@@ -100,5 +101,24 @@ WHERE MEM_NUM=#{MEM_NUM}
 	WHERE GOODS_LIKE_USER=#{MEM_NUM}
 ]]>
 </select> 
+
+
+<!-- 찜 취소 -->
+<delete id="deleteGoodsLike" parameterType="hashmap">
+<![CDATA[
+DELETE FROM GOODS_LIKE
+WHERE GOODS_LIKE_PRONUM = #{TOTAL_GOODS_NUM}
+      AND GOODS_LIKE_USER=#{MEM_NUM}
+]]>
+</delete>
+
+<!-- 찜하기 취소시, TOTAL_GOODS 테이블의 TOTAL_GOODS_LIKE_COUNT - 1씩 (UPDATE 쿼리) -->
+<update id="updateGoodsLikeCountDecrease" parameterType="hashmap">
+    <![CDATA[
+        UPDATE TOTAL_GOODS
+        SET TOTAL_GOODS_LIKE_COUNT = TOTAL_GOODS_LIKE_COUNT - 1
+        WHERE TOTAL_GOODS_NUM = #{TOTAL_GOODS_NUM}
+    ]]>
+</update>
 
 </mapper>

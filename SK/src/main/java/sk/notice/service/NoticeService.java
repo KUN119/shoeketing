@@ -9,5 +9,6 @@ public interface NoticeService {
 
 	int selectNoticeCount(Map<String, Object> map) throws Exception;
 	
+	public Map<String, Object> selectNoticeDetail(Map<String, Object> map) throws Exception;
 
 }

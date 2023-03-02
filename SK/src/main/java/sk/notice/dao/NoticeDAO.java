@@ -20,4 +20,10 @@ public class NoticeDAO extends AbstractDAO{
 		System.out.println("selectNoticeCount : " + map);
 		return (int) selectOne("notice.selectNoticeCount", map);
 	}
+	
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> selectNoticeDetail(Map<String, Object> map) {
+		System.out.println("selectNoticeDetail : " + map);
+		return (Map<String, Object>) selectOne("notice.selectNoticeDetail", map);
+	}
 }
