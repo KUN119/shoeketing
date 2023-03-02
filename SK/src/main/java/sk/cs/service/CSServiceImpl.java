@@ -95,7 +95,7 @@ public class CSServiceImpl implements CSService {
 		map.put("MEM_NUM", 2); // 추후 ajax로 해당 회원 MEM_NUM 보내주기,, 추후 수정!
 		map.put("INFORM_TYPE", 3); // 문의글 답변 작성시 알림유형3
 
-		informDAO.informInsert(map, str);
+		informDAO.insertInform(map, str);
 
 		System.out.println("map 확인 : " + map);
 

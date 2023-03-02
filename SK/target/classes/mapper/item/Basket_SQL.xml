@@ -34,6 +34,14 @@
 	]]>
 </select>
 
-
+<!-- 장바구니 삭제 -->
+<update id="deleteBasket" parameterType="hashmap">
+	<![CDATA[
+		UPDATE BASKET
+		SET BASKET_DEL_GB = 'Y'
+		WHERE BASKET_MEM_NUM = #{BASKET_MEM_NUM}
+		AND BASKET_NUM = #{BASKET_NUM}
+	]]>
+</update>
 
 </mapper>
