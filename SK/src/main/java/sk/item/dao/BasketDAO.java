@@ -16,6 +16,10 @@ public class BasketDAO extends AbstractDAO{
 		return selectList("basket.selectBasketList", map);
 	}
 	
+	//장바구니 삭제 (DEL_GB를 Y로 변경)
+	public void deleteBasket (Map<String, Object> map) throws Exception {
+		update("basket.deleteBasket", map);
+	}
 	
 
 }

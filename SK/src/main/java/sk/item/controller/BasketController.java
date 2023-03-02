@@ -28,18 +28,33 @@ public class BasketController {
 	private BasketService basketService;
 
 	@RequestMapping(value = "/basket/basketList")
-	public ModelAndView basketList(Map<String, Object> map, HttpServletRequest request, HttpSession session) throws Exception {
+	public ModelAndView basketList(Map<String, Object> map, HttpSession session) throws Exception {
 		log.debug("###### 장바구니 리스트 ######");
 		ModelAndView mv = new ModelAndView("basketList");
 		
-		String memNum = sessionService.getSession(session, "MEM_NUM");
-		System.out.println("memNum: " + memNum);
+		map.put("BASKET_MEM_NUM", sessionService.getSession(session, "MEM_NUM"));
 		
-		map.put("BASKET_MEM_NUM", memNum);
 		List<Map<String, Object>> list = basketService.selectBasketList(map);
-		System.out.println("list: " + list);
 		
-		mv.addObject("list", list);
+		mv.addObject("basketList", list);
 		return mv;
 	}
+	
+	
+	@PostMapping(value="/basket/basketDelete")
+	public void basketDelete(@RequestBody List<Map<String, Object>> basketList, HttpSession session) throws Exception {
+		log.debug("###### 장바구니 삭제 ######");
+		
+		//여러개 선택하여 삭제할 수 있으므로 반복문 처리
+		for(Map<String, Object> map : basketList) {
+			//맵에 세션의 mem_num 넣어주기
+			map.put("BASKET_MEM_NUM", sessionService.getSession(session, "MEM_NUM"));
+			
+			//삭제 처리 쿼리 실행
+			basketService.deleteBasket(map);
+		}
+	}
+	
+	
+
 }

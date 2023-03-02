@@ -47,5 +47,16 @@ public class MemberPageDAO extends AbstractDAO {
 	public int selectGoodsLikeCount(Map<String, Object> map) throws Exception {
 		return (int) selectOne("memberPage.selectGoodsLikeCount", map);
 	}
+	
+	//찜 취소 (delete 처리)
+	public void deleteGoodsLike(Map<String, Object> map) throws Exception {
+		delete("memberPage.deleteGoodsLike", map);
+	}
+	
+	//찜 취소 시, TOTAL_GOODS_LIKE_COUNT -1 처리
+	public void updateGoodsLikeCountDecrease(Map<String, Object> map) throws Exception {
+		update("memberPage.updateGoodsLikeCountDecrease", map);
+	}
+	
 
 }
