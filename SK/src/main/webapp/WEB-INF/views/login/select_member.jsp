@@ -74,13 +74,13 @@
           <div class="modal-body">
             <form class="php-email-form mb-5">
                 <div class="form-floating mb-3">
-                  <input type="text" class="form-control" id="reissuePwName" placeholder="1">
+                  <input type="text" class="form-control" name="reissuePwName" id="reissuePwName" placeholder="1">
                   <label for="floatingInput">이름을 입력해주세요</label>
                 </div>
                 <div class="form-floating d-flex">
                   <input type="email" class="form-control" id="reissuePwEmail" placeholder="1">
                   <label for="floatingInput">이메일을 입력해주세요</label>
-                  <button class="btn btn-outline-secondary" type="button" id="button-addon2" style="font-size: 15px; width: 120px;">PW재발급</button>
+                  <button class="btn btn-outline-secondary" type="button" name="findPw" id="button-addon2" style="font-size: 15px; width: 120px;">PW재발급</button>
                 </div>
             </form>
           </div>
@@ -203,33 +203,38 @@ $(document).ready(function() {
 	            }
 	         }); 
 	};
+	
+	$("button[name='findPw']").on("click", function(e) {
+		e.preventDefault();
+		fn_findPw();
+	});
 		
 	function fn_findPw() { //비밀번호찾기
 		
-	       var MEM_NAME = $('#MEM_NAME2').val();
+	       var MEM_NAME = $('#reissuePwName').val();
 	       var MEM_EMAIL = $('#MEM_EMAIL').val();
 	       var findData = {"MEM_NAME" : MEM_NAME, "MEM_EMAIL": MEM_EMAIL};
 	         
 	        $.ajax({
-	            url:"<c:url value='/findPw'/>",
+	            url: '/join/emailAuth',
 	            type:'post',
 	            data:findData,
 	            success:function(data) {
 	            	if(data != null) {
 	            		$(".findPwResultDiv").empty();
-	            		$(".findPwResultDiv").append(MEM_NAME+"님의 비밀번호는 "+data["MEM_PW"]+" 입니다.");
+	            		$(".findPwResultDiv").append("입력하신 이메일을 확인해주세요.");
 	            		$("#findPwModal").modal("hide");
 	            		$("#findPwResultModal").modal("show");
 	            	}
 	            },
 	            error:function() {
 	            	$(".findPwResultDiv").empty();
-         		$(".findPwResultDiv").append("입력하신 정보와 일치한 회원정보가 없습니다.");
-         		$("#findPwModal").modal("hide");
-         		$("#findPwResultModal").modal("show");
+	         		$(".findPwResultDiv").append("입력하신 정보와 일치한 회원정보가 없습니다.");
+	         		$("#findPwModal").modal("hide");
+	         		$("#findPwResultModal").modal("show");
 	            }
 	            
-	         }); 
+	       }); 
 	};
 });
 </script>
