@@ -143,7 +143,38 @@ shopStockList <br>
 해당 매장 상품 토탈개수 : ${stockCount}
 
 <!-- 매장 재고수량 업데이트 결과 -->
-재고수량 업데이트 결과 : ${updateResult}
+재고수량 업데이트 결과 : ${updateResult}<br><br>
+
+<!-- 나의 픽업 예약 리스트 -->
+<c:choose>
+	<c:when test="${fn:length(pickupList) > 0 }">
+		<c:forEach items="${pickupList}" var="pickup">
+			<tr>  
+		      <td>브랜드명 : ${pickup.BRAND_NAME}</td>
+		      <td>사이즈 : ${pickup.RESERVATION_SIZE}</td>
+		      <td>상품명 : ${pickup.TOTAL_GOODS_NAME}</td>
+		      <td>모델명 : ${pickup.TOTAL_GOODS_MODEL}</td>
+		      <td>상품 가격 : ${pickup.TOTAL_GOODS_PRICE}</td>
+		      <td>픽업 예약 상태 : ${pickup.RESERVATION_STATUS}</td>
+		      <td>픽업 지정날짜 :  ${pickup.RESERVATION_PICKUP_DATE}</td>
+		      <br>
+  		 	</tr>
+		</c:forEach>
+	</c:when>
+</c:choose>
+
+<!-- 픽업 예약 상세조회 -->
+ <br>픽업 예약 상세조회<br>
+픽업 예약번호 : ${pickupDetailMap.RESERVATION_NUM} <br>
+상품 가격 : ${pickupDetailMap.TOTAL_GOODS_PRICE} <br>
+브랜드명 : ${pickupDetailMap.SHOP_BRAND } <br>
+상품 사이즈 : ${pickupDetailMap.RESERVATION_SIZE } <br>
+상품명 : ${pickupDetailMap.TOTAL_GOODS_NAME } <br>
+모델명 : ${pickupDetailMap.TOTAL_GOODS_MODEL } <br>
+지점명 : ${pickupDetailMap.SHOP_NAME } <br>
+픽업 만료기한 : ${pickupDetailMap.RESERVATION_EXP} ${pickupDetailMap.SHOP_END_TIME} <br>
+픽업 상태 : ${pickupDetailMap.RESERVATION_STATUS} ${pickupDetailMap.RESERVATION_PICKUP_DATE}<br>
+ <br>
 
 
 </body>

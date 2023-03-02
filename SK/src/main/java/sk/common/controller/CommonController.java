@@ -27,7 +27,7 @@ public class CommonController {
 		ResponseEntity<byte[]> result = null;
 		log.debug("############### fileName : " + fileName);
 //		String filePath_temp = request.getServletContext().getRealPath("/resources/uploadImage/");
-		String filePath_temp = "C:\\uploadImage\\"; // 로컬 경로에 업로드
+		String filePath_temp = "C:\\goods_image\\"; // 로컬 경로에 업로드
 
 		File file = new File(filePath_temp + fileName);
 
