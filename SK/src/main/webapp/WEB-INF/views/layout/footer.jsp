@@ -20,7 +20,7 @@
             <div class="col-3 text-center">
                 <div class="copyright-box">
                     <p class="copyright">고객센터</p>
-                    <div class="credits mt-3"><a href="#">공지사항</a></div>
+                    <div class="credits mt-3"><a href="/sk/noticeList">공지사항</a></div>
                 </div>
             </div>
           </div>

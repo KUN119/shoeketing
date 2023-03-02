@@ -46,6 +46,11 @@
    	  <put-attribute name="body1" value="/WEB-INF/views/goods/goodsTotalList.jsp" />
     </definition>
     
+	<!-- 전체 상품 조회 -->
+	<definition name="allGoodsList_ajax" template="/WEB-INF/views/layout/layout_ajax.jsp">
+   	  <put-attribute name="body_ajax" value="/WEB-INF/views/goods/goodsTotalList_ajax.jsp" />
+	</definition>
+	
     <!-- 전체 상품 조회 -->
 	<definition name="goodsDetail" extends="default1">
    	  <put-attribute name="body1" value="/WEB-INF/views/goods/goodsDetail.jsp" />
