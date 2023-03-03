@@ -1322,8 +1322,6 @@ $(document).ready(function() {
 		var formData = new FormData();
 		formData.append("listType", listType);
 		
-		alert(listType);
-		
 		$.ajax({
 			url: '/sk/goods/totalList_ajax',
 			type: 'POST',
@@ -1338,9 +1336,7 @@ $(document).ready(function() {
 				console.log('실패');
 			}
 		});
-		
 	}
-	
 });
 </script>	
 </html>
