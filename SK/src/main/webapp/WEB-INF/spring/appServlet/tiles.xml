@@ -76,6 +76,11 @@
    	  <put-attribute name="body1" value="/WEB-INF/views/notice/noticeList.jsp" />
     </definition>
     
+    <!-- 공지사항 리스트 -->
+	<definition name="noticeList_ajax" template="/WEB-INF/views/layout/layout_ajax.jsp">
+   	  <put-attribute name="body_ajax" value="/WEB-INF/views/notice/noticeList_ajax.jsp" />
+    </definition>
+    
     <!-- 공지사항 상세보기 -->
 	<definition name="noticeDetail" extends="default1">
    	  <put-attribute name="body1" value="/WEB-INF/views/notice/noticeDetail.jsp" />
@@ -191,6 +196,31 @@
     <!-- 브랜드 회원 마이페이지 입점 매장 리스트 shopList-->
    <definition name="shopList" extends="default1">
    	  <put-attribute name="body1" value="/WEB-INF/views/brand/shop/shopList.jsp" />
+   </definition>
+   
+    <!-- 브랜드 회원 마이페이지 입점 매장 입점 요청 shopRequestList shopPage-->
+   <definition name="shopRequestList" extends="default1">
+   	  <put-attribute name="body1" value="/WEB-INF/views/brand/shop/shopRequestList.jsp" />
+   </definition>
+   
+    <!-- 매장 회원 마이페이지 shopPage-->
+   <definition name="shopPage" extends="default1">
+   	  <put-attribute name="body1" value="/WEB-INF/views/shop/shopPage/main.jsp" />
+   </definition>
+   
+    <!-- 매장 회원 마이페이지 shopAccountModifyForm-->
+   <definition name="accountModifyForm" extends="default1">
+   	  <put-attribute name="body1" value="/WEB-INF/views/shop/shopPage/account/accountModifyForm.jsp" />
+   </definition>
+   
+    <!-- 매장 회원 마이페이지 매장 문의 내역 csList stockList-->
+   <definition name="csList" extends="default1">
+   	  <put-attribute name="body1" value="/WEB-INF/views/shop/shopPage/cs/csList.jsp" />
+   </definition>
+   
+    <!-- 매장 회원 마이페이지 재 리스트 stockList-->
+   <definition name="stockList" extends="default1">
+   	  <put-attribute name="body1" value="/WEB-INF/views/shop/shopPage/stock/stockList.jsp" />
    </definition> 
 
     
