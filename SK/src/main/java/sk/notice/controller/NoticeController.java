@@ -7,7 +7,6 @@ import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,18 +22,66 @@ public class NoticeController {
 
 	Log log = LogFactory.getLog(this.getClass());
 
-	@GetMapping(value = "/noticeList")
+	@RequestMapping(value = "/noticeList")
 	public ModelAndView noticeList(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("###### noticeList ######");
 		ModelAndView mv = new ModelAndView("noticeList");
 		
-		//바꿔야 됨
 		//페이징 되면 1번이 맨위로 올라가게 jsp에서 바꾸시오
 		map.put("START", 1);
 		map.put("END", 5);
 		
+		String searchType = (String) map.get("searchType");
+		String keyword = "";
+		
+		if(map.get("keyword") != null) {
+			keyword = (String) map.get("keyword");
+		}
+		
+		if(searchType != null) {
+			map.put("searchType", searchType);
+		}
+		
+		if(keyword != null) {
+			map.put("keyword", keyword);
+		}
+		
 		List<Map<String, Object>> noticeList = noticeService.selectNoticeList(map);
 		mv.addObject("noticeList", noticeList);
+		
+		System.out.println("map: " +map);
+		
+		return mv;
+	}
+	
+	@RequestMapping(value = "/noticeList_ajax")
+	public ModelAndView noticeList_ajax(@RequestParam Map<String, Object> map) throws Exception {
+		log.debug("###### noticeList_ajax ######");
+		ModelAndView mv = new ModelAndView("noticeList_ajax");
+		
+		//페이징 되면 1번이 맨위로 올라가게 jsp에서 바꾸시오
+		map.put("START", 1);
+		map.put("END", 5);
+		
+		String searchType = (String) map.get("searchType");
+		String keyword = "";
+		
+		if(map.get("keyword") != null) {
+			keyword = (String) map.get("keyword");
+		}
+		
+		if(searchType != null) {
+			map.put("searchType", searchType);
+		}
+		
+		if(keyword != null) {
+			map.put("keyword", keyword);
+		}
+		
+		List<Map<String, Object>> noticeList = noticeService.selectNoticeList(map);
+		mv.addObject("noticeList", noticeList);
+		
+		System.out.println("map: " +map);
 		
 		return mv;
 	}

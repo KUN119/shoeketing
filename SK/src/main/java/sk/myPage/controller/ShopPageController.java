@@ -33,7 +33,7 @@ public class ShopPageController {
 	@GetMapping(value = "/shopPage")
 	public ModelAndView shopPage(Map<String, Object> map) throws Exception {
 		log.debug("###### 매장 마이 페이지 메인 ######");
-		ModelAndView mv = new ModelAndView("testMain");  //추후 수정
+		ModelAndView mv = new ModelAndView("shopPage");  //추후 수정
 		
 		return mv;
 	}
@@ -41,7 +41,7 @@ public class ShopPageController {
 	@GetMapping(value = "/shopPage/accountModifyForm")
 	public ModelAndView shopModifyForm(Map<String, Object> map) throws Exception {
 		log.debug("###### 매장 기본 정보 수정 폼 ######");
-		ModelAndView mv = new ModelAndView("testMain");  //추후 수정
+		ModelAndView mv = new ModelAndView("accountModifyForm");  //추후 수정
 		
 		Map<String, Object> shopInfoMap = shopPageService.selectShopInfo(map);
 		mv.addObject("shopInfoMap", shopInfoMap);
@@ -63,7 +63,7 @@ public class ShopPageController {
 	@GetMapping(value = "/shopPage/csList")
 	public ModelAndView shopCSList(Map<String, Object> map) throws Exception {
 		log.debug("###### 매장 문의 내역 리스트 ######");
-		ModelAndView mv = new ModelAndView("testMain");  //추후 수정
+		ModelAndView mv = new ModelAndView("csList");  //추후 수정
 		
 		// 매장 문의내역 글 토탈 개수, 문의내역 리스트
 		int shopCSCount = csService.selectShopCSCount(map);

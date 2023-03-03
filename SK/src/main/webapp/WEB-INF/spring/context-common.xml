@@ -6,9 +6,9 @@
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:websocket="http://www.springframework.org/schema/websocket"
 	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
 		http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
@@ -74,9 +74,9 @@
       </beans:property>   
    </beans:bean>
 
-   <!-- <beans:bean id="mailService" class="sk.member.service.MailServiceImpl">
+   <beans:bean id="mailService" class="sk.user.service.MailServiceImpl">
       <beans:property name="javaMailSender" ref="mailSender" />
-   </beans:bean> -->
+   </beans:bean>
    
    <!-- mybatis -->
    <beans:bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">

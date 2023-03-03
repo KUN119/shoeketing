@@ -9,9 +9,17 @@ pageEncoding="UTF-8"%>
     <nav id="navbar" class="navbar justify-content-end">
       <ul>
         <li>
-          <a class="nav-link scrollto" href="/sk/myPage" style="font-size: 13px"
-            >마이페이지</a
-          >
+          <c:choose>
+          	<c:when test="${session_MEM_ID != null}">
+          		<a class="nav-link scrollto" href="/sk/myPage" style="font-size: 13px">마이페이지</a>
+			</c:when>
+			<c:when test="${session_BRAND_ID != null}">
+          		<a class="nav-link scrollto" href="/sk/brandPage" style="font-size: 13px">마이페이지</a>
+			</c:when>
+			<c:when test="${session_SHOP_ID != null}">
+          		<a class="nav-link scrollto" href="/sk/shopPage" style="font-size: 13px">마이페이지</a>
+			</c:when>
+		  </c:choose>          
         </li>
         <li>
         <c:choose>
@@ -51,7 +59,7 @@ pageEncoding="UTF-8"%>
     <nav id="navbar" class="navbar justify-content-end">
       <ul>
         <li>
-          <a class="nav-link scrollto" href="/sk/basket/basketList"
+          <a class="nav-link scrollto" href="#hero"
             ><svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"

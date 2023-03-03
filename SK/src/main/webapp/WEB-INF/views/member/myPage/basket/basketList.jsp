@@ -21,11 +21,11 @@
 
       <div class="row">
         <div class="form-check col ms-3 align-self-end">
-          <input class="form-check-input" type="checkbox" id='selectAll' name="chkAll" onclick='checkAll();'/>
+          <input class="form-check-input" type="checkbox" id='selectAll' name="chkAll" onclick='checkAll();' checked/>
           <label class="form-check-label" for="selectAll">전체선택</label>
         </div>
         <div class="col text-end">
-          <button class="btn btn-secondary" type="button">삭제</button>
+          <button class="btn btn-secondary" type="button" id="chkDelete" name="chkDelete">삭제</button>
         </div>
       </div>
       <hr class="mt-3" style="border: 1px solid black;"/>
@@ -37,10 +37,11 @@
       <c:when test="${fn:length(list)>0 }">
       <c:forEach items="${list}" var="basket">
         <!--장바구니 데이터 한줄 시작-->
-        <div class="row mt-4 mb-4">
+        <div class="row mt-4 mb-4" id="basketGoods">
           <div class="col-auto align-self-center ms-2">
             <div class="form-check">
-              <input class="form-check-input" id='chk' name="chk" type="checkbox" value="" />
+            	<c:set var="deposit" value="30000"/>
+              <input class="form-check-input" id='chk' name="chk" type="checkbox" value="${basket.BASKET_NUM}"/>
             </div>
           </div>
           <div class="col-2 align-self-center">
@@ -51,7 +52,7 @@
           </div>
           <div class="col-4">
             <div class="ms-1 align-self-center">
-              <p class="mb-2" style="font-weight: 700"> ${basket.TOTAL_GOODS_BRAND}</p>
+              <p class="mb-2" style="font-weight: 700"> ${basket.BRAND_NAME}</p>
               <p class="mb-2" style="font-weight: 700">
                 ${basket.TOTAL_GOODS_NAME} / ${basket.TOTAL_GOODS_MODEL}
               </p>
@@ -65,7 +66,7 @@
           >
             <h5 class="mb-4">상품가격</h5>
             <div class="d-flex justify-content-center">
-              <h5><label for= chk>${basket.TOTAL_GOODS_PRICE}</label></h5>
+              <h5><label for="chk"><fmt:formatNumber type="number" maxFractionDigits="3" value="${basket.TOTAL_GOODS_PRICE}"/></label></h5>
               <h6 class="align-self-end">원</h6>
             </div>
           </div>
@@ -75,7 +76,7 @@
           >
             <h5 class="mb-4">예약금</h5>
             <div class="d-flex justify-content-center">
-              <h5>30,000</h5>
+               <h5 id="deposit"><fmt:formatNumber type="number" maxFractionDigits="3" value="${deposit}"/></h5>
               <h6 class="align-self-end">원</h6>
             </div>
           </div>
@@ -94,6 +95,8 @@
               class="btn btn-sm btn-secondary ms-5"
               type="button"
               style="width: 5rem"
+              name="delete"
+              id="delete"
             >
               삭제
             </button>
@@ -106,7 +109,7 @@
           장바구니에 담긴 상품이 없습니다.
           </c:otherwise>
         </c:choose> 
-
+        
       <!--예약금액, 할인금액, 결제금액 시작-->
       <div
         class="row pt-3 pb-3 mb-5"
@@ -118,7 +121,8 @@
         <div class="col-3 align-self-center text-center">
           <p class="mb-1">예약금액</p>
           <div class="d-flex justify-content-center">
-            <h4>90,000 ${TOTAL_GOODS_PRICE}</h4>
+         	 <c:set var="totalDeposit" value="<fmt:formatNumber type='number' maxFractionDigits='3' value='0'/>"/>
+            <h4 id="totalDeposit">${totalDeposit}</h4>
             <h5 class="align-self-end ms-1">원</h5>
           </div>
         </div>
@@ -130,8 +134,19 @@
         <div class="col-3 align-self-center text-center">
           <p class="mb-1">할인금액</p>
           <div class="d-flex justify-content-center">
-            <h4>9,000</h4>
-            <h5 class="align-self-end ms-1">원</h5>
+            <c:choose>
+          		<c:when test="${session_MEM_INFO.MEM_GRADE=='플래티넘'}">
+          			<c:set var="sale" value="3000"/>
+            			<h4 id="sale"><fmt:formatNumber type="number" maxFractionDigits="3" value="${sale}"/></h4>
+            	</c:when>
+            	<c:when test="${session_MEM_INFO.MEM_GRADE=='다이아'}">
+            		<c:set var="sale" value="5000"/>
+            			<h4 id="sale"><fmt:formatNumber type="number" maxFractionDigits="3" value="${sale}"/></h4>
+            	</c:when>
+            	<c:otherwise>
+            		<h4 id="sale">0</h4>
+            	</c:otherwise>
+            </c:choose>
           </div>
         </div>
 
@@ -142,7 +157,7 @@
         <div class="col-3 align-self-center text-center">
           <p class="mb-1">결제금액</p>
           <div class="d-flex justify-content-center">
-            <h4 class="fw-bold">99,000</h4>
+            <h4 class="fw-bold" id="finalPrice"></h4>
             <h4 class="align-self-end ms-1 fw-bold">원</h4>
           </div>
         </div>
@@ -160,12 +175,17 @@
       <!--예약금액, 할인금액, 결제금액 끝-->
       
     </div>
+   </div> 
   </body>
   
 <script type="text/javascript">
 
+$(document).ready(function() {
+	checkAll();
+});
+
 //https://ivory-room.tistory.com/67
-function checkAll() {
+function checkAll() { //전체 체크 함수
 	if($("#selectAll").is(':checked')) {
 		$("input[name=chk]").prop("checked", true);
 	} else {
@@ -173,23 +193,97 @@ function checkAll() {
 	}
 }
 
-$(document).on("click", "input:checkbox[name=chk]", function(e) {
+$(document).on("click", "input:checkbox[name=chk]", function(e) { //개별 체크박스 클릭하면
 	var chks = document.getElementsByName("chk");
 	var chksChecked = 0;
+//	var deposit = $("#deposoit").val();
+//	var totalDeposit = document.getElementById("TotalDeposit");
 	
 	for(var i=0; i<chks.length; i++) {
 		var chk = chks[i];
 		
 		if(chk.checked) {
-			chksChecked++;
+			chksChecked++; //체크된 체크박스의 개수 집계
+			/* depositSum = deposit + chks;
+			
+			totalDeposit.innerHTML = depositSum;
+			 */
+		}
+		
+	}
+	
+	if(chks.length == chksChecked){ //모든 체크박스가 체크되어있으면
+		$("#selectAll").prop("checked", true); //전체선택 버튼을 true로
+	}else{
+		$("#selectAll").prop("checked",false); //전체선택 버튼 false로
+	}
+	
+});
+
+
+/* function calcPrice() {
+	let array = document.getElementsByName("chk");
+	let priceArray = new Array();
+	for(let i=0; i<priceArray.length; i++) {
+		if(priceArray[i].checked == true) {
+			let spanId = priceArray[i].id.replace('chk', 'price');
+			let priceTag = document.getElementById(spanId).innerText;
+			priceArray.push(price);
 		}
 	}
 	
-	if(chks.length == chksChecked){
-		$("#selectAll").prop("checked", true);
-	}else{
-		$("#selectAll").prop("checked",false);
+	let total = 0;
+	for(let i=0; i<priceArray.length; i++) {
+		total += parseInt(priceArray[i]);
 	}
+	document.getElementById('totalDeposit').innerText = total;
+} */
+
+$(document).ready(function() {
+	
+	$("button[name='chkDelete']").on("click", function(e) { //개별 삭제 버튼 누르면
+		 e.preventDefault();
+		 fn_chkDelete();
+	});
+	
+	
+	function fn_chkDelete() { //체크된 상품 삭제
+		var basketNum = $("#chk").val(); 
+		var goodsArr = [];
+		var list = $("input[name='chk']");
+	//	var dataList = {"basketList":goodsArr};
+
+		
+			for(var i=0; i<list.length; i++) {
+					if(list[i].checked) { //선택되어 있으면 배열에 값을 저장
+						goodsArr.push(list[i].value);
+					}
+			}
+			
+			if(goodsArr.length == 0) {
+				alert("선택된 상품이 없습니다.");
+			} else {
+				if(confirm("상품을 장바구니에서 제거하시겠습니까?")) {
+					alert("번호 : " + goodsArr);
+					$.ajaxSettings.traditional = true;
+					$.ajax({
+					url:"/sk/basket/basketDelete",
+					type:'post',
+					contentType:"application/json; charset=UTF-8",
+					data:JSON.stringify(goodsArr),
+					success:function() {
+						alert("상품을 장바구니에서 삭제하였습니다.");
+						location.reload(); //페이지 새로고침
+					},
+					error:function() {
+						alert("잠시 후 다시 시도해주세요.");
+					}	
+					});
+					}
+				}
+		}
 });
+
+
 </script>  
 </html>

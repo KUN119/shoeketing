@@ -1,5 +1,6 @@
 package sk.item.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,16 +38,22 @@ public class BasketController {
 
 		List<Map<String, Object>> list = basketService.selectBasketList(map);
 
-		mv.addObject("basketList", list);
+		mv.addObject("list", list);
 		return mv;
 	}
 
 	@PostMapping(value = "/basket/basketDelete")
-	public void basketDelete(@RequestBody List<Map<String, Object>> basketList, HttpSession session) throws Exception {
-		log.debug("###### 장바구니 삭제 ######");
-
+	public void basketDelete(@RequestBody List<String> basketList, HttpSession session) throws Exception {
+			log.debug("###### 장바구니 삭제 ######");
+			System.out.println("컨트롤러 파라미터 : " + basketList);
+			
+			Map<String, Object> map = new HashMap<>();
+			
 		// 여러개 선택하여 삭제할 수 있으므로 반복문 처리
-		for (Map<String, Object> map : basketList) {
+		for(String basket : basketList) {
+			map.put("BASKET_NUM", basket);
+			System.out.println("BASKET_NUM : " + basket);
+			
 			// 맵에 세션의 mem_num 넣어주기
 			map.put("BASKET_MEM_NUM", sessionService.getSession(session, "MEM_NUM"));
 
@@ -54,5 +61,7 @@ public class BasketController {
 			basketService.deleteBasket(map);
 		}
 	}
+	
+	
 
 }
