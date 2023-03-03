@@ -185,10 +185,11 @@ $(document).ready(function() {
 		var formData = new FormData();
 		formData.append("RESERVATION_NUM", reservationNum);
 		formData.append("RESERVATION_STATUS", reservationStatus);
+		formData.append("paymentKey", localStorage.getItem(reservationNum))
 		
 		$.ajax({
 			type : 'post',
-			url : '/sk/myPage/reservationDelete',
+			url : '/sk/reservationCancel',
 			data : formData,
 			processData : false,
 			contentType : false,
