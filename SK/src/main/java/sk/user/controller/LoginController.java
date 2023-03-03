@@ -264,10 +264,14 @@ public class LoginController {
 		return mv;
 	}
 
-	@GetMapping(value = "/findPw")
+	@RequestMapping(value = "/findPw")
 	public ModelAndView findPw(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("###### 비밀번호 찾기 ######");
 		ModelAndView mv = new ModelAndView("findPw");
+		
+		String pw = (String) map.get("MEM_PW");
+		mv.addObject("MEM_PW", pw);
+		
 		return mv;
 	}
 }
