@@ -13,6 +13,46 @@
       }
 </style>
 <body>
+<!-- Modal -->
+    <div
+      class="modal fade"
+      id="pickUpDateModal"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">
+              픽업 시작 날짜 선택
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <input type="date" class="form-control"/>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              취소
+            </button>
+            <button type="button" class="btn btn-primary">예약하기</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="container">
       <div class="row mt-5">
         <h3 class="mb-4" style="font-weight: 700">실시간 재고 검색</h3>
@@ -206,15 +246,28 @@
 	          border: none;
 	        "
 	      >
-	        <h4 class="mb-4" style="font-weight: 700;">나이키 명동</h4>
+	        <h4 class="mb-4" style="font-weight: 700">나이키 명동</h4>
 	        <p class="mb-1">서울특별시 중구 남대문로 78</p>
-	        <p style="color:forestgreen">02-362-7789</p>
-	        <h6 style="font-weight: 700;">재고 : 5개</h6>
+	        <p style="color: forestgreen">02-362-7789</p>
+	        <h6 style="font-weight: 700">재고 : 5개</h6>
 	        <div class="d-flex justify-content-between">
 	          <a href="#" class="align-self-center">문의하기</a>
 	          <div>
-	            <button class="button" type="button" style="border: 1px solid rgba(0, 0, 0, 0.116)">픽업예약</button>
-	            <button class="button" type="button" style="border: 1px solid rgba(0, 0, 0, 0.116)">장바구니</button>
+	            <button
+	              class="button"
+	              type="button"
+	              style="border: 1px solid rgba(0, 0, 0, 0.116)"
+	              data-bs-toggle="modal" data-bs-target="#pickUpDateModal"
+	            >
+	              픽업예약
+	            </button>
+	            <button
+	              class="button"
+	              type="button"
+	              style="border: 1px solid rgba(0, 0, 0, 0.116)"
+	            >
+	              장바구니
+	            </button>
 	          </div>
 	        </div>
 	      </div>`, // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
