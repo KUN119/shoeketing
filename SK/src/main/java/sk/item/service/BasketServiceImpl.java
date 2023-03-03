@@ -21,10 +21,12 @@ public class BasketServiceImpl implements BasketService {
 		return basketDAO.selectBasketList(map);
 	}
 
-	// 장바구니 삭제 (DEL_GB를 Y로 변경)
+	//장바구니 삭제 (DEL_GB를 Y로 변경)
 	@Override
 	public void deleteBasket(Map<String, Object> map) throws Exception {
 		basketDAO.deleteBasket(map);
 	}
+	
+	
 
 }
