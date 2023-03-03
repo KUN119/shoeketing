@@ -53,7 +53,6 @@ public class ReservationServiceImpl implements ReservationService {
 	@Override
 	public Map<String, Object> selectPickupDetail(Map<String, Object> map) throws Exception {
 
-		//map.put("RESERVATION_NUM", 1);  // 추후 삭제
 		map.put("RESERVATION_NUM", map.get("RESERVATION_NUM"));
 		
 		Map<String, Object> pickupDetailMap = reservationDAO.selectPickupDetail(map);
@@ -67,7 +66,6 @@ public class ReservationServiceImpl implements ReservationService {
 	@Override
 	public Map<String, Object> deleteReservation(Map<String, Object> map) throws Exception {
 
-		//map.put("RESERVATION_NUM", 1);  // 추후 삭제
 		map.put("RESERVATION_NUM", map.get("RESERVATION_NUM"));
 		
 		//예약 취소하고, 취소된 결과 Map에 담아주기위해 resultMap 선언
@@ -89,7 +87,7 @@ public class ReservationServiceImpl implements ReservationService {
 		int reservationUserMemNum = Integer.parseInt(pickupDetailMap.get("RESERVATION_USER").toString());
 		
 		// 예약 상태가 예약 대기중 -> 예약 취소로 변경됐으므로, 회원에게 알림
-		String str = "회원님께서 예약하신 " + pickupGoodsName + "의 예약 상태가 '예약 취소'로 변경되었습니다.";
+		String str = "회원님께서 예약하신 '" + pickupGoodsName + "'의 예약 상태가 '예약 취소'로 변경되었습니다.";
 		
 		// insertInform시 필요한 파라미터들 넣어주기 (알림내용, 알림받을 회원번호, 알림유형)
 		map.put("INFORM_CONTENT", str);
@@ -108,6 +106,7 @@ public class ReservationServiceImpl implements ReservationService {
 	public Map<String, Object> deletePickup(Map<String, Object> map) throws Exception {
 
 		map.put("RESERVATION_NUM", map.get("RESERVATION_NUM"));
+		System.out.println("deletePickup map 확인" + map);
 		
 		// 픽업 취소하고, 취소된 결과 map에 담아주기 위해 resultMap 선언
 		int deleteResult = reservationDAO.deletePickup(map);
@@ -123,13 +122,22 @@ public class ReservationServiceImpl implements ReservationService {
 		System.out.println("픽업 deleteResult 결과 : " + deleteResult);
 		System.out.println("픽업 resultMap 결과 : " + resultMap);
 		
+		// 픽업 취소했을 경우에는 재고 +1 시켜주기 
+		Map<String, Object> detailMap = reservationDAO.selectPickupDetail(map);
+		
+		map.put("TOTAL_GOODS_NUM", Integer.parseInt(detailMap.get("RESERVATION_PRONUM").toString()));
+		map.put("SHOP_NUM", Integer.parseInt(detailMap.get("RESERVATION_SHOP_NUM").toString()));
+		map.put("SHOP_GOODS_SIZE", detailMap.get("RESERVATION_SIZE").toString());
+	
+		Map<String, Object> stockIncrease = updateStockIncrease(map);
+		System.out.println("stockIncrease 결과 :" + stockIncrease);
+		
 		// 예약번호로 예약 상세조회해서, 상품명 가져오기
-		Map<String, Object> pickupDetailMap = reservationDAO.selectPickupDetail(map);
-		String pickupGoodsName = (String)pickupDetailMap.get("TOTAL_GOODS_NAME");
-		int reservationUserMemNum = Integer.parseInt(pickupDetailMap.get("RESERVATION_USER").toString());
+		String pickupGoodsName = (String)detailMap.get("TOTAL_GOODS_NAME");
+		int reservationUserMemNum = Integer.parseInt(detailMap.get("RESERVATION_USER").toString());
 		
 		// 예약 상태가 픽업 대기중 -> 픽업 취소로 변경됐으므로, 회원에게 알림
-		String str = "회원님께서 예약하신 " + pickupGoodsName + "의 예약 상태가 '픽업 취소'로 변경되었습니다.";
+		String str = "회원님께서 예약하신 '" + pickupGoodsName + "'의 예약 상태가 '픽업 취소'로 변경되었습니다.";
 		
 		// insertInform시 필요한 파라미터들 넣어주기 (알림내용, 알림받을 회원번호, 알림유형)
 		map.put("INFORM_CONTENT", str);
@@ -148,21 +156,40 @@ public class ReservationServiceImpl implements ReservationService {
 
 		Map<String, Object> resultMap = new HashMap<>();
 		
+		int stockIncreaseResult = reservationDAO.updateStockIncrease(map);
+		
+		if(stockIncreaseResult == 1) {
+			resultMap.put("result", "pass");
+		}else {
+			resultMap.put("result", "fail");
+		}
+		
 		return resultMap;
 	}
 
 	// 픽업 예약 요청 리스트 (매장)
 	@Override
-	public List<Map<String, Object>> selectReservationRequestList(Map<String, Object> map) throws Exception {
+	public List<Map<String, Object>> selectReservationRequestList(Map<String, Object> map, HttpSession session) throws Exception {
 
-		return null;
+		// 세션에서 로그인한 매장의 번호 꺼내와서 넣어주고, 해당 매장의 픽업 예약 요청 리스트 가져오기
+		map.put("RESERVATION_SHOP_NUM", commonService.getSessionShop(session, "SHOP_NUM"));
+		map.put("START", 1);
+		map.put("END", 5);
+		
+		List<Map<String, Object>> reservationRequestList = reservationDAO.selectReservationRequestList(map);
+		
+		return reservationRequestList;
 	}
 
 	// 해당 매장의 총 픽업 예약개수 (매장)
 	@Override
-	public int selectReservationCount(Map<String, Object> map) throws Exception {
+	public int selectReservationCount(Map<String, Object> map, HttpSession session) throws Exception {
 
-		return 0;
+		// 세션에서 로그인한 매장의 번호 꺼내와서 넣어주고, 해당 매장의 픽업 예약개수 가져오기
+		map.put("SHOP_NUM", commonService.getSessionShop(session, "SHOP_NUM"));
+		int reservationCount = reservationDAO.selectReservationCount(map);
+		
+		return reservationCount;
 	}
 
 	// ajax 구현 예정
@@ -171,8 +198,41 @@ public class ReservationServiceImpl implements ReservationService {
 	@Override
 	public Map<String, Object> updateReservationApprove(Map<String, Object> map) throws Exception {
 		
-		//updateStockDecrease(map); 
 		Map<String, Object> resultMap = new HashMap<>();
+		
+		map.put("RESERVATION_NUM", 28);
+//		map.put("RESERVATION_NUM", map.get("RESERVATION_NUM"));
+		
+		int updateResult = reservationDAO.updateReservationApprove(map);
+		
+		// 매장이 픽업 예약 승인할경우
+		if(updateResult == 1) {
+			resultMap.put("result", "pass");
+		}else {
+			resultMap.put("result", "fail");
+		}
+		
+		// 픽업 승인할경우, 재고 -1 시키기
+		// RESERVATION_PRONUM, RESERVATION_SHOP_NUM, RESERVATION_SIZE
+		Map<String, Object> detailMap = reservationDAO.selectPickupDetail(map);
+		map.put("RESERVATION_PRONUM", detailMap.get("RESERVATION_PRONUM"));
+		map.put("RESERVATION_SHOP_NUM", detailMap.get("RESERVATION_SHOP_NUM"));
+		map.put("RESERVATION_SIZE", detailMap.get("RESERVATION_SIZE"));
+		
+		updateStockDecrease(map);
+		
+		// 픽업 예약 승인후, 해당 회원에게 알림 
+		String pickupGoodsName = detailMap.get("TOTAL_GOODS_NAME").toString();
+		
+		// 예약 상태가 예약 대기중 -> 픽업 대기중으로 변경됐으므로, 회원에게 알림
+		String str = "회원님께서 예약하신 '" + pickupGoodsName + "'의 예약 상태가 '픽업 대기중'으로 변경되었습니다.";
+
+		// insertInform시 필요한 파라미터들 넣어주기 (알림내용, 알림받을 회원번호, 알림유형)
+		map.put("INFORM_CONTENT", str);
+		map.put("MEM_NUM", detailMap.get("RESERVATION_USER"));
+		map.put("INFORM_TYPE", 1);
+		
+		informDAO.insertInform(map, str);
 		
 		return resultMap;
 	}
@@ -182,6 +242,14 @@ public class ReservationServiceImpl implements ReservationService {
 	public Map<String, Object> updateStockDecrease(Map<String, Object> map) throws Exception {
 
 		Map<String, Object> resultMap = new HashMap<>();
+		
+		int stockDecreaseResult = reservationDAO.updateStockDecrease(map);
+
+		if(stockDecreaseResult == 1) {
+			resultMap.put("result", "pass");
+		}else {
+			resultMap.put("result", "fail");
+		}
 		
 		return resultMap;
 	}

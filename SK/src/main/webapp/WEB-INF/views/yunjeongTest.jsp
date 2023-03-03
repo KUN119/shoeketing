@@ -176,6 +176,44 @@ shopStockList <br>
 픽업 상태 : ${pickupDetailMap.RESERVATION_STATUS} ${pickupDetailMap.RESERVATION_PICKUP_DATE}<br>
  <br>
 
+<!-- 픽업 예약 요청 리스트 조회(매장) -->
+reservationList<br>
+<c:choose>
+	<c:when test="${fn:length(reservationList) > 0 }">
+		<c:forEach items="${reservationList}" var="reservation">
+			<tr>  
+		      <td>예약번호 : ${reservation.RESERVATION_NUM}</td>
+		      <td>상품명 : ${reservation.TOTAL_GOODS_NAME}</td>
+		      <td>모델명 : ${reservation.TOTAL_GOODS_MODEL}</td>
+		      <td>사이즈 : ${reservation.RESERVATION_SIZE}</td>
+		      <td>회원 이름 : ${reservation.MEM_NAME}</td>
+		      <td>회원 전화번호 : ${reservation.RESERVATION_PHONE}</td>
+		      <td>상품 가격 : ${reservation.TOTAL_GOODS_PRICE}</td>
+		      <td>픽업 예약 상태 : ${reservation.RESERVATION_STATUS}</td>
+		      <td>픽업 예약날짜 :  ${reservation.RESERVATION_DATE}</td>
+		      <td>픽업 지정날짜 :  ${reservation.RESERVATION_PICKUP_DATE}</td>
+		      <br>
+  		 	</tr>
+		</c:forEach>
+	</c:when>
+</c:choose>
+
+paymentKey값 : ${paymentKey}
+orderId값 : ${orderId}
+
+<script type="text/javascript">
+
+//결제 완료 페이지가 로드될 때, 웹 스토리지에 paymentKey값 저장하기
+$(document).ready(function (){
+	
+	//주문번호 받아와서, 웹 스토리지에 key=주문번호, value=paymentKey로 저장
+	var paymentKey = "${paymentKey}";
+	localStorage.setItem("${orderId}", paymentKey);
+
+});
+
+	
+</script>
 
 </body>
 </html>
