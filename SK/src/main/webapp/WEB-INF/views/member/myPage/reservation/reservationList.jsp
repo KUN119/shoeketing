@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -184,10 +187,11 @@ $(document).ready(function() {
 		var formData = new FormData();
 		formData.append("RESERVATION_NUM", reservationNum);
 		formData.append("RESERVATION_STATUS", reservationStatus);
+		formData.append("paymentKey", localStorage.getItem(reservationNum))
 		
 		$.ajax({
 			type : 'post',
-			url : '/sk/myPage/reservationDelete',
+			url : '/sk/reservationCancel',
 			data : formData,
 			processData : false,
 			contentType : false,

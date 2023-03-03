@@ -28,6 +28,11 @@
     <definition name="testMain" extends="default1">
     	  <put-attribute name="body1" value="/WEB-INF/views/yunjeongTest.jsp" />
     </definition>
+    
+    <!-- 토스 테스트 -->
+    <definition name="tossTest" extends="default1">
+    	  <put-attribute name="body1" value="/WEB-INF/views/tossTest.jsp" />
+    </definition>
    
     <!-- 개인 회원 마이페이지 메인 -->
     <definition name="myPageMain" extends="myPageTemplate">
