@@ -47,7 +47,10 @@
             >
               취소
             </button>
-            <button type="button" class="btn btn-primary">예약하기</button>
+            <!-- 토스 페이먼츠 API -->
+            <div id="payment-method"></div>
+            <button type="button" class="btn btn-primary" id="payment-button">예약하기</button>
+            <!-- 토스 페이먼츠 API 끝-->
           </div>
         </div>
       </div>
@@ -211,10 +214,15 @@
       <!--카카오 지도 API 적용 div 끝-->
     </div>
   </body>
+  
   <script
     type="text/javascript"
     src="//dapi.kakao.com/v2/maps/sdk.js?appkey=08e2c5126e1c7f5ac14b68c3f37365ad"
   ></script>
+  
+  <!-- 토스 페이먼츠 API -->
+  <script src="https://js.tosspayments.com/v1/payment-widget"></script>
+  
   <script>
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		mapOption = {
@@ -283,5 +291,26 @@
 		
 		//마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
 		infowindow.open(map, marker);
+		
+		
+		// 토스 페이먼츠 결제  (추후 orderId, orderName, customerEmail, customerName 수정필요)
+		const clientKey = 'test_ck_7XZYkKL4Mrjnv7vJl1ar0zJwlEWR';
+	    const customerKey = 'yunjeong1234'; 
+	    const paymentWidget = PaymentWidget(clientKey, customerKey);  // 결제위젯 초기화
+	    
+	    $("#payment-button").on("click", function(e){
+	    	paymentWidget.renderPaymentMethods('#payment-method', 30000);
+	    	
+	    	paymentWidget.requestPayment({
+	      	  orderId: 10000030,
+	      	  orderName: '코트버로우 로우',
+	      	  successUrl: 'http://localhost:8080/sk/reservationSuccess',
+	      	  failUrl: 'http://localhost:8080/sk',
+	      	  customerEmail: 'dbswjd8178@naver.com', 
+	      	  customerName: '김윤정'
+	      	});
+	   
+	    });
+		
   </script>
 </html>
