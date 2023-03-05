@@ -61,5 +61,60 @@
 		]]>
 	</update>
 
+	<!-- 검색한 재고를 가지고 있는 매장 리스트 -->
+	<select id="selectShopStockList" parameterType="hashmap" resultType="hashmap"> 
+		<![CDATA[
+		SELECT *
+		FROM (SELECT 
+		                    ROW_NUMBER() OVER (ORDER BY SHOP_NUM DESC) AS NUM,
+		                    S.SHOP_NUM,
+		                    S.SHOP_BRAND,
+		                    S.SHOP_NAME,
+		                    S.SHOP_TEL,
+		                    S.SHOP_ADD,
+		                    S.SHOP_POS1,
+		                    S.SHOP_POS2,
+		                    S.SHOP_START_TIME,
+		                    S.SHOP_END_TIME,
+		                    TG.TOTAL_GOODS_NUM,
+		                    TG.TOTAL_GOODS_NAME,
+		                    SG.SHOP_GOODS_SHOP_NUM,
+		                    SG.SHOP_GOODS_SIZE,
+		                    SG.SHOP_GOODS_AMOUNT
+		          FROM
+		                    SHOP S, SHOP_GOODS SG, TOTAL_GOODS TG
+		          WHERE SG.SHOP_GOODS_SHOP_NUM = S.SHOP_NUM
+		          AND SG.SHOP_GOODS_GOODS_NUM = TG.TOTAL_GOODS_NUM
+		          AND S.SHOP_DEL_GB = 'N'
+		          AND S.SHOP_JOIN_APPROVE = 'Y'
+		          AND S.SHOP_BRAND LIKE '%'||#{BRAND_NAME}||'%'
+		          AND TG.TOTAL_GOODS_NAME LIKE '%'||#{GOODS_NAME}||'%'
+		          AND SG.SHOP_GOODS_SIZE = #{GOODS_SIZE}]]>
+		         <include refid="shopName"/>
+		         <![CDATA[
+		WHERE NUM BETWEEN #{START} AND #{END}
+		]]>
+	</select>
 
+	<select id="selectShopStockCount" parameterType="hashmap" resultType="int"> 
+    <![CDATA[
+	SELECT	 
+	                    COUNT(S.SHOP_NUM) AS SHOP_COUNT
+	          FROM
+	                    SHOP S, SHOP_GOODS SG, TOTAL_GOODS TG
+	          WHERE SG.SHOP_GOODS_SHOP_NUM = S.SHOP_NUM
+	          AND SG.SHOP_GOODS_GOODS_NUM = TG.TOTAL_GOODS_NUM
+	          AND S.SHOP_DEL_GB = 'N'
+	          AND S.SHOP_JOIN_APPROVE = 'Y'
+	          AND S.SHOP_BRAND LIKE '%'||#{BRAND_NAME}||'%'
+	          AND TG.TOTAL_GOODS_NAME LIKE '%'||#{GOODS_NAME}||'%'
+	          AND SG.SHOP_GOODS_SIZE = #{GOODS_SIZE}]]>
+	         <include refid="shopName"/>
+	</select>
+	
+	<sql id="shopName">
+	    <if test="SHOP_NAME != null">
+	        AND S.SHOP_NAME LIKE '%'||#{SHOP_NAME}||'%')
+	    </if>
+	</sql>
 </mapper>

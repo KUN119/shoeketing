@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<div class="col-ms-7 col-lg-8" style="margin-top: 0px;">
+<div class="col-8" style="margin-top: 0px;">
           <h3 style="margin-left: 30px; color: black; font-weight: bolder;">회원 정보 수정</h3>
           <br>
 

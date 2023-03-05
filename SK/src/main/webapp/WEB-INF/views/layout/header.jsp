@@ -8,6 +8,9 @@ pageEncoding="UTF-8"%>
 
     <nav id="navbar" class="navbar justify-content-end">
       <ul>
+      	<li>
+      		<a class="nav-link scrollto" href="/sk/admin/noticeList" style="font-size: 13px">관리자</a>
+      	</li>
         <li>
           <c:choose>
           	<c:when test="${session_MEM_ID != null}">

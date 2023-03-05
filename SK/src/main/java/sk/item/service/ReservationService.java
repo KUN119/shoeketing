@@ -26,10 +26,10 @@ public interface ReservationService {
 	public Map<String, Object> updateStockIncrease(Map<String, Object> map) throws Exception;
 	
 	// 픽업 예약 요청 리스트 (매장)
-	public List<Map<String, Object>> selectReservationRequestList(Map<String, Object> map) throws Exception;
+	public List<Map<String, Object>> selectReservationRequestList(Map<String, Object> map, HttpSession session) throws Exception;
 	
 	// 해당매장의 총 픽업 예약개수 (매장)
-	public int selectReservationCount(Map<String, Object> map) throws Exception;
+	public int selectReservationCount(Map<String, Object> map, HttpSession session) throws Exception;
 	
 	// 픽업 예약 승인 (매장)
 	public Map<String, Object> updateReservationApprove(Map<String, Object> map) throws Exception;
@@ -38,7 +38,7 @@ public interface ReservationService {
 	public Map<String, Object> updateStockDecrease(Map<String, Object> map) throws Exception;
 	
 	// 예약금 결제 성공
-	public Map<String, Object> insertReservation(Map<String, Object> map) throws Exception; 
+	public Map<String, Object> insertReservation(Map<String, Object> map, HttpSession session) throws Exception; 
 		
 	
 }

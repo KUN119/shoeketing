@@ -1,13 +1,65 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-<!-- 답변 작성 모달 -->
+
+    <div class="col-8" style="margin-top: 0px;">
+            <h3 style="margin-left: 30px; color: black; font-weight: bolder;">매장 문의</h3>
+            <hr style="border: solid 1px rgb(73, 73, 73); width: 100%; ">
+            <table class="table table table-bordered" style="text-align: center;">
+                <thead>
+                  <tr style="width: 25%;">
+                    <th>작성자</th>
+                    <th>제목</th>
+                    <th>작성 날짜</th>
+                    <th>처리 상태</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style="width: 25%;">spvpt44@naver.com</td>
+                    <td style="width: 45%;"><a href="#" data-bs-toggle="modal" data-bs-target="#csDetail">상품 1의 재고 문의</a></td>
+                    <td style="width: 15%;">2023/02/07 </td>
+                    <td style="width: 25%;">답변 대기</td>
+                  </tr>
+                  <tr>
+                    <td style="width: 25%;">kimst@naver.com</td>
+                    <td style="width: 45%;"><a href="#" data-bs-toggle="modal" data-bs-target="#csDetail"> 상품3의 재고 문의</a></td>
+                    <td style="width: 15%;">2023/02/07 </td>
+                    <td style="width: 15%;">답변 대기</td>
+                  </tr>
+                  <tr>
+                    <td style="width: 25%;">asd@gmail.com</td>
+                    <td style="width: 45%;"><a href="#" data-bs-toggle="modal" data-bs-target="#csDetail">상품4의 픽업 예약 관련 문의 </a></td>
+                    <td style="width: 15%;">2023/02/07 </td>
+                    <td style="width: 15%;">답변 대기</td>
+                  </tr>
+                  <tr>
+                    <td style="width: 25%;">123@naver.com</td>
+                    <td style="width: 45%;"><a href="#" data-bs-toggle="modal" data-bs-target="#csDetail">상품5의 픽업 예약 취소 문의 </a></td>
+                    <td style="width: 15%;">2023/02/07 </td>
+                    <td style="width: 15%;">답변 완료</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <nav aria-label="Page navigation example" style="margin-left: 40%;">
+                <ul class="pagination">
+                  <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                    </a>
+                  </li>
+                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+      </div>
+      <!-- 답변 작성 모달 -->
 <div class="modal fade" id="csWrite" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content" style="width:600px; height: auto;">
@@ -75,63 +127,3 @@
   </div>
     <!-- 모달 끝 -->
     
-    <div class="col-ms-7 col-lg-8" style="margin-top: 0px;">
-            <h3 style="margin-left: 30px; color: black; font-weight: bolder;">매장 문의</h3>
-            <hr style="border: solid 1px rgb(73, 73, 73); width: 100%; ">
-            <table class="table table table-bordered" style="text-align: center;">
-                <thead>
-                  <tr style="width: 25%;">
-                    <th>작성자</th>
-                    <th>제목</th>
-                    <th>작성 날짜</th>
-                    <th>처리 상태</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td style="width: 25%;">spvpt44@naver.com</td>
-                    <td style="width: 45%;"><a href="#" data-bs-toggle="modal" data-bs-target="#csDetail">상품 1의 재고 문의</a></td>
-                    <td style="width: 15%;">2023/02/07 </td>
-                    <td style="width: 25%;">답변 대기</td>
-                  </tr>
-                  <tr>
-                    <td style="width: 25%;">kimst@naver.com</td>
-                    <td style="width: 45%;"><a href="#" data-bs-toggle="modal" data-bs-target="#csDetail"> 상품3의 재고 문의</a></td>
-                    <td style="width: 15%;">2023/02/07 </td>
-                    <td style="width: 15%;">답변 대기</td>
-                  </tr>
-                  <tr>
-                    <td style="width: 25%;">asd@gmail.com</td>
-                    <td style="width: 45%;"><a href="#" data-bs-toggle="modal" data-bs-target="#csDetail">상품4의 픽업 예약 관련 문의 </a></td>
-                    <td style="width: 15%;">2023/02/07 </td>
-                    <td style="width: 15%;">답변 대기</td>
-                  </tr>
-                  <tr>
-                    <td style="width: 25%;">123@naver.com</td>
-                    <td style="width: 45%;"><a href="#" data-bs-toggle="modal" data-bs-target="#csDetail">상품5의 픽업 예약 취소 문의 </a></td>
-                    <td style="width: 15%;">2023/02/07 </td>
-                    <td style="width: 15%;">답변 완료</td>
-                  </tr>
-                </tbody>
-              </table>
-
-              <nav aria-label="Page navigation example" style="margin-left: 40%;">
-                <ul class="pagination">
-                  <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                      <span aria-hidden="true">&laquo;</span>
-                    </a>
-                  </li>
-                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                      <span aria-hidden="true">&raquo;</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-      </div>
-</body>
-</html>

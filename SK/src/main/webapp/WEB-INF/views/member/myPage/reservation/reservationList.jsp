@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/views/include/include-taglib.jspf" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -164,6 +165,13 @@
 </body>
 <script type="text/javascript">
 $(document).ready(function() {
+	
+	// 토스 페이먼츠 결제 후, 픽업 예약 리스트 화면이 표시될 때 웹 스토리지에 paymentKey값 저장
+	//주문번호 받아와서, 웹 스토리지에 key=주문번호, value=paymentKey로 저장
+	var paymentKey = "${paymentKey}";
+	localStorage.setItem("${orderId}", paymentKey);
+
+	
 	$("a[name='goodsDetail']").on("click", function(e) { // 픽업 예약 상품 상세조회
 		e.preventDefault();
 		const reservationNum = $(this).attr("data-num");
@@ -184,10 +192,11 @@ $(document).ready(function() {
 		var formData = new FormData();
 		formData.append("RESERVATION_NUM", reservationNum);
 		formData.append("RESERVATION_STATUS", reservationStatus);
+		formData.append("paymentKey", localStorage.getItem(reservationNum))
 		
 		$.ajax({
 			type : 'post',
-			url : '/sk/myPage/reservationDelete',
+			url : '/sk/reservationCancel',
 			data : formData,
 			processData : false,
 			contentType : false,
