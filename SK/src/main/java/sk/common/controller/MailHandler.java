@@ -1,11 +1,8 @@
 package sk.common.controller;
 
-import java.util.Map;
-
 import javax.annotation.Resource;
 
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,9 +16,9 @@ public class MailHandler {
 	
 	@RequestMapping(value = "/join/emailAuth")
 	@ResponseBody
-	public String mailCheck(@RequestParam Map<String, Object> map) throws Exception {
+	public String mailCheck(String email) {
 		System.out.println("이메일을 확인해주세요.");
-		System.out.println("map: " + map);
-		return mailService.joinEmail(map);
+		return mailService.joinEmail(email);
 	}
+
 }

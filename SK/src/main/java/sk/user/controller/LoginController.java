@@ -1,7 +1,6 @@
 package sk.user.controller;
 
 import java.util.Map;
-import java.util.Random;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -260,26 +258,11 @@ public class LoginController {
 	}
 
 	@GetMapping(value = "/findId")
-	public @ResponseBody String findId(String phoneNumber, String MEM_NAME, String MEM_EMAIL) throws Exception {
+	public ModelAndView findId(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("###### 아이디 찾기 ######");
-		Random rand  = new Random();
-        String numStr = "";
-        for(int i=0; i<4; i++) {
-            String ran = Integer.toString(rand.nextInt(10));
-            numStr+=ran;
-        }
-
-        System.out.println("수신자 번호 : " + phoneNumber);
-        System.out.println("인증번호 : " + numStr);
-        System.out.println("이름: " + MEM_NAME);
-        LoginService.findIdWithPhone(phoneNumber, numStr, MEM_NAME);
-        
-        ModelAndView mv = new ModelAndView();
-        mv.addObject("MEM_EMAIL", MEM_EMAIL);
-        
-        return numStr;
+		ModelAndView mv = new ModelAndView("findId");
+		return mv;
 	}
-	
 
 	@RequestMapping(value = "/findPw")
 	public ModelAndView findPw(@RequestParam Map<String, Object> map) throws Exception {
