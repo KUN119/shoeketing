@@ -51,33 +51,26 @@ public class GoodsController {
 		mv.addObject("list", list);
 		return mv;
 	}
-	
+
 	@RequestMapping(value = "/goods/totalList_ajax")
 	public ModelAndView allGoodsList_ajax(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("###### allGoodsList ######");
 		ModelAndView mv = new ModelAndView("allGoodsList_ajax");
 		map.put("START", 1);
-		map.put("END",5);
-		
+		map.put("END", 5);
+
 		String listType = "";
-		if (map.get("listType") != null) { 
+		if (map.get("listType") != null) {
 			listType = (String) map.get("listType");
 			map.put("listType", listType);
 		}
-		
+
 		List<Map<String, Object>> list = goodsService.selectAllGoodsList(map);
-		
+
 		System.out.println("list: " + list);
 		System.out.println("map: " + map);
-		
-		mv.addObject("list", list);
-		return mv;
-	}
 
-	@GetMapping(value = "/goods/stockSearchForm")
-	public ModelAndView stockSearchForm(@RequestParam Map<String, Object> map) throws Exception {
-		log.debug("###### allGoodsList ######");
-		ModelAndView mv = new ModelAndView("stockSearchForm");
+		mv.addObject("list", list);
 		return mv;
 	}
 
