@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,14 +21,14 @@
           <div class="mt-4 ms-3 row-cols-md-1">
             <table>
             <tr>
-                <p style="font-weight: bolder; font-size: medium; margin-bottom: 0;">상품 1의 재고 문의</p>
+                <p style="font-weight: bolder; font-size: medium; margin-bottom: 0;" class="d_title" id="d_title"></p>
             </tr>
   
             <tr style="height: 70px;">
                 <hr style="border: solid 1px rgb(73, 73, 73); width: 100%; ">
             </tr>
             <tr style="height: 70px;">
-                <p style="font-size: medium; margin-bottom: 0;">보이는 끝까지 찾아다녀도 목숨이 있는 때까지 방황하여도 보이는 것은 거친 모래뿐일 것이다 이상의 꽃이 없으면 쓸쓸한 인간에 남는 것은 영락과 부패 뿐이다 낙원을 장식하는 천자만홍이 어디 있으며 인생을 풍부하게 하는 온갖 과실이</p>
+                <p style="font-size: medium; margin-bottom: 0;" class="d_content" id="d_content"></p>
             </tr>  
             <tr>
                 <hr style="border: solid 1px rgb(73, 73, 73); width: 100%; ">
@@ -40,8 +42,7 @@
                 <hr style="border: solid 1px rgb(73, 73, 73); width: 100%; ">
             </tr>
             <tr style="height: 70px;">
-                <p style="font-size: medium; margin-bottom: 0;">안녕하세요 나이키 명동점입니다.
-                    ~~~~ 매장 문의 답변 내용~~~~</p>
+                <p style="font-size: medium; margin-bottom: 0;" class="d_reply" id="d_reply"></p>
             </tr>  
           </table>
             </div>
@@ -67,12 +68,29 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td style="width: 40%;"><a href="#" data-bs-toggle="modal" data-bs-target="#csDetail">상품 1의 재고 문의</a></td>
-                    <td style="width: 30%;">2023/02/07 </td>
-                    <td style="width: 30%;">답변 대기</td>
-                  </tr>
-                  <tr>
+                	<c:choose>
+                		<c:when test="${fn:length(CSList)>0}">
+	                		<c:forEach var="CS" items="${CSList}" varStatus="status">
+			                  <tr>
+			                    <td style="width: 40%;"><a href="#" data-bs-toggle="modal" data-bs-target="#csDetail" name="title" data-num="${CS.CS_NUM}">${CS.CS_TITLE}</a></td>
+			                    <td style="width: 30%;">${CS.CS_DATE}</td>
+			                    <c:choose>
+			                    	<c:when test="${fn:length(replyList[status.index])>0}">
+			                    	 <td style="width: 30%;">답변 완료</td>
+			                    	</c:when>
+			                    	<c:otherwise>
+			                    	 <td style="width: 30%;">답변 대기</td>
+			                    	</c:otherwise>
+			             		</c:choose>
+			                  </tr>
+	                  		</c:forEach>
+                		</c:when>
+                		<c:otherwise>
+                			등록된 글이 없습니다.
+                		</c:otherwise>
+                	</c:choose>
+                	
+                 	 <!-- <tr>
                     <td style="width: 40%;"><a href="#" data-bs-toggle="modal" data-bs-target="#csDetail">상품 2의 재고 문의</a></td>
                     <td style="width: 30%;">2023/02/05 </td>
                     <td style="width: 30%;">답변 대기</td>
@@ -86,7 +104,7 @@
                     <td style="width: 40%;"><a href="#" data-bs-toggle="modal" data-bs-target="#csDetail">상품 4의 재고 문의</a></td>
                     <td style="width: 30%;">2023/01/30 </td>
                     <td style="width: 30%;">답변 대기</td>
-                  </tr>
+                  </tr>	 -->
                 </tbody>
               </table>
 
@@ -108,5 +126,40 @@
                 </ul>
               </nav>
       </div>
+
+<script type="text/javaScript">
+
+$(document).ready(function() {
+	$("a[name='title']").on("click", function(e) { //회원 탈퇴 버튼을 누르면
+	 e.preventDefault();
+	var num = $(this).attr('data-num'); //string으로 가져옴. attr말고 data('num')으로 쓰면 실제 자료형으로 가져옴
+	//var jsonNum = {"CS_NUM":num};
+	
+	detail(num);
+	});
+});
+
+
+function detail(num) {
+	$.ajax({
+		url:"/sk/myPage/csDetail",
+		type:'post',
+		contentType:"application/json; charset=UTF-8",
+		data:JSON.stringify({CS_NUM:num}),
+		success:function(data) {
+			alert(data.result.CS_CONTENT);
+			$("#d_title").html(data.result.CS_TITLE);
+			$("#d_content").html(data.result.CS_CONTENT);
+			$("#d_reply").html(data.result.CS_REPLY_CONTENT);
+		},
+		error:function() {
+			alert("잠시 후 다시 시도해주세요.");
+		}	
+		});
+}
+
+</script>
+
+
 </body>
 </html>

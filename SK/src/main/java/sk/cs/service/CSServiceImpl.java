@@ -50,7 +50,7 @@ public class CSServiceImpl implements CSService {
 	@Override
 	public Map<String, Object> selectCSDetail(Map<String, Object> map) throws Exception {
 
-		map.put("CS_NUM", 2); // 추후 수정
+		//map.put("CS_NUM", 2); // 추후 수정
 		// map.put("CS_NUM", map.get("CS_NUM"));
 
 		return csDAO.selectCSDetail(map);
@@ -60,7 +60,7 @@ public class CSServiceImpl implements CSService {
 	@Override
 	public Map<String, Object> selectCSReply(Map<String, Object> map) throws Exception {
 
-		map.put("CS_NUM", 2); // 추후 수정
+		//map.put("CS_NUM", 2); // 추후 수정
 		// map.put("CS_NUM", map.get("CS_NUM"));
 
 		return csDAO.selectCSReply(map);
@@ -131,5 +131,7 @@ public class CSServiceImpl implements CSService {
 	public void insertCS(Map<String, Object> map) throws Exception {
 		csDAO.insertCS(map);
 	}
+	
+	//삭제처리 추가 예정
 
 }
