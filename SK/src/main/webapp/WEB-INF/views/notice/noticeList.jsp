@@ -21,7 +21,7 @@
         </div>
         <div class="col input-group">
           <select class="form-select-sm" style="width: 4rem; border-color: rgba(0, 0, 0, 0.263);" id="searchType" name="searchType">
-            <option selected value="total" <c:out value="${searchType eq 'total' ? 'selected' :''}"/>>전체</option>
+            <option selected value="total">전체</option>
             <option value="title" <c:out value="${searchType eq 'title' ? 'selected' :''}"/>>제목</option>
             <option value="content" <c:out value="${searchType eq 'content' ? 'selected' :''}"/>>내용</option>
           </select>

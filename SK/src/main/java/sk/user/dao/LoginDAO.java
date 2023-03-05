@@ -18,10 +18,10 @@ public class LoginDAO extends AbstractDAO{
 	}
 	
 	// 아이디찾기
-	public String findIdWithPhone(String MEM_EMAIL) throws Exception {
-		System.out.println("findIdWithPhone : " + MEM_EMAIL);
-		
-		return (String) selectOne("login.findIdWithPhone", MEM_EMAIL);
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> findIdWithPhone(Map<String, Object> map) throws Exception {
+		System.out.println("findIdWithPhone : " + map);
+		return (Map<String, Object>) selectOne("login.findIdWithPhone", map);
 		// 이름과 생년월일에 해당하는 아이디 가져오기
 	}
 
