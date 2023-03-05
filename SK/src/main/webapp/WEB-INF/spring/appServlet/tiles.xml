@@ -153,8 +153,8 @@
    
    <!-- 개인 회원 마이 페이지 나의 문의 내역 -->
    <definition name="csList" extends="myPageTemplate">
-    	  <put-attribute name="myPage_header" value="/WEB-INF/views/layout/myPage/member_myPage_header.jsp" />
-    	  <put-attribute name="myPage_side" value="/WEB-INF/views/layout/myPage/member_myPage_side.jsp" />
+    	   <put-attribute name="myPage_header" value="/WEB-INF/views/layout/myPage/member_myPage_header.jsp" />
+    	   <put-attribute name="myPage_side" value="/WEB-INF/views/layout/myPage/member_myPage_side.jsp" />
     	  <put-attribute name="myPage_main" value="/WEB-INF/views/member/myPage/cs/csList.jsp" />
     </definition>
   
@@ -214,7 +214,7 @@
    </definition>
    
     <!-- 매장 회원 마이페이지 매장 문의 내역 csList stockList-->
-   <definition name="csList" extends="default1">
+   <definition name="shopCsList" extends="default1">
    	  <put-attribute name="body1" value="/WEB-INF/views/shop/shopPage/cs/csList.jsp" />
    </definition>
    

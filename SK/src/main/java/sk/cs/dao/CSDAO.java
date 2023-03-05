@@ -13,29 +13,36 @@ public class CSDAO extends AbstractDAO {
 	// 나의 문의 리스트 가져오기
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> selectCSList(Map<String, Object> map) throws Exception {
+		System.out.println("selectCSList 파라미터 : " + map);
 		return selectList("cs.selectCSList", map);
 	}
 
 	// 나의 문의 개수 가져오기
 	public int SelectCSCount(Map<String, Object> map) throws Exception {
+		System.out.println("SelectCSCount 파라미터 : " + map);
 		return (int) selectOne("cs.selectCSCount", map);
 	}
 
 	// 지점 리스트 가져오기
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> selectShopList(Map<String, Object> map) throws Exception {
+		System.out.println("selectShopList 파라미터 : " + map);
 		return selectList("cs.selectShopList", map);
 	}
 
 	// 지점 총 개수 가져오기
 	public int selectShopCount(Map<String, Object> map) throws Exception {
+		System.out.println("selectShopCount 파라미터 : " + map);
 		return (int) selectOne("cs.selectShopCount", map);
 	}
 
 	// 문의글 작성처리
 	public void insertCS(Map<String, Object> map) throws Exception {
+		System.out.println("insertCS 파라미터 : " + map);
 		insert("cs.insertCS", map);
 	}
+	
+	//삭제처리 추가예정
 
 	// 매장 문의내역 리스트(10줄) - selectList()
 	@SuppressWarnings("unchecked")
