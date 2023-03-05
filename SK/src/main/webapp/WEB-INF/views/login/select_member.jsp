@@ -4,6 +4,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="/static/js/sweetalert2.min.css">
+<script src="/static/js/sweetalert2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.all.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.min.css" rel="stylesheet">
 <meta charset="UTF-8">
 </head>
 <body>
@@ -18,13 +22,13 @@
           <div class="modal-body">
             <form class="php-email-form mb-5">
                 <div class="form-floating mb-3">
-                  <input type="text" name="MEM_NAME" class="form-control" id="findIdName" placeholder="1">
+                  <input type="text" name="MEM_NAME" class="form-control" name="findIdName" id="findIdName" placeholder="1">
                   <label for="floatingInput">이름을 입력해주세요</label>
                 </div>
                 <div class="form-floating d-flex">
-                  <input type="text" name="MEM_PHONE" class="form-control" id="findIdPhone" placeholder="1">
+                  <input type="text" name="MEM_PHONE" class="form-control" name="findIdPhone" id="findIdPhone" placeholder="1">
                   <label for="floatingPassword">전화번호를 입력해주세요</label>
-                  <button class="btn btn-outline-secondary" type="button" id="button-addon2" style="font-size: 15px; width: 120px;">본인인증</button>
+                  <button class="btn btn-outline-secondary" type="button" name="sendPhoneNumber" id="button-addon2" style="font-size: 15px; width: 120px;">본인인증</button>
                 </div>
             </form>
             <hr>
@@ -53,7 +57,7 @@
           </div>
           <div class="modal-body">
             <h6>고객님의 정보와 일치하는 아이디</h6>
-            <h5 class="text-center mt-5 mb-5">spvpt44@naver.com</h5>
+            <h5 class="text-center mt-5 mb-5">${MEM_EMAIL}</h5>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
@@ -71,6 +75,9 @@
             <h1 class="modal-title fs-5" id="exampleModalLabel">비밀번호 재발급</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
+          <div class="modal-body findPwResultDiv">
+        회원 정보가 없습니다.
+      </div>
           <div class="modal-body">
             <form class="php-email-form mb-5">
                 <div class="form-floating mb-3">
@@ -177,32 +184,51 @@ $(document).ready(function() {
 		});
 	};
 	
-	function fn_findId() { //아이디찾기
+	$("button[name='sendPhoneNumber']").on("click", function(e) {
+		e.preventDefault();
+		fn_sendPhoneNumber();
+	});
 		
-	       var MEM_NAME = $('#MEM_NAME').val();
-	       var MEM_PHONE = $('#MEM_PHONE').val();
-	       var findData = {"MEM_NAME" : MEM_NAME, "MEM_PHONE": MEM_PHONE};
-	         
-	        $.ajax({
-	            url:"<c:url value='/findId'/>",
-	            type:'post',
-	            data:findData,
-	            success:function(data) {
-	            	if(data != null) {
-	            		$(".findIdResultDiv").empty();
-	            		$(".findIdResultDiv").append(MEM_NAME+"님의 아이디는 "+data["MEM_EMAIL"]+" 입니다.");
-	            		$("#findIdModal").modal("hide");
-	            		$("#findIdResultModal").modal("show");
-	            	}
-	            },
-	            error:function() {
-	            	$(".findIdResultDiv").empty();
-         			$(".findIdResultDiv").append("입력하신 정보와 일치한 회원정보가 없습니다.");
-         			$("#findIdModal").modal("hide");
-         			$("#findIdResultModal").modal("show");
-	            }
-	         }); 
-	};
+	function fn_sendPhoneNumber(){
+			let MEM_NAME= $('#findIdName').val();
+            let phoneNumber = $('#findIdPhone').val();
+            Swal.fire('인증번호 발송 완료!')
+
+            $.ajax({
+                type: "GET",
+                url: "/sk/findId",
+                data: {
+                	"MEM_NAME" : MEM_NAME,
+                    "phoneNumber" : phoneNumber
+                },
+                success: function(res){
+                    $('#checkBtn').click(function(){
+                        if($.trim(res) ==$('#findIdWithPhone').val()){
+                            Swal.fire(
+                                '인증성공!',
+                                '휴대폰 인증이 정상적으로 완료되었습니다.',
+                                'success'
+                            );
+
+                            $.ajax({
+                                type: "GET",
+                                url: "/update/phone",
+                                data: {
+                                    "phoneNumber" : $('#findIdPhone').val()
+                                }
+                            });
+                        }else{
+                            Swal.fire({
+                                icon: 'error',
+                                title: '인증오류',
+                                text: '인증번호가 올바르지 않습니다!',
+                                footer: '<a href="/home">다음에 인증하기</a>'
+                            });
+                        }
+                    });
+                }
+            });
+        };
 	
 	$("button[name='findPw']").on("click", function(e) {
 		e.preventDefault();
@@ -212,13 +238,20 @@ $(document).ready(function() {
 	function fn_findPw() { //비밀번호찾기
 		
 	       var MEM_NAME = $('#reissuePwName').val();
-	       var MEM_EMAIL = $('#MEM_EMAIL').val();
-	       var findData = {"MEM_NAME" : MEM_NAME, "MEM_EMAIL": MEM_EMAIL};
+	       var MEM_EMAIL = $('#reissuePwEmail').val();
+	       var findData = new FormData();
+	       findData.append('MEM_NAME', MEM_NAME);
+	       findData.append('MEM_EMAIL', MEM_EMAIL);
+	       
+	       alert(MEM_NAME);
+	       alert(MEM_EMAIL);
 	         
 	        $.ajax({
-	            url: '/join/emailAuth',
-	            type:'post',
+	            url: '/sk/join/emailAuth',
+	            type:'POST',
 	            data:findData,
+	            processData: false,
+				contentType: false,
 	            success:function(data) {
 	            	if(data != null) {
 	            		$(".findPwResultDiv").empty();
@@ -233,7 +266,6 @@ $(document).ready(function() {
 	         		$("#findPwModal").modal("hide");
 	         		$("#findPwResultModal").modal("show");
 	            }
-	            
 	       }); 
 	};
 });
