@@ -30,10 +30,12 @@ body, pre {
 	
 	<!-- admin_body --> 
 	<main id="main">
+		<div class="row g-3" style="margin-top: 4%">
 			<!-- admin_side -->
 			<tiles:insertAttribute name="admin_side"/>
 			<!-- admin_main -->
 			<tiles:insertAttribute name="admin_main"/>
+		</div>
 	</main>
 	<!-- admin_body end -->
 	</div>

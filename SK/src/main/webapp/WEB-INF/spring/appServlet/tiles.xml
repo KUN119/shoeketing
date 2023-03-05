@@ -11,11 +11,18 @@
 	   <put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp" />
 	</definition>
 	
+	<!-- MyPage 레이아웃 -->
 	<definition name="myPageTemplate" template="/WEB-INF/views/layout/myPage/layout_myPage.jsp">
 	   <put-attribute name="header" value="/WEB-INF/views/layout/header.jsp" />
 	   <put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp" />
 	</definition>
 
+	<!-- admin 레이아웃 -->
+	<definition name="adminTemplate" template="/WEB-INF/views/layout/admin/layout_admin.jsp">
+	   <put-attribute name="header" value="/WEB-INF/views/layout/header.jsp" />
+	   <put-attribute name="admin_side" value="/WEB-INF/views/layout/admin/admin_side.jsp" />
+	   <put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp" />
+	</definition>
    
    <!-- 개인 회원 마이페이지 메인 -->
    <definition name="myPageMain" extends="default1">
@@ -233,9 +240,14 @@
    	  <put-attribute name="body1" value="/WEB-INF/views/shop/shopPage/stock/stockList.jsp" />
    </definition> 
 
-	<!-- 관리자 페이지 메인 -->
-   <definition name="adminMain" extends="default1">
-   	  <put-attribute name="body1" value="/WEB-INF/views/admin/main.jsp" />
+	<!-- 관리자 페이지 공지사항 리스트 -->
+   <definition name="adminNoticeList" extends="adminTemplate">
+   	  <put-attribute name="admin_main" value="/WEB-INF/views/admin/noticeList.jsp" />
+   </definition> 
+   
+	<!-- 관리자 페이지 공지사항 상세보기 -->
+   <definition name="adminNoticeDetail" extends="adminTemplate">
+   	  <put-attribute name="admin_main" value="/WEB-INF/views/admin/noticeDetail.jsp" />
    </definition> 
     
 </tiles-definitions>

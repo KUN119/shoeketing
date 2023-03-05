@@ -21,10 +21,18 @@ public class AdminBoardController {
 
 	Log log = LogFactory.getLog(this.getClass());
 
-	@GetMapping(value = "/admin/main")
-	public ModelAndView adminMain(@RequestParam Map<String, Object> map) throws Exception {
-		log.debug("######### 관리자 페이지 메인 ##########");
-		ModelAndView mv = new ModelAndView("adminMain");
+	@GetMapping(value = "/admin/noticeList")
+	public ModelAndView adminNoticeList(@RequestParam Map<String, Object> map) throws Exception {
+		log.debug("######### 관리자 페이지 공지사항 리스트 ##########");
+		ModelAndView mv = new ModelAndView("adminNoticeList");
+
+		return mv;
+	}
+
+	@GetMapping(value = "/admin/noticeDetail")
+	public ModelAndView adminNoticeDetail(@RequestParam Map<String, Object> map) throws Exception {
+		log.debug("######### 관리자 페이지 공지사항 상세보기 ##########");
+		ModelAndView mv = new ModelAndView("adminNoticeDetail");
 
 		return mv;
 	}
