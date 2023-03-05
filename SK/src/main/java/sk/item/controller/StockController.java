@@ -1,6 +1,5 @@
 package sk.item.controller;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,36 +18,65 @@ import sk.item.service.StockService;
 
 @RestController
 public class StockController {
-	
+
 	Log log = LogFactory.getLog(this.getClass());
-	
-	@Resource(name="stockService")
+
+	@Resource(name = "stockService")
 	private StockService stockService;
-	
+
 	@GetMapping(value = "/shopPage/stockList")
 	public ModelAndView shopStockList(Map<String, Object> map) throws Exception {
 		log.debug("###### 매장 상품 재고 리스트 ######");
-		ModelAndView mv = new ModelAndView("testMain");  // 추후 수정
-		
+		ModelAndView mv = new ModelAndView("testMain"); // 추후 수정
+
 		// 재고 리스트 토탈개수 (Ex, 상품이 14줄이면 토탈개수 14)
 		int stockCount = stockService.selectStockCount(map);
 		List<Map<String, Object>> shopStockList = stockService.selectStockList(map);
-		
+
 		mv.addObject("shopStockList", shopStockList);
 		mv.addObject("stockCount", stockCount);
-		
+
 		return mv;
 	}
-	
-	@ResponseBody  // ajax 구현예정. @RestController이므로 추후 @ResponsenBody 빼고,,! 
+
+	@ResponseBody // ajax 구현예정. @RestController이므로 추후 @ResponsenBody 빼고,,!
 	@PostMapping(value = "/shopPage/stockModify")
 	public Map<String, Object> shopStockModify(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("###### 매장 상품 재고 수량 변경 ######");
-		//ModelAndView mv = new ModelAndView("testMain");  // 추후 수정
-		
+		// ModelAndView mv = new ModelAndView("testMain"); // 추후 수정
+
 		Map<String, Object> updateResult = stockService.updateStock(map);
-	
+
 		return updateResult;
+	}
+
+	@GetMapping(value = "/goods/stockSearchForm")
+	public ModelAndView stockSearchForm(@RequestParam Map<String, Object> map) throws Exception {
+		log.debug("###### 실시간 재고 검색폼 ######");
+		ModelAndView mv = new ModelAndView("stockSearchForm");
+		return mv;
+	}
+
+	@PostMapping(value = "/goods/stockSearch")
+	public ModelAndView ShopSearch(@RequestParam Map<String, Object> map) throws Exception {
+		log.debug("###### 실시간 재고 소유 매장 리스트 검색 ######");
+		ModelAndView mv = new ModelAndView("stockShopSearch_ajax");
+
+		map.put("START", 1);
+		map.put("END", 9);
+		List<Map<String, Object>> resultList = stockService.selectShopStockList(map);
+		mv.addObject("shopList", resultList);
+
+		return mv;
+	}
+
+	@ResponseBody
+	@PostMapping(value = "/goods/stockShopInfo")
+	public Map<String, Object> stockShopInfo(@RequestParam Map<String, Object> map) throws Exception {
+		log.debug("###### 실시간 재고 소유 매장 상세정보 ######");
+		Map<String, Object> resultMap = stockService.selectStockShopInfo(map);
+
+		return resultMap;
 	}
 
 }

@@ -56,9 +56,14 @@
    	  <put-attribute name="body1" value="/WEB-INF/views/goods/goodsDetail.jsp" />
     </definition>
     
-    <!-- 상품 상세보기 -->
+    <!-- 제품 찾기 폼 -->
 	<definition name="stockSearchForm" extends="default1">
    	  <put-attribute name="body1" value="/WEB-INF/views/goods/search/stockSearchForm.jsp" />
+    </definition>
+    
+    <!-- 제품 찾기 폼 -->
+	<definition name="stockShopSearch_ajax" template="/WEB-INF/views/layout/layout_ajax.jsp">
+   	  <put-attribute name="body_ajax" value="/WEB-INF/views/goods/search/stockShopSearch_ajax.jsp" />
     </definition>
     
     <!-- 통합 검색 -->
@@ -193,6 +198,10 @@
    	  <put-attribute name="body1" value="/WEB-INF/views/brand/shop/shopList.jsp" />
    </definition> 
 
+	<!-- 관리자 페이지 메인 -->
+   <definition name="adminMain" extends="default1">
+   	  <put-attribute name="body1" value="/WEB-INF/views/admin/main.jsp" />
+   </definition> 
     
 </tiles-definitions>
 

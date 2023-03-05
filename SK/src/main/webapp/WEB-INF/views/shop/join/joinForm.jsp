@@ -5,37 +5,93 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=08e2c5126e1c7f5ac14b68c3f37365ad&libraries=services,clusterer,drawing"></script>
+
+<script
+    type="text/javascript"
+    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=08e2c5126e1c7f5ac14b68c3f37365ad"
+  ></script>
+<script>
+    function sample6_execDaumPostcode() {
+    	const shopName = $("#SHOP_NAME").val();
+    	if(shopName == null || shopName == "") {
+    		alert("지점명을 먼저 입력해주세요");
+    		return false;
+    	}
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var addr = ''; // 주소 변수
+                var extraAddr = ''; // 참고항목 변수
+                
+                const mapContainer = document.getElementById("map"), // 지도를 표시할 div
+                mapOption = {
+                  center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                  level: 3, // 지도의 확대 레벨
+                };
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById("SHOP_ADD").value = addr;
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById("SHOP_ADD").focus();
+                
+                const address = $("#SHOP_ADD").val();
+
+                // 지도를 생성합니다
+                const map = new kakao.maps.Map(mapContainer, mapOption);
+
+                // 주소-좌표 변환 객체를 생성합니다
+                const geocoder = new kakao.maps.services.Geocoder();
+
+                // 주소로 좌표를 검색합니다
+                geocoder.addressSearch(
+                  address,
+                  function (result, status) {
+                    // 정상적으로 검색이 완료됐으면
+                    if (status === kakao.maps.services.Status.OK) {
+                      var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+                      // 결과값으로 받은 위치를 마커로 표시합니다
+                      var marker = new kakao.maps.Marker({
+                        map: map,
+                        position: coords,
+                      });
+
+                      // 인포윈도우로 장소에 대한 설명을 표시합니다
+                      var infowindow = new kakao.maps.InfoWindow({
+                    		  content:
+                                  '<div style="width:150px; box-shadow: 2px 2px 2px 2px gray; text-align:center;padding:6px 0;">'+ shopName +'</div>',
+                      });
+                      infowindow.open(map, marker);
+
+                      // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+                      map.setCenter(coords);
+                      
+                      $("#SHOP_POS1").val(coords.La);
+                      $("#SHOP_POS2").val(coords.Ma);
+                      
+                      console.log($("#SHOP_POS1").val());
+                      console.log($("#SHOP_POS2").val());
+                    }
+                  }
+                );
+            }
+        }).open();
+    }
+</script>
 </head>
 <body>
-
-<!-- shopLocationModal -->
-    <div class="modal fade" id="shopLocationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">매장 주소</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <form class="php-email-form mb-5">
-                <div class="form-floating d-flex">
-                  <input type="text" class="form-control" id="SHOP_ADD" name="SHOP_ADD" placeholder="1">
-                  <label for="floatingInput">매장 주소를 입력해주세요</label>
-                  <button class="btn btn-outline-secondary" type="button" id="button-addon2" style="font-size: 15px; width: 120px;">검색</button>
-                </div>
-            </form>
-              <!--카카오 지도 API 적용 div-->
-		      <div class="row">
-		      	<div id="map" style="width: 500px; height: 500px"></div>
-		      </div>
-		      <!--카카오 지도 API 적용 div 끝-->
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-          </div>  
-        </div>
-      </div>
-    </div>
 
 <div class="container" style="width: 600px">
       <div class="box-shadow-full" style="margin-top: 100px">
@@ -160,17 +216,25 @@
                 style="font-size: large; font-weight: bolder"
                 >매장 주소</label
               >
-              <input
-                class="form-control"
-                type="text"
-                id="SHOP_ADD"
-                name="SHOP_ADD"
-                required
-              />
-              <button type="button" class="btn btn-outline-primary mt-3" data-bs-toggle="modal" data-bs-target="#shopLocationModal">
-                매장 위치 검색
-              </button>
+              <div class="d-flex">
+	              <input
+	                class="form-control"
+	                type="text"
+	                id="SHOP_ADD"
+	                name="SHOP_ADD"
+	                required
+	              />
+	              <button type="button" class="btn btn-outline-primary" style="width:8rem;" onclick="sample6_execDaumPostcode()">주소찾기</button>
+              </div>
+              <input type="hidden" id="SHOP_POS1" name="SHOP_POS1" value="" />
+              <input type="hidden" id="SHOP_POS2" name="SHOP_POS2" value="" />
             </div>
+            
+            <div class="row">
+		      	<div class="col-auto">
+		      		<div id="map" style="width: 480px; height: 500px"></div>
+		      	</div>
+		      </div>
           </div>
 
           <hr class="my-4" />
@@ -185,49 +249,5 @@
       </div>
     </div>
 </body>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=08e2c5126e1c7f5ac14b68c3f37365ad&libraries=services,clusterer,drawing"></script>
 
-<script
-    type="text/javascript"
-    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=08e2c5126e1c7f5ac14b68c3f37365ad"
-  ></script>
-  
-<script>
-var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-    mapOption = {
-        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-        level: 3 // 지도의 확대 레벨
-    };  
-
-// 지도를 생성합니다    
-var map = new kakao.maps.Map(mapContainer, mapOption); 
-
-// 주소-좌표 변환 객체를 생성합니다
-var geocoder = new kakao.maps.services.Geocoder();
-
-// 주소로 좌표를 검색합니다
-geocoder.addressSearch('서울특별시 서대문구 북아현로10길', function(result, status) {
-
-    // 정상적으로 검색이 완료됐으면 
-     if (status === kakao.maps.services.Status.OK) {
-
-        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
-        // 결과값으로 받은 위치를 마커로 표시합니다
-        var marker = new kakao.maps.Marker({
-            map: map,
-            position: coords
-        });
-
-        // 인포윈도우로 장소에 대한 설명을 표시합니다
-        var infowindow = new kakao.maps.InfoWindow({
-            content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
-        });
-        infowindow.open(map, marker);
-
-        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-        map.setCenter(coords);
-    } 
-});
-</script>
 </html>
