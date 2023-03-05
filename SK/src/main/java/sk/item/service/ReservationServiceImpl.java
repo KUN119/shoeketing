@@ -87,7 +87,7 @@ public class ReservationServiceImpl implements ReservationService {
 		int reservationUserMemNum = Integer.parseInt(pickupDetailMap.get("RESERVATION_USER").toString());
 		
 		// 예약 상태가 예약 대기중 -> 예약 취소로 변경됐으므로, 회원에게 알림
-		String str = "회원님께서 예약하신 '" + pickupGoodsName + "'의 예약 상태가 '예약 취소'로 변경되었습니다.";
+		String str = "회원님께서 예약하신 '" + pickupGoodsName + "'의 예약 상태가 '예약 취소'로 변경되었으며, 픽업 예약금도 함께 취소되었습니다";
 		
 		// insertInform시 필요한 파라미터들 넣어주기 (알림내용, 알림받을 회원번호, 알림유형)
 		map.put("INFORM_CONTENT", str);
@@ -137,7 +137,7 @@ public class ReservationServiceImpl implements ReservationService {
 		int reservationUserMemNum = Integer.parseInt(detailMap.get("RESERVATION_USER").toString());
 		
 		// 예약 상태가 픽업 대기중 -> 픽업 취소로 변경됐으므로, 회원에게 알림
-		String str = "회원님께서 예약하신 '" + pickupGoodsName + "'의 예약 상태가 '픽업 취소'로 변경되었습니다.";
+		String str = "회원님께서 예약하신 '" + pickupGoodsName + "'의 예약 상태가 '픽업 취소'로 변경되었으며, 픽업 예약금도 함께 취소되었습니다.";
 		
 		// insertInform시 필요한 파라미터들 넣어주기 (알림내용, 알림받을 회원번호, 알림유형)
 		map.put("INFORM_CONTENT", str);
@@ -257,9 +257,22 @@ public class ReservationServiceImpl implements ReservationService {
 	// ajax 구현 예정
 	// 예약금 결제 성공_토스 페이먼츠 api 구현 예정 
 	@Override
-	public Map<String, Object> insertReservation(Map<String, Object> map) throws Exception {
+	public Map<String, Object> insertReservation(Map<String, Object> map, HttpSession session) throws Exception {
 
 		Map<String, Object> resultMap = new HashMap<>();
+		
+		int insertReservationResult = reservationDAO.insertReservation(map);
+		
+		
+		map.put("RESERVATION_PRONUM", map.get("RESERVATION_PRONUM"));
+		map.put("RESERVATION_SHOP_NUM", map.get("RESERVATION_SHOP_NUM"));
+		map.put("RESERVATION_SIZE", map.get("RESERVATION_SIZE"));
+		
+		map.put("RESERVATION_USER", commonService.getSession(session, "MEM_NUM"));
+		map.put("RESERVATION_PHONE", commonService.getSession(session, "MEM_PHONE"));
+		map.put("RESERVATION_PICKUP_DATE", map.get("RESERVATION_PICKUP_DATE"));
+		
+
 		
 		return resultMap;
 	}

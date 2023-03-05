@@ -38,7 +38,7 @@ public interface ReservationService {
 	public Map<String, Object> updateStockDecrease(Map<String, Object> map) throws Exception;
 	
 	// 예약금 결제 성공
-	public Map<String, Object> insertReservation(Map<String, Object> map) throws Exception; 
+	public Map<String, Object> insertReservation(Map<String, Object> map, HttpSession session) throws Exception; 
 		
 	
 }

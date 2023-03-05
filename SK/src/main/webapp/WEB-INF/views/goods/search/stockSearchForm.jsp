@@ -47,7 +47,10 @@
             >
               취소
             </button>
-            <button type="button" class="btn btn-primary">예약하기</button>
+            <!-- 토스 페이먼츠 API -->
+            <div id="payment-method"></div>
+            <button type="button" class="btn btn-primary" id="payment-button">예약하기</button>
+            <!-- 토스 페이먼츠 API 끝-->
           </div>
         </div>
       </div>
@@ -224,10 +227,15 @@
       <!--카카오 지도 API 적용 div 끝-->
     </div>
   </body>
+  
   <script
     type="text/javascript"
     src="//dapi.kakao.com/v2/maps/sdk.js?appkey=08e2c5126e1c7f5ac14b68c3f37365ad"
   ></script>
+  
+  <!-- 토스 페이먼츠 API -->
+  <script src="https://js.tosspayments.com/v1/payment-widget"></script>
+  
   <script>
   $(document).ready(function(e) {
 	  
@@ -341,6 +349,77 @@
 		
 		
   });
+		
+		//마커가 지도 위에 표시되도록 설정합니다
+		marker.setMap(map);
+		
+		//############### 매장 정보가 들어갈 공간 ###################
+		var iwContent = `<div
+	        style="
+	          padding: 15px 20px 20px 15px;
+	          width: 400px;
+	          height: 210px;
+	          box-shadow: 2px 2px 2px 2px gray;
+	          border: none;
+	        "
+	      >
+	        <h4 class="mb-4" style="font-weight: 700">나이키 명동</h4>
+	        <p class="mb-1">서울특별시 중구 남대문로 78</p>
+	        <p style="color: forestgreen">02-362-7789</p>
+	        <h6 style="font-weight: 700">재고 : 5개</h6>
+	        <div class="d-flex justify-content-between">
+	          <a href="#" class="align-self-center">문의하기</a>
+	          <div>
+	            <button
+	              class="button"
+	              type="button"
+	              style="border: 1px solid rgba(0, 0, 0, 0.116)"
+	              data-bs-toggle="modal" data-bs-target="#pickUpDateModal"
+	            >
+	              픽업예약
+	            </button>
+	            <button
+	              class="button"
+	              type="button"
+	              style="border: 1px solid rgba(0, 0, 0, 0.116)"
+	            >
+	              장바구니
+	            </button>
+	          </div>
+	        </div>
+	      </div>`, // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+	      //####### 좌표 입력3 #########
+		  iwPosition = new kakao.maps.LatLng(37.5641952, 126.9817070); //인포윈도우 표시 위치입니다 SHOP_POS2, SHOP_POS1 값 넣어주기
+		//############### 매장 정보가 들어갈 공간 끝 ###################
+		
+		//인포윈도우를 생성합니다
+		var infowindow = new kakao.maps.InfoWindow({
+		  position : iwPosition, 
+		  content : iwContent 
+		});
+		
+		//마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
+		infowindow.open(map, marker);
+		
+		
+		// 토스 페이먼츠 결제  (추후 orderId, orderName, customerEmail, customerName 수정필요)
+		const clientKey = 'test_ck_7XZYkKL4Mrjnv7vJl1ar0zJwlEWR';
+	    const customerKey = 'yunjeong1234'; 
+	    const paymentWidget = PaymentWidget(clientKey, customerKey);  // 결제위젯 초기화
+	    
+	    $("#payment-button").on("click", function(e){
+	    	paymentWidget.renderPaymentMethods('#payment-method', 30000);
+	    	
+	    	paymentWidget.requestPayment({
+	      	  orderId: 10000030,
+	      	  orderName: '코트버로우 로우',
+	      	  successUrl: 'http://localhost:8080/sk/reservationSuccess',
+	      	  failUrl: 'http://localhost:8080/sk',
+	      	  customerEmail: 'dbswjd8178@naver.com', 
+	      	  customerName: '김윤정'
+	      	});
+	   
+	    });
 		
   </script>
 </html>
