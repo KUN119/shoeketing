@@ -77,6 +77,13 @@
 			<artifactId>mail</artifactId>
 			<version>1.4.7</version>
 		</dependency>
+		
+		<!-- 문자인증 api -->
+		<dependency>
+		    <groupId>net.nurigo</groupId>
+		    <artifactId>javaSDK</artifactId>
+		    <version>2.2</version>
+  		</dependency>
 				
 		<!-- AspectJ -->
 		<dependency>

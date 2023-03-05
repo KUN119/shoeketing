@@ -67,8 +67,7 @@
 	<!-- 아이디 찾기 -->
 	<select id = "findIdWithPhone" parameterType="hashmap" resultType="hashmap">
 		<![CDATA[
-			SELECT 
-					MEM_EMAIL
+			SELECT MEM_EMAIL
     		FROM MEMBER
     		WHERE MEM_NAME = #{MEM_NAME} AND to_char(MEM_PHONE)= #{MEM_PHONE}
 			AND MEM_DEL_GB = 'N'
