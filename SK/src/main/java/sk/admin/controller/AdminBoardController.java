@@ -36,4 +36,12 @@ public class AdminBoardController {
 
 		return mv;
 	}
+
+	@GetMapping(value = "/admin/noticeWriteForm")
+	public ModelAndView adminNoticeWriteForm(@RequestParam Map<String, Object> map) throws Exception {
+		log.debug("######### 관리자 페이지 공지사항 작성 폼 ##########");
+		ModelAndView mv = new ModelAndView("adminNoticeWriteForm");
+
+		return mv;
+	}
 }

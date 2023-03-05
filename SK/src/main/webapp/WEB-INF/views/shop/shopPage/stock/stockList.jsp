@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<div class="col-ms-7 col-lg-8" style="margin-top: 0px;">
+<div class="col-8" style="margin-top: 0px;">
             <table>
                 <tr>
                     <td style="width:250px;">

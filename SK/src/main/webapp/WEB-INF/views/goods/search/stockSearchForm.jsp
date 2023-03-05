@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/views/include/include-taglib.jspf" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,7 +38,12 @@
             ></button>
           </div>
           <div class="modal-body">
-            <input type="date" class="form-control"/>
+          	<form id="reservationForm">
+            	<input type="date" id="RESERVATION_PICKUP_DATE" name="RESERVATION_PICKUP_DATE" class="form-control"/>
+            	<input type="hidden" id="RESERVATION_PRONUM" name="RESERVATION_PRONUM" value="" />
+            	<input type="hidden" id="RESERVATION_SHOP_NUM" name="RESERVATION_SHOP_NUM" value="" />
+            	<input type="hidden" id="RESERVATION_SIZE" name="RESERVATION_SIZE" value="" />
+            </form>
           </div>
           <div class="modal-footer">
             <button
@@ -226,7 +232,9 @@
       </div>
       <!--카카오 지도 API 적용 div 끝-->
     </div>
+    
   </body>
+  
   
   <script
     type="text/javascript"
@@ -261,8 +269,14 @@
 		  e.preventDefault();
 		  const shopNum = $(this).attr('data-num');
 		  const goodsAmount = $(this).attr('data-amount');
+		  const goodsNum = $(this).attr('data-goods_num');
 		  const goodsName = $(this).attr('data-goods_name');
 		  const goodsSize = $(this).attr('data-goods_size');
+		  
+		  $("#RESERVATION_PRONUM").val(goodsNum);
+		  $("#RESERVATION_SHOP_NUM").val(shopNum);
+		  $("#RESERVATION_SIZE").val(goodsSize);
+		  
 		  var formData2 = new FormData();
 		  formData2.append("SHOP_NUM", shopNum);
 		  
@@ -317,6 +331,7 @@
 				              type="button"
 				              style="border: 1px solid rgba(0, 0, 0, 0.116)"
 				              data-bs-toggle="modal" data-bs-target="#pickUpDateModal"
+				              data-shop_num=
 				            >
 				              픽업예약
 				            </button>
@@ -353,6 +368,9 @@
 	  const paymentWidget = PaymentWidget(clientKey, customerKey);  // 결제위젯 초기화
 	  
 	  $("#payment-button").on("click", function(e){
+		  
+		  alert($("#RESERVATION_PRONUM").val());
+		  
 	  	paymentWidget.renderPaymentMethods('#payment-method', 30000);
 	  	
 	  	paymentWidget.requestPayment({

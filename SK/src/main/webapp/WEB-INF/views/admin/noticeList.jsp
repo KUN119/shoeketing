@@ -23,27 +23,27 @@
         <tbody class="table-group-divider">
           <tr>
             <td>1</td>
-            <td><a href="#">[공지] 회원 탈퇴 안내</a></td>
+            <td><a href="/sk/admin/noticeDetail">[공지] 회원 탈퇴 안내</a></td>
             <td>23/03/03</td>
           </tr>
           <tr>
             <td>2</td>
-            <td><a href="#">개인정보처리방침 변경 내역_2023년 2월 13일 이후</a></td>
+            <td><a href="/sk/admin/noticeDetail">개인정보처리방침 변경 내역_2023년 2월 13일 이후</a></td>
             <td>23/03/03</td>
           </tr>
           <tr>
             <td>3</td>
-            <td><a href="#">뉴발란스 신발 소비자 가격 인상 안내</a></td>
+            <td><a href="/sk/admin/noticeDetail">뉴발란스 신발 소비자 가격 인상 안내</a></td>
             <td>23/03/03</td>
           </tr>
           <tr>
             <td>4</td>
-            <td><a href="#">헌신 줄게, 새신다오 이벤트 당첨자 안내</a></td>
+            <td><a href="/sk/admin/noticeDetail">헌신 줄게, 새신다오 이벤트 당첨자 안내</a></td>
             <td>23/03/03</td>
           </tr>
           <tr>
             <td>5</td>
-            <td><a href="#">크리스마스 기획전 당첨자 발표 관련 안내</a></td>
+            <td><a href="/sk/admin/noticeDetail">크리스마스 기획전 당첨자 발표 관련 안내</a></td>
             <td>23/03/03</td>
           </tr>
         </tbody>

@@ -33,7 +33,7 @@
         			<c:forEach begin="${num.index*3-2 }" end="${num.index*3 }" varStatus="status">
         				<c:choose>
 	        				<c:when test="${not empty shopList[status.current-1].SHOP_NAME}">
-	        					<th scope="row"><a name="shopName" data-num="${shopList[status.current-1].SHOP_NUM }" data-amount="${shopList[status.current-1].SHOP_GOODS_AMOUNT }" data-goods_name="${shopList[status.current-1].TOTAL_GOODS_NAME }" data-goods_size="${shopList[status.current-1].SHOP_GOODS_SIZE }"  style="cursor:pointer;">${shopList[status.current-1].SHOP_NAME } (${shopList[status.current-1].TOTAL_GOODS_NAME })</a></th>
+	        					<th scope="row"><a name="shopName" data-num="${shopList[status.current-1].SHOP_NUM }" data-amount="${shopList[status.current-1].SHOP_GOODS_AMOUNT }" data-goods_name="${shopList[status.current-1].TOTAL_GOODS_NAME }" data-goods_size="${shopList[status.current-1].SHOP_GOODS_SIZE }" data-goods_num="${shopList[status.current-1].TOTAL_GOODS_NUM }"  style="cursor:pointer;">${shopList[status.current-1].SHOP_NAME } (${shopList[status.current-1].TOTAL_GOODS_NAME })</a></th>
 	        				</c:when>
 	        				<c:when test="${empty shopList[status.current-1].SHOP_NAME}">
 	        					<th scope="row"></th>

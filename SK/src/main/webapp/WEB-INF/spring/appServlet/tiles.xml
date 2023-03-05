@@ -211,34 +211,46 @@
     </definition>
 
     <!-- 브랜드 회원 마이페이지 입점 매장 리스트 shopList-->
-   <definition name="shopList" extends="default1">
-   	  <put-attribute name="body1" value="/WEB-INF/views/brand/shop/shopList.jsp" />
-   </definition>
+   <definition name="shopList" extends="myPageTemplate">
+    	  <put-attribute name="myPage_header" value="/WEB-INF/views/layout/myPage/brand_myPage_header.jsp" />
+    	  <put-attribute name="myPage_side" value="/WEB-INF/views/layout/myPage/brand_myPage_side.jsp" />
+    	  <put-attribute name="myPage_main" value="/WEB-INF/views/brand/shop/shopList.jsp" />
+    </definition>
    
     <!-- 브랜드 회원 마이페이지 입점 매장 입점 요청 shopRequestList shopPage-->
-   <definition name="shopRequestList" extends="default1">
-   	  <put-attribute name="body1" value="/WEB-INF/views/brand/shop/shopRequestList.jsp" />
-   </definition>
+   <definition name="shopRequestList" extends="myPageTemplate">
+    	  <put-attribute name="myPage_header" value="/WEB-INF/views/layout/myPage/brand_myPage_header.jsp" />
+    	  <put-attribute name="myPage_side" value="/WEB-INF/views/layout/myPage/brand_myPage_side.jsp" />
+    	  <put-attribute name="myPage_main" value="/WEB-INF/views/brand/shop/shopRequestList.jsp" />
+    </definition>
    
     <!-- 매장 회원 마이페이지 shopPage-->
-   <definition name="shopPage" extends="default1">
-   	  <put-attribute name="body1" value="/WEB-INF/views/shop/shopPage/main.jsp" />
-   </definition>
+   <definition name="shopPage" extends="myPageTemplate">
+    	  <put-attribute name="myPage_header" value="/WEB-INF/views/layout/myPage/shop_myPage_header.jsp" />
+    	  <put-attribute name="myPage_side" value="/WEB-INF/views/layout/myPage/shop_myPage_side.jsp" />
+    	  <put-attribute name="myPage_main" value="/WEB-INF/views/shop/shopPage/main.jsp" />
+    </definition>
    
     <!-- 매장 회원 마이페이지 shopAccountModifyForm-->
-   <definition name="accountModifyForm" extends="default1">
-   	  <put-attribute name="body1" value="/WEB-INF/views/shop/shopPage/account/accountModifyForm.jsp" />
-   </definition>
+   <definition name="accountModifyForm" extends="myPageTemplate">
+    	  <put-attribute name="myPage_header" value="/WEB-INF/views/layout/myPage/shop_myPage_header.jsp" />
+    	  <put-attribute name="myPage_side" value="/WEB-INF/views/layout/myPage/shop_myPage_side.jsp" />
+    	  <put-attribute name="myPage_main" value="/WEB-INF/views/shop/shopPage/account/accountModifyForm.jsp" />
+    </definition>
    
     <!-- 매장 회원 마이페이지 매장 문의 내역 csList stockList-->
-   <definition name="csList" extends="default1">
-   	  <put-attribute name="body1" value="/WEB-INF/views/shop/shopPage/cs/csList.jsp" />
-   </definition>
+   <definition name="shopCSList" extends="myPageTemplate">
+    	  <put-attribute name="myPage_header" value="/WEB-INF/views/layout/myPage/shop_myPage_header.jsp" />
+    	  <put-attribute name="myPage_side" value="/WEB-INF/views/layout/myPage/shop_myPage_side.jsp" />
+    	  <put-attribute name="myPage_main" value="/WEB-INF/views/shop/shopPage/cs/csList.jsp" />
+    </definition>
    
     <!-- 매장 회원 마이페이지 재 리스트 stockList-->
-   <definition name="stockList" extends="default1">
-   	  <put-attribute name="body1" value="/WEB-INF/views/shop/shopPage/stock/stockList.jsp" />
-   </definition> 
+	<definition name="stockList" extends="myPageTemplate">
+    	  <put-attribute name="myPage_header" value="/WEB-INF/views/layout/myPage/shop_myPage_header.jsp" />
+    	  <put-attribute name="myPage_side" value="/WEB-INF/views/layout/myPage/shop_myPage_side.jsp" />
+    	  <put-attribute name="myPage_main" value="/WEB-INF/views/shop/shopPage/stock/stockList.jsp" />
+    </definition>
 
 	<!-- 관리자 페이지 공지사항 리스트 -->
    <definition name="adminNoticeList" extends="adminTemplate">
@@ -248,6 +260,11 @@
 	<!-- 관리자 페이지 공지사항 상세보기 -->
    <definition name="adminNoticeDetail" extends="adminTemplate">
    	  <put-attribute name="admin_main" value="/WEB-INF/views/admin/noticeDetail.jsp" />
+   </definition> 
+   
+	<!-- 관리자 페이지 공지사항 작성폼 -->
+   <definition name="adminNoticeWriteForm" extends="adminTemplate">
+   	  <put-attribute name="admin_main" value="/WEB-INF/views/admin/noticeWriteForm.jsp" />
    </definition> 
     
 </tiles-definitions>

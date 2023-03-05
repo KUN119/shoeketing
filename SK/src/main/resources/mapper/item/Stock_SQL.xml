@@ -76,6 +76,7 @@
 		                    S.SHOP_POS2,
 		                    S.SHOP_START_TIME,
 		                    S.SHOP_END_TIME,
+		                    TG.TOTAL_GOODS_NUM,
 		                    TG.TOTAL_GOODS_NAME,
 		                    SG.SHOP_GOODS_SHOP_NUM,
 		                    SG.SHOP_GOODS_SIZE,
