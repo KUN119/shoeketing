@@ -28,7 +28,7 @@ public class StockController {
 	@GetMapping(value = "/shopPage/stockList")
 	public ModelAndView shopStockList(Map<String, Object> map) throws Exception {
 		log.debug("###### 매장 상품 재고 리스트 ######");
-		ModelAndView mv = new ModelAndView("testMain");  // 추후 수정
+		ModelAndView mv = new ModelAndView("stockList");  // 추후 수정
 		
 		// 재고 리스트 토탈개수 (Ex, 상품이 14줄이면 토탈개수 14)
 		int stockCount = stockService.selectStockCount(map);

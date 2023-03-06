@@ -213,9 +213,14 @@
    	  <put-attribute name="body1" value="/WEB-INF/views/shop/shopPage/cs/csList.jsp" />
    </definition>
    
-    <!-- 매장 회원 마이페이지 재 리스트 stockList-->
+    <!-- 매장 회원 마이페이지 재고 리스트 stockList reservationList-->
    <definition name="stockList" extends="default1">
    	  <put-attribute name="body1" value="/WEB-INF/views/shop/shopPage/stock/stockList.jsp" />
+   </definition> 
+
+    <!-- 매장 회원 마이페이지 예약 목록 reservationList-->
+   <definition name="reservationList" extends="default1">
+   	  <put-attribute name="body1" value="/WEB-INF/views/shop/shopPage/reservation/reservationRequestList.jsp" />
    </definition> 
 
     
