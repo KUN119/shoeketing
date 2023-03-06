@@ -39,11 +39,8 @@ public class BrandPageController {
 		log.debug("###### 브랜드 기본 정보 수정 폼 ######");
 		ModelAndView mv = new ModelAndView("brandModifyForm"); // 추후 수정
 
-		// 로직 서비스에 있음(나중에 주석 삭제)
 		Map<String, Object> brandInfoMap = brandPageService.selectBrandInfo(map, session);
 
-		// 기본 정보 수정폼에 브랜드 정보 조회해서 출력 (BRAND_ID, BRAND_NAME, BRAND_BUSINESS_NUM,
-		// BRAND_ADD, BRAND_LOGO_FILE, BRAND_INFO)
 		System.out.println("brandInfoMap : " + brandInfoMap);
 		mv.addObject("brandInfoMap", brandInfoMap);
 
@@ -58,7 +55,6 @@ public class BrandPageController {
 
 		System.out.println("map 확인 : " + map);
 
-		// 로직 서비스에 있음(나중에 주석 삭제)
 		Map<String, Object> resultMap = brandPageService.updateBrandInfo(map);
 
 		return resultMap;
@@ -67,14 +63,11 @@ public class BrandPageController {
 	@GetMapping(value = "/brandPage/shopList")
 	public ModelAndView shopList(Map<String, Object> map, HttpSession session) throws Exception {
 		log.debug("###### 브랜드 입점 매장 리스트 ######");
-		ModelAndView mv = new ModelAndView("shopList"); // 추후 수정 (brand/shop/shopList.jsp)
+		ModelAndView mv = new ModelAndView("shopList"); 
 
-		// 로직 서비스에 있음(나중에 주석 삭제)
 		List<Map<String, Object>> shopList = brandPageService.selectShopList(map, session);
-		System.out.println("shopList 확인 : " + shopList);
 
-		mv.addObject("shopList", shopList); // SHOP_NAME, SHOP_TEL, SHOP_ADD, SHOP_START_TIME, SHOP_END_TIME
-		// choose-when-foreach 사용해서 반복문으로 매장 리스트 출력
+		mv.addObject("shopList", shopList); 
 
 		// 해당 브랜드 입점 매장 토탈 개수
 		int shopCount = brandPageService.selectShopCount(map, session);
@@ -86,20 +79,16 @@ public class BrandPageController {
 	@GetMapping(value = "/brandPage/shopRequestList")
 	public ModelAndView shopRequestList(Map<String, Object> map, HttpSession session) throws Exception {
 		log.debug("###### 브랜드 매장 입점 요청 리스트 ######");
-		ModelAndView mv = new ModelAndView("shopRequestList"); // 추후 수정 (brand/shop/shopRequestList.jsp)
+		ModelAndView mv = new ModelAndView("shopRequestList");
 
-		// 로직 서비스에 있음(나중에 주석 삭제)
 		List<Map<String, Object>> shopRequestList = brandPageService.selectRequestShopList(map, session);
-		System.out.println("shopRequestList 확인 : " + shopRequestList);
-
-		mv.addObject("shopRequestList", shopRequestList); // SHOP_NAME, SHOP_TEL, SHOP_ADD, SHOP_START_TIME,
-															// SHOP_END_TIME
-		// choose-when-foreach 사용해서 반복문으로 매장 리스트 출력
+		
+		mv.addObject("shopRequestList", shopRequestList); 
 
 		return mv;
 	}
 
-	// ajax 구현 예정
+	// ajax 구현
 	@ResponseBody
 	@PostMapping(value = "/brandPage/shopJoinApprove")
 	public Map<String, Object> shopJoinApprove(@RequestParam Map<String, Object> map) throws Exception {
@@ -112,7 +101,7 @@ public class BrandPageController {
 		return result;
 	}
 	
-	// ajax 구현 예정
+	// ajax 구현
 	@ResponseBody
 	@PostMapping(value = "/brandPage/shopJoinReject")
 	public Map<String, Object> shopJoinReject(@RequestParam Map<String, Object> map) throws Exception {

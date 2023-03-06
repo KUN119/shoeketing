@@ -43,19 +43,11 @@ public class TossPaymentsController {
 		log.debug("###### 픽업 예약금 결제 성공 ######");
 	
 		ModelAndView mv = new ModelAndView("redirect:/tossPaymentsApprove");   // 픽업 예약금 결제 승인으로 리다이렉트
-
-		System.out.println("pickupDate : " + map.get("pickupDate"));
-		System.out.println("goodsNum : " + map.get("goodsNum"));
-		System.out.println("shopNum : " + map.get("shopNum")); 
-		System.out.println("goodsSize : " + map.get("goodsSize"));
-		System.out.println("paymentKey : " + map.get("paymentKey"));
-		System.out.println("orderId : " + map.get("orderId"));
 		
 		mv.addObject("pickupDate", map.get("pickupDate"));
 		mv.addObject("goodsNum", map.get("goodsNum"));
 		mv.addObject("shopNum", map.get("shopNum"));
 		mv.addObject("goodsSize", map.get("goodsSize"));
-		
 		mv.addObject("paymentKey",  map.get("paymentKey"));
 		mv.addObject("orderId", map.get("orderId"));
 	
@@ -66,13 +58,6 @@ public class TossPaymentsController {
 	public ModelAndView reservationApprove(@RequestParam Map<String, Object> map, HttpSession session) throws Exception {
 		log.debug("###### 픽업 예약금 결제 승인 / 픽업 예약 리스트 이동 ######");
 		ModelAndView mv = new ModelAndView("reservationList");  // 결제 승인 완료 후, 픽업 예약 리스트로 이동
-
-		System.out.println("pickupDate : " + map.get("pickupDate"));
-		System.out.println("goodsNum : " + map.get("goodsNum"));
-		System.out.println("shopNum : " + map.get("shopNum")); 
-		System.out.println("goodsSize : " + map.get("goodsSize"));
-		System.out.println("paymentKey : " + map.get("paymentKey"));
-		System.out.println("orderId : " + map.get("orderId"));
 		
 		// 로그인 한 회원 정보 세션에서 가져와서 map에 넣어주기
 		map.put("RESERVATION_USER", sessionService.getSession(session, "MEM_NUM"));

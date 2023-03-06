@@ -305,8 +305,9 @@
 					marker.setMap(map);
 					
 					//############### 매장 정보가 들어갈 공간 ###################
+					
 					var iwContent;
-					if(goodsAmount > 0){
+					if(goodsAmount > 0){  // 재고 > 0 일경우 (재고가 있을경우 픽업예약버튼, 장바구니 버튼 표시O)
 					iwContent = `<div
 				        style="
 				          padding: 15px 20px 20px 15px;
@@ -343,7 +344,7 @@
 				          </div>
 				        </div>
 				      </div>`
-					} else{
+					} else{  // 재고 = 0 일경우 (재고가 없을경우 픽업예약버튼, 장바구니 버튼 표시X)
 						iwContent = `<div
 					        style="
 					          padding: 15px 20px 20px 15px;
@@ -402,17 +403,10 @@
 		var shopNum = $('#RESERVATION_SHOP_NUM').val();
 		var goodsSize = $('#RESERVATION_SIZE').val()
 		var pickupDate = $("#RESERVATION_PICKUP_DATE").val();
-	
-		alert(goodsNum);
-		alert(goodsName);
-		alert(shopNum);
-		alert(goodsSize);
-		alert(pickupDate);
-		
 	  	paymentWidget.renderPaymentMethods('#payment-method', 30000);
 	  	
 	  	paymentWidget.requestPayment({
-	    	  orderId: 10000063,
+	    	  orderId: 10000063,   // selectKey로 max 예약번호 가져와서 가져다쓰기!!!!! 구현필요
 	    	  orderName: goodsName,
 	    	  successUrl: 'http://localhost:8080/sk/tossPaymentsSuccess?goodsNum=' + goodsNum + '&shopNum=' + shopNum + '&goodsSize=' + goodsSize + '&pickupDate=' + pickupDate,
 	    	  failUrl: 'http://localhost:8080/sk',
