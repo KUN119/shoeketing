@@ -21,6 +21,7 @@ public interface CSService {
 	public void insertCS (Map<String, Object> map) throws Exception;
 	
 	//삭제 처리 추가 예정
+	public void deleteCS(Map<String, Object> map) throws Exception;
 	
 	// 매장 문의내역 리스트(10줄)
 	public List<Map<String, Object>> selectShopCSList(Map<String, Object> map) throws Exception;

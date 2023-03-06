@@ -3,12 +3,16 @@ package sk.cs.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Repository;
 
 import sk.common.dao.AbstractDAO;
 
 @Repository("csDAO")
 public class CSDAO extends AbstractDAO {
+	
+	Log log = LogFactory.getLog(this.getClass());
 
 	// 나의 문의 리스트 가져오기
 	@SuppressWarnings("unchecked")
@@ -27,9 +31,9 @@ public class CSDAO extends AbstractDAO {
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> selectShopList(Map<String, Object> map) throws Exception {
 		System.out.println("selectShopList 파라미터 : " + map);
-		return selectList("cs.selectShopList", map);
+		return selectList("cs.selectShopListSearch", map);
 	}
-
+	
 	// 지점 총 개수 가져오기
 	public int selectShopCount(Map<String, Object> map) throws Exception {
 		System.out.println("selectShopCount 파라미터 : " + map);
@@ -42,7 +46,11 @@ public class CSDAO extends AbstractDAO {
 		insert("cs.insertCS", map);
 	}
 	
-	//삭제처리 추가예정
+	//글 삭제처리
+	public void deleteCS(Map<String, Object> map) throws Exception {
+		System.out.println("deleteCS 파라미터 : " + map);
+		update("cs.deleteCS", map);
+	}
 
 	// 매장 문의내역 리스트(10줄) - selectList()
 	@SuppressWarnings("unchecked")

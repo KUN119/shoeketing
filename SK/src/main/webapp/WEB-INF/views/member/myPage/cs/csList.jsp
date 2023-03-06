@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%-- <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> --%>
+<%@ include file="/WEB-INF/views/include/include-taglib.jspf" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,7 +49,7 @@
             </div>
             <br>
             <div class="modal-footer">
-              <button type="button" class="btn btn-danger">삭제</button>
+              <button type="button" class="btn btn-danger" name="delete">삭제</button>
             </div>
         </div>
         </div>
@@ -132,11 +133,21 @@
 $(document).ready(function() {
 	$("a[name='title']").on("click", function(e) { //회원 탈퇴 버튼을 누르면
 	 e.preventDefault();
+	//CS_NUM을 변수로 저장
 	var num = $(this).attr('data-num'); //string으로 가져옴. attr말고 data('num')으로 쓰면 실제 자료형으로 가져옴
 	//var jsonNum = {"CS_NUM":num};
 	
-	detail(num);
+	detail(num); //상세보기 함수 호출
 	});
+	
+	$("button[name='delete']").on("click", function(e) { //회원 탈퇴 버튼을 누르면
+		 e.preventDefault();
+		//CS_NUM을 변수로 저장
+		var num = $("a[name='title']").attr('data-num'); //string으로 가져옴. attr말고 data('num')으로 쓰면 실제 자료형으로 가져옴
+		
+		deleteCS(num); //삭제 함수 호출
+	});
+	
 });
 
 
@@ -147,7 +158,6 @@ function detail(num) {
 		contentType:"application/json; charset=UTF-8",
 		data:JSON.stringify({CS_NUM:num}),
 		success:function(data) {
-			alert(data.result.CS_CONTENT);
 			$("#d_title").html(data.result.CS_TITLE);
 			$("#d_content").html(data.result.CS_CONTENT);
 			$("#d_reply").html(data.result.CS_REPLY_CONTENT);
@@ -156,6 +166,26 @@ function detail(num) {
 			alert("잠시 후 다시 시도해주세요.");
 		}	
 		});
+}
+
+
+function deleteCS(num) {
+	if(confirm("문의 글을 삭제하시겠습니까?")) {
+		$.ajax({
+		url:"/sk/myPage/csDelete",
+		type:'post',
+		contentType:"application/json; charset=UTF-8",
+		data:JSON.stringify({CS_NUM:num}),
+		success:function() {
+			alert("문의가 삭제되었습니다.");
+			location.reload(); //페이지 새로고침
+		},
+		error:function() {
+			alert("잠시 후 다시 시도해주세요.");
+		}	
+		});
+	}
+	
 }
 
 </script>
