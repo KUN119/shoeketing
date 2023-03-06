@@ -104,7 +104,10 @@ pageEncoding="UTF-8"%>
                       border-top-left-radius: 5px;
                       border-bottom-left-radius: 5px;
                     "
-                    type="text"
+                    type="search"
+                    id='search'
+                    name='search'
+                    <%-- value="<c:out value="${search}"/>" --%>
                   />
                   <button
                     class="btn"
@@ -114,6 +117,8 @@ pageEncoding="UTF-8"%>
                       border: solid 1px black;
                       border-left: none;
                     "
+                    id="btnSearch"
+                    name="btnSearch"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -151,6 +156,31 @@ $(document).ready(function() {
 			url:'/sk/logout',
 			success: function() {
 				location.href='/sk/main';
+			}
+		});
+	};
+	
+	$("a[name='btnSearch']").on("click", function(e) { //검색 버튼
+		e.preventDefault();
+		fn_btnSearch();
+	});
+	
+	function fn_btnSearch() {
+		
+		var formData = new FormData();
+		formData = $("#search").val();
+		
+		$.ajax({
+			url: '/sk/totalSearch',
+			type: 'POST',
+			data: formData,
+			processData: false,
+			contentType: false,
+			success: function(data) {
+				
+			},
+			error: function(xhr, status, error) {
+				console.log('실패');
 			}
 		});
 	};

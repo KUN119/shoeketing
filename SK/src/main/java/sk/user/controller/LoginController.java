@@ -1,7 +1,7 @@
 package sk.user.controller;
 
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -222,7 +223,6 @@ public class LoginController {
 
 				} else { // 비밀번호가 일치하지 않을 때
 					result="pwfail";
-
 					log.debug("비밀번호 틀림");
 				}
 			} 
@@ -258,28 +258,25 @@ public class LoginController {
 			session.invalidate();
 		}
 	}
-
-	@GetMapping(value = "/findId")
-	public @ResponseBody String findId(String phoneNumber, String MEM_NAME, String MEM_EMAIL) throws Exception {
-		log.debug("###### 아이디 찾기 ######");
-		Random rand  = new Random();
-        String numStr = "";
-        for(int i=0; i<4; i++) {
-            String ran = Integer.toString(rand.nextInt(10));
-            numStr+=ran;
-        }
-
-        System.out.println("수신자 번호 : " + phoneNumber);
-        System.out.println("인증번호 : " + numStr);
-        System.out.println("이름: " + MEM_NAME);
-        LoginService.findIdWithPhone(phoneNumber, numStr, MEM_NAME);
-        
-        ModelAndView mv = new ModelAndView();
-        mv.addObject("MEM_EMAIL", MEM_EMAIL);
-        
-        return numStr;
-	}
 	
+	@RequestMapping(value = "/findId", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> sendSMS(@RequestParam("phone") String userPhoneNumber, @RequestParam("MEM_NAME") String MEM_NAME) throws Exception { // 휴대폰 문자보내기
+		int randomNumber = (int)((Math.random()* (9999 - 1000 + 1)) + 1000);//난수 생성
+
+		String result = loginService.findIdWithPhone(userPhoneNumber, randomNumber, MEM_NAME);
+		
+		System.out.println("MEM_NAME: " + MEM_NAME);
+		
+//		ModelAndView mv = new ModelAndView();
+//		mv.addObject("MEM_EMAIL", MEM_EMAIL);
+		
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("result", result);
+		resultMap.put("randomNumber", randomNumber);
+		
+		return resultMap;
+	}
 
 	@RequestMapping(value = "/findPw")
 	public ModelAndView findPw(@RequestParam Map<String, Object> map) throws Exception {
