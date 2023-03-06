@@ -62,7 +62,7 @@ pageEncoding="UTF-8"%>
     <nav id="navbar" class="navbar justify-content-end">
       <ul>
         <li>
-          <a class="nav-link scrollto" href="#hero"
+          <a class="nav-link scrollto" href="/sk/basket/basketList"
             ><svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"

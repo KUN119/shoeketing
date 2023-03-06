@@ -23,7 +23,7 @@ public class CSServiceImpl implements CSService {
 	// 매장 문의내역 리스트(10줄)
 	@Override
 	public List<Map<String, Object>> selectShopCSList(Map<String, Object> map) throws Exception {
-
+		System.out.println("selectShopCSList 서비스 파라미터 : " + map);
 		map.put("SHOP_NUM", 1); // 추후 수정
 		// map.put("SHOP_NUM", map.get("SHOP_NUM"));
 
@@ -35,7 +35,7 @@ public class CSServiceImpl implements CSService {
 	// 매장 문의내역 글 토탈 개수 (int 타입으로 리턴)
 	@Override
 	public int selectShopCSCount(Map<String, Object> map) throws Exception {
-
+		System.out.println("selectShopCSCount 서비스 파라미터 : " + map);
 		map.put("SHOP_NUM", 1); // 추후 수정
 		// map.put("SHOP_NUM", map.get("SHOP_NUM"));
 		map.put("START", 1);
@@ -49,7 +49,7 @@ public class CSServiceImpl implements CSService {
 	// 매장 문의내역 상세보기
 	@Override
 	public Map<String, Object> selectCSDetail(Map<String, Object> map) throws Exception {
-
+		System.out.println("selectCSDetail 서비스 파라미터 : " + map);
 		//map.put("CS_NUM", 2); // 추후 수정
 		// map.put("CS_NUM", map.get("CS_NUM"));
 
@@ -69,7 +69,7 @@ public class CSServiceImpl implements CSService {
 	// 매장 문의내역 댓글(답변) 작성. 작성시 해당 회원에게 알림 가도록 알림도 추가필요
 	@Override
 	public Map<String, Object> insertCSReply(Map<String, Object> map) throws Exception {
-
+		System.out.println("insertCSReply 서비스 파라미터 : " + map);
 		// CS_REPLY_NUM, CS_REPLY_CONTENT
 		map.put("CS_REPLY_NUM", 2); // 추후 수정
 		map.put("CS_REPLY_CONTENT", "문의글 답변 테스트"); // 추후 수정
@@ -105,33 +105,46 @@ public class CSServiceImpl implements CSService {
 	// 나의 문의 내역
 	@Override
 	public List<Map<String, Object>> selectCSList(Map<String, Object> map) throws Exception {
+		System.out.println("selectCSList 서비스 파라미터 : " + map);
 		return csDAO.selectCSList(map);
+	}
+	
+	
+	//나의 문의 삭제
+	@Override
+	public void deleteCS(Map<String, Object> map) throws Exception {
+		System.out.println("deleteCS 서비스 파라미터 : " + map);
+		csDAO.deleteCS(map);
+		
 	}
 
 	// 문의 개수
 	@Override
 	public int SelectCSCount(Map<String, Object> map) throws Exception {
+		System.out.println("SelectCSCount 서비스 파라미터 : " + map);
 		return csDAO.SelectCSCount(map);
 	}
 
+	
 	// 문의할 매장찾기 지점 리스트
 	@Override
 	public List<Map<String, Object>> selectShopList(Map<String, Object> map) throws Exception {
+		System.out.println("selectShopList 서비스 파라미터 : " + map);
 		return csDAO.selectShopList(map);
 	}
 
 	// 지점 총 개수
 	@Override
 	public int selectShopCount(Map<String, Object> map) throws Exception {
+		System.out.println("selectShopCount 서비스 파라미터 : " + map);
 		return csDAO.selectShopCount(map);
 	}
 
 	// 문의 작성하기
 	@Override
 	public void insertCS(Map<String, Object> map) throws Exception {
+		System.out.println("insertCS 서비스 파라미터 : " + map);
 		csDAO.insertCS(map);
 	}
-	
-	//삭제처리 추가 예정
 
 }
