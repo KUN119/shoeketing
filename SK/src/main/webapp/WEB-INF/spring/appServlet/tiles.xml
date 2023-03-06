@@ -261,21 +261,58 @@
 
 	<!-- 관리자 페이지 공지사항 리스트 -->
    <definition name="adminNoticeList" extends="adminTemplate">
-   	  <put-attribute name="admin_main" value="/WEB-INF/views/admin/noticeList.jsp" />
+   	  <put-attribute name="admin_main" value="/WEB-INF/views/admin/notice/noticeList.jsp" />
    </definition> 
    
 	<!-- 관리자 페이지 공지사항 상세보기 -->
    <definition name="adminNoticeDetail" extends="adminTemplate">
-   	  <put-attribute name="admin_main" value="/WEB-INF/views/admin/noticeDetail.jsp" />
+   	  <put-attribute name="admin_main" value="/WEB-INF/views/admin/notice/noticeDetail.jsp" />
    </definition> 
    
 	<!-- 관리자 페이지 공지사항 작성폼 -->
    <definition name="adminNoticeWriteForm" extends="adminTemplate">
-   	  <put-attribute name="admin_main" value="/WEB-INF/views/admin/noticeWriteForm.jsp" />
+   	  <put-attribute name="admin_main" value="/WEB-INF/views/admin/notice/noticeWriteForm.jsp" />
    </definition> 
-
-
-
+   
+	<!-- 관리자 페이지 공지사항 수정폼 -->
+   <definition name="adminNoticeModifyForm" extends="adminTemplate">
+   	  <put-attribute name="admin_main" value="/WEB-INF/views/admin/notice/noticeModifyForm.jsp" />
+   </definition> 
+   
+   <!-- 관리자 페이지 일반회원 리스트 -->
+   <definition name="adminMemberList" extends="adminTemplate">
+   	  <put-attribute name="admin_main" value="/WEB-INF/views/admin/user/memberList.jsp" />
+   </definition>
+   
+   <!-- 관리자 페이지 일반회원 상세보기 -->
+   <definition name="adminMemberDetail" extends="adminTemplate">
+   	  <put-attribute name="admin_main" value="/WEB-INF/views/admin/user/memberDetail.jsp" />
+   </definition>
+   
+   <!-- 관리자 페이지 매장회원 리스트 -->
+   <definition name="adminShopList" extends="adminTemplate">
+   	  <put-attribute name="admin_main" value="/WEB-INF/views/admin/user/shopList.jsp" />
+   </definition>
+   
+   <!-- 관리자 페이지 매장회원 상세보기 -->
+   <definition name="adminShopDetail" extends="adminTemplate">
+   	  <put-attribute name="admin_main" value="/WEB-INF/views/admin/user/shopDetail.jsp" />
+   </definition>
+   
+   <!-- 관리자 페이지 브랜드회원 리스트 -->
+   <definition name="adminBrandList" extends="adminTemplate">
+   	  <put-attribute name="admin_main" value="/WEB-INF/views/admin/user/brandList.jsp" />
+   </definition>
+   
+   <!-- 관리자 페이지 브랜드회원 상세보기 -->
+   <definition name="adminBrandDetail" extends="adminTemplate">
+   	  <put-attribute name="admin_main" value="/WEB-INF/views/admin/user/brandDetail.jsp" />
+   </definition>
+   
+   <!-- 관리자 페이지 브랜드회원 상세보기 -->
+   <definition name="adminGoodsTotalList" extends="adminTemplate">
+   	  <put-attribute name="admin_main" value="/WEB-INF/views/admin/goods/goodsTotalList.jsp" />
+   </definition>
     
 </tiles-definitions>
 
