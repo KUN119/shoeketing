@@ -27,10 +27,10 @@ public interface BrandPageService {
 	public int selectRequestShopCount(Map<String, Object> map) throws Exception;
 
 	// 브랜드 매장 입점 요청 승인
-	public void updateShopJoinApprove(Map<String, Object> map) throws Exception;
+	public Map<String, Object> updateShopJoinApprove(Map<String, Object> map) throws Exception;
 
 	// 브랜드 매장 입점 요청 거부
-	public void updateShopJoinReject(Map<String, Object> map) throws Exception;
+	public Map<String, Object> updateShopJoinReject(Map<String, Object> map) throws Exception;
 
 	// 브랜드가 입점한 매장 삭제(탈퇴)
 	// 트리거 사용해서 상품 테이블에 있는 해당 매장 상품들도 모두 삭제
@@ -43,9 +43,9 @@ public interface BrandPageService {
 	public Map<String, Object> selectGoodsThumbnail(Map<String, Object> map) throws Exception;
 
 	// 브랜드관 최신 상품 조회 (최신 상품 5개)
-	public List<Map<String, Object>> selectNewGoodsList(Map<String, Object> map, HttpSession session) throws Exception;
+	public List<Map<String, Object>> selectNewGoodsList(Map<String, Object> map) throws Exception;
 
 	// 브랜드관 랭킹 5인 상품(인기상품 5개) 조회
-	public List<Map<String, Object>> selectGoodsRankingList(Map<String, Object> map, HttpSession session) throws Exception;
+	public List<Map<String, Object>> selectGoodsRankingList(Map<String, Object> map) throws Exception;
 
 }

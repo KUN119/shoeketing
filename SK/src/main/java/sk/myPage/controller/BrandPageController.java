@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.LogManager;
@@ -100,31 +99,40 @@ public class BrandPageController {
 		return mv;
 	}
 
-	@GetMapping(value = "/brandPage/shopJoinConfirm")
-	public ModelAndView shopJoinConfirm(Map<String, Object> map) throws Exception {
-		log.debug("###### 브랜드 매장 입점 승인/거부 ######");
-		ModelAndView mv = new ModelAndView("testMain"); // 추후 수정
-
-		// 추후 ajax로 구현 (로직 다시 생각해봐야함,, 화면 구현하고 나면 다시 로직 작성)
+	// ajax 구현 예정
+	@ResponseBody
+	@PostMapping(value = "/brandPage/shopJoinApprove")
+	public Map<String, Object> shopJoinApprove(@RequestParam Map<String, Object> map) throws Exception {
+		log.debug("###### 브랜드 매장 입점 승인 ######");
+		
 		// 브랜드가 매장 입점 승인 (매장 가입 승인여부 Y로 변경됨)_승인시, 트리거 동작해서 해당 브랜드의 전체 상품이 해당 매장의 상품으로
 		// 자동등록됨
-		//map.put("SHOP_NAME", "나이키 명동점"); // 추후 수정
-		brandPageService.updateShopJoinApprove(map);
+		Map<String, Object> result = brandPageService.updateShopJoinApprove(map);
+
+		return result;
+	}
+	
+	// ajax 구현 예정
+	@ResponseBody
+	@PostMapping(value = "/brandPage/shopJoinReject")
+	public Map<String, Object> shopJoinReject(@RequestParam Map<String, Object> map) throws Exception {
+		log.debug("###### 브랜드 매장 입점 거부 ######");
 
 		// 브랜드가 매장 입점 거부 (매장 탈퇴여부 Y로 변경됨)
-		// brandPageService.updateShopJoinReject(map);
-
-		return mv;
+		Map<String, Object> result = brandPageService.updateShopJoinReject(map);
+		 
+		return result;
 	}
 
-	@GetMapping(value = "/brandPage/shopDelete")
-	public Map<String, Object> shopDelete(Map<String, Object> map) throws Exception {
+	// ajax 구현 
+	@ResponseBody
+	@PostMapping(value = "/brandPage/shopDelete")
+	public Map<String, Object> shopDelete(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("###### 브랜드 입점 매장 삭제(탈퇴) ######");
-		ModelAndView mv = new ModelAndView("testMain"); // 추후 수정
+		
+		Map<String, Object> result = brandPageService.deleteShop(map);
 
-		// 로직 서비스에 있음(나중에 주석 삭제)
-		// ajax로 구현예정
-		return brandPageService.deleteShop(map);
+		return result;
 	}
 
 	@GetMapping(value = "/brandPage/shopLocationInfo")
@@ -141,12 +149,12 @@ public class BrandPageController {
 
 	// 브랜드관
 	@GetMapping(value = "/brand/main")
-	public ModelAndView brandInfo(Map<String, Object> map, HttpSession session) throws Exception {
+	public ModelAndView brandInfo(Map<String, Object> map) throws Exception {
 		log.debug("###### 브랜드관 메인 페이지 ######");
 		ModelAndView mv = new ModelAndView("testMain"); // 추후 수정
 
 		// 최신 상품 리스트(5개)
-		List<Map<String, Object>> recentGoodsList = brandPageService.selectNewGoodsList(map, session);
+		List<Map<String, Object>> recentGoodsList = brandPageService.selectNewGoodsList(map);
 		System.out.println("recentGoodsList 확인 : " + recentGoodsList);
 
 		Map<String, Object> recentGoodsMap = new HashMap<String, Object>();
@@ -171,7 +179,7 @@ public class BrandPageController {
 		mv.addObject("recentGoodsThumbnailList", recentGoodsThumbnailList);
 
 		// 인기 상품 리스트(찜순으로 5개)
-		List<Map<String, Object>> rankingGoodsList = brandPageService.selectGoodsRankingList(map, session);
+		List<Map<String, Object>> rankingGoodsList = brandPageService.selectGoodsRankingList(map);
 		System.out.println("rankingGoodsList 확인 : " + rankingGoodsList);
 
 		Map<String, Object> rankingGoodsMap = new HashMap<String, Object>();

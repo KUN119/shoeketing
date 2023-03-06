@@ -64,8 +64,8 @@ public class StockController {
 		String memName = sessionService.getSession(session, "MEM_NAME");
 		String memEmail = (String) session.getAttribute("session_MEM_ID");
 		
-		System.out.println("이름 : " + sessionService.getSession(session, "MEM_NAME"));
-		System.out.println("이름 : " + (String) session.getAttribute("session_MEM_ID"));
+		mv.addObject("MEM_NAME", memName);
+		mv.addObject("MEM_EMAIL", memEmail);
 		
 		return mv;
 	}

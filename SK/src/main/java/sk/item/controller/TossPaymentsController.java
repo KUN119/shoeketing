@@ -7,6 +7,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import sk.common.service.CommonService;
 import sk.item.service.ReservationService;
 
 @Controller
@@ -31,41 +33,64 @@ public class TossPaymentsController {
 	@Resource(name = "reservationService")
 	private ReservationService reservationService;
 	
+	@Resource(name = "sessionService")
+	private CommonService sessionService;
+	
 	// 픽업 예약금 결제는 실시간 재고 검색 폼 - 픽업예약 모달창에서 진행 (stockSearchForm.jsp)
 	
-	@GetMapping(value = "/reservationSuccess")
-	public ModelAndView reservationSuccess(Map<String, Object> map, @RequestParam String paymentKey, String orderId, HttpSession session) throws Exception {
+	@GetMapping(value = "/tossPaymentsSuccess")
+	public ModelAndView reservationSuccess(@RequestParam Map<String, Object> map, HttpSession session) throws Exception {
 		log.debug("###### 픽업 예약금 결제 성공 ######");
-		
-		ModelAndView mv = new ModelAndView("redirect:/reservationApprove");   // 픽업 예약금 결제 승인으로 리다이렉트
+	
+		ModelAndView mv = new ModelAndView("redirect:/tossPaymentsApprove");   // 픽업 예약금 결제 승인으로 리다이렉트
 
-		System.out.println("paymentKey : " + paymentKey);
-		System.out.println("orderId : " + orderId);
-		mv.addObject("paymentKey", paymentKey);
-		mv.addObject("orderId", orderId);
+		System.out.println("pickupDate : " + map.get("pickupDate"));
+		System.out.println("goodsNum : " + map.get("goodsNum"));
+		System.out.println("shopNum : " + map.get("shopNum")); 
+		System.out.println("goodsSize : " + map.get("goodsSize"));
+		System.out.println("paymentKey : " + map.get("paymentKey"));
+		System.out.println("orderId : " + map.get("orderId"));
 		
-		// insertReservation 호출 (추후 실시간 재고검색 기능 구현후 주석 풀기)
-		// 예약 insert 하는 과정
-//		Map<String, Object> reservationResult = reservationService.insertReservation(map, session);
-//		System.out.println("reservationResult 결과 : " + reservationResult);
+		mv.addObject("pickupDate", map.get("pickupDate"));
+		mv.addObject("goodsNum", map.get("goodsNum"));
+		mv.addObject("shopNum", map.get("shopNum"));
+		mv.addObject("goodsSize", map.get("goodsSize"));
 		
+		mv.addObject("paymentKey",  map.get("paymentKey"));
+		mv.addObject("orderId", map.get("orderId"));
+	
 		return mv;
 	}
 	
-	@GetMapping(value = "/reservationApprove")
-	public ModelAndView reservationApprove(Map<String, Object> map, @RequestParam String paymentKey, String orderId) throws Exception {
+	@GetMapping(value = "/tossPaymentsApprove")
+	public ModelAndView reservationApprove(@RequestParam Map<String, Object> map, HttpSession session) throws Exception {
 		log.debug("###### 픽업 예약금 결제 승인 / 픽업 예약 리스트 이동 ######");
 		ModelAndView mv = new ModelAndView("reservationList");  // 결제 승인 완료 후, 픽업 예약 리스트로 이동
 
-		System.out.println("paymentKey : " + paymentKey);
-		System.out.println("orderId : " + orderId);
-		mv.addObject("paymentKey", paymentKey);
-		mv.addObject("orderId", orderId);
+		System.out.println("pickupDate : " + map.get("pickupDate"));
+		System.out.println("goodsNum : " + map.get("goodsNum"));
+		System.out.println("shopNum : " + map.get("shopNum")); 
+		System.out.println("goodsSize : " + map.get("goodsSize"));
+		System.out.println("paymentKey : " + map.get("paymentKey"));
+		System.out.println("orderId : " + map.get("orderId"));
+		
+		// 로그인 한 회원 정보 세션에서 가져와서 map에 넣어주기
+		map.put("RESERVATION_USER", sessionService.getSession(session, "MEM_NUM"));
+		map.put("RESERVATION_PHONE", sessionService.getSession(session, "MEM_PHONE"));
+		
+		// 픽업 예약 관련 파라미터들 map에 넣어주기
+		map.put("RESERVATION_PICKUP_DATE", map.get("pickupDate"));
+		map.put("RESERVATION_PRONUM", map.get("goodsNum"));
+		map.put("RESERVATION_SHOP_NUM", map.get("shopNum"));
+		map.put("RESERVATION_SIZE", map.get("goodsSize"));
+		
+		mv.addObject("paymentKey", map.get("paymentKey"));
+		mv.addObject("orderId", map.get("orderId"));
 		
 		// Request (픽업 예약금 30000원)
 		int amount = 30000;
 		
-		log.debug("paymentKey 확인 :" + paymentKey);
+		log.debug("paymentKey 확인 :" + map.get("paymentKey"));
 		
 		// 결제 승인시 연결할 웹페이지 url
 		String apiURL = "https://api.tosspayments.com/v1/payments/confirm";
@@ -83,8 +108,8 @@ public class TossPaymentsController {
 			StringBuilder sb = new StringBuilder();
 
 			// append() 사용해 문자열 더하기 (보내줄 파라미터들 한줄로 묶기)
-			sb.append("{\"paymentKey\":" + "\"" + paymentKey + "\",");
-			sb.append("\"orderId\":" + "\"" + orderId + "\",");
+			sb.append("{\"paymentKey\":" + "\"" + map.get("paymentKey") + "\",");
+			sb.append("\"orderId\":" + "\"" + map.get("orderId") + "\",");
 			sb.append("\"amount\":" + amount + "}");
 
 			OutputStream os = con.getOutputStream();
@@ -123,6 +148,17 @@ public class TossPaymentsController {
 
 			if (responseCode == 200) { // 정상 호출일 경우 (응답코드 200)
 
+				// insertReservation 호출 (추후 실시간 재고검색 기능 구현후 주석 풀기)
+				// 예약 insert 하는 과정
+				Map<String, Object> reservationResult = reservationService.insertReservation(map, session);
+				System.out.println("reservationResult 결과 : " + reservationResult);
+				
+				// 픽업 예약 리스트 가져와서 보여주기
+				List<Map<String, Object>> pickupList = reservationService.selectPickupList(map, session);
+				int pickupCount = reservationService.selectPickupCount(map, session);
+				
+				mv.addObject("pickupList", pickupList);
+				mv.addObject("pickupCount", pickupCount);
 			}
 		} catch (Exception e) {
 			System.out.println(e);
@@ -132,7 +168,7 @@ public class TossPaymentsController {
 	}
 	
 	@ResponseBody
-	@PostMapping(value = "/reservationCancel")
+	@PostMapping(value = "/tossPaymentsCancel")
 	public Map<String, Object> reservationCancel(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("###### 픽업 예약금 결제 취소 ######");
 		//ModelAndView mv = new ModelAndView("tossTest"); // 추후 수정

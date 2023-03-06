@@ -37,7 +37,14 @@
             ></button>
           </div>
           <div class="modal-body">
-            <input type="date" class="form-control"/>
+          <form id="">
+            <input type="date" class="form-control" id="RESERVATION_PICKUP_DATE" name="RESERVATION_PICKUP_DATE"/>
+          	<input type="hidden" id="RESERVATION_PRONUM" name="RESERVATION_PRONUM" value="">
+          	<input type="hidden" id="TOTAL_GOODS_NAME" name="TOTAL_GOODS_NAME" value="">
+          	<input type="hidden" id="RESERVATION_SHOP_NUM" name="RESERVATION_SHOP_NUM" value="">
+        	<input type="hidden" id="RESERVATION_SIZE" name="RESERVATION_SIZE" value="">
+          	
+          </form>
           </div>
           <div class="modal-footer">
             <button
@@ -233,9 +240,6 @@
     src="//dapi.kakao.com/v2/maps/sdk.js?appkey=08e2c5126e1c7f5ac14b68c3f37365ad"
   ></script>
   
-  <!-- 토스 페이먼츠 API -->
-  <script src="https://js.tosspayments.com/v1/payment-widget"></script>
-  
   <script>
   $(document).ready(function(e) {
 	  
@@ -261,8 +265,15 @@
 		  e.preventDefault();
 		  const shopNum = $(this).attr('data-num');
 		  const goodsAmount = $(this).attr('data-amount');
+		  const goodsNum = $(this).attr('data-goods_num');
 		  const goodsName = $(this).attr('data-goods_name');
 		  const goodsSize = $(this).attr('data-goods_size');
+		  
+		  $('#RESERVATION_PRONUM').val(goodsNum);
+		  $('#TOTAL_GOODS_NAME').val(goodsName);
+		  $('#RESERVATION_SHOP_NUM').val(shopNum);
+		  $('#RESERVATION_SIZE').val(goodsSize);
+		  
 		  var formData2 = new FormData();
 		  formData2.append("SHOP_NUM", shopNum);
 		  
@@ -294,7 +305,9 @@
 					marker.setMap(map);
 					
 					//############### 매장 정보가 들어갈 공간 ###################
-					var iwContent = `<div
+					var iwContent;
+					if(goodsAmount > 0){
+					iwContent = `<div
 				        style="
 				          padding: 15px 20px 20px 15px;
 				          width: 400px;
@@ -329,7 +342,30 @@
 				            </button>
 				          </div>
 				        </div>
-				      </div>`, // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+				      </div>`
+					} else{
+						iwContent = `<div
+					        style="
+					          padding: 15px 20px 20px 15px;
+					          width: 400px;
+					          height: 250px;
+					          box-shadow: 2px 2px 2px 2px gray;
+					          border: none;
+					        "
+					      >
+					        <h4 class="mb-4" style="font-weight: 700">`+data.SHOP_NAME+`</h4>
+					        <p class="mb-1">`+data.SHOP_ADD+`</p>
+					        <p style="color: forestgreen">`+data.SHOP_TEL+`</p>
+					        <h5 style="font-weight: 700">`+goodsName+` (`+goodsSize+`)</h5>
+					        <h6 style="font-weight: 700">재고 : `+goodsAmount+`</h6>
+					        <div class="d-flex justify-content-between">
+					          <a href="#" class="align-self-center" data-bs-toggle="modal"
+					              data-bs-target="#CSModal">문의하기</a>
+					          <div>
+					          </div>
+					        </div>
+					      </div>`
+					}// 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
 				      //####### 좌표 입력3 #########
 					  iwPosition = new kakao.maps.LatLng(data.SHOP_POS2, data.SHOP_POS1); //인포윈도우 표시 위치입니다 SHOP_POS2, SHOP_POS1 값 넣어주기
 					//############### 매장 정보가 들어갈 공간 끝 ###################
@@ -346,30 +382,47 @@
 			 });
 		  
 	  });
+  });
 	  
+	  </script>
+	  
+	   <!-- 토스 페이먼츠 API -->
+	  <script src="https://js.tosspayments.com/v1/payment-widget"></script>
+	  
+	  <script>
 	  //토스 페이먼츠 결제  (추후 orderId, orderName, customerEmail, customerName 수정필요)
 	  const clientKey = 'test_ck_7XZYkKL4Mrjnv7vJl1ar0zJwlEWR';
-	  const customerKey = 'yunjeong1234'; 
+	  const customerKey = 'user123'; 
 	  const paymentWidget = PaymentWidget(clientKey, customerKey);  // 결제위젯 초기화
 	  
 	  $("#payment-button").on("click", function(e){
+		  
+		var goodsNum = $('#RESERVATION_PRONUM').val();
+		var goodsName = $('#TOTAL_GOODS_NAME').val();
+		var shopNum = $('#RESERVATION_SHOP_NUM').val();
+		var goodsSize = $('#RESERVATION_SIZE').val()
+		var pickupDate = $("#RESERVATION_PICKUP_DATE").val();
+	
+		alert(goodsNum);
+		alert(goodsName);
+		alert(shopNum);
+		alert(goodsSize);
+		alert(pickupDate);
+		
 	  	paymentWidget.renderPaymentMethods('#payment-method', 30000);
 	  	
 	  	paymentWidget.requestPayment({
-	    	  orderId: 10000030,
-	    	  orderName: '코트버로우 로우',
-	    	  successUrl: 'http://localhost:8080/sk/reservationSuccess',
+	    	  orderId: 10000063,
+	    	  orderName: goodsName,
+	    	  successUrl: 'http://localhost:8080/sk/tossPaymentsSuccess?goodsNum=' + goodsNum + '&shopNum=' + shopNum + '&goodsSize=' + goodsSize + '&pickupDate=' + pickupDate,
 	    	  failUrl: 'http://localhost:8080/sk',
-	    	  customerEmail: 'dbswjd8178@naver.com', 
-	    	  customerName: '김윤정'
+	    	  customerEmail: '${MEM_EMAIL}', 
+	    	  customerName: '${MEM_NAME}'
 	    	});
-	 
-	  });
-			
-		
+
+
   });
 
-		
-		
+	
   </script>
 </html>
