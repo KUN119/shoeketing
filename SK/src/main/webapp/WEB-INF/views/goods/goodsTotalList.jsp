@@ -979,7 +979,7 @@
           <c:when test="${fn:length(list)>0}">
           	<c:forEach items="${list}" var="goods">
           <div class="card" style="width: 14rem; margin-left: 10px; margin-right: 10px; margin-bottom: 80px; border-style: none;">
-              <a href="#" name="title" data-num="${goods.TOTAL_GOODS_NUM }">
+              <a href="/sk/goods/goodsDetail?TOTAL_GOODS_NUM=${goods.TOTAL_GOODS_NUM}" name="title" data-num="${goods.TOTAL_GOODS_NUM }">
                 <img src="<%=request.getContextPath() %>/assets/img/a7ae62bb0c3243a2af834df70e9b0d81.jpg" style="width:13rem; height: 11rem" class="card-img-top" alt="<%=request.getContextPath() %>.">
                 <div class="card-body" style="height:6rem;">
                   <h6 class="card-title" style="font-size: 15px; font-weight: 700;">${goods.BRAND_NAME}</h6>
@@ -1286,7 +1286,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	
-	$("a[name='title']").on("click", function(e) { // 상품 상세보기
+	/* $("a[name='title']").on("click", function(e) {
 		e.preventDefault();
 		const num = $(this).attr("data-num");
 		fn_goodsDetail(num);
@@ -1310,7 +1310,7 @@ $(document).ready(function() {
 				console.log('실패');
 			}
 		});
-	};
+	}; */
 	
 	$("a[name='listType']").on("click", function(e) { // 정렬 검색
 		e.preventDefault();

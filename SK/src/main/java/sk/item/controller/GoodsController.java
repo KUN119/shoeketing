@@ -74,10 +74,15 @@ public class GoodsController {
 		return mv;
 	}
 
-	@GetMapping(value = "/goods/goodsDetail")
+	@RequestMapping(value = "/goods/goodsDetail")
 	public ModelAndView goodsDetail(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("###### goodsDetail ######");
 		ModelAndView mv = new ModelAndView("goodsDetail");
+
+		Map<String, Object> goodsDetailMap = goodsService.selectGoodsDetail(map);
+
+		System.out.println("goodsDetailMap : " + goodsDetailMap);
+
 		return mv;
 	}
 

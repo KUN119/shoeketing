@@ -3,14 +3,13 @@
 
 <mapper namespace="cs">
 
-<!-- 나의 매장 문의 리스트 -->
+<!-- 개인회원 문의 리스트 -->
 <select id="selectCSList" parameterType="hashmap" resultType="hashmap">
 <![CDATA[
 	SELECT
 			CS_NUM,
 			CS_TITLE,
-			TO_CHAR(CS_DATE, 'YYYY.MM.DD') AS CS_DATE,
-			TO_CHAR(CS_DATE, 'HH24:MI:SS') AS CS_TIME
+			TO_CHAR(CS_DATE, 'YYYY/MM/DD') AS CS_DATE
 	FROM (SELECT
 				ROWNUM RNUM,
 				T1.*
@@ -42,11 +41,13 @@ INSERT INTO CS
 				(CS_NUM,
 				CS_SHOP_NUM,
 				CS_TITLE,
+				CS_WRITER,
 				CS_CONTENT,
 				CS_DATE)
 VALUES (CS_SEQ.NETVAL,
 		#{CS_SHOP_NUM},
 		#{CS_TITLE},
+		#{CS_WRITER},
 		#{CS_CONTENT},
 		SYSDATE
 		)
@@ -93,7 +94,7 @@ VALUES (CS_SEQ.NETVAL,
 	<include refid="shopSearch"/>
 </select>
 
-<!-- 매장 문의내역 리스트 -->
+<!-- 매장회원 문의내역 리스트 -->
 	<select id="selectShopCSList" parameterType="hashmap" resultType="hashmap">
 		<![CDATA[
 			SELECT *

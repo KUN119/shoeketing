@@ -25,14 +25,14 @@ public class StockController {
 
 	@Resource(name = "stockService")
 	private StockService stockService;
-	
+
 	@Resource(name = "sessionService")
 	private CommonService sessionService;
 
 	@GetMapping(value = "/shopPage/stockList")
 	public ModelAndView shopStockList(Map<String, Object> map) throws Exception {
 		log.debug("###### 매장 상품 재고 리스트 ######");
-		ModelAndView mv = new ModelAndView("testMain"); // 추후 수정
+		ModelAndView mv = new ModelAndView("stockList"); // 추후 수정
 
 		// 재고 리스트 토탈개수 (Ex, 상품이 14줄이면 토탈개수 14)
 		int stockCount = stockService.selectStockCount(map);
@@ -59,14 +59,14 @@ public class StockController {
 	public ModelAndView stockSearchForm(@RequestParam Map<String, Object> map, HttpSession session) throws Exception {
 		log.debug("###### 실시간 재고 검색폼 ######");
 		ModelAndView mv = new ModelAndView("stockSearchForm");
-		
+
 		// 로그인 한 회원 정보 세션에서 가져오기
 		String memName = sessionService.getSession(session, "MEM_NAME");
 		String memEmail = (String) session.getAttribute("session_MEM_ID");
-		
+
 		System.out.println("이름 : " + sessionService.getSession(session, "MEM_NAME"));
 		System.out.println("이름 : " + (String) session.getAttribute("session_MEM_ID"));
-		
+
 		return mv;
 	}
 

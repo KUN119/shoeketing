@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/views/include/include-taglib.jspf" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,9 +9,29 @@
 </head>
 <body>
 <div class="col-10" style="margin-top: 0px">
-      <h3 style="margin-left: 30px; color: black; font-weight: bolder">
-        공지사항
-      </h3>
+	<div class="row d-flex mb-4 mt-5">
+        <div class="col-8">
+	      <h3 style="margin-left: 30px; color: black; font-weight: bolder">
+	        공지사항
+	      </h3>
+      </div>
+      <div class="col input-group">
+          <select class="form-select-sm" style="width: 4rem; border-color: rgba(0, 0, 0, 0.263);" id="searchType" name="searchType">
+            <option selected value="total" <c:out value="${searchType eq 'total' ? 'selected' :''}"/>>전체</option>
+            <option value="title" <c:out value="${searchType eq 'title' ? 'selected' :''}"/>>제목</option>
+            <option value="content" <c:out value="${searchType eq 'content' ? 'selected' :''}"/>>내용</option>
+          </select>
+          <input type="text" class="form-control" name="keyword" id="keyword" />
+          <button
+            class="btn btn-outline-secondary"
+            type="button"
+            id="button-addon2"
+            name="noticeSearch"
+          >
+            검색
+          </button>
+        </div>
+      </div>
 
       <table class="table" style="text-align: center">
         <thead>
