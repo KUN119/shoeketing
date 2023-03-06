@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -58,62 +60,68 @@ public class JoinController {
 		return result;
 	}
 
-	@GetMapping(value = "/memberJoin/phoneAuth")
-	public ModelAndView phoneAuth(@RequestParam Map<String, Object> map) throws Exception {
-		log.debug("###### 휴대폰 인증 ######");
-		ModelAndView mv = new ModelAndView("phoneAuth");
-		return mv;
+	
+	
+	@RequestMapping(value = "/phoneCheck", method = RequestMethod.GET)
+	@ResponseBody
+	public String sendSMS(@RequestParam("phone") String userPhoneNumber) throws Exception { // 휴대폰 문자보내기
+		int randomNumber = (int)((Math.random()* (9999 - 1000 + 1)) + 1000);//난수 생성
+
+		joinService.certifiedPhoneNumber(userPhoneNumber,randomNumber);
+		
+		return Integer.toString(randomNumber);
 	}
+	
+	
 
 	@RequestMapping(value = "/memberJoin/joinAvailable")
-	public ModelAndView joinAvailable(HttpServletRequest request) throws Exception {
+	public @ResponseBody String joinAvailable(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("###### 회원가입 가능 여부 검토 ######");
-
-//		    String email = request.getParameter("email");
-//		    
-//
-		ModelAndView modelAndView = new ModelAndView();
-//		    
-//		    int check = joinService.selectEmailCheck(email);
+		
+		String result = "";
+		    
+//		int check = joinService.selectDelGB(map);
 //		    System.out.println("check : " + check);
 //
-//		    if (check == 1) {
-//		        // DB에 회원가입 처리 전, 회원 탈퇴한 이력이 있고 7일 지났는지 여부 확인
-//		        int delCount = joinService.selectDelCount(email);
-//		        System.out.println("delCount : " + delCount);
+//		    String result = "";
 //
-//		        if (delCount == 0) { // 회원 탈퇴 후 7일이 지나지 않았을 경우
-//		            modelAndView.addObject("result", "fail");
-//		        } else { // 회원 탈퇴 후 7일이 지났거나, 혹은 처음으로 가입할 경우
-//		            // DB에 회원가입 처리
-//		            Member member = new Member();
-//		            
-//		            member.setEmail(email);
-//		            
-//		            joinService.insertMember(member);
-//		            modelAndView.addObject("result", "success");
-//		        }
-//		    } else {
-//		        Member member = new Member();
-//		        
-//		        member.setEmail(email);
-//		        
-//		        joinService.insertMember(member);
-//		        modelAndView.addObject("result", "success");
-//		    }
+//			if (check == 1) {
+//				// DB에 회원가입 처리 전, 회원 탈퇴한 이력이 있고 7일 지났는지 여부 확인
+//				int delCount = joinService.selectDelCount(map);
+//				System.out.println("delCount : " + delCount);
 //
-//		    modelAndView.setViewName("joinResult");
-		return modelAndView;
+//				if (delCount == 0) { // 회원 탈퇴 후 7일이 지나지 않았을 경우
+//					result = "fail";
+//				} else { // 회원 탈퇴 후 7일이 지났거나, 혹은 처음으로 가입할 경우
+//					// DB에 회원가입 처리
+//					joinService.insertMember(map);
+//					result = "success";
+//				}
+//			} else {
+//				joinService.insertMember(map);
+//				result = "success";
+//			}
+
+			return result;
 	}
 
 	// 회원 가입 성공
-	@GetMapping(value = "/memberJoin/joinSuccess")
+	@PostMapping(value = "/memberJoin/joinSuccess")
 	public ModelAndView memberInsertMember(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("###### 회원가입 성공 ######");
 
-		ModelAndView mv = new ModelAndView("InsertMember");
+		ModelAndView mv = new ModelAndView("main");
+		
+		
+		joinService.insertMember(map);
+		
+		
+
+		
+		
 		return mv;
 	}
+	
 
 	@GetMapping(value = "/brandJoinForm")
 	public ModelAndView brandJoinForm(@RequestParam Map<String, Object> map) throws Exception {

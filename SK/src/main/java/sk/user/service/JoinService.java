@@ -1,14 +1,14 @@
 package sk.user.service;
 
+
 import java.util.Map;
+
 
 public interface JoinService {
 
 	// 이메일 중복확인
 	Map<String, Object> selectEmailCheck(Map<String, Object> map) throws Exception;
 	
-	// 휴대폰 인증
-	Map<String, Object> selectPhoneAuth(Map<String, Object> map) throws Exception;
 	
 	// 회원탈퇴 후 7일 지났는지 여부 확인
 	int selectDelCount(Map<String, Object> map) throws Exception;
@@ -30,5 +30,10 @@ public interface JoinService {
 	
 	// 매장 회원가입 처리
 	void insertShop(Map<String, Object> map) throws Exception;
+
+	// 폰인증
+	void certifiedPhoneNumber(String userPhoneNumber, int randomNumber) throws Exception;
+
+	
 }
 
