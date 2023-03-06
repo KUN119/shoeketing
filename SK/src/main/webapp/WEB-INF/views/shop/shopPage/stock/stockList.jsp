@@ -25,10 +25,43 @@
                     </div>
             </td>
             <td>
-                    <div class="search" style="width: 90%;" >
-                        <input type="text" placeholder="검색어 입력">
-                        <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
-                      </div>
+                   <div class="input-group">
+                  <input
+                    class="header-input"
+                    style="
+                      height: 38px;
+                      width: 50%;
+                      border-style: none;
+                      border: solid 1px black;
+                      border-right: none;
+                      border-top-left-radius: 5px;
+                      border-bottom-left-radius: 5px;
+                    "
+                    type="text"
+                  />
+                  <button
+                    class="btn"
+                    type="button"
+                    style="
+                      background-color: white;
+                      border: solid 1px black;
+                      border-left: none;
+                    "
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="15"
+                      height="15"
+                      fill="currentColor"
+                      class="bi bi-search"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
+                      />
+                    </svg>
+                  </button>
+                </div>
 
             </td>
             </tr>

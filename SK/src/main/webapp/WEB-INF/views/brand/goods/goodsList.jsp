@@ -10,7 +10,7 @@
         <div class="col-8" style="margin-top: 0px;">
             <h3 style="margin-left: 30px; color: black; font-weight: bolder;">전체 상품 리스트</h3>
             <div class="d-grid gap-2 d-flex justify-content-start mt-4">
-                <h5 style="margin-left: 30px; width: 70px; color: black; font-weight: bolder;">전체</h5>        
+                <h5 style="margin-left: 30px; width: 100px; color: black; font-weight: bolder;">전체</h5>        
                 <h5 style="color: black; font-weight: bolder;">총</h5>
                 <h5 style="color: rgb(255, 183, 0); font-weight: bolder;">18</h5>
                 <h5 style="color: black; font-weight: bolder;">개</h5>
@@ -24,10 +24,44 @@
                           <li><button class="dropdown-item" type="button">모델 번호</button></li>
                         </ul>
                     </div>
-                    <div class="search">
-                        <input type="text" placeholder="검색어 입력">
-                        <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
-                      </div>
+                      <div class="input-group">
+                  <input
+                    class="header-input"
+                    style="
+                      height: 38px;
+                      width: 50%;
+                      border-style: none;
+                      border: solid 1px black;
+                      border-right: none;
+                      border-top-left-radius: 5px;
+                      border-bottom-left-radius: 5px;
+                    "
+                    type="text"
+                  />
+                  <button
+                    class="btn"
+                    type="button"
+                    style="
+                      background-color: white;
+                      border: solid 1px black;
+                       height: 38px;
+                      border-left: none;
+                    "
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="15"
+                      height="15"
+                      fill="currentColor"
+                      class="bi bi-search"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
+                      />
+                    </svg>
+                  </button>
+                </div>
                 </p>
             </div>
             
