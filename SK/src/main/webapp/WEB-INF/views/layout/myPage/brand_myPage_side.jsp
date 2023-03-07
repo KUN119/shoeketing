@@ -37,5 +37,21 @@
             </li>
           </ul>
         </div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$("a[name='shopList']").on("click", function(e) {  // 브랜드 기본정보 수정
+		e.preventDefault();
+	
+		const brandNum = $(this).attr("data-brandNum");
+		location.href="/sk/brandPage/shopList?BRAND_NUM=" + brandNum;
+		
+		//fn_brandInfoModify(brandNum);
+	});
+	
+});
+
+</script>        
+        
 </body>
 </html>

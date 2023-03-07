@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ <%@ include file="/WEB-INF/views/include/include-taglib.jspf" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,7 +29,7 @@
 					<p style="font-weight: bolder; font-size: large; margin-left: 10%;">사이즈 : ${pickupDetailMap.RESERVATION_SIZE }</p>
 					<p style="font-weight: bolder; font-size: large; margin-left: 10%;">${pickupDetailMap.SHOP_NAME} - ${pickupDetailMap.SHOP_ADD }</p>
                                    
-					<c:if test="${pickupDetailMap.RESERVATION_STATUS != '예약 취소' && pickupDetailMap.RESERVATION_STATUS != '픽업 취소'}">
+					<c:if test="${pickupDetailMap.RESERVATION_STATUS == '예약 대기중' || pickupDetailMap.RESERVATION_STATUS == '픽업 대기중'}">
                     <div class="d-grid gap-2 d-md-flex justify-content-md-start mt-3">
                     	
                         <h6 style="color: black; margin-left: 10%;">픽업 만료 기한</h6>
@@ -41,7 +42,7 @@
                         <h6 style="color: black; margin-left: 10%;">${pickupDetailMap.RESERVATION_STATUS}</h6>
                         <p></p>
                         <c:choose>
-                        	<c:when test="${pickupDetailMap.RESERVATION_STATUS != '예약 취소' && pickupDetailMap.RESERVATION_STATUS != '픽업 취소'}">
+                        	<c:when test="${pickupDetailMap.RESERVATION_STATUS == '예약 대기중' || pickupDetailMap.RESERVATION_STATUS == '픽업 대기중'}">
                         	<h6 style="color: black;">&nbsp;&nbsp;&nbsp;&nbsp;${pickupDetailMap.RESERVATION_PICKUP_DATE}</h6>
                         </c:when>
                         	<c:otherwise>

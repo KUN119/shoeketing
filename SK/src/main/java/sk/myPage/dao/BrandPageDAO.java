@@ -56,17 +56,17 @@ public class BrandPageDAO extends AbstractDAO {
 	}
 
 	// 브랜드 매장 입점 요청 승인 - update()
-	public void updateShopJoinApprove(Map<String, Object> map) throws Exception {
+	public int updateShopJoinApprove(Map<String, Object> map) throws Exception {
 		System.out.println("updateShopJoinApprove 파라미터 : " + map);
 
-		update("brandPage.updateShopJoinApprove", map);
+		return (int) update("brandPage.updateShopJoinApprove", map);
 	}
 
 	// 브랜드 매장 입점 요청 거부 - update()
-	public void updateShopJoinReject(Map<String, Object> map) throws Exception {
+	public int updateShopJoinReject(Map<String, Object> map) throws Exception {
 		System.out.println("updateShopJoinReject 파라미터 : " + map);
 
-		update("brandPage.updateShopJoinReject", map);
+		return (int) update("brandPage.updateShopJoinReject", map);
 	}
 
 	// 브랜드가 입점한 매장 삭제(탈퇴) - update()

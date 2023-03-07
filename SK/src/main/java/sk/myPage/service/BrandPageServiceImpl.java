@@ -100,18 +100,38 @@ public class BrandPageServiceImpl implements BrandPageService {
 
 	// 브랜드 매장 입점 요청 승인
 	@Override
-	public void updateShopJoinApprove(Map<String, Object> map) throws Exception {
+	public Map<String, Object> updateShopJoinApprove(Map<String, Object> map) throws Exception {
 
-		map.put("SHOP_NAME", map.get("SHOP_NAME"));
+		Map<String, Object> resultMap = new HashMap<>();
+		map.put("SHOP_NUM", map.get("SHOP_NUM"));
 		
-		brandPageDAO.updateShopJoinApprove(map);
+		int result = brandPageDAO.updateShopJoinApprove(map);
+		
+		if(result == 1) {
+			resultMap.put("result", "pass");
+		}else {
+			resultMap.put("result", "fail");
+		}
+		
+		return resultMap;
 	}
 
 	// 브랜드 매장 입점 요청 거부
 	@Override
-	public void updateShopJoinReject(Map<String, Object> map) throws Exception {
-
-		brandPageDAO.updateShopJoinReject(map);
+	public Map<String, Object> updateShopJoinReject(Map<String, Object> map) throws Exception {
+		
+		Map<String, Object> resultMap = new HashMap<>();
+		map.put("SHOP_NUM", map.get("SHOP_NUM"));
+		
+		int result = brandPageDAO.updateShopJoinReject(map);
+		
+		if(result == 1) {
+			resultMap.put("result", "pass");
+		}else {
+			resultMap.put("result", "fail");
+		}
+		
+		return resultMap;
 	}
 
 	// 브랜드가 입점한 매장 삭제(탈퇴)
@@ -126,10 +146,10 @@ public class BrandPageServiceImpl implements BrandPageService {
 		Map<String, Object> deleteResult = new HashMap<String, Object>();
 
 		if (result == 1) {
-			deleteResult.put("deleteResult", "해당 매장을 삭제하였습니다.");
+			deleteResult.put("deleteResult", "pass");
 			System.out.println(deleteResult);
 		} else {
-			deleteResult.put("deleteResult", "해당 매장을 삭제하지 못했습니다.");
+			deleteResult.put("deleteResult", "fail");
 			System.out.println(deleteResult);
 		}
 
@@ -156,19 +176,22 @@ public class BrandPageServiceImpl implements BrandPageService {
 
 	// 브랜드관 최신 상품 리스트 (최신 상품 5개)
 	@Override
-	public List<Map<String, Object>> selectNewGoodsList(Map<String, Object> map, HttpSession session) throws Exception {
-		// 세션에 로그인한 브랜드회원의 정보중 BRAND_NUM 가져와서 map에 넣어주기
-		map.put("BRAND_NUM", commonService.getSessionBrand(session, "BRAND_NUM"));
+	public List<Map<String, Object>> selectNewGoodsList(Map<String, Object> map) throws Exception {
+		
+		map.put("BRAND_NUM", 1);  // 추후 삭제
+		
+//		map.put("BRAND_NUM", map.get("BRAND_NUM"));
 
 		return brandPageDAO.selectNewGoodsList(map);
 	}
 
 	// 브랜드관 랭킹 5인 상품 리스트 (인기 상품 5개)
 	@Override
-	public List<Map<String, Object>> selectGoodsRankingList(Map<String, Object> map, HttpSession session) throws Exception {
-		// 세션에 로그인한 브랜드회원의 정보중 BRAND_NUM 가져와서 map에 넣어주기
-		map.put("BRAND_NUM", commonService.getSessionBrand(session, "BRAND_NUM"));
+	public List<Map<String, Object>> selectGoodsRankingList(Map<String, Object> map) throws Exception {
+		
+		map.put("BRAND_NUM", 1); // 추후 삭제
 
+//		map.put("BRAND_NUM", map.get("BRAND_NUM"));
 		return brandPageDAO.selectGoodsRankingList(map);
 	}
 
