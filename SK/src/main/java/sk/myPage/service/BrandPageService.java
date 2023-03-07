@@ -36,7 +36,7 @@ public interface BrandPageService {
 	// 트리거 사용해서 상품 테이블에 있는 해당 매장 상품들도 모두 삭제
 	public Map<String, Object> deleteShop(Map<String, Object> map) throws Exception;
 
-	// 브랜드 입점 매장 위치 조회
+	// 브랜드 입점/입점요청 매장 위치 조회
 	public Map<String, Object> selectShopLocationInfo(Map<String, Object> map) throws Exception;
 
 	// 브랜드관 상품 썸네일 이미지 조회 (image order 1)

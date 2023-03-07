@@ -156,13 +156,16 @@ public class BrandPageServiceImpl implements BrandPageService {
 		return deleteResult;
 	}
 
-	// 브랜드 입점 매장 위치 조회
+	// 브랜드 입점/입점요청 매장 위치 조회
 	@Override
 	public Map<String, Object> selectShopLocationInfo(Map<String, Object> map) throws Exception {
+		Map<String, Object> shopInfoMap = new HashMap<>();
+			
+		map.put("SHOP_NUM", map.get("SHOP_NUM"));
 
-		map.put("SHOP_NAME", map.get("SHOP_NAME"));
-
-		return brandPageDAO.selectShopLocationInfo(map);
+		shopInfoMap = brandPageDAO.selectShopLocationInfo(map);
+		
+		return shopInfoMap;
 	}
 
 	// 브랜드관 상품 썸네일 이미지 조회 (image order 1)
