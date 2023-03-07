@@ -4,10 +4,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="/static/js/sweetalert2.min.css">
-<script src="/static/js/sweetalert2.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.all.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.min.css" rel="stylesheet">
 <meta charset="UTF-8">
 </head>
 <body>
@@ -22,24 +18,27 @@
           <div class="modal-body">
             <form class="php-email-form mb-5">
                 <div class="form-floating mb-3">
-                  <input type="text" name="MEM_NAME" class="form-control" name="findIdName" id="findIdName" placeholder="1">
+                  <input type="text" name="MEM_NAME" class="form-control" id="MEM_NAME" placeholder="1">
                   <label for="floatingInput">이름을 입력해주세요</label>
                 </div>
                 <div class="form-floating d-flex">
-                  <input type="text" name="MEM_PHONE" class="form-control" name="findIdPhone" id="findIdPhone" placeholder="1">
+                  <input type="text" name="phone" class="form-control" id="phone" placeholder="1" required>
                   <label for="floatingPassword">전화번호를 입력해주세요</label>
-                  <button class="btn btn-outline-secondary" type="button" name="sendPhoneNumber" id="button-addon2" style="font-size: 15px; width: 120px;">본인인증</button>
+                  <button class="btn btn-outline-secondary" type="button" name="phoneChk" id="phoneChk" style="font-size: 15px; width: 120px;">본인인증</button>
                 </div>
             </form>
             <hr>
             <form class="php-email-form mt-5">
                 <div class="form-floating mb-3">
-                    <input type="email" class="form-control" id="findIdEmail" placeholder="1">
+                    <input type="text" class="form-control" id="phone2" name="phone2" placeholder="1" disabled required>
                     <label for="floatingInput">인증번호를 입력해주세요</label>
+                    <button class="btn btn-outline-secondary" type="button" name="phoneChk2" id="phoneChk2" style="font-size: 15px; width: 120px;">인증</button>
+                    <span class="point successPhoneChk">휴대폰 번호 입력후 인증번호 보내기를 해주십시오.</span>
+                    <!-- <input type="hidden" id="phoneDoubleChk"/> -->
                 </div>
                 <div class="text-end">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#findIdResultModal">아이디 찾기</button>
+                    <button type="button" class="btn btn-primary" id="findId2" disabled>아이디 찾기</button>
                 </div>
             </form>
           </div>
@@ -57,7 +56,7 @@
           </div>
           <div class="modal-body">
             <h6>고객님의 정보와 일치하는 아이디</h6>
-            <h5 class="text-center mt-5 mb-5">${MEM_EMAIL}</h5>
+            <h5 id="emailH5" class="text-center mt-5 mb-5"></h5>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
@@ -183,52 +182,57 @@ $(document).ready(function() {
 			}
 		});
 	};
-	
-	$("button[name='sendPhoneNumber']").on("click", function(e) {
-		e.preventDefault();
-		fn_sendPhoneNumber();
-	});
-		
-	function fn_sendPhoneNumber(){
-			let MEM_NAME= $('#findIdName').val();
-            let phoneNumber = $('#findIdPhone').val();
-            Swal.fire('인증번호 발송 완료!')
-
-            $.ajax({
-                type: "GET",
-                url: "/sk/findId",
-                data: {
-                	"MEM_NAME" : MEM_NAME,
-                    "phoneNumber" : phoneNumber
-                },
-                success: function(res){
-                    $('#checkBtn').click(function(){
-                        if($.trim(res) ==$('#findIdWithPhone').val()){
-                            Swal.fire(
-                                '인증성공!',
-                                '휴대폰 인증이 정상적으로 완료되었습니다.',
-                                'success'
-                            );
-
-                            $.ajax({
-                                type: "GET",
-                                url: "/update/phone",
-                                data: {
-                                    "phoneNumber" : $('#findIdPhone').val()
-                                }
-                            });
-                        }else{
-                            Swal.fire({
-                                icon: 'error',
-                                title: '인증오류',
-                                text: '인증번호가 올바르지 않습니다!',
-                                footer: '<a href="/home">다음에 인증하기</a>'
-                            });
-                        }
-                    });
+        
+      //휴대폰 번호 인증
+      //https://unknown-coding.tistory.com/16
+        var code2 = "";
+        var memEmail = "";
+        $("#phoneChk").click(function(){
+        	var phone = $("#phone").val();
+        	var MEM_NAME = $("#MEM_NAME").val();
+        	
+        	$.ajax({
+                type:"GET",
+                url:"/sk/findId?phone=" + phone + "&MEM_NAME=" + MEM_NAME,
+                cache : false,
+                success:function(data){
+                	if(data.result == "error"){
+                		alert("휴대폰 번호가 올바르지 않습니다.")
+        				$(".successPhoneChk").text("유효한 번호를 입력해주세요.");
+        				$(".successPhoneChk").css("color","red");
+        				$("#phone").attr("autofocus",true);
+                	}else{	        		
+                		$("#phone2").attr("disabled",false);
+                		$("#phoneChk2").css("display","inline-block");
+                		$(".successPhoneChk").text("인증번호를 입력한 뒤 본인인증을 눌러주십시오.");
+                		$(".successPhoneChk").css("color","green");
+                		$("#phone").attr("readonly",true);
+                		code2 = data.randomNumber;
+                		memEmail = data.result;
+                	}
                 }
             });
-        };
+        });
+        
+        $("#phoneChk2").click(function(){
+        	if($("#phone2").val() == code2){
+        		$(".successPhoneChk").text("인증번호가 일치합니다.");
+        		$(".successPhoneChk").css("color","green");
+        		$("#phone2").attr("disabled",true);
+        		$("#findId2").attr("disabled",false);
+        	}else{
+        		$(".successPhoneChk").text("인증번호가 일치하지 않습니다. 확인해주시기 바랍니다.");
+        		$(".successPhoneChk").css("color","red");
+        		$(this).attr("autofocus",true);
+        	}
+        });
+        
+        $("#findId2").click(function(){
+        	$("#emailH5").append(memEmail);
+        	$("#findIdModal").modal('hide');
+    		$("#findIdResultModal").modal('show');
+        });
+        
 	
 	$("button[name='findPw']").on("click", function(e) {
 		e.preventDefault();

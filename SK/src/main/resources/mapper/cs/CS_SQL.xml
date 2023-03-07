@@ -54,6 +54,18 @@ VALUES (CS_SEQ.NETVAL,
 ]]>
 </insert>
 
+<!-- 나의 문의글 삭제 -->
+<update id="deleteCS" parameterType="hashmap">
+<![CDATA[
+UPDATE CS
+SET
+	CS_DEL_GB='Y'
+WHERE CS_NUM = #{CS_NUM}
+]]>
+</update>
+
+
+
 <!-- 지점 리스트 가져오기 -->
 <select id="selectShopListSearch" parameterType="hashmap" resultType="hashmap">
 <![CDATA[
@@ -78,7 +90,7 @@ VALUES (CS_SEQ.NETVAL,
 
 <!-- 검색조건  -->
 <sql id="shopSearch">
-		<if test="keyword != null">
+		<if test="!keyword.isEmpty()">
 			AND SHOP_NAME LIKE '%' || #{keyword} || '%'
 		</if>
 </sql>

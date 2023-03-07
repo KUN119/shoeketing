@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/views/include/include-taglib.jspf" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,44 +9,35 @@
 </head>
 <body>
     <div class="col-10" style="margin-top: 0px">
-      <table>
-        <tr>
-          <td class="col-9">
-            <h3 style="margin-left: 30px; color: black; font-weight: bolder">
-              재고 관리
-            </h3>
-          </td>
-
-          <td class="col-3">
-            <div class="col input-group">
-              <select
-                class="form-select-sm"
-                style="width: 4rem; border-color: rgba(0, 0, 0, 0.263)"
-                id="searchType"
-                name="searchType"
-              >
-                <option selected value="total">전체</option>
-                <option value="title">제목</option>
-                <option value="content">내용</option>
-              </select>
-              <input
-                type="text"
-                class="form-control"
-                name="keyword"
-                id="keyword"
-              />
-              <button
-                class="btn btn-outline-secondary"
-                type="button"
-                id="button-addon2"
-                name="noticeSearch"
-              >
-                검색
-              </button>
-            </div>
-          </td>
-        </tr>
-      </table>
+      <div class="row d-flex mb-4 mt-5">
+        <div class="col-8">
+          <h3 style="margin-left: 30px; color: black; font-weight: bolder">
+            상품 관리
+          </h3>
+        </div>
+        <div class="col input-group">
+          <select
+            class="form-select-sm"
+            style="width: 4rem; border-color: rgba(0, 0, 0, 0.263)"
+            id="searchType"
+            name="searchType"
+          >
+            <option selected value="total">전체</option>
+            <option value="goodsName">상품명</option>
+            <option value="goodsModel">모델 번호</option>
+            <option value="brandName">브랜드명</option>
+          </select>
+          <input type="text" class="form-control" name="keyword" id="keyword" />
+          <button
+            class="btn btn-outline-secondary"
+            type="button"
+            id="button-addon2"
+            name="goodsSearch"
+          >
+            검색
+          </button>
+        </div>
+      </div>
 
       <table class="table" style="width: 100%; margin-left: 30px">
         <tbody class="table-group-divider">
@@ -80,21 +72,22 @@
                 vertical-align: middle;
               "
             >
-              <p style="font-weight: bolder; font-size: large">VANS</p>
+              <p class="mb-4" style="font-weight: bolder; font-size: large">VANS</p>
               <p style="font-weight: bolder">
                 어센틱 블랙 마쉬멜로우 / VN005U01K19DU
               </p>
-              <p style="font-size: small">사이즈 : 245mm</p>
             </td>
             <td
               style="
                 text-align: center;
-                width: 10%;
+                width: 20%;
                 margin-bottom: 1;
                 vertical-align: middle;
               "
             >
-              <p class="mb-0" style="font-weight: bolder; font-size: large">79,000원</p>
+              <p class="mb-0" style="font-weight: bolder; font-size: large">
+                79,000원
+              </p>
             </td>
             <td
               style="
@@ -104,13 +97,7 @@
               "
             >
               <div class="row justify-content-center">
-                <input
-                  class="form-control form-control-sm text-center"
-                  type="text"
-                  style="width: 5rem"
-                  value="0"
-                  placeholder="재고"
-                />
+                <button class="btn btn-secondary" style="width:5rem;">삭제</button>
               </div>
             </td>
           </tr>
@@ -146,21 +133,22 @@
                 vertical-align: middle;
               "
             >
-              <p style="font-weight: bolder; font-size: large">VANS</p>
+              <p class="mb-4" style="font-weight: bolder; font-size: large">VANS</p>
               <p style="font-weight: bolder">
                 어센틱 블랙 마쉬멜로우 / VN005U01K19DU
               </p>
-              <p style="font-size: small">사이즈 : 245mm</p>
             </td>
             <td
               style="
                 text-align: center;
-                width: 10%;
+                width: 20%;
                 margin-bottom: 1;
                 vertical-align: middle;
               "
             >
-              <p class="mb-0" style="font-weight: bolder; font-size: large">79,000원</p>
+              <p class="mb-0" style="font-weight: bolder; font-size: large">
+                79,000원
+              </p>
             </td>
             <td
               style="
@@ -170,13 +158,7 @@
               "
             >
               <div class="row justify-content-center">
-                <input
-                  class="form-control form-control-sm text-center"
-                  type="text"
-                  style="width: 5rem"
-                  value="0"
-                  placeholder="재고"
-                />
+                <button class="btn btn-secondary" style="width:5rem;">삭제</button>
               </div>
             </td>
           </tr>
@@ -212,21 +194,22 @@
                 vertical-align: middle;
               "
             >
-              <p style="font-weight: bolder; font-size: large">VANS</p>
+              <p class="mb-4" style="font-weight: bolder; font-size: large">VANS</p>
               <p style="font-weight: bolder">
                 어센틱 블랙 마쉬멜로우 / VN005U01K19DU
               </p>
-              <p style="font-size: small">사이즈 : 245mm</p>
             </td>
             <td
               style="
                 text-align: center;
-                width: 10%;
+                width: 20%;
                 margin-bottom: 1;
                 vertical-align: middle;
               "
             >
-              <p class="mb-0" style="font-weight: bolder; font-size: large">79,000원</p>
+              <p class="mb-0" style="font-weight: bolder; font-size: large">
+                79,000원
+              </p>
             </td>
             <td
               style="
@@ -236,13 +219,7 @@
               "
             >
               <div class="row justify-content-center">
-                <input
-                  class="form-control form-control-sm text-center"
-                  type="text"
-                  style="width: 5rem"
-                  value="0"
-                  placeholder="재고"
-                />
+                <button class="btn btn-secondary" style="width:5rem;">삭제</button>
               </div>
             </td>
           </tr>
@@ -278,21 +255,22 @@
                 vertical-align: middle;
               "
             >
-              <p style="font-weight: bolder; font-size: large">VANS</p>
+              <p class="mb-4" style="font-weight: bolder; font-size: large">VANS</p>
               <p style="font-weight: bolder">
                 어센틱 블랙 마쉬멜로우 / VN005U01K19DU
               </p>
-              <p style="font-size: small">사이즈 : 245mm</p>
             </td>
             <td
               style="
                 text-align: center;
-                width: 10%;
+                width: 20%;
                 margin-bottom: 1;
                 vertical-align: middle;
               "
             >
-              <p class="mb-0" style="font-weight: bolder; font-size: large">79,000원</p>
+              <p class="mb-0" style="font-weight: bolder; font-size: large">
+                79,000원
+              </p>
             </td>
             <td
               style="
@@ -302,13 +280,7 @@
               "
             >
               <div class="row justify-content-center">
-                <input
-                  class="form-control form-control-sm text-center"
-                  type="text"
-                  style="width: 5rem"
-                  value="0"
-                  placeholder="재고"
-                />
+                <button class="btn btn-secondary" style="width:5rem;">삭제</button>
               </div>
             </td>
           </tr>
@@ -344,21 +316,22 @@
                 vertical-align: middle;
               "
             >
-              <p style="font-weight: bolder; font-size: large">VANS</p>
+              <p class="mb-4" style="font-weight: bolder; font-size: large">VANS</p>
               <p style="font-weight: bolder">
                 어센틱 블랙 마쉬멜로우 / VN005U01K19DU
               </p>
-              <p style="font-size: small">사이즈 : 245mm</p>
             </td>
             <td
               style="
                 text-align: center;
-                width: 10%;
+                width: 20%;
                 margin-bottom: 1;
                 vertical-align: middle;
               "
             >
-              <p class="mb-0" style="font-weight: bolder; font-size: large">79,000원</p>
+              <p class="mb-0" style="font-weight: bolder; font-size: large">
+                79,000원
+              </p>
             </td>
             <td
               style="
@@ -368,26 +341,14 @@
               "
             >
               <div class="row justify-content-center">
-                <input
-                  class="form-control form-control-sm text-center"
-                  type="text"
-                  style="width: 5rem"
-                  value="0"
-                  placeholder="재고"
-                />
+                <button class="btn btn-secondary" style="width:5rem;">삭제</button>
               </div>
             </td>
           </tr>
+          
         </tbody>
       </table>
 
-      <button
-        class="btn btn-primary btn-md"
-        style="margin-left: 90%; width: 10%"
-        type="submit"
-      >
-        저장
-      </button>
       <hr class="my-4" style="margin-left: 30px; width: 100%" />
       <nav aria-label="Page navigation example" style="margin-left: 50%">
         <ul class="pagination">

@@ -44,4 +44,20 @@ public class AdminBoardController {
 
 		return mv;
 	}
+
+	@GetMapping(value = "/admin/noticeModifyForm")
+	public ModelAndView adminNoticeModifyForm(@RequestParam Map<String, Object> map) throws Exception {
+		log.debug("######### 관리자 페이지 공지사항 수정 폼 ##########");
+		ModelAndView mv = new ModelAndView("adminNoticeModifyForm");
+
+		return mv;
+	}
+
+	@GetMapping(value = "/admin/goodsTotalList")
+	public ModelAndView adminGoodsTotalList(@RequestParam Map<String, Object> map) throws Exception {
+		log.debug("######### 관리자 페이지 상품 전체 리스트 ##########");
+		ModelAndView mv = new ModelAndView("adminGoodsTotalList");
+
+		return mv;
+	}
 }

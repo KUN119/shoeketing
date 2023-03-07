@@ -13,7 +13,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -63,16 +63,68 @@ public class CSController {
 	}
 
 	// 문의 작성 폼
-	@GetMapping(value = "/csWriteForm")
+	@RequestMapping(value = "/myPage/csWriteForm")
 	public ModelAndView csWriteForm(Map<String, Object> map) throws Exception {
-		log.debug("###### 문의 작성 ######");
+		log.debug("###### 문의 작성 폼 ######");
 		ModelAndView mv = new ModelAndView("csWriteForm");
 
 		return mv;
 	}
 	
+	//문의할 매장찾기 (지점 리스트 가져오기)
+	@RequestMapping(value="/myPage/findShop")
+	public ModelAndView findShop(@RequestParam String keyword)throws Exception {
+		log.debug("###### 문의 작성 폼 모든 매장 가져오기 ######");
+		ModelAndView mv = new ModelAndView("jsonView");
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("END", 10);
+		map.put("START", 1);
+		
+		keyword.trim();
+		
+		if(keyword != null || !keyword.equals("")) {
+			map.put("keyword", keyword);
+		}
+		
+		//지점 리스트 가져오기
+		List<Map<String, Object>> shopList = csService.selectShopList(map);
+		System.out.println("shopList map : " + shopList);
+		
+		mv.addObject("shopList", shopList);
+		
+		return mv;
+	}
+	
+	//문의할 매장찾기 (지점 리스트 가져오기) - AJAX
+	@RequestMapping(value="/myPage/findShopAjax")
+	public ModelAndView findShopAjax(@RequestParam String keyword)throws Exception {
+		log.debug("###### 문의 작성 폼 매장 찾기 ajax ######");
+		ModelAndView mv = new ModelAndView("shopList_ajax");
+ 		
+		Map<String, Object> map = new HashMap<>();
+		map.put("END", 10);
+		map.put("START", 1);
+		
+		
+		
+		if(keyword != null || keyword != "") {
+			keyword.trim();
+			map.put("keyword", keyword);
+		}
+		
+		
+		//지점 리스트 가져오기
+		List<Map<String, Object>> shopList = csService.selectShopList(map);
+		System.out.println("shopList map : " + shopList);
+		
+		mv.addObject("shopList", shopList);
+		
+		return mv;
+	}
+	
 	@RequestMapping(value= "/myPage/csDetail")
-	public @ResponseBody ModelAndView csDetail(@RequestBody Map<String, Object> map) throws Exception {
+	public ModelAndView csDetail(@RequestBody Map<String, Object> map) throws Exception {
 		log.debug("###### 문의 상세보기 ######");
 		ModelAndView mv = new ModelAndView("jsonView");
 		
@@ -83,7 +135,10 @@ public class CSController {
 		//댓글 가져오기
 		Map<String, Object> replyMap = csService.selectCSReply(map);
 		//CS_REPLY_NUM도 가져오지만 필요하지 않기 때문에 댓글내용만 꺼내서 resultMap에 추가함
-		resultMap.put("CS_REPLY_CONTENT", replyMap.get("CS_REPLY_CONTENT").toString());
+		if(replyMap != null && !replyMap.isEmpty()) { //isEmpty()는 값이 없는 경우만 체크되고 null은 체크되지 않음
+			resultMap.put("CS_REPLY_CONTENT", replyMap.get("CS_REPLY_CONTENT").toString());
+		}
+		
 		System.out.println("resultMap : " + resultMap);
 		
 		mv.addObject("result",resultMap);
@@ -91,5 +146,13 @@ public class CSController {
 		return mv;
 	}
 	
-	
+	@RequestMapping(value="/myPage/csDelete")
+	public void csDelete(@RequestBody Map<String, Object> map) throws Exception {
+		log.debug("###### 문의 삭제 ######");
+		
+		System.out.println("csDelete map : " + map);
+
+		csService.deleteCS(map);
+	}
+
 }

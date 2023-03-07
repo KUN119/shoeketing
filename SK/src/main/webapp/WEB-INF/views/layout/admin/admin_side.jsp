@@ -30,13 +30,13 @@
             <h5 class="my-0">회원 관리</h5>
             <br />
             <h6 class="text-muted mb-3" style="margin-left: 25px">
-              <a href="/sk/admin/userList" style="font-weight: 400;">일반회원</a>
+              <a href="/sk/admin/memberList" style="font-weight: 400;">일반회원</a>
             </h6>
             <h6 class="text-muted mb-3" style="margin-left: 25px">
-              <a href="/sk/admin/userList" style="font-weight: 400;">매장회원</a>
+              <a href="/sk/admin/shopList" style="font-weight: 400;">매장회원</a>
             </h6>
             <h6 class="text-muted mb-3" style="margin-left: 25px">
-              <a href="/sk/admin/userList" style="font-weight: 400;">브랜드회원</a>
+              <a href="/sk/admin/brandList" style="font-weight: 400;">브랜드회원</a>
             </h6>
           </div>
         </li>
