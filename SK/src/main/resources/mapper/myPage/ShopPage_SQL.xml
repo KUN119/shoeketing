@@ -32,7 +32,9 @@
 				SHOP_TEL = #{SHOP_TEL},
 				SHOP_START_TIME = #{SHOP_START_TIME},
 				SHOP_END_TIME = #{SHOP_END_TIME},
-				SHOP_ADD = #{SHOP_ADD}
+				SHOP_ADD = #{SHOP_ADD},
+				SHOP_POS1 = #{SHOP_POS1},
+				SHOP_POS2 = #{SHOP_POS2}
 			WHERE SHOP_NUM = #{SHOP_NUM}
 		]]>
 	</update>

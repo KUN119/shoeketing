@@ -313,6 +313,7 @@ Array.from(forms).forEach((form) => {
             }
         } */
         
+        //비밀번호
          let pwdval = $('#MEM_PW').val()
 	      let pwdokval = $('#MEM_PW2').val()
 	      let pwdcheck = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,16}$/;

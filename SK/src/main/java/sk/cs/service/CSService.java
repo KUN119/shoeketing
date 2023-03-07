@@ -3,6 +3,8 @@ package sk.cs.service;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 public interface CSService {
 
 	//나의 문의 리스트 가져오기
@@ -24,10 +26,10 @@ public interface CSService {
 	public void deleteCS(Map<String, Object> map) throws Exception;
 	
 	// 매장 문의내역 리스트(10줄)
-	public List<Map<String, Object>> selectShopCSList(Map<String, Object> map) throws Exception;
+	public List<Map<String, Object>> selectShopCSList(Map<String, Object> map, HttpSession session) throws Exception;
 	
 	// 매장 문의내역 글 토탈 개수 (int 타입으로 리턴)
-	public int selectShopCSCount(Map<String, Object> map) throws Exception;
+	public int selectShopCSCount(Map<String, Object> map, HttpSession session) throws Exception;
 	
 	// 매장 문의내역 상세보기
 	public Map<String, Object> selectCSDetail(Map<String, Object> map) throws Exception;
