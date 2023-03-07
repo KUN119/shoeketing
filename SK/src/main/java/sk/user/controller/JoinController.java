@@ -61,7 +61,7 @@ public class JoinController {
 	}
 
 	
-	
+	//폰인증
 	@RequestMapping(value = "/phoneCheck", method = RequestMethod.GET)
 	@ResponseBody
 	public String sendSMS(@RequestParam("phone") String userPhoneNumber) throws Exception { // 휴대폰 문자보내기
@@ -112,24 +112,21 @@ public class JoinController {
 
 		ModelAndView mv = new ModelAndView("main");
 		
-		
 		joinService.insertMember(map);
-		
-		
 
-		
-		
 		return mv;
 	}
 	
 
+	//브랜드회원가입
 	@GetMapping(value = "/brandJoinForm")
 	public ModelAndView brandJoinForm(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("###### 브랜드 회원가입 ######");
 		ModelAndView mv = new ModelAndView("brandJoinForm");
 		return mv;
 	}
-
+	
+	//사업자 등록번호
 	@RequestMapping(value = "/brand/bNumAuth")
 	public ModelAndView bNumAuth(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("###### 사업자 등록번호 인증 ######");
@@ -138,13 +135,19 @@ public class JoinController {
 		return mv;
 	}
 
-	@GetMapping(value = "/brandJoin/brandInsertMember")
+	//브랜드 회원가입 성공
+	@PostMapping(value = "/brandJoin/joinSuccess")
 	public ModelAndView brandInsertMember(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("###### 브랜드회원가입 성공 ######");
-		ModelAndView mv = new ModelAndView("brandInsertMember");
+
+		ModelAndView mv = new ModelAndView("main");
+		
+		joinService.insertBrand(map);
+
 		return mv;
 	}
 
+	//매장 회원가입
 	@GetMapping(value = "/shopJoinForm")
 	public ModelAndView shopJoinForm(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("###### 매장 회원가입 ######");
