@@ -77,7 +77,7 @@ public class BrandPageDAO extends AbstractDAO {
 		return (int) update("brandPage.deleteShop", map);
 	}
 
-	// 브랜드 입점 매장 위치 조회 - selectOne()
+	// 브랜드 입점/입점요청 매장 위치 조회 - selectOne()
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> selectShopLocationInfo(Map<String, Object> map) throws Exception {
 		System.out.println("selectShopLocationInfo 파라미터 : " + map);
