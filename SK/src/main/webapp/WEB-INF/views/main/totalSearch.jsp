@@ -35,6 +35,8 @@
                 border-radius: 0;
                 border-bottom: 3px thick black;
               "
+              id="searchBtn"
+              name="searchBtn"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -55,15 +57,15 @@
       <!--검색창 끝-->
 
       <!--검색 키워드 시작-->
-      <div class="row mb-3">
-        <h2 style="font-weight: 700">검색어 "나이키"</h2>
+      <div class="row mb-3" id="searchKeyword">
+       <!--  <h2 id='searchKeyword'></h2> -->
       </div>
       <!--검색 키워드 끝-->
 
       <!--브랜드 검색 결과 시작-->
       <div class="row mb-5">
-        <a class="d-flex" href="#">
-          <div class="col-1">
+        <a class="d-flex" href="#" id=bInfo>
+          <%-- <div class="col-1">
             <img
               src="<%=request.getContextPath()%>/assets/img/nikeLogo.jpg"
               class="img-thumbnail"
@@ -74,7 +76,7 @@
             <h6 class="mb-0" style="font-weight: 700; font-size: 18px">
               나이키<i class="bi bi-chevron-right" style="font-weight: 700"></i>
             </h6>
-          </div>
+          </div> --%>
         </a>
       </div>
       <!--브랜드 검색 결과 끝-->
@@ -141,11 +143,11 @@
         </div>
 
         <!--상품 검색결과 더보기 시작-->
-        <div class="row">
-          <a href="#" class="ms-4" style="font-weight: 500"
-            ><p>검색결과 더보기<i class="bi bi-chevron-down ms-2"></i></p
-          ></a>
-          <hr />
+        <div class="row" id="sInfo">
+          <a href="#" class="ms-4" style="font-weight: 500">
+          	<p>검색결과 더보기<i class="bi bi-chevron-down ms-2"></i></p>
+          </a>
+          <hr/>
         </div>
         <!--상품 검색결과 더보기 끝-->
       </div>
@@ -326,4 +328,66 @@
       <!--매장 검색결과 리스트 끝-->
     </div>
   </body>
+  
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	$("button[name='searchBtn']").on("click", function(e) {
+		e.preventDefault();
+		fn_searchBtn();
+	});
+	
+	function fn_searchBtn() {
+		var formData = new FormData();
+		var keyword = $('#keyword').val();
+		
+		formData.append("keyword", keyword);
+		
+		$.ajax({
+			url: '/sk/totalSearch',
+			type: 'POST',
+			data: formData,
+			processData: false,
+			contentType: false,
+			success: function(data) {
+				console.log(data);
+				
+				value = data.keyword;
+				//console.log(value);
+				
+				var str = "";
+				str += "<h2 id='searchKeyword' style='font-weight: 700'>검색어: " +value+ "</h2>";
+				
+				$("#searchKeyword").prepend(str);
+				
+				values = data.brandlist;
+				
+				$.each(values, function(index, value) {
+					var bName = value.BRAND_NAME;
+					var bLogo = value.BRAND_LOGO_FILE;
+					//console.log(index + " : " + bName+", "+ bLogo);
+					console.log(bName);
+					console.log(bLogo);
+					
+				var a = "";
+				a += "<div class='col-1'>";
+	            a += 	"<img src=" + bLogo + "class='img-thumbnail'";
+	            a +=  		"style='height: 5rem; width: auto'/>";
+	            a += "</div>";
+	            a += "<div class='col-1 ms-3 align-self-center'>";
+	            a += "<h6 class='mb-0' style='font-weight: 700; font-size: 18px'>";
+	            a +=   bName + "<i class='bi bi-chevron-right' style='font-weight: 700'></i>";
+	            a += "</h6>";
+	            a += "</div>";
+                
+                $("#bInfo").prepend(a);
+				});
+			},
+			error: function(xhr, status, error) {
+				console.log('실패');
+			}
+		});
+	};
+});
+</script>
 </html>
