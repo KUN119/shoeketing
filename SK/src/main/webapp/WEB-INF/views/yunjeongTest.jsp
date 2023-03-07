@@ -201,7 +201,7 @@ reservationList<br>
 paymentKey값 : ${paymentKey}
 orderId값 : ${orderId}
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 
 //결제 완료 페이지가 로드될 때, 웹 스토리지에 paymentKey값 저장하기
 $(document).ready(function (){
@@ -213,7 +213,7 @@ $(document).ready(function (){
 });
 
 	
-</script>
+</script> -->
 
 </body>
 </html>

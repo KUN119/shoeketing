@@ -84,6 +84,7 @@
 	                 FROM
 	                    SHOP
 	                 WHERE  SHOP_JOIN_APPROVE = 'N'
+	                 AND SHOP_DEL_GB = 'N'
 	                 AND SHOP_BRAND = #{BRAND_NAME})
 	        WHERE NUM BETWEEN #{START} AND #{END} 
 	    ]]>
@@ -105,7 +106,7 @@
 		<![CDATA[
 	        UPDATE SHOP
 	        SET SHOP_JOIN_APPROVE = 'Y'
-	        WHERE SHOP_NAME= #{SHOP_NAME}
+	        WHERE SHOP_NUM = #{SHOP_NUM}
 	    ]]>
 	</update>
 	
@@ -149,7 +150,7 @@
 		<![CDATA[
 	        UPDATE SHOP
 	        SET SHOP_DEL_GB = 'Y'
-	        WHERE SHOP_NAME= #{SHOP_NAME}
+	        WHERE SHOP_NUM = #{SHOP_NUM}
 	        AND SHOP_JOIN_APPROVE = 'N'
 	    ]]>
 	</update>   
