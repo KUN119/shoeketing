@@ -9,7 +9,7 @@
 <body>
 <div class="container" style="width: 600px;">
 
-<form id="memberJoinForm" class="needs-validation" novalidate>
+<form id="memberJoinForm" class="needs-validation" novalidate action="/sk/memberJoin/joinSuccess" method="post">
 
       <div class="box-shadow-full" style="margin-top: 100px">
         <div class="row mb-4 text-center">
@@ -65,12 +65,12 @@
               placeholder="특수문자, 문자, 숫자 포함 형태의 8~16자리 이내"
               required
             />
-            <!-- <div id="pw-null" class="invalid-feedback">
+            <div id="pw-null" class="invalid-feedback">
 		      비밀번호를 입력해주세요
 		  	</div>
 		  	<div id="pw-type" class="invalid-feedback">
 		      비밀번호 형식이 올바르지 않습니다
-		  	</div> -->
+		  	</div>
           </div>
 
           <div class="mb-3">
@@ -88,12 +88,12 @@
               pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,16}$"
               required
             />
-            <!-- <div id="pw2-null" class="invalid-feedback">
+             <div id="pw2-null" class="invalid-feedback">
 		      비밀번호 확인이 필요합니다
 		  	</div>
             <div id="pw2-same" class="invalid-feedback">
 		      비밀번호가 일치하지 않습니다
-		  	</div> -->
+		  	</div> 
            
           </div>
 
@@ -128,15 +128,15 @@
 	            <input
 	              class="form-control"
 	              type="text"
-	              id="phone"
-	              name="phone"
+	              id="MEM_PHONE"
+	              name="MEM_PHONE"
 	              placeholder="휴대전화 입력"
 	              required
 	            />
-	            <button class="btn btn-outline-secondary" name="phoneCheck" type="button" id="button-addon2" style="font-size: 15px; width: 100px;">인증번호 보내기</button>
+	            <button class="btn btn-outline-secondary" name="phoneCheck" type="button" id="phoneChk" style="font-size: 15px; width: 100px;">인증번호 보내기</button>
             </div>
             
-            <!-- <div class="d-flex">
+            <div class="d-flex">
 	            <input
 	              class="form-control"
 	              type="text"
@@ -146,13 +146,13 @@
 	              disabled
 	              required
 	            />
-	            <button class="btn btn-outline-secondary" name="phoneCheck2" type="button" id="button-addon2" style="font-size: 15px; width: 100px;">본인 인증</button>
+	            <button class="btn btn-outline-secondary" name="phoneCheck2" type="button" id="phoneChk2" style="font-size: 15px; width: 100px;">본인 인증</button>
             </div>
             <div class="point successPhoneChk">휴대폰 번호 입력후 인증번호 보내기를 해주십시오.</div>
             <input
             	type="hidden"
             	id="phoneDoubleCheck"
-            	/> -->
+            	/>
           </div>
 
           <div
@@ -195,49 +195,9 @@
     </div>
     
      <script type="text/javascript">
-
      
-     // 회원가입
-		$(document).ready(function() {
-			  $("button[name='userJoin']").on("click", function(e) {  
-			    e.preventDefault();
-			    fn_userJoin();
-			  });
-			  
-			  function fn_userJoin() {
-			    var memEmail = $('#MEM_EMAIL').val();
-			    var memPw = $('#MEM_PW').val();
-			    var memName = $('#MEM_NAME').val();
-			    var memPhone = $('#MEM_PHONE').val();
-
-			    var formData = new FormData();
-			    formData.append("MEM_EMAIL", memEmail);
-			    formData.append("MEM_PW", memPw);
-			    formData.append("MEM_NAME", memName);
-			    formData.append("MEM_PHONE", memPhone);
-
-			    $.ajax({
-			      url:'/sk/memberJoin/joinSuccess',
-			      type:'POST',
-			      data:formData,
-			      processData:false,
-			      contentType:false,
-			      success:function(data) {
-			        if(data === 'fail'){
-			          alert("회원가입 실패");
-			        } else if (data === 'success'){
-			          alert("회원가입 성공");
-			        }
-			      },
-			      error:function() {
-			        alert("에러입니다.");
-			      }
-			    });
-			  }
-			});
-    
-		
-     //이메일 중복확인
+     
+   //이메일 중복확인
      $(document).ready(function() {
     	
     	$("button[name='idCheck']").on("click", function(e) { // 이메일아이디 중복확인
@@ -249,6 +209,7 @@
     	function fn_idCheck() { //함수를 ajax 형식으로 수정 필요
     		      
     	var MEM_EMAIL = $('#MEM_EMAIL').val();
+    	
     	alert(MEM_EMAIL);
     		         
     		$.ajax({
@@ -267,134 +228,121 @@
     		});
     	};
     });
-    
-   //휴대폰 번호 인증
    
-    /* var code2 = "";
-    $("#phoneCheck").click(function(){
-    	alert("인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호 확인을 해주십시오.");
-    	var phone = $("#MEM_PHONE").val();
-    	$.ajax({
-            type:"GET",
-            url:"/sk//memberJoin/phoneAuth?phone=" + MEM_PHONE,
-            cache : false,
-            success:function(data){
-            	if(data == "error"){
-            		alert("휴대폰 번호가 올바르지 않습니다.")
-    				$(".successPhoneChk").text("유효한 번호를 입력해주세요.");
-    				$(".successPhoneChk").css("color","red");
-    				$("#MEM_PHONE").attr("autofocus",true);
-            	}else{	        		
-            		$("#MEM_PHONE2").attr("disabled",false);
-            		$("#phoneChk2").css("display","inline-block");
-            		$(".successPhoneChk").text("인증번호를 입력한 뒤 본인인증을 눌러주십시오.");
-            		$(".successPhoneChk").css("color","green");
-            		$("#MEM_PHONE2").attr("readonly",true);
-            		code2 = data;
-            	}
+   //휴대폰 번호 인증
+     var code2 = "";
+     $("#phoneChk").click(function(){
+     	alert("인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호 확인을 해주십시오.");
+     	var phone = $("#MEM_PHONE").val();
+     	$.ajax({
+             type:"GET",
+             url:"phoneCheck?phone=" + phone,
+             cache : false,
+             success:function(data){
+             	if(data == "error"){
+             		alert("휴대폰 번호가 올바르지 않습니다.")
+     				$(".successPhoneChk").text("유효한 번호를 입력해주세요.");
+     				$(".successPhoneChk").css("color","red");
+     				$("#MEM_PHONE").attr("autofocus",true);
+             	}else{	        		
+             		$("#phone2").attr("disabled",false);
+             		$("#phoneChk2").css("display","inline-block");
+             		$(".successPhoneChk").text("인증번호를 입력한 뒤 본인인증을 눌러주십시오.");
+             		$(".successPhoneChk").css("color","green");
+             		$("#MEM_PHONE").attr("readonly",true);
+             		code2 = data;
+             	}
+             }
+         });
+     });
+   
+     
+   //휴대폰 인증번호 대조
+     $("#phoneChk2").click(function(){
+     	if($("#phone2").val() == code2){
+     		$(".successPhoneChk").text("인증번호가 일치합니다.");
+     		$(".successPhoneChk").css("color","green");
+     		$("#phoneDoubleChk").val("true");
+     		$("#phone2").attr("disabled",true);
+     	}else{
+     		$(".successPhoneChk").text("인증번호가 일치하지 않습니다. 확인해주시기 바랍니다.");
+     		$(".successPhoneChk").css("color","red");
+     		$("#phoneDoubleChk").val("false");
+     		$(this).attr("autofocus",true);
+     	}
+     });
+
+     
+   //유효성검증
+ 	(() => {
+ 		  'use strict'
+
+ 		  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+ 		  const forms = document.querySelectorAll('.needs-validation');
+
+// Loop over them and prevent submission
+Array.from(forms).forEach((form) => {
+    form.addEventListener('submit', (event) => {
+        var pass = true;
+        
+        if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+            pass = false;
+        }
+
+        form.classList.add('was-validated');
+
+        /* var MEM_EMAIL = $('#MEM_EMAIL').val();
+        var emailRule = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+        
+        if (MEM_EMAIL == null || $.trim(MEM_EMAIL) == '' || !emailRule.test(MEM_EMAIL)) {
+            $("#MEM_EMAIL").addClass('is-invalid');
+            $("#email-null").show();
+            $("#email-type").hide();
+            $("#MEM_EMAIL").focus();
+            pass = false;
+        } else {
+            $("#email-null").hide();
+            if (!emailRule.test(MEM_EMAIL)) {
+                $("#email-type").show();
+                $("#MEM_EMAIL").focus();
+                pass = false;
+            } else {
+                $("#email-type").hide();
             }
-        });
-    });  
-    
-  //유효성검증
-	(() => {
-		  'use strict'
+        } */
+        
+         let pwdval = $('#MEM_PW').val()
+	      let pwdokval = $('#MEM_PW2').val()
+	      let pwdcheck = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,16}$/;
+	      
+	      if(pwdval == null || $.trim(pwdval) == "") {
+	    	  $("#pw-null").show();
+			  $("#pw-type").hide();
+		      $("#MEM_PW").focus();
+	      } else if(!pwdcheck.test(pwdval)) {
+	    	  $("#pw-null").hide();
+			  $("#pw-type").show();
+		      $("#MEM_PW").focus();
+	      } else {
+	    	  $("#pw-null").hide();
+			  $("#pw-type").hide();
+	      }
+	      
+	      if(pwdokval == null || $.trim(pwdokval) == "") {
+	    	  $("#pw2-null").show();
+			  $("#pw2-same").hide();
+		      $("#MEM_PW2").focus();
+	      } else if(pwdval!==pwdokval) {
+	    	  $("#pw2-null").hide();
+			  $("#pw2-same").show();
+		      $("#MEM_PW2").focus();
+	      } 
 
-		  // Fetch all the forms we want to apply custom Bootstrap validation styles to
-		  const forms = document.querySelectorAll('.needs-validation')
-
-		  // Loop over them and prevent submission
-		  Array.from(forms).forEach(form => {
-		    form.addEventListener('submit', event => {
-		    	
-		    	var pass = true;
-		    	
-		      if (!form.checkValidity()) {
-		        event.preventDefault();
-		        event.stopPropagation();
-		        pass = false;
-		      }
-		      
-		      form.classList.add('was-validated')
-		      
-		      
-		      
-		      let pwdval = $('#MEM_PW').val()
-		      let pwdokval = $('#MEM_PW2').val()
-		      let pwdcheck = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,16}$/;
-		      
-		      if(pwdval == null || $.trim(pwdval) == "") {
-		    	  $("#pw-null").show();
-				  $("#pw-type").hide();
-			      $("#MEM_PW").focus();
-		      } else if(!pwdcheck.test(pwdval)) {
-		    	  $("#pw-null").hide();
-				  $("#pw-type").show();
-			      $("#MEM_PW").focus();
-		      } else {
-		    	  $("#pw-null").hide();
-				  $("#pw-type").hide();
-		      }
-		      
-		      if(pwdokval == null || $.trim(pwdokval) == "") {
-		    	  $("#pw2-null").show();
-				  $("#pw2-same").hide();
-			      $("#MEM_PW2").focus();
-		      } else if(pwdval!==pwdokval) {
-		    	  $("#pw2-null").hide();
-				  $("#pw2-same").show();
-			      $("#MEM_PW2").focus();
-		      }
-		      
-		      
-		      
-		   //  회원이름 전송
-			   function fn_sendMemName(){
-			      var comSubmit = new ComSubmit();
-			      var memName = $('#MEM_NAME').val();
-			 
-			      comSubmit.setUrl("/sk/memberJoinForm");  
-			      comSubmit.addParam("MEM_NAME", memName);
-			      comSubmit.submit();
-			   }
-		   
-			// 회원가입 가능한지 여부 확인 및 회원가입 폼 데이터 넘겨주기
-			  	function fn_checkMember() {
-			  		var memEmail = $('#MEM_EMAIL').val();
-			  		var memPw = $('#MEM_PW').val();
-			  		var memName = $('#MEM_NAME').val();
-			  		var memPhone = $('#MEM_PHONE').val();
-			  	
-			  	var formData = new FormData();
-			          formData.append("MEM_EMAIL", memEmail);
-			          formData.append("MEM_PW", memPw);
-			          formData.append("MEM_NAME", memName);
-			          formData.append("MEM_PHONE", memPhone);
-			   
-			          $.ajax({ 
-			              url:"/sk/joinAvailable",
-			              type:"post",
-			              data:formData,
-			              processData:false,
-			              contentType:false,
-			              success:function(data){
-			                 console.log("탈퇴이력 조회 성공");
-			                 
-			                 // 회원 탈퇴한지 7일 지나지 않았을 경우 경고창 띄우기
-			                 if(data == 'fail') {
-			                       alert("탈퇴 후 재가입은 7일 후에 가능합니다.");
-			                    } else if(data == 'success') {  // 회원 탈퇴한지 7일 지났을 경우 joinSuccess로 이동
-			                  	  fn_sendMemName();
-			                    }
-			                 },
-			  	            error:function() {
-			  	               alert("에러입니다.");
-			  	            }
-			  	  	 });
-			  	   }
-				}, false)
-			  })
-	})() */
+    });
+});
+ 	})()
     </script> 
     
     

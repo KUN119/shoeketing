@@ -15,12 +15,7 @@ public class JoinDAO extends AbstractDAO {
 		return (Map<String, Object>) selectOne("join.selectEmailCheck", map);
 	}
 
-	// 폰 인증
-	@SuppressWarnings("unchecked")
-	public Map<String, Object> selectPhoneAuth(Map<String, Object> map) {
-
-		return (Map<String, Object>) selectOne("join.selectPhoneAuth", map);
-	}
+	
 
 	public int selectDelCount(Map<String, Object> map) throws Exception {
 		return (int) selectOne("join.selectDelCount", map);

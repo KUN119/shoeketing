@@ -50,11 +50,11 @@
          VALUES(
                	MEMBER_SEQ.NEXTVAL,
                	#{MEM_EMAIL},
-		#{MEM_NAME},
+				#{MEM_NAME},
                	#{MEM_PW},
                	#{MEM_PHONE},
                	'N',
-               	‘N’)
+               	'N')
       ]]>
    </insert>
    
