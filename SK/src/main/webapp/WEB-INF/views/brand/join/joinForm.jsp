@@ -8,8 +8,9 @@
 </head>
 <body>
 <div class="container" style="width: 600px">
+	
       <div class="box-shadow-full" style="margin-top: 100px">
-        <form id="joinForm" class="php-email-form">
+        <form id="brandJoinForm" class="needs-validation" novalidate action="/sk/brandJoin/joinSuccess" method="post">
           <div class="row mb-4 text-center">
             <h1>SHOEKETING</h1>
             <h6>(브랜드회원)</h6>
@@ -43,8 +44,17 @@
                 class="form-control"
                 id="BRAND_PW"
                 name="BRAND_PW"
+                pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,16}$"
+              	placeholder="특수문자, 문자, 숫자 포함 형태의 8~16자리 이내"
                 required
               />
+              
+              <div id="pw-null" class="invalid-feedback">
+		      비밀번호를 입력해주세요
+		  	</div>
+		  	<div id="pw-type" class="invalid-feedback">
+		      비밀번호 형식이 올바르지 않습니다
+		  	</div>
             </div>
 
             <div class="mb-3">
@@ -59,8 +69,16 @@
                 class="form-control"
                 id="BRAND_PW2"
                 name="BRAND_PW2"
+                pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,16}$"
                 required
               />
+              
+              <div id="pw2-null" class="invalid-feedback">
+		      비밀번호 확인이 필요합니다
+		  	</div>
+            <div id="pw2-same" class="invalid-feedback">
+		      비밀번호가 일치하지 않습니다
+		  	</div>
             </div>
 
             <div class="mb-3">
@@ -92,9 +110,18 @@
                   type="text"
                   id="BRAND_BUSINESS_NUM"
                   name="BRAND_BUSINESS_NUM"
+                  pattern="^[0-9]{3}[0-9]{2}[0-9]{5}$"
                   placeholder="사업자 등록번호 입력"
+                  max="10"
                   required
                 />
+                
+                <!-- <div id="business-null" class="invalid-feedback">
+		      		등록번호를 입력해주세요
+		  		</div>
+		  		<div id="business-type" class="invalid-feedback">
+		      		등록번호 형식이 올바르지 않습니다
+		  		</div> -->
 
                 <button
                   id="button-addon2"
@@ -131,7 +158,7 @@
                 style="font-size: large; font-weight: bolder"
                 >브랜드 로고 파일</label
               >
-              <input class="form-control" type="file" id="BRAND_LOGO_FILE">
+              <input class="form-control" type="file" id="joinImgUpload" name="joinImgUpload">
             </div>
           </div>
 
@@ -140,6 +167,8 @@
             class="btn btn-primary btn-lg"
             style="margin-left: 30%; width: 45%"
             type="submit"
+            id="brandJoin"
+          name="brandJoin"
           >
             가입하기
           </button>
@@ -173,6 +202,7 @@ $(document).ready(function() {
 					var success = result.data[0].b_stt_cd;
 					if(success == '01') {
 						alert('사업자 등록번호 확인 완료');
+						
 					} else{
 						alert('사업장 등록번호를 다시 확인해주세요.');
 					}
@@ -182,7 +212,93 @@ $(document).ready(function() {
 				}
 		});
 	}
+	
+		//파일업로드
+	 	function fn_joinForm() {
+		var formData = new FormData(document.getElementById("brandJoinForm"));
+		var fileInput = document.getElementById("joinImgUpload"); //id로 파일 태그를 호출
+        var files = fileInput.files; //업로드한 파일들의 정보를 넣는다.
+        
+        for (var i = 1; i < files.length; i++) {
+            formData.append('file-'+i, files[i]); //업로드한 파일을 하나하나 읽어서 FormData 안에 넣는다.
+        }
+        
+        $.ajax({
+            url: "/brandJoin/joinSuccess",
+            data: formData,
+            processData: false,
+            contentType: false,
+            type: 'POST',
+            dataType: 'text',
+            success: function(result){
+            	alert("업로드 완료");
+          },
+          error: function(xhr,textStatus,error){
+                                  
+              console.log("textStatus: "+xhr.status+", error: "+error);
+              alert("예상치 못한 오류가 발생했습니다.");
+              
+          }
+      });
+        
+	}; 
 });
+
+
+//유효성검증
+	(() => {
+		  'use strict'
+
+		  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+		  const forms = document.querySelectorAll('.needs-validation');
+
+//Loop over them and prevent submission
+Array.from(forms).forEach((form) => {
+form.addEventListener('submit', (event) => {
+    var pass = true;
+    
+    if (!form.checkValidity()) {
+        event.preventDefault();
+        event.stopPropagation();
+        pass = false;
+    }
+
+    form.classList.add('was-validated');
+    
+  //비밀번호
+    let pwdval = $('#BRAND_PW').val()
+     let pwdokval = $('#BRAND_PW2').val()
+     let pwdcheck = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,16}$/;
+     
+     if(pwdval == null || $.trim(pwdval) == "") {
+   	  $("#pw-null").show();
+		  $("#pw-type").hide();
+	      $("#BRAND_PW").focus();
+     } else if(!pwdcheck.test(pwdval)) {
+   	  $("#pw-null").hide();
+		  $("#pw-type").show();
+	      $("#BRAND_PW").focus();
+     } else {
+   	  $("#pw-null").hide();
+		  $("#pw-type").hide();
+     }
+     
+     if(pwdokval == null || $.trim(pwdokval) == "") {
+   	  $("#pw2-null").show();
+		  $("#pw2-same").hide();
+	      $("#BRAND_PW2").focus();
+     } else if(pwdval!==pwdokval) {
+   	  $("#pw2-null").hide();
+		  $("#pw2-same").show();
+	      $("#BRAND_PW2").focus();
+     } 
+     
+     
+      
+    
+});
+});
+})()
 	
 </script>
 </html>
