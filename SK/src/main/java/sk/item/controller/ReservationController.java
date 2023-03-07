@@ -81,7 +81,7 @@ public class ReservationController {
 	@GetMapping(value = "/shopPage/reservationList")
 	public ModelAndView shopReservationList(Map<String, Object> map, HttpSession session) throws Exception {
 		log.debug("###### 매장 픽업 예약 요청 리스트 ######");
-		ModelAndView mv = new ModelAndView("reservationList"); // 추후 수정
+		ModelAndView mv = new ModelAndView("reservationRequestList"); // 수정 완
 
 		List<Map<String, Object>> reservaionList = reservationService.selectReservationRequestList(map, session);
 		int reservationCount = reservationService.selectReservationCount(map, session);

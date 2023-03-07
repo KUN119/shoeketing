@@ -113,7 +113,6 @@ public class CSController {
 			map.put("keyword", keyword);
 		}
 		
-		
 		//지점 리스트 가져오기
 		List<Map<String, Object>> shopList = csService.selectShopList(map);
 		System.out.println("shopList map : " + shopList);
@@ -145,6 +144,18 @@ public class CSController {
 		
 		return mv;
 	}
+	
+	@RequestMapping(value="/myPage/csWrite")
+	public void csWrite(@RequestParam Map<String, Object> map, HttpSession session) throws Exception {
+		log.debug("###### 문의글 등록 ######");
+		System.out.println("csWrite 파라미터 : " + map);
+		
+		//현재 로그인한 사용자를 작성자로 맵에 저장
+		map.put("CS_WRITER", sessionService.getSession(session, "MEM_NUM"));
+		System.out.println("csWrite map : " + map);
+		csService.insertCS(map);
+	}
+	
 	
 	@RequestMapping(value="/myPage/csDelete")
 	public void csDelete(@RequestBody Map<String, Object> map) throws Exception {
