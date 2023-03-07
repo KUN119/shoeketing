@@ -6,15 +6,24 @@
 <meta charset="UTF-8">
 </head>
 <body>
-<div class="py-5 row" style="background-color: black;" >
-        <div class="col align-self-center ms-5" style="margin-left: 100px;">
-            <h1 class="mb-0 fs-1" style="color: rgb(255, 255, 255);">${session_MEM_INFO.MEM_NAME}님</h1>   
+  <div class="py-5 row" style="background-color: black; height: 200px;" >
+    <div class="col align-self-center ms-5" style="margin-left: 100px;">
+        <h1 class="mb-0 fs-1" style="color: rgb(255, 255, 255);">나이키 명동</h1>   
+    </div>
     
-        </div>
-        <div class="col text-end" style="margin-right: 100px;">
-            <h1 class="mb-0 fs-1" style="color: rgb(255, 255, 255);">${session_MEM_INFO.MEM_GRADE}</h2>
-            <h1 class="mb-0 fs-5" style="color: rgb(255, 255, 255);">등급혜택</h2>
-        </div>
-       </div>
+    <div class="col text-end mt-0" style="margin-right: 100px; align-items: center;">
+    <table style="margin-left: 430px;">
+    <tr>
+    	<td>
+            <img class="mb-1 mt-2" style="width: 80px; height: 80px; margin-right: 30px;" src="/Users/mj/Desktop/자바 수업/2_슈케팅/2차 화면구현/assets/img/nikelogo.jpeg">
+        </td>
+        
+        <td>
+            <p class="mb-0 fs-2" style="color: rgb(255, 255, 255); font-size: larger;">나이키</p>
+        </td>
+    </tr>
+    </table>
+      </div>
+   </div>
 </body>
 </html>
