@@ -19,7 +19,6 @@ public class MailServiceImpl implements MailService {
 
 	@Autowired
 	private JavaMailSender javaMailSender;
-	private int authNumber;
 	
 	@Resource(name = "loginDAO")
 	private LoginDAO loginDAO;
@@ -28,29 +27,32 @@ public class MailServiceImpl implements MailService {
 		this.javaMailSender = javaMailSender;
 	}
 
-//	@Override
-//	public void makeRandomNumber() {
-//		// 난수의 범위 111111 ~ 999999 (6자리 난수)
-//		Random r = new Random();
-//		int checkNum = r.nextInt(888888) + 111111;
-//		System.out.println("인증번호 : " + checkNum);
-//		authNumber = checkNum;
-//	}
-
 	@Override
 	public String joinEmail(Map<String, Object> map) throws Exception {
 		System.out.println("map: " + map);
 		
 		Map<String, Object> pw = loginDAO.findPwWithEmail(map);
-		String pww = (String) pw.get("MEM_PW");
-		String setFrom = "naesanamsa@gmail.com"; // email-config에 설정한 자신의 이메일 주소를 입력
-		String toMail = (String) map.get("MEM_EMAIL");
-		String title = "비밀번호 찾기 결과입니다."; // 이메일 제목
-		String content = "슈케팅을 방문해주셔서 감사합니다." + // html 형식으로 작성 !
-				"<br><br>" + "고객님의 비밀번호는 " + pww + "입니다." + "<br>" + "해당 비밀번호로 로그인해주세요."; // 이메일 내용 삽입
-		mailSend(setFrom, toMail, title, content);
+		String pww = "";
 		
-		return "성공";	
+		Object memPw = pw.get("MEM_PW");
+		if (memPw == null || ((String) memPw).isEmpty()) {
+		    pww = "";
+		} else {
+		    pww = (String) memPw;
+		}
+		
+		if(pww == "" || pww == null) {
+			return "fail";
+		} else {
+			String setFrom = "shoeketing@gmail.com"; // email-config에 설정한 자신의 이메일 주소를 입력
+			String toMail = (String) map.get("MEM_EMAIL");
+			String title = "비밀번호 찾기 결과입니다."; // 이메일 제목
+			String content = "슈케팅을 방문해주셔서 감사합니다." + // html 형식으로 작성 !
+					"<br><br>" + "고객님의 비밀번호는 " + pww + "입니다." + "<br>" + "해당 비밀번호로 로그인해주세요."; // 이메일 내용 삽입
+			mailSend(setFrom, toMail, title, content);
+			
+			return "success";	
+		}
 	}
 
 	@Override
