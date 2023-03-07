@@ -44,7 +44,7 @@
 							CS_WRITER,
 							CS_CONTENT,
 							CS_DATE)
-			VALUES (CS_SEQ.NETVAL,
+			VALUES (CS_SEQ.NEXTVAL,
 					#{CS_SHOP_NUM},
 					#{CS_TITLE},
 					#{CS_WRITER},

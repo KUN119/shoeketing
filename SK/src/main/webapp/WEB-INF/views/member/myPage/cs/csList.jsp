@@ -90,22 +90,6 @@
                 			등록된 글이 없습니다.
                 		</c:otherwise>
                 	</c:choose>
-                	
-                 	 <!-- <tr>
-                    <td style="width: 40%;"><a href="#" data-bs-toggle="modal" data-bs-target="#csDetail">상품 2의 재고 문의</a></td>
-                    <td style="width: 30%;">2023/02/05 </td>
-                    <td style="width: 30%;">답변 대기</td>
-                  </tr>
-                  <tr>
-                    <td style="width: 40%;"><a href="#" data-bs-toggle="modal" data-bs-target="#csDetail">상품 3의 재고 문의</a></td>
-                    <td style="width: 30%;">2023/02/08 </td>
-                    <td style="width: 30%;">답변 대기</td>
-                  </tr>
-                  <tr>
-                    <td style="width: 40%;"><a href="#" data-bs-toggle="modal" data-bs-target="#csDetail">상품 4의 재고 문의</a></td>
-                    <td style="width: 30%;">2023/01/30 </td>
-                    <td style="width: 30%;">답변 대기</td>
-                  </tr>	 -->
                 </tbody>
               </table>
 
@@ -131,16 +115,15 @@
 <script type="text/javaScript">
 
 $(document).ready(function() {
-	$("a[name='title']").on("click", function(e) { //회원 탈퇴 버튼을 누르면
+	$("a[name='title']").on("click", function(e) { //목록에서 글 제목을 클릭하면
 	 e.preventDefault();
 	//CS_NUM을 변수로 저장
 	var num = $(this).attr('data-num'); //string으로 가져옴. attr말고 data('num')으로 쓰면 실제 자료형으로 가져옴
-	//var jsonNum = {"CS_NUM":num};
 	
 	detail(num); //상세보기 함수 호출
 	});
 	
-	$("button[name='delete']").on("click", function(e) { //회원 탈퇴 버튼을 누르면
+	$("button[name='delete']").on("click", function(e) { //모달에서 삭제 버튼을 누르면
 		 e.preventDefault();
 		//CS_NUM을 변수로 저장
 		var num = $("a[name='title']").attr('data-num'); //string으로 가져옴. attr말고 data('num')으로 쓰면 실제 자료형으로 가져옴
@@ -160,7 +143,9 @@ function detail(num) {
 		success:function(data) {
 			$("#d_title").html(data.result.CS_TITLE);
 			$("#d_content").html(data.result.CS_CONTENT);
+			$("#d_reply").empty();
 			$("#d_reply").html(data.result.CS_REPLY_CONTENT);
+			
 		},
 		error:function() {
 			alert("잠시 후 다시 시도해주세요.");
