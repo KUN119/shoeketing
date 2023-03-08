@@ -318,6 +318,11 @@
    <definition name="adminGoodsTotalList" extends="adminTemplate">
    	  <put-attribute name="admin_main" value="/WEB-INF/views/admin/goods/goodsTotalList.jsp" />
    </definition>
+   
+   <!-- 브랜드관 -->
+   <definition name="brandInfo" extends="default1">
+   	  <put-attribute name="body1" value="/WEB-INF/views/brand/main.jsp" />
+   </definition>
     
 </tiles-definitions>
 
