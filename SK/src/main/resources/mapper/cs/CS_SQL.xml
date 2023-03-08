@@ -140,6 +140,7 @@
 		<![CDATA[
 			SELECT
 					M.MEM_EMAIL,
+					M.MEM_NUM,
                     C.CS_NUM,
 					C.CS_SHOP_NUM,
 					C.CS_TITLE,

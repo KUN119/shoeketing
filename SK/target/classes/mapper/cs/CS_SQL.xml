@@ -44,7 +44,7 @@
 							CS_WRITER,
 							CS_CONTENT,
 							CS_DATE)
-			VALUES (CS_SEQ.NETVAL,
+			VALUES (CS_SEQ.NEXTVAL,
 					#{CS_SHOP_NUM},
 					#{CS_TITLE},
 					#{CS_WRITER},
@@ -140,6 +140,7 @@
 		<![CDATA[
 			SELECT
 					M.MEM_EMAIL,
+					M.MEM_NUM,
                     C.CS_NUM,
 					C.CS_SHOP_NUM,
 					C.CS_TITLE,

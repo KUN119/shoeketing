@@ -250,6 +250,11 @@
     	  <put-attribute name="myPage_main" value="/WEB-INF/views/shop/shopPage/cs/csList.jsp" />
     </definition>
    
+   <!-- 매장 회원 마이페이지 매장 문의 상세보기 csDetail_ajax -->
+   <definition name="shopCSDetail_ajax" template="/WEB-INF/views/layout/layout_ajax.jsp">
+    	  <put-attribute name="body_ajax" value="/WEB-INF/views/shop/shopPage/cs/csDetail_ajax.jsp" />
+    </definition>
+   
     <!-- 매장 회원 마이페이지 재 리스트 stockList-->
 	<definition name="stockList" extends="myPageTemplate">
     	  <put-attribute name="myPage_header" value="/WEB-INF/views/layout/myPage/shop_myPage_header.jsp" />
