@@ -119,10 +119,10 @@ public class ShopPageController {
 		return mv;
 	}
 
-	@GetMapping(value = "/shopPage/csDetail")
-	public ModelAndView shopCSDetail(Map<String, Object> map) throws Exception {
+	@PostMapping(value = "/shopPage/csDetail_ajax")
+	public ModelAndView shopCSDetail(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("###### 매장 문의 내역 상세 보기 ######");
-		ModelAndView mv = new ModelAndView("testMain"); // 추후 수정
+		ModelAndView mv = new ModelAndView("shopCSDetail_ajax"); 
 
 		Map<String, Object> csDetailMap = csService.selectCSDetail(map);
 		Map<String, Object> csReplyMap = csService.selectCSReply(map);
@@ -144,15 +144,17 @@ public class ShopPageController {
 		return mv;
 	}
 
-	@GetMapping(value = "/shopPage/csReplyWrite")
-	public ModelAndView shopCSReplyWrite(Map<String, Object> map) throws Exception {
+	// ajax 구현
+	@ResponseBody
+	@PostMapping(value = "/shopPage/csReplyWrite")
+	public Map<String, Object> shopCSReplyWrite(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("###### 매장 문의내역 답변작성 ######"); // 문의 답변 작성시 inform쪽 insertInform도 호출
 		ModelAndView mv = new ModelAndView("testMain"); // 추후 수정
 
-		Map<String, Object> insertCSReply = csService.insertCSReply(map);
-		System.out.println("insertCSReply 확인 : " + insertCSReply);
+		Map<String, Object> insertCSReplyResult = csService.insertCSReply(map);
+		System.out.println("insertCSReplyResult 확인 : " + insertCSReplyResult);
 
-		return mv;
+		return insertCSReplyResult;
 	}
 
 	@GetMapping(value = "/shopDetail")

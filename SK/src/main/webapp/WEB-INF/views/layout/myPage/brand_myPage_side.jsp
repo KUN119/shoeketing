@@ -13,7 +13,7 @@
           <ul>
             <li class="list-group-item d-flex justify-content-between lh-sm">
               <div>
-                <h5><a href="/sk/brandPage/accountModifyForm" name="brandInfoModify" data-brandNum="2">기본 정보 수정</a></h5> <!-- 추후 data-brandNum 세션에서 꺼낸 BRAND_NUM 값으로 전송 -->
+                <h5><a href="/sk/brandPage/accountModifyForm" name="brandInfoModify">기본 정보 수정</a></h5> <!-- 추후 data-brandNum 세션에서 꺼낸 BRAND_NUM 값으로 전송 -->
                 <small class="text-muted">  </small>
               </div>
             </li>
