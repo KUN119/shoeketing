@@ -120,7 +120,7 @@
 			                        <p style="font-weight: bolder;">${pickup.TOTAL_GOODS_NAME} / ${pickup.TOTAL_GOODS_MODEL}</p>
 			                    </td>
 			                    <td style="text-align: left; width: 20%; margin-bottom: 1; ">
-			                        <p style="font-weight: bolder; font-size: large;">${pickup.TOTAL_GOODS_PRICE}원</p>
+			                        <p style="font-weight: bolder; font-size: large;"><fmt:formatNumber type="number" maxFractionDigits="3" value="${pickup.TOTAL_GOODS_PRICE}"/>원</p>
 			                        <div id="statusDiv_${pickup.RESERVATION_NUM}">
 			                        <p style="font-size: medium;">${pickup.RESERVATION_STATUS}</p>
 			                        </div>
@@ -194,7 +194,8 @@ $(document).ready(function() {
 		formData.append("RESERVATION_STATUS", reservationStatus);
 		formData.append("paymentKey", localStorage.getItem(reservationNum))
 		
-		$.ajax({
+		if(confirm("예약을 취소하시겠습니까?")) {
+			$.ajax({
 			type : 'post',
 			url : '/sk/reservationCancel',
 			data : formData,
@@ -218,8 +219,44 @@ $(document).ready(function() {
 			}
 			
 		});
+		}
+		
 		
 	}
+	
+	function writeReview() {
+		
+		
+		if(confirm("후기를 등록하시겠습니까?")) {
+			$.ajax({
+			type : 'post',
+			url : '/sk/myPage/reviewWrite',
+			data : formData,
+			processData : false,
+			contentType : false,
+			 success : function(data){
+				 if(data.result == "pass"){
+					 alert("픽업 예약이 취소되었습니다.");
+					 $("#deleteBtnDiv_"+reservationNum).empty();
+					 $("#statusDiv_"+reservationNum).empty();
+					 str = '<p style="font-size: medium;">';
+					 str += data.RESERVATION_STATUS;
+					 str += '</p>';
+					 $("#statusDiv_"+reservationNum).append(str);
+				 }else if(data.result == "fail") {
+					 alert("실패");
+				 }
+			},
+			error : function(){
+				alert("오류 발생");
+			}
+			
+		});
+		}
+		
+	}
+	
+	
 
 });
 

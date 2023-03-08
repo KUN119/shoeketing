@@ -6,13 +6,18 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import sk.common.service.CommonService;
 import sk.common.service.InformService;
 import sk.cs.service.CSService;
 import sk.myPage.service.ShopPageService;
@@ -29,45 +34,50 @@ public class ShopPageController {
 
 	@Resource(name = "informService")
 	private InformService informService;
-
+	
+	@Resource(name = "sessionService")
+	private CommonService sessionService;
+	
 	@GetMapping(value = "/shopPage")
 	public ModelAndView shopPage(Map<String, Object> map) throws Exception {
 		log.debug("###### 매장 마이 페이지 메인 ######");
-		ModelAndView mv = new ModelAndView("shopPage"); // 추후 수정
+		ModelAndView mv = new ModelAndView("shopPage"); 
 
 		return mv;
 	}
 
 	@GetMapping(value = "/shopPage/accountModifyForm")
-	public ModelAndView shopModifyForm(Map<String, Object> map) throws Exception {
+	public ModelAndView shopModifyForm(Map<String, Object> map, HttpSession session) throws Exception {
 		log.debug("###### 매장 기본 정보 수정 폼 ######");
-		ModelAndView mv = new ModelAndView("accountModifyForm"); // 추후 수정
+		ModelAndView mv = new ModelAndView("accountModifyForm"); 
 
+		map.put("SHOP_NUM", sessionService.getSessionShop(session, "SHOP_NUM"));
+		
 		Map<String, Object> shopInfoMap = shopPageService.selectShopInfo(map);
 		mv.addObject("shopInfoMap", shopInfoMap);
-
+		
 		return mv;
 	}
 
-	@GetMapping(value = "/shopPage/accountModify")
-	public ModelAndView shopModify(Map<String, Object> map) throws Exception {
+	// ajax 구현 
+	@ResponseBody
+	@PostMapping(value = "/shopPage/accountModify")
+	public Map<String, Object> shopModify(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("###### 매장 기본 정보 수정 ######");
-		ModelAndView mv = new ModelAndView("testMain"); // 추후 수정
 
 		Map<String, Object> updateResultMap = shopPageService.updateShopInfo(map);
 
-		mv.addObject("updateResultMap", updateResultMap);
-		return mv;
+		return updateResultMap;
 	}
 
 	@GetMapping(value = "/shopPage/csList")
-	public ModelAndView shopCSList(Map<String, Object> map) throws Exception {
+	public ModelAndView shopCSList(Map<String, Object> map, HttpSession session) throws Exception {
 		log.debug("###### 매장 문의 내역 리스트 ######");
 		ModelAndView mv = new ModelAndView("shopCSList"); // 추후 수정
 
 		// 매장 문의내역 글 토탈 개수, 문의내역 리스트
-		int shopCSCount = csService.selectShopCSCount(map);
-		List<Map<String, Object>> shopCSList = csService.selectShopCSList(map);
+		int shopCSCount = csService.selectShopCSCount(map, session);
+		List<Map<String, Object>> shopCSList = csService.selectShopCSList(map, session);
 
 		mv.addObject("shopCSCount", shopCSCount);
 		mv.addObject("shopCSList", shopCSList);

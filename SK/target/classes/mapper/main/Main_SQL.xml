@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="main">
-	<select id="selectBrandList" parameterType="hashmap" resultType="int">
+	<select id="selectBrandList" parameterType="hashmap" resultType="hashmap">
 		<![CDATA[
 			SELECT 
 					BRAND_NAME,
@@ -33,6 +33,7 @@
                   AND SHOP_JOIN_APPROVE = 'Y'
                   AND SHOP_BRAND = #{BRAND_NAME})
         	WHERE NUM BETWEEN #{START} AND #{END}
+        	AND SHOP_NAME LIKE '%' || #{keyword} || '%'
         ]]>
 	</select>
 

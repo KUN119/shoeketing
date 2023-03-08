@@ -5,10 +5,12 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
 
 import sk.common.dao.InformDAO;
+import sk.common.service.CommonService;
 import sk.cs.dao.CSDAO;
 
 @Service("csService")
@@ -19,13 +21,16 @@ public class CSServiceImpl implements CSService {
 
 	@Resource(name = "informDAO")
 	private InformDAO informDAO;
+	
+	@Resource(name = "sessionService")
+	private CommonService sessionService;
 
 	// 매장 문의내역 리스트(10줄)
 	@Override
-	public List<Map<String, Object>> selectShopCSList(Map<String, Object> map) throws Exception {
+	public List<Map<String, Object>> selectShopCSList(Map<String, Object> map, HttpSession session) throws Exception {
 		System.out.println("selectShopCSList 서비스 파라미터 : " + map);
-		map.put("SHOP_NUM", 1); // 추후 수정
-		// map.put("SHOP_NUM", map.get("SHOP_NUM"));
+		
+		map.put("SHOP_NUM", sessionService.getSessionShop(session, "SHOP_NUM"));
 
 		List<Map<String, Object>> shopCSList = csDAO.selectShopCSList(map);
 
@@ -34,10 +39,10 @@ public class CSServiceImpl implements CSService {
 
 	// 매장 문의내역 글 토탈 개수 (int 타입으로 리턴)
 	@Override
-	public int selectShopCSCount(Map<String, Object> map) throws Exception {
+	public int selectShopCSCount(Map<String, Object> map, HttpSession session) throws Exception {
 		System.out.println("selectShopCSCount 서비스 파라미터 : " + map);
-		map.put("SHOP_NUM", 1); // 추후 수정
-		// map.put("SHOP_NUM", map.get("SHOP_NUM"));
+		
+		map.put("SHOP_NUM", sessionService.getSessionShop(session, "SHOP_NUM"));
 		map.put("START", 1);
 		map.put("END", 10);
 
@@ -50,9 +55,11 @@ public class CSServiceImpl implements CSService {
 	@Override
 	public Map<String, Object> selectCSDetail(Map<String, Object> map) throws Exception {
 		System.out.println("selectCSDetail 서비스 파라미터 : " + map);
-		//map.put("CS_NUM", 2); // 추후 수정
-		// map.put("CS_NUM", map.get("CS_NUM"));
+		
+		map.put("CS_NUM", map.get("CS_NUM"));
 
+		Map<String, Object> csDetailMap = csDAO.selectCSDetail(map);
+		
 		return csDAO.selectCSDetail(map);
 	}
 
@@ -60,8 +67,7 @@ public class CSServiceImpl implements CSService {
 	@Override
 	public Map<String, Object> selectCSReply(Map<String, Object> map) throws Exception {
 
-		//map.put("CS_NUM", 2); // 추후 수정
-		// map.put("CS_NUM", map.get("CS_NUM"));
+		map.put("CS_NUM", map.get("CS_NUM"));
 
 		return csDAO.selectCSReply(map);
 	}
@@ -70,12 +76,9 @@ public class CSServiceImpl implements CSService {
 	@Override
 	public Map<String, Object> insertCSReply(Map<String, Object> map) throws Exception {
 		System.out.println("insertCSReply 서비스 파라미터 : " + map);
-		// CS_REPLY_NUM, CS_REPLY_CONTENT
-		map.put("CS_REPLY_NUM", 2); // 추후 수정
-		map.put("CS_REPLY_CONTENT", "문의글 답변 테스트"); // 추후 수정
 
-		map.put("CS_REPLY_NUM", map.get("CS_REPLY_NUM")); // 추후 수정
-		map.put("CS_REPLY_CONTENT", map.get("CS_REPLY_CONTENT")); // 추후 수정
+		map.put("CS_REPLY_NUM", map.get("CS_REPLY_NUM")); 
+		map.put("CS_REPLY_CONTENT", map.get("CS_REPLY_CONTENT")); 
 
 		// 문의 댓글 작성결과 insertReplyResult에 저장
 		int insertReply = csDAO.insertCSReply(map);
@@ -92,7 +95,7 @@ public class CSServiceImpl implements CSService {
 		// 문의 댓글 작성시, 회원에게 알림
 		String str = "문의하신 글에 답변이 달렸습니다.";
 		map.put("INFORM_CONTENT", str);
-		map.put("MEM_NUM", 2); // 추후 ajax로 해당 회원 MEM_NUM 보내주기,, 추후 수정!
+		//map.put("MEM_NUM", 2); // 추후 ajax로 해당 회원 MEM_NUM 보내주기,, 추후 수정!
 		map.put("INFORM_TYPE", 3); // 문의글 답변 작성시 알림유형3
 
 		informDAO.insertInform(map, str);

@@ -124,16 +124,14 @@ public class BrandPageController {
 		return result;
 	}
 
-	@GetMapping(value = "/brandPage/shopLocationInfo")
-	public ModelAndView shopLocationInfo(Map<String, Object> map) throws Exception {
-		log.debug("###### 브랜드 입점 매장 위치 조회 ######");
-		ModelAndView mv = new ModelAndView("testMain"); // 추후 수정
+	@ResponseBody
+	@PostMapping(value = "/brandPage/shopLocationInfo")
+	public Map<String, Object> shopLocationInfo(@RequestParam Map<String, Object> map) throws Exception {
+		log.debug("###### 브랜드 입점/입점요청 매장 위치 조회 ######");
 
-		// 로직 서비스에 있음(나중에 주석 삭제)
 		Map<String, Object> shopLocationInfoMap = brandPageService.selectShopLocationInfo(map);
-		mv.addObject("shopLocationInfoMap", shopLocationInfoMap);
 
-		return mv;
+		return shopLocationInfoMap;
 	}
 
 	// 브랜드관

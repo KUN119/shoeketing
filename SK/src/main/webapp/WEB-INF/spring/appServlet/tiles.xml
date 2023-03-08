@@ -258,7 +258,7 @@
     </definition>
 
 	<!-- 매장 회원 마이페이지 예약 목록 reservationList-->
-   <definition name="reservationList" extends="myPageTemplate">
+   <definition name="reservationRequestList" extends="myPageTemplate">
 	  <put-attribute name="myPage_header" value="/WEB-INF/views/layout/myPage/shop_myPage_header.jsp" />
       <put-attribute name="myPage_side" value="/WEB-INF/views/layout/myPage/shop_myPage_side.jsp" />
    	  <put-attribute name="myPage_main" value="/WEB-INF/views/shop/shopPage/reservation/reservationRequestList.jsp" />

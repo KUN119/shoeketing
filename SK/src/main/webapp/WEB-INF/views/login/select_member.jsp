@@ -264,11 +264,13 @@ $(document).ready(function() {
 	            		$("#findPwResultModal").modal("show");
 	            	}
 	            },
-	            error:function() {
-	            	$(".findPwResultDiv").empty();
-	         		$(".findPwResultDiv").append("입력하신 정보와 일치한 회원정보가 없습니다.");
-	         		$("#findPwModal").modal("hide");
-	         		$("#findPwResultModal").modal("show");
+	            error:function(data) {
+	            	if(data === 'fail'){
+		            	$(".findPwResultDiv").empty();
+		         		$(".findPwResultDiv").append("입력하신 정보와 일치한 회원정보가 없습니다.");
+		         		$("#findPwModal").modal("hide");
+		         		$("#findPwResultModal").modal("show");
+	            	}
 	            }
 	       }); 
 	};

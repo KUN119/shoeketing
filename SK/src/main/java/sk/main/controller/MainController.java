@@ -1,5 +1,6 @@
 package sk.main.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -29,18 +30,37 @@ public class MainController {
 		return mv;
 	}
 	
-	@RequestMapping("/totalSearch")
+	@RequestMapping(value = "/totalSearch")
 	public ModelAndView totalSearch(@RequestParam Map<String, Object> map) throws Exception{
 		log.debug("###### totalSearch ######");
-		ModelAndView mv = new ModelAndView();
+		ModelAndView mv = new ModelAndView("totalSearch");
+
+		Object keyword = map.get("keyword");
+		if(keyword == null || ((String)keyword).isEmpty()) {
+			return mv;
+		}else {
+			mainService.BrandSearch(map);
+			mainService.ShopSearch(map);
+//			mainService.GoodsSearch(map);
+			
+		}
+		
+		List<Map<String, Object>> barndlist = mainService.BrandSearch(map);
+		List<Map<String, Object>> shoplist = mainService.ShopSearch(map);
+		
+		mv.addObject("shoplist", shoplist);
+		mv.addObject("brandlist", barndlist);
+		mv.addObject("keyword", keyword);
+		
+		System.out.println("keyword: " + keyword);
+		
 		return mv;
 	}
 
-	
 //	  @GetMapping(value = "/totalSearch") public ModelAndView
 //	  totalSearch(@RequestParam Map<String, Object> map) throws Exception {
 //	  log.debug("###### totalSearch ######"); ModelAndView mv = new
-//	  ModelAndView("totalSearch"); /////////////////////////////// 페이징
+//	  ModelAndView(totalSearch); /////////////////////////////// 페이징
 //	  ///////////////////////////////// int pg = 1; // 현재 페이지 기본값 1 if
 //	  (commandMap.get("pg") != null) { pg = Integer.parseInt((String)
 //	  commandMap.get("pg")); // 현제 페이지 값이 넘어오면 설정 } int pageSize = 8; // 한 페이지에 보여줄

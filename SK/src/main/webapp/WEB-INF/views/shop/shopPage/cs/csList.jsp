@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/views/include/include-taglib.jspf" %>
 
     <div class="col-8" style="margin-top: 0px;">
             <h3 style="margin-left: 30px; color: black; font-weight: bolder;">매장 문의</h3>
@@ -14,30 +15,19 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td style="width: 25%;">spvpt44@naver.com</td>
-                    <td style="width: 45%;"><a href="#" data-bs-toggle="modal" data-bs-target="#csDetail">상품 1의 재고 문의</a></td>
-                    <td style="width: 15%;">2023/02/07 </td>
-                    <td style="width: 25%;">답변 대기</td>
-                  </tr>
-                  <tr>
-                    <td style="width: 25%;">kimst@naver.com</td>
-                    <td style="width: 45%;"><a href="#" data-bs-toggle="modal" data-bs-target="#csDetail"> 상품3의 재고 문의</a></td>
-                    <td style="width: 15%;">2023/02/07 </td>
-                    <td style="width: 15%;">답변 대기</td>
-                  </tr>
-                  <tr>
-                    <td style="width: 25%;">asd@gmail.com</td>
-                    <td style="width: 45%;"><a href="#" data-bs-toggle="modal" data-bs-target="#csDetail">상품4의 픽업 예약 관련 문의 </a></td>
-                    <td style="width: 15%;">2023/02/07 </td>
-                    <td style="width: 15%;">답변 대기</td>
-                  </tr>
-                  <tr>
-                    <td style="width: 25%;">123@naver.com</td>
-                    <td style="width: 45%;"><a href="#" data-bs-toggle="modal" data-bs-target="#csDetail">상품5의 픽업 예약 취소 문의 </a></td>
-                    <td style="width: 15%;">2023/02/07 </td>
-                    <td style="width: 15%;">답변 완료</td>
-                  </tr>
+             	   <c:choose>
+						<c:when test="${fn:length(shopCSList) > 0 }">
+							<c:forEach items="${shopCSList}" var="shopCS" varStatus="status">
+			                  <tr>
+			                    <td style="width: 25%;">${shopCS.MEM_EMAIL}</td>
+			                    <td style="width: 45%;"><a href="#" data-bs-toggle="modal" data-bs-target="#csDetail">${shopCS.CS_TITLE}</a></td>
+			                    <td style="width: 15%;">${shopCS.CS_DATE}</td>
+			                    <td style="width: 25%;">${csReplyStatusList[status.index].csReplyStatus}</td>
+			                  </tr>
+			                </c:forEach>
+						</c:when>
+					</c:choose>
+                  
                 </tbody>
               </table>
 

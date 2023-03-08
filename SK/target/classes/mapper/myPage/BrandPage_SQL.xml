@@ -180,7 +180,7 @@
 	</update>
 	
 	
-	<!-- 브랜드 입점 매장 위치 조회 (승인여부 Y, 탈퇴여부 N인 매장만 조회) -->
+	<!-- 브랜드 입점 / 입점 요청 매장 위치 조회 -->
 	<select id="selectShopLocationInfo" parameterType="hashmap" resultType="hashmap"> 
 	    <![CDATA[
             SELECT 
@@ -194,9 +194,8 @@
                        SHOP_START_TIME,
                        SHOP_END_TIME
             FROM SHOP
-            WHERE SHOP_JOIN_APPROVE = 'Y'
-            AND SHOP_DEL_GB = 'N'
-            AND SHOP_NAME = #{SHOP_NAME}
+            WHERE SHOP_DEL_GB = 'N'
+            AND SHOP_NUM = #{SHOP_NUM}
 	    ]]>
 	</select>
 

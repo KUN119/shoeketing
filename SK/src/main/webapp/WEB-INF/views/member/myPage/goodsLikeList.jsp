@@ -28,7 +28,8 @@
 	                    		<div class="col">
 			                 		 <div class="card shadow-sm">
 					                    <svg class="bd-placeholder-img card-img-top" width="150" height="200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-					                        <image href="/Users/mj/Desktop/자바 수업/2_슈케팅/2차 화면구현/assets/img/apple-touch-icon.png" height="100%" width="100%" id="like" data-num="${list.TOTAL_GOODS_NUM}"/>
+					                        <%-- <image href="/Users/mj/Desktop/자바 수업/2_슈케팅/2차 화면구현/assets/img/apple-touch-icon.png" height="100%" width="100%" id="like" data-num="${list.TOTAL_GOODS_NUM}"/> --%>
+					                        <img src="/sk/image/display?fileName=${list.GOODS_IMAGE_STD}" height="100%" width="100%" id="like" data-num="${list.TOTAL_GOODS_NUM}"/>
 					                    </svg>
 					                    <div class="card-body">
 					                      <p class="card-text mb-1">${list.BRAND_NAME}</p>
@@ -102,7 +103,7 @@ $(document).ready(function() {
 
 		function fn_unlike() { //찜 취소 처리
 			//이 함수를 호출할 버튼이 필요함. 임시로 이미지 a태그에 넣어서 구현해봄
-			var goodsNum = $('image').attr("data-num");
+			var goodsNum = $('img').attr("data-num");
 			if(confirm("상품을 목록에서 삭제하시겠습니까?")) {
 				$.ajax({
 					url:"/sk/myPage/goodsUnlike",

@@ -14,5 +14,4 @@ public interface MainService {
 	
 	public List<Map<String, Object>> GoodsSearch(Map<String, Object> map) throws Exception;
 	
-
 }
