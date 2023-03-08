@@ -145,7 +145,7 @@ button :not(#delete) { filter: opacity(100%); } */
           </div>
           <div class="col-2 align-self-center">
             <img
-              src="../assets/img/a7ae62bb0c3243a2af834df70e9b0d81.jpg"
+              src="/sk/image/display?fileName=${basket.GOODS_IMAGE_STD}"
               style="width: 10rem"
             />
           </div>
