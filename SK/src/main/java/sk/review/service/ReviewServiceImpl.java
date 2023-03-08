@@ -29,5 +29,13 @@ public class ReviewServiceImpl implements ReviewService {
 		reviewDAO.updateGoodsReviewScoreAvg(map);
 	}
 	
+	//특정 상품에 대하여 로그인한 사용자의 리뷰 개수 가져오기
+	@Override
+	public int selectReviewCount(Map<String, Object> map) throws Exception {
+		System.out.println("updateGoodsReviewScoreAvg 서비스 파라미터 : " + map);
+		return reviewDAO.selectReviewCount(map);
+	}
+	
+	
 	
 }

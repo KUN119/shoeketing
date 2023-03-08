@@ -10,7 +10,7 @@
 <div class="container" style="width: 600px">
 	
       <div class="box-shadow-full" style="margin-top: 100px">
-        <form id="brandJoinForm" class="needs-validation" novalidate action="/sk/brandJoin/joinSuccess" method="post">
+        <form id="brandJoinForm" class="needs-validation" novalidate action="/sk/brandJoin/joinSuccess" method="post" enctype="multipart/form-data">
           <div class="row mb-4 text-center">
             <h1>SHOEKETING</h1>
             <h6>(브랜드회원)</h6>

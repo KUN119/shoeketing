@@ -162,10 +162,11 @@ public class JoinController {
 		return mv;
 	}
 
-	@GetMapping(value = "/shop/joinSuccess")
+	@PostMapping(value = "/shop/joinSuccess")
 	public ModelAndView shopJoinSuccess(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("###### 매장 회원가입성공 ######");
-		ModelAndView mv = new ModelAndView("shopJoinSuccess");
+		ModelAndView mv = new ModelAndView("main");
+		joinService.insertShop(map);
 		return mv;
 	}
 
