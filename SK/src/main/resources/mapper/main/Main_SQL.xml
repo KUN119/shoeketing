@@ -31,7 +31,7 @@
                             SHOP
                   WHERE SHOP_DEL_GB = 'N'
                   AND SHOP_JOIN_APPROVE = 'Y'
-                  AND SHOP_BRAND = #{BRAND_NAME})
+                  AND SHOP_BRAND LIKE '%' || #{keyword} || '%')
         	WHERE NUM BETWEEN #{START} AND #{END}
         	AND SHOP_NAME LIKE '%' || #{keyword} || '%'
         ]]>
@@ -62,7 +62,7 @@
     			AND B.BRAND_NUM = TG.TOTAL_GOODS_BRAND
     			AND GI.GOODS_IMAGE_ORDER = 1
     			AND TG.TOTAL_GOODS_DEL_GB = 'N'
-    			AND (B.BRAND_NAME = #{BRAND_NAME}
+    			AND (B.BRAND_NAME LIKE  '%' || #{keyword} || '%' 
     			OR TG.TOTAL_GOODS_NAME LIKE  '%' || #{keyword} || '%' 
     			OR TG.TOTAL_GOODS_MODEL LIKE  '%' || #{keyword} || '%'))
     		WHERE NUM BETWEEN #{START} AND #{END}

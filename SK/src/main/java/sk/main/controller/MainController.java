@@ -1,5 +1,6 @@
 package sk.main.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,27 +35,47 @@ public class MainController {
 	public ModelAndView totalSearch(@RequestParam Map<String, Object> map) throws Exception{
 		log.debug("###### totalSearch ######");
 		ModelAndView mv = new ModelAndView("totalSearch");
-
+		
 		Object keyword = map.get("keyword");
 		if(keyword == null || ((String)keyword).isEmpty()) {
 			return mv;
-		}else {
-			mainService.BrandSearch(map);
-			mainService.ShopSearch(map);
-//			mainService.GoodsSearch(map);
-			
 		}
-		
-		List<Map<String, Object>> barndlist = mainService.BrandSearch(map);
-		List<Map<String, Object>> shoplist = mainService.ShopSearch(map);
-		
-		mv.addObject("shoplist", shoplist);
-		mv.addObject("brandlist", barndlist);
 		mv.addObject("keyword", keyword);
-		
 		System.out.println("keyword: " + keyword);
 		
+		List<Map<String, Object>> barndList = mainService.BrandSearch(map);
+		List<Map<String, Object>> goodsList = mainService.GoodsSearch(map);
+		List<Map<String, Object>> shopList = mainService.ShopSearch(map);
+		
+		mv.addObject("brandList", barndList);
+		mv.addObject("shopList", shopList);
+		mv.addObject("goodsList", goodsList);
+		
 		return mv;
+	}
+	
+	@RequestMapping(value = "/totalSearch_ajax")
+	public Map<String, Object> totalSearch_ajax(@RequestParam Map<String, Object> map) throws Exception{
+		log.debug("###### totalSearch_ajax ######");
+
+		Map<String, Object> info = new HashMap<String, Object>();
+
+		Object keyword = map.get("keyword");
+		if(keyword == null || ((String)keyword).isEmpty()) {
+			return info;
+		}
+		info.put("keyword", keyword);
+		System.out.println("keyword: " + keyword);
+		
+		List<Map<String, Object>> barndList = mainService.BrandSearch(map);
+		List<Map<String, Object>> shopList = mainService.ShopSearch(map);
+		List<Map<String, Object>> goodsList = mainService.GoodsSearch(map);
+		
+		info.put("brandList", barndList);
+		info.put("shopList", shopList);
+		info.put("goodsList", goodsList);
+
+		return info;
 	}
 
 //	  @GetMapping(value = "/totalSearch") public ModelAndView
