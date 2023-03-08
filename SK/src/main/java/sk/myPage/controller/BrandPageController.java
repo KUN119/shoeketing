@@ -140,7 +140,7 @@ public class BrandPageController {
 	@GetMapping(value = "/brand/main")
 	public ModelAndView brandInfo(Map<String, Object> map) throws Exception {
 		log.debug("###### 브랜드관 메인 페이지 ######");
-		ModelAndView mv = new ModelAndView("testMain"); // 추후 수정
+		ModelAndView mv = new ModelAndView("brandInfo"); // 추후 수정
 
 		// 최신 상품 리스트(5개)
 		List<Map<String, Object>> recentGoodsList = brandPageService.selectNewGoodsList(map);
