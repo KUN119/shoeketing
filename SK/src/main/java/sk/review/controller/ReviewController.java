@@ -8,6 +8,8 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,10 +39,20 @@ public class ReviewController {
 		//리뷰 등록 처리
 		reviewService.insertReview(map);
 		
-		map.put("TOTAL_GOODS_NUM", map.get("REVIEW_PRONUM"));
+		//map.put("TOTAL_GOODS_NUM", map.get("REVIEW_PRONUM"));
 		//리뷰 평점 평균 계산
 		reviewService.updateGoodsReviewScoreAvg(map);
 		
+	}
+	
+	//리뷰 작성여부 검사 (리뷰 1회만 작성 가능)
+	@RequestMapping(value="/myPage/checkReviewExists")
+	public int checkReviewExists(@RequestBody Map<String, Object> map, HttpSession session) throws Exception {
+		log.debug("###### 리뷰 작성여부 검사하기 ######");
+		
+		map.put("MEM_NUM", sessionService.getSession(session, "MEM_NUM"));
+		
+		return reviewService.selectReviewCount(map);
 	}
 	
 	

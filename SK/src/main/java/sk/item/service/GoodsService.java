@@ -22,4 +22,6 @@ public interface GoodsService {
 	public List<Map<String, Object>> selectReviewDetail(Map<String, Object> map) throws Exception;
 
 	public Map<String, Object> selectReviewPercent(Map<String, Object> map) throws Exception;
+
+	public int insertGoodsLike(Map<String, Object> map) throws Exception;
 }

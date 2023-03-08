@@ -26,4 +26,10 @@ public class ReviewDAO extends AbstractDAO {
 		update("review.updateGoodsReviewScoreAvg", map);
 	}
 	
+	//로그인한 회원이 특정 상품에 대해 작성한 리뷰의 개수를 가져옴
+	public int selectReviewCount(Map<String, Object> map) throws Exception {
+		System.out.println("selectReviewCount 파라미터 : " + map);
+		return (int) selectOne("review.selectReviewCount", map);
+	}
+	
 }

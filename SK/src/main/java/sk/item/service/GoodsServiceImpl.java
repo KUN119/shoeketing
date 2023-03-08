@@ -1,5 +1,6 @@
 package sk.item.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -81,57 +82,83 @@ public class GoodsServiceImpl implements GoodsService {
 		String REVIEW_SIZE = null;
 		String REVIEW_COLOR = null;
 		String REVIEW_COMFORT = null;
-		for (Map<String, Object> reviewDetailMap : reviewDetailList) {
-			REVIEW_SIZE = reviewDetailMap.get("REVIEW_SIZE").toString();
-			REVIEW_COLOR = reviewDetailMap.get("REVIEW_COLOR").toString();
-			REVIEW_COMFORT = reviewDetailMap.get("REVIEW_COMFORT").toString();
 
-			if (REVIEW_SIZE.equals("정사이즈보다 작음")) {
-				review_size_count_1++;
+		if (reviewCount != 0) {
+			for (Map<String, Object> reviewDetailMap : reviewDetailList) {
+				REVIEW_SIZE = reviewDetailMap.get("REVIEW_SIZE").toString();
+				REVIEW_COLOR = reviewDetailMap.get("REVIEW_COLOR").toString();
+				REVIEW_COMFORT = reviewDetailMap.get("REVIEW_COMFORT").toString();
+
+				if (REVIEW_SIZE.equals("정사이즈보다 작음")) {
+					review_size_count_1++;
+				}
+
+				if (REVIEW_SIZE.equals("정사이즈")) {
+					review_size_count_2++;
+				}
+
+				if (REVIEW_SIZE.equals("정사이즈보다 큼")) {
+					review_size_count_3++;
+				}
+
+				if (REVIEW_COLOR.equals("화면보다 밝음")) {
+					review_color_count_1++;
+				}
+
+				if (REVIEW_COLOR.equals("화면과 같음")) {
+					review_color_count_2++;
+				}
+
+				if (REVIEW_COLOR.equals("화면보다 어두움")) {
+					review_color_count_3++;
+				}
+
+				if (REVIEW_COMFORT.equals("나쁨")) {
+					review_comfort_count_1++;
+				}
+
+				if (REVIEW_COMFORT.equals("보통")) {
+					review_comfort_count_2++;
+				}
+
+				if (REVIEW_COMFORT.equals("좋음")) {
+					review_comfort_count_3++;
+				}
+
 			}
 
-			if (REVIEW_SIZE.equals("정사이즈")) {
-				review_size_count_2++;
-			}
+			review_size_count_1 = (int) (review_size_count_1 / (double) reviewCount * 100);
+			review_size_count_2 = (int) (review_size_count_2 / (double) reviewCount * 100);
+			review_size_count_3 = (int) (review_size_count_3 / (double) reviewCount * 100);
 
-			if (REVIEW_SIZE.equals("정사이즈보다 큼")) {
-				review_size_count_3++;
-			}
+			review_color_count_1 = (int) (review_color_count_1 / (double) reviewCount * 100);
+			review_color_count_2 = (int) (review_color_count_2 / (double) reviewCount * 100);
+			review_color_count_3 = (int) (review_color_count_3 / (double) reviewCount * 100);
 
-			if (REVIEW_COLOR.equals("화면보다 밝음")) {
-				review_color_count_1++;
-			}
-
-			if (REVIEW_COLOR.equals("화면과 같음")) {
-				review_color_count_2++;
-			}
-
-			if (REVIEW_COLOR.equals("화면보다 어두움")) {
-				review_color_count_3++;
-			}
-
-			if (REVIEW_COMFORT.equals("나쁨")) {
-				review_comfort_count_1++;
-			}
-
-			if (REVIEW_COMFORT.equals("보통")) {
-				review_comfort_count_2++;
-			}
-
-			if (REVIEW_COMFORT.equals("좋음")) {
-				review_comfort_count_3++;
-			}
-
+			review_comfort_count_1 = (int) (review_comfort_count_1 / (double) reviewCount * 100);
+			review_comfort_count_2 = (int) (review_comfort_count_2 / (double) reviewCount * 100);
+			review_comfort_count_3 = (int) (review_comfort_count_3 / (double) reviewCount * 100);
 		}
 
-		review_size_count_1 = (int) (review_size_count_1 / (double) reviewCount * 100);
-		review_size_count_2 = (int) (review_size_count_2 / (double) reviewCount * 100);
-		review_size_count_3 = (int) (review_size_count_3 / (double) reviewCount * 100);
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("REVIEW_SIZE_PERCENT1", review_size_count_1);
+		resultMap.put("REVIEW_SIZE_PERCENT2", review_size_count_2);
+		resultMap.put("REVIEW_SIZE_PERCENT3", review_size_count_3);
 
-		System.out.println("temp : " + review_size_count_1);
-		System.out.println("temp : " + review_size_count_2);
-		System.out.println("temp : " + review_size_count_3);
+		resultMap.put("REVIEW_COLOR_PERCENT1", review_color_count_1);
+		resultMap.put("REVIEW_COLOR_PERCENT2", review_color_count_2);
+		resultMap.put("REVIEW_COLOR_PERCENT3", review_color_count_3);
 
-		return null;
+		resultMap.put("REVIEW_COMFORT_PERCENT1", review_comfort_count_1);
+		resultMap.put("REVIEW_COMFORT_PERCENT2", review_comfort_count_2);
+		resultMap.put("REVIEW_COMFORT_PERCENT3", review_comfort_count_3);
+
+		return resultMap;
 	}
+
+	@Override
+	public int insertGoodsLike(Map<String, Object> map) throws Exception {
+		return goodsDAO.insertGoodsLike(map);
+	}
+
 }

@@ -228,4 +228,19 @@
 		]]>
 	</select>
 	
+	<insert id="insertGoodsLike" parameterType="hashmap">
+		<![CDATA[
+			INSERT INTO GOODS_LIKE(
+					          GOODS_LIKE_NUM,
+					          GOODS_LIKE_USER,
+					          GOODS_LIKE_PRONUM
+					          )
+			VALUES (
+				GOODS_LIKE_SEQ.NEXTVAL,
+				#{MEM_NUM},
+				#{GOODS_LIKE_PRONUM}
+				)
+		]]>
+	</insert>
+	
 </mapper>

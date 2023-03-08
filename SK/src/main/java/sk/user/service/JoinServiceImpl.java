@@ -84,10 +84,6 @@ public class JoinServiceImpl implements JoinService {
 		String api_key = "NCSIKOFKNRPPVHGV";
 	    String api_secret = "ZGAHL7RMAJJUKXDNKCOFRV286GPH3LU3";
 	    Message coolsms = new Message(api_key, api_secret);
-	    
-	    
-	    
-	  
 
 	    // 4 params(to, from, type, text) are mandatory. must be filled
 	    HashMap<String, String> params = new HashMap<String, String>();

@@ -58,7 +58,6 @@
 
       <!--검색 키워드 시작-->
       <div class="row mb-3" id="searchKeyword">
-       <!--  <h2 id='searchKeyword'></h2> -->
       </div>
       <!--검색 키워드 끝-->
 
@@ -86,7 +85,22 @@
         <h5 class="mb-3" style="font-weight: 700">상품 검색결과</h5>
         <hr />
 
-        <div class="col-6 mt-4 mb-4 d-flex">
+	<form id='gInfo'>
+        <%-- <div class="col-6 mt-4 mb-4 d-flex">
+          <a href="#" class="d-flex">
+            <img
+              src="<%=request.getContextPath()%>/assets/img/a7ae62bb0c3243a2af834df70e9b0d81.jpg"
+              style="width: 14rem"
+            />
+            <div class="ms-5 align-self-center">
+              <p style="font-weight: 700">VANS</p>
+              <p>어센틱 VR3 블랙 마쉬멜로우 / VN0005UD1KP1</p>
+              <p style="font-weight: 700; font-size: large">79,000원</p>
+            </div>
+          </a>
+        </div> --%>
+	</form>
+        <%-- <div class="col-6 mt-4 mb-4 d-flex">
           <a href="#" class="d-flex">
             <img
               src="<%=request.getContextPath()%>/assets/img/a7ae62bb0c3243a2af834df70e9b0d81.jpg"
@@ -99,6 +113,7 @@
             </div>
           </a>
         </div>
+        
 
         <div class="col-6 mt-4 mb-4 d-flex">
           <a href="#" class="d-flex">
@@ -126,24 +141,10 @@
               <p style="font-weight: 700; font-size: large">79,000원</p>
             </div>
           </a>
-        </div>
-
-        <div class="col-6 mt-4 mb-4 d-flex">
-          <a href="#" class="d-flex">
-            <img
-              src="<%=request.getContextPath()%>/assets/img/a7ae62bb0c3243a2af834df70e9b0d81.jpg"
-              style="width: 14rem"
-            />
-            <div class="ms-5 align-self-center">
-              <p style="font-weight: 700">VANS</p>
-              <p>어센틱 VR3 블랙 마쉬멜로우 / VN0005UD1KP1</p>
-              <p style="font-weight: 700; font-size: large">79,000원</p>
-            </div>
-          </a>
-        </div>
+        </div> --%>
 
         <!--상품 검색결과 더보기 시작-->
-        <div class="row" id="sInfo">
+        <div class="row">
           <a href="#" class="ms-4" style="font-weight: 500">
           	<p>검색결과 더보기<i class="bi bi-chevron-down ms-2"></i></p>
           </a>
@@ -157,7 +158,9 @@
       <div class="row mt-5">
         <h5 class="mb-3" style="font-weight: 700">매장 검색결과</h5>
         <hr />
-        <a href="#">
+        
+<form id='sInfo'>
+        <!-- <a href="#">   
           <div class="row mt-2 mb-2">
             <div class="col-2 align-self-center text-center">
               <p class="fw-semibold" style="font-size: large">나이키 서울</p>
@@ -195,10 +198,10 @@
             </div>
           </div>
         </a>
+        <hr /> -->
+</form>
 
-        <hr />
-
-        <a href="#">
+        <!-- <a href="#">
           <div class="row mt-2 mb-2">
             <div class="col-2 align-self-center text-center">
               <p class="fw-semibold" style="font-size: large">나이키 서울</p>
@@ -236,46 +239,6 @@
             </div>
           </div>
         </a>
-        <hr />
-        <a href="#">
-          <div class="row mt-2 mb-2">
-            <div class="col-2 align-self-center text-center">
-              <p class="fw-semibold" style="font-size: large">나이키 서울</p>
-            </div>
-            <div class="col-10">
-              <div class="row">
-                <div class="col-2">
-                  <p style="font-weight: 500">전화번호</p>
-                </div>
-                <div class="col-4">
-                  <p>02-3789-9534</p>
-                </div>
-                <div class="col-2">
-                  <p style="font-weight: 500">영업시간</p>
-                </div>
-                <div class="col-4">
-                  <p>10:00 ~ 21:30</p>
-                </div>
-              </div>
-
-              <div class="row mt-3">
-                <div class="col-2">
-                  <p style="font-weight: 500">주소</p>
-                </div>
-                <div class="col-4">
-                  <p>서울 서울특별시 중구 명동길 14</p>
-                </div>
-                <div class="col-2">
-                  <p style="font-weight: 500">브랜드명</p>
-                </div>
-                <div class="col-4">
-                  <p>나이키</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </a>
-
         <hr />
         <a href="#">
           <div class="row mt-2 mb-2">
@@ -316,6 +279,46 @@
           </div>
         </a>
 
+        <hr />
+        <a href="#">
+          <div class="row mt-2 mb-2">
+            <div class="col-2 align-self-center text-center">
+              <p class="fw-semibold" style="font-size: large">나이키 서울</p>
+            </div>
+            <div class="col-10">
+              <div class="row">
+                <div class="col-2">
+                  <p style="font-weight: 500">전화번호</p>
+                </div>
+                <div class="col-4">
+                  <p>02-3789-9534</p>
+                </div>
+                <div class="col-2">
+                  <p style="font-weight: 500">영업시간</p>
+                </div>
+                <div class="col-4">
+                  <p>10:00 ~ 21:30</p>
+                </div>
+              </div>
+
+              <div class="row mt-3">
+                <div class="col-2">
+                  <p style="font-weight: 500">주소</p>
+                </div>
+                <div class="col-4">
+                  <p>서울 서울특별시 중구 명동길 14</p>
+                </div>
+                <div class="col-2">
+                  <p style="font-weight: 500">브랜드명</p>
+                </div>
+                <div class="col-4">
+                  <p>나이키</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+ -->
         <!--매장 검색결과 더보기 시작-->
         <div class="row">
           <a href="#" class="ms-4" style="font-weight: 500"
@@ -344,7 +347,7 @@ $(document).ready(function() {
 		formData.append("keyword", keyword);
 		
 		$.ajax({
-			url: '/sk/totalSearch',
+			url: '/sk/totalSearch_ajax',
 			type: 'POST',
 			data: formData,
 			processData: false,
@@ -357,35 +360,116 @@ $(document).ready(function() {
 				
 				var str = "";
 				str += "<h2 id='searchKeyword' style='font-weight: 700'>검색어: " +value+ "</h2>";
-				
+				$("#searchKeyword").empty();
 				$("#searchKeyword").prepend(str);
 				
-				values = data.brandlist;
+				values = data.brandList;
+				values2 = data.goodsList;
+				values3 = data.shopList;
+				
+				$("#bInfo").empty();
+				$("#gInfo").empty();
+				$("#sInfo").empty();
 				
 				$.each(values, function(index, value) {
 					var bName = value.BRAND_NAME;
-					var bLogo = value.BRAND_LOGO_FILE;
-					//console.log(index + " : " + bName+", "+ bLogo);
-					console.log(bName);
-					console.log(bLogo);
+					var bLogo = value.BRAND_LOGO_FILE;		
 					
-				var a = "";
-				a += "<div class='col-1'>";
-	            a += 	"<img src=" + bLogo + "class='img-thumbnail'";
-	            a +=  		"style='height: 5rem; width: auto'/>";
-	            a += "</div>";
-	            a += "<div class='col-1 ms-3 align-self-center'>";
-	            a += "<h6 class='mb-0' style='font-weight: 700; font-size: 18px'>";
-	            a +=   bName + "<i class='bi bi-chevron-right' style='font-weight: 700'></i>";
-	            a += "</h6>";
-	            a += "</div>";
+				var b = "";
+				b += "<div class='col-1'>";
+	            b += 	"<img src='/sk/image/display?fileName=" + bLogo + "' class='img-thumbnail'";
+	            b +=  		"style='height: 5rem; width: auto'/>";
+	            b += "</div>";
+	            b += "<div class='col-1 ms-3 align-self-center'>";
+	            b += "<h6 class='mb-0' style='font-weight: 700; font-size: 18px'>";
+	            b +=   bName + "<i class='bi bi-chevron-right' style='font-weight: 700'></i>";
+	            b += "</h6>";
+	            b += "</div>";
+	            
+                $("#bInfo").prepend(b);
                 
-                $("#bInfo").prepend(a);
+				});
+				
+                $.each(values2, function(index, value) {
+					var bName = value.BRAND_NAME;
+					
+					var gImg = value.GOODS_IMAGE_STD;
+					var gName = value.TOTAL_GOODS_NAME;
+					var gModel = value.TOTAL_GOODS_MODEL;
+					var gPrice = value.TOTAL_GOODS_PRICE;
+                
+                var g = "";
+                g +="<div class='col-6 mt-4 mb-4 d-flex'>";
+                g +=  "<a href='#' class='d-flex'>";
+                g += "<img src='/sk/image/display?fileName=" + gImg + "'";
+                g +=    "style='width: 14rem'/>";
+                g +=  "<div class='ms-5 align-self-center'>";
+                g +=   "<p style='font-weight: 700'>" + bName + "</p>";
+                g +=  "<p>" + gName + "/" + gModel + "</p>";
+                g +=  "<p style='font-weight: 700; font-size: large'>" + gPrice + "</p>";
+                g += "</div>";
+                g += "</a>";
+                g +="</div>";
+                
+                $("#gInfo").prepend(g);
+                
+				});
+                
+                $.each(values3, function(index, value) {
+					var sBrand = value.SHOP_BRAND;
+					var sName = value.SHOP_NAME;
+					var sTel = value.SHOP_TEL;
+					var sAdd = value.SHOP_ADD;
+					var sOpen = value.SHOP_START_TIME;
+                    var sClose = value.SHOP_END_TIME;
+                
+                var s = "";
+                s+="<a href='#'>";
+                s+="<div class='row mt-2 mb-2'>";
+                s+="  <div class='col-2 align-self-center text-center'>";
+                s+="    <p class='fw-semibold' style='font-size: large'>"+sName+"</p>";
+                s+=" </div>";
+                s+="  <div class='col-10'>";
+                s+="    <div class='row'>";
+                s+="      <div class='col-2'>";
+                s+="        <p style='font-weight: 500'>전화번호</p>";
+                s+="   </div>";
+                s+="   <div class='col-4'>";
+                s+="     <p>"+sTel+"</p>";
+                s+="   </div>";
+                s+="   <div class='col-2'>";
+                s+="  <p style='font-weight: 500'>영업시간</p>";
+                s+="      </div>";
+                s+="   <div class='col-4'>";
+                s+="     <p>"+sOpen+ " ~ " +sClose+"</p>";
+                s+="   </div>";
+                s+="    </div>";
+                s+="    <div class='row mt-3'>";
+                s+="    <div class='col-2'>";
+                s+="     <p style='font-weight: 500'>주소</p>";
+                s+="   </div>";
+                s+="   <div class='col-4'>";
+                s+="     <p>"+sAdd+"</p>";
+                s+="   </div>";
+                s+="   <div class='col-2'>";
+                s+="     <p style='font-weight: 500'>브랜드명</p>";
+                s+="   </div>";
+                s+="   <div class='col-4'>";
+                s+="    <p>"+sBrand+"</p>";
+                s+="      </div>";
+                s+=" </div>";
+                s+="  </div>";
+                s+="</div>";
+                s+="</a>";
+                s+="<hr />";
+                
+                $("#sInfo").prepend(s);
+                
 				});
 			},
-			error: function(xhr, status, error) {
-				console.log('실패');
-			}
+			error: function(jqXHR, textStatus, errorThrown) {
+		        console.log('Ajax request failed: ' + textStatus + ', ' + errorThrown);
+		    }
 		});
 	};
 });

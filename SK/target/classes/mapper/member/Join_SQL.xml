@@ -113,7 +113,7 @@
 		#{SHOP_ADD},
 		#{SHOP_POS1},
 		#{SHOP_POS2},
-		’N’,
+		'N',
                	'N')
       ]]>
    </insert>

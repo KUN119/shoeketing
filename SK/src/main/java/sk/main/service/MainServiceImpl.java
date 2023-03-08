@@ -25,6 +25,10 @@ public class MainServiceImpl implements MainService{
 	@Override
 	public List<Map<String, Object>> ShopSearch(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
+		
+		map.put("START", 1);
+		map.put("END", 5);
+		
 		return mainDAO.ShopSearch(map);
 	}
 
@@ -37,6 +41,10 @@ public class MainServiceImpl implements MainService{
 	@Override
 	public List<Map<String, Object>> GoodsSearch(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
+		
+		map.put("START", 1);
+		map.put("END", 5);
+		
 		return mainDAO.GoodsSearch(map);
 
 	}
