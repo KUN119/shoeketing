@@ -61,4 +61,9 @@ public class GoodsDAO extends AbstractDAO {
 		System.out.println("selectReviewCount : " + map);
 		return (int) selectOne("goods.selectReviewCount", map);
 	}
+
+	public int insertGoodsLike(Map<String, Object> map) throws Exception {
+		System.out.println("insertGoodsLike : " + map);
+		return (int) insert("insertGoodsLike", map);
+	}
 }

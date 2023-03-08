@@ -19,7 +19,7 @@
           />
         </div>
         <!--상품 정보-->
-        <div class="col-6 ps-5 pe-4 pt-4">
+        <div class="col-6 ps-5 pe-4 pt-5">
           <div class="d-flex align-self-center">
             <h6 class="mb-0 me-1" style="font-weight: 700">${goodsDetailList[0].BRAND_NAME }</h6>
             <p class="mb-0 ms-3" style="font-size: 12px; font-weight: 400">
@@ -68,25 +68,22 @@
             style="margin-left: 8rem; margin-top: 2rem"
           >
             <button
-              class="btn btn-dark"
-              style="border-radius: 15px"
-              type="button"
-            >
-              장바구니
-            </button>
-            <button
-              class="btn btn-light"
+              class="btn btn-light mt-4"
               style="
                 border: 1px solid rgba(0, 0, 0, 0.345);
                 border-radius: 15px;
+                height:3rem;
               "
               type="button"
+              name="goodsLikeBtn"
             >
-              위시리스트 <i class="bi bi-heart"></i>
+              위시리스트 <svg id="heartIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+              </svg>
             </button>
             <button
-              class="btn btn-secondary"
-              style="border-radius: 15px"
+              class="btn btn-secondary mt-3"
+              style="border-radius: 15px; height:3rem;"
               type="button"
             >
               재고찾기
@@ -146,15 +143,15 @@
               <h5 class="mb-4">사이즈</h5>
               <div class="d-flex justify-content-between">
                 <p>정사이즈보다 작음</p>
-                <p>10%</p>
+                <p>${goodsReviewPercent.REVIEW_SIZE_PERCENT1 }%</p>
               </div>
               <div class="d-flex justify-content-between">
                 <p>정사이즈</p>
-                <p>80%</p>
+                <p>${goodsReviewPercent.REVIEW_SIZE_PERCENT2 }%</p>
               </div>
               <div class="d-flex justify-content-between">
                 <p>정사이즈보다 큼</p>
-                <p>10%</p>
+                <p>${goodsReviewPercent.REVIEW_SIZE_PERCENT3 }%</p>
               </div>
             </div>
 
@@ -162,15 +159,15 @@
               <h5 class="mb-4">착화감</h5>
               <div class="d-flex justify-content-between">
                 <p>나쁨</p>
-                <p>10%</p>
+                <p>${goodsReviewPercent.REVIEW_COMFORT_PERCENT1 }%</p>
               </div>
               <div class="d-flex justify-content-between">
                 <p>보통</p>
-                <p>20%</p>
+                <p>${goodsReviewPercent.REVIEW_COMFORT_PERCENT2 }%</p>
               </div>
               <div class="d-flex justify-content-between">
                 <p>좋음</p>
-                <p>70%</p>
+                <p>${goodsReviewPercent.REVIEW_COMFORT_PERCENT3 }%</p>
               </div>
             </div>
 
@@ -178,15 +175,15 @@
               <h5 class="mb-4">색상</h5>
               <div class="d-flex justify-content-between">
                 <p>화면보다 밝음</p>
-                <p>15%</p>
+                <p>${goodsReviewPercent.REVIEW_COLOR_PERCENT1 }%</p>
               </div>
               <div class="d-flex justify-content-between">
                 <p>화면과 같음</p>
-                <p>75%</p>
+                <p>${goodsReviewPercent.REVIEW_COLOR_PERCENT2 }%</p>
               </div>
               <div class="d-flex justify-content-between">
                 <p>화면보다 어두움</p>
-                <p>10%</p>
+                <p>${goodsReviewPercent.REVIEW_COLOR_PERCENT3 }%</p>
               </div>
             </div>
           </div>
@@ -201,6 +198,19 @@
     $(document).ready(function () {
       const starPoint = $("input[name='starPoint']").val() * 10;
       $(".starView").css('width', starPoint + '%');
+      
+      $("button[name='goodsLikeBtn']").on("click", function(e) {
+    	  $.ajax({
+    		  url : '/sk/goods/goodsLike?GOODS_LIKE_PRONUM=' + ${goodsDetailList[0].GOODS_DETAIL_NUM},
+    		  type : 'get',
+    		  success : function(data) {
+    			  if(data == "success") {
+    				  $("#heartIcon").attr('fill')
+    			  }
+    		  }
+    	  });
+      });
+      
     });
   </script>
 </html>
