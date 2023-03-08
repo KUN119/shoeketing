@@ -79,9 +79,12 @@ public class GoodsController {
 		log.debug("###### goodsDetail ######");
 		ModelAndView mv = new ModelAndView("goodsDetail");
 
-		Map<String, Object> goodsDetailMap = goodsService.selectGoodsDetail(map);
+		List<Map<String, Object>> goodsDetailList = goodsService.selectGoodsDetail(map);
+		List<Map<String, Object>> goodsImageList = goodsService.selectGoodsImage(map);
+		Map<String, Object> goodsReviewMap = goodsService.selectReviewPercent(map);
 
-		System.out.println("goodsDetailMap : " + goodsDetailMap);
+		mv.addObject("goodsDetailList", goodsDetailList);
+		mv.addObject("goodsImageList", goodsImageList);
 
 		return mv;
 	}
