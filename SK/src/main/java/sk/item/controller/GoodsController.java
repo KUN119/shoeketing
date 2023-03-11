@@ -81,9 +81,10 @@ public class GoodsController {
 	}
 
 	@RequestMapping(value = "/goods/goodsDetail")
-	public ModelAndView goodsDetail(@RequestParam Map<String, Object> map) throws Exception {
+	public ModelAndView goodsDetail(@RequestParam Map<String, Object> map, HttpSession session) throws Exception {
 		log.debug("###### goodsDetail ######");
 		ModelAndView mv = new ModelAndView("goodsDetail");
+		map.put("MEM_NUM", commonService.getSession(session, "MEM_NUM"));
 
 		List<Map<String, Object>> goodsDetailList = goodsService.selectGoodsDetail(map);
 		List<Map<String, Object>> goodsImageList = goodsService.selectGoodsImage(map);

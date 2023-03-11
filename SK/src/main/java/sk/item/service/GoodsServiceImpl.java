@@ -49,6 +49,7 @@ public class GoodsServiceImpl implements GoodsService {
 		long percentScore = (long) (score / 5 * 100);
 		goodsDetailList.get(0).put("TOTAL_GOODS_SCORE", roundedScore);
 		goodsDetailList.get(0).put("TOTAL_GOODS_SCORE_PERCENT", percentScore);
+
 		return goodsDetailList;
 	}
 
