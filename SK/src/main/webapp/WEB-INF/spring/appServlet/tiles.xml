@@ -261,6 +261,11 @@
     	  <put-attribute name="myPage_side" value="/WEB-INF/views/layout/myPage/shop_myPage_side.jsp" />
     	  <put-attribute name="myPage_main" value="/WEB-INF/views/shop/shopPage/stock/stockList.jsp" />
     </definition>
+    
+    <!-- 매장 회원 마이페이지 매장 문의 상세보기 stockList_ajax -->
+   <definition name="stockList_ajax" template="/WEB-INF/views/layout/layout_ajax.jsp">
+    	  <put-attribute name="body_ajax" value="/WEB-INF/views/shop/shopPage/stock/stockList_ajax.jsp" />
+    </definition>
 
 	<!-- 매장 회원 마이페이지 예약 목록 reservationList-->
    <definition name="reservationRequestList" extends="myPageTemplate">

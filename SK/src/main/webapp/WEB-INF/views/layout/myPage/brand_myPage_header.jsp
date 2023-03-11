@@ -12,7 +12,7 @@
         <table>
         <tr>
         <td>
-            <img class="mb-1 mt-2" style="width: 80px; height: 80px; margin-right: 90%;" src="/Users/mj/Desktop/자바 수업/2_슈케팅/2차 화면구현/assets/img/nikelogo.jpeg">
+            <img class="mb-1 mt-2" style="width: 80px; height: 80px; margin-right: 90%;" src="/sk/image/display?fileName=<%= session.getAttribute("session_BRAND_LOGO_FILE")%>">
             </td>
             <td>
             <p class="mb-0 fs-1" style="margin-left: 30px; margin-top: 0px; color: rgb(255, 255, 255); font-size: larger; font-weight: border;">나이키</p>
