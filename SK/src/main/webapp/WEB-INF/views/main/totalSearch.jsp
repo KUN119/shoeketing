@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -62,44 +65,49 @@
       <!--검색 키워드 끝-->
 
       <!--브랜드 검색 결과 시작-->
+      <c:forEach var="brand" items="${brandList}" varStatus="status">
+      <form id="id=bInfo">
       <div class="row mb-5">
-        <a class="d-flex" href="#" id=bInfo>
-          <%-- <div class="col-1">
+        <a class="d-flex" href="#">
+           <div class="col-1">
             <img
-              src="<%=request.getContextPath()%>/assets/img/nikeLogo.jpg"
+              src='/sk/image/display?fileName=${brand.BRAND_LOGO_FILE}'
               class="img-thumbnail"
               style="height: 5rem; width: auto"
             />
           </div>
           <div class="col-1 ms-3 align-self-center">
             <h6 class="mb-0" style="font-weight: 700; font-size: 18px">
-              나이키<i class="bi bi-chevron-right" style="font-weight: 700"></i>
+              ${brand.BRAND_NAME}<i class="bi bi-chevron-right" style="font-weight: 700"></i>
             </h6>
-          </div> --%>
+          </div> 
         </a>
       </div>
+      </form>
+      </c:forEach>
       <!--브랜드 검색 결과 끝-->
 
       <!--상품 검색결과 리스트 시작-->
       <div class="row">
         <h5 class="mb-3" style="font-weight: 700">상품 검색결과</h5>
         <hr />
-
+<c:forEach var="goods" items="${goodsList}" varStatus="status">
 	<form id='gInfo'>
-        <%-- <div class="col-6 mt-4 mb-4 d-flex">
+         <div class="col-6 mt-4 mb-4 d-flex">
           <a href="#" class="d-flex">
             <img
-              src="<%=request.getContextPath()%>/assets/img/a7ae62bb0c3243a2af834df70e9b0d81.jpg"
+              src='/sk/image/display?fileName=${goods.GOODS_IMAGE_STD}'
               style="width: 14rem"
             />
             <div class="ms-5 align-self-center">
-              <p style="font-weight: 700">VANS</p>
-              <p>어센틱 VR3 블랙 마쉬멜로우 / VN0005UD1KP1</p>
-              <p style="font-weight: 700; font-size: large">79,000원</p>
+              <p style="font-weight: 700">${goods.BRAND_NAME}</p>
+              <p>${goods.TOTAL_GOODS_NAME} / ${goods.TOTAL_GOODS_MODEL}</p>
+              <p style="font-weight: 700; font-size: large">${goods.TOTAL_GOODS_PRICE}</p>
             </div>
           </a>
-        </div> --%>
+        </div> 
 	</form>
+</c:forEach>
         <%-- <div class="col-6 mt-4 mb-4 d-flex">
           <a href="#" class="d-flex">
             <img
@@ -159,11 +167,12 @@
         <h5 class="mb-3" style="font-weight: 700">매장 검색결과</h5>
         <hr />
         
+<c:forEach var="shopList" items="${shopList}" varStatus="status">
 <form id='sInfo'>
-        <!-- <a href="#">   
+         <a href="#">   
           <div class="row mt-2 mb-2">
             <div class="col-2 align-self-center text-center">
-              <p class="fw-semibold" style="font-size: large">나이키 서울</p>
+              <p class="fw-semibold" style="font-size: large">${shopList.SHOP_NAME }</p>
             </div>
             <div class="col-10">
               <div class="row">
@@ -171,13 +180,13 @@
                   <p style="font-weight: 500">전화번호</p>
                 </div>
                 <div class="col-4">
-                  <p>02-3789-9534</p>
+                  <p>${shopList.SHOP_TEL }</p>
                 </div>
                 <div class="col-2">
                   <p style="font-weight: 500">영업시간</p>
                 </div>
                 <div class="col-4">
-                  <p>10:00 ~ 21:30</p>
+                  <p>${shopList.SHOP_START_TIME } ~ ${shopList.SHOP_END_TIME}</p>
                 </div>
               </div>
 
@@ -186,20 +195,21 @@
                   <p style="font-weight: 500">주소</p>
                 </div>
                 <div class="col-4">
-                  <p>서울 서울특별시 중구 명동길 14</p>
+                  <p>${shopList.SHOP_ADD }</p>
                 </div>
                 <div class="col-2">
                   <p style="font-weight: 500">브랜드명</p>
                 </div>
                 <div class="col-4">
-                  <p>나이키</p>
+                  <p>${shopList.SHOP_BRAND }</p>
                 </div>
               </div>
             </div>
           </div>
         </a>
-        <hr /> -->
+        <hr /> 
 </form>
+</c:forEach>
 
         <!-- <a href="#">
           <div class="row mt-2 mb-2">
@@ -321,9 +331,9 @@
  -->
         <!--매장 검색결과 더보기 시작-->
         <div class="row">
-          <a href="#" class="ms-4" style="font-weight: 500"
-            ><p>검색결과 더보기<i class="bi bi-chevron-down ms-2"></i></p
-          ></a>
+          <a href="#" class="ms-4" style="font-weight: 500">
+          <p>검색결과 더보기<i class="bi bi-chevron-down ms-2"></i></p>
+          </a>
           <hr />
         </div>
         <!--매장 검색결과 더보기 끝-->
@@ -376,6 +386,8 @@ $(document).ready(function() {
 					var bLogo = value.BRAND_LOGO_FILE;		
 					
 				var b = "";
+				b +="<div class='row mb-5'>";
+				b +="<a class='d-flex' href='#'>";
 				b += "<div class='col-1'>";
 	            b += 	"<img src='/sk/image/display?fileName=" + bLogo + "' class='img-thumbnail'";
 	            b +=  		"style='height: 5rem; width: auto'/>";
@@ -384,6 +396,8 @@ $(document).ready(function() {
 	            b += "<h6 class='mb-0' style='font-weight: 700; font-size: 18px'>";
 	            b +=   bName + "<i class='bi bi-chevron-right' style='font-weight: 700'></i>";
 	            b += "</h6>";
+	            b += "</div>";
+	            b += "</a>";
 	            b += "</div>";
 	            
                 $("#bInfo").prepend(b);
