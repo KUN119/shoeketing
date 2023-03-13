@@ -108,52 +108,10 @@
         </div> 
 	</form>
 </c:forEach>
-        <%-- <div class="col-6 mt-4 mb-4 d-flex">
-          <a href="#" class="d-flex">
-            <img
-              src="<%=request.getContextPath()%>/assets/img/a7ae62bb0c3243a2af834df70e9b0d81.jpg"
-              style="width: 14rem"
-            />
-            <div class="ms-5 align-self-center">
-              <p style="font-weight: 700">VANS</p>
-              <p>어센틱 VR3 블랙 마쉬멜로우 / VN0005UD1KP1</p>
-              <p style="font-weight: 700; font-size: large">79,000원</p>
-            </div>
-          </a>
-        </div>
-        
-
-        <div class="col-6 mt-4 mb-4 d-flex">
-          <a href="#" class="d-flex">
-            <img
-              src="<%=request.getContextPath()%>/assets/img/a7ae62bb0c3243a2af834df70e9b0d81.jpg"
-              style="width: 14rem"
-            />
-            <div class="ms-5 align-self-center">
-              <p style="font-weight: 700">VANS</p>
-              <p>어센틱 VR3 블랙 마쉬멜로우 / VN0005UD1KP1</p>
-              <p style="font-weight: 700; font-size: large">79,000원</p>
-            </div>
-          </a>
-        </div>
-
-        <div class="col-6 mt-4 mb-4 d-flex">
-          <a href="#" class="d-flex">
-            <img
-              src="<%=request.getContextPath()%>/assets/img/a7ae62bb0c3243a2af834df70e9b0d81.jpg"
-              style="width: 14rem"
-            />
-            <div class="ms-5 align-self-center">
-              <p style="font-weight: 700">VANS</p>
-              <p>어센틱 VR3 블랙 마쉬멜로우 / VN0005UD1KP1</p>
-              <p style="font-weight: 700; font-size: large">79,000원</p>
-            </div>
-          </a>
-        </div> --%>
 
         <!--상품 검색결과 더보기 시작-->
         <div class="row">
-          <a href="#" class="ms-4" style="font-weight: 500">
+          <a href="#" class="ms-4" style="font-weight: 500" id="goodsMore">
           	<p>검색결과 더보기<i class="bi bi-chevron-down ms-2"></i></p>
           </a>
           <hr/>
@@ -211,124 +169,6 @@
 </form>
 </c:forEach>
 
-        <!-- <a href="#">
-          <div class="row mt-2 mb-2">
-            <div class="col-2 align-self-center text-center">
-              <p class="fw-semibold" style="font-size: large">나이키 서울</p>
-            </div>
-            <div class="col-10">
-              <div class="row">
-                <div class="col-2">
-                  <p style="font-weight: 500">전화번호</p>
-                </div>
-                <div class="col-4">
-                  <p>02-3789-9534</p>
-                </div>
-                <div class="col-2">
-                  <p style="font-weight: 500">영업시간</p>
-                </div>
-                <div class="col-4">
-                  <p>10:00 ~ 21:30</p>
-                </div>
-              </div>
-
-              <div class="row mt-3">
-                <div class="col-2">
-                  <p style="font-weight: 500">주소</p>
-                </div>
-                <div class="col-4">
-                  <p>서울 서울특별시 중구 명동길 14</p>
-                </div>
-                <div class="col-2">
-                  <p style="font-weight: 500">브랜드명</p>
-                </div>
-                <div class="col-4">
-                  <p>나이키</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </a>
-        <hr />
-        <a href="#">
-          <div class="row mt-2 mb-2">
-            <div class="col-2 align-self-center text-center">
-              <p class="fw-semibold" style="font-size: large">나이키 서울</p>
-            </div>
-            <div class="col-10">
-              <div class="row">
-                <div class="col-2">
-                  <p style="font-weight: 500">전화번호</p>
-                </div>
-                <div class="col-4">
-                  <p>02-3789-9534</p>
-                </div>
-                <div class="col-2">
-                  <p style="font-weight: 500">영업시간</p>
-                </div>
-                <div class="col-4">
-                  <p>10:00 ~ 21:30</p>
-                </div>
-              </div>
-
-              <div class="row mt-3">
-                <div class="col-2">
-                  <p style="font-weight: 500">주소</p>
-                </div>
-                <div class="col-4">
-                  <p>서울 서울특별시 중구 명동길 14</p>
-                </div>
-                <div class="col-2">
-                  <p style="font-weight: 500">브랜드명</p>
-                </div>
-                <div class="col-4">
-                  <p>나이키</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </a>
-
-        <hr />
-        <a href="#">
-          <div class="row mt-2 mb-2">
-            <div class="col-2 align-self-center text-center">
-              <p class="fw-semibold" style="font-size: large">나이키 서울</p>
-            </div>
-            <div class="col-10">
-              <div class="row">
-                <div class="col-2">
-                  <p style="font-weight: 500">전화번호</p>
-                </div>
-                <div class="col-4">
-                  <p>02-3789-9534</p>
-                </div>
-                <div class="col-2">
-                  <p style="font-weight: 500">영업시간</p>
-                </div>
-                <div class="col-4">
-                  <p>10:00 ~ 21:30</p>
-                </div>
-              </div>
-
-              <div class="row mt-3">
-                <div class="col-2">
-                  <p style="font-weight: 500">주소</p>
-                </div>
-                <div class="col-4">
-                  <p>서울 서울특별시 중구 명동길 14</p>
-                </div>
-                <div class="col-2">
-                  <p style="font-weight: 500">브랜드명</p>
-                </div>
-                <div class="col-4">
-                  <p>나이키</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </a>
- -->
         <!--매장 검색결과 더보기 시작-->
         <div class="row">
           <a href="#" class="ms-4" style="font-weight: 500">
@@ -362,11 +202,10 @@ $(document).ready(function() {
 			data: formData,
 			processData: false,
 			contentType: false,
+			
 			success: function(data) {
 				console.log(data);
-				
 				value = data.keyword;
-				//console.log(value);
 				
 				var str = "";
 				str += "<h2 id='searchKeyword' style='font-weight: 700'>검색어: " +value+ "</h2>";
@@ -383,7 +222,7 @@ $(document).ready(function() {
 				
 				$.each(values, function(index, value) {
 					var bName = value.BRAND_NAME;
-					var bLogo = value.BRAND_LOGO_FILE;		
+					var bLogo = value.BRAND_LOGO_FILE;
 					
 				var b = "";
 				b +="<div class='row mb-5'>";
@@ -406,7 +245,6 @@ $(document).ready(function() {
 				
                 $.each(values2, function(index, value) {
 					var bName = value.BRAND_NAME;
-					
 					var gImg = value.GOODS_IMAGE_STD;
 					var gName = value.TOTAL_GOODS_NAME;
 					var gModel = value.TOTAL_GOODS_MODEL;

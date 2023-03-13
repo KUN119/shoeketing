@@ -361,10 +361,9 @@
                       type="radio"
                       name="brandType"
                       id="brandName1"
-                      data-b="나이키"
                       value="나이키"
                     />
-                    <label class="form-check-label" for="brandName1" id=brandName>
+                    <label class="form-check-label" for="brandName1">
                       나이키
                     </label>
                   </div>
@@ -374,7 +373,6 @@
                       type="radio"
                       name="brandType"
                       id="brandName2"
-                      data-b="아디다스"
                       value="아디다스"
                     />
                     <label class="form-check-label" for="brandName2">
@@ -387,7 +385,6 @@
                       type="radio"
                       name="brandType"
                       id="brandName3"
-                      data-b="뉴발란스"
                       value="뉴발란스"
                     />
                     <label class="form-check-label" for="brandName3">
@@ -400,7 +397,6 @@
                       type="radio"
                       name="brandType"
                       id="brandName4"
-                      data-b="푸마"
                       value="푸마"
                     />
                     <label class="form-check-label" for="brandName4">
@@ -413,7 +409,6 @@
                       type="radio"
                       name="brandType"
                       id="brandName5"
-                      data-b="컨버스"
                       value="컨버스"
                     />
                     <label class="form-check-label" for="brandName5">
@@ -426,7 +421,6 @@
                       type="radio"
                       name="brandType"
                       id="brandName6"
-                      data-b="반스"
                       value="반스"
                     />
                     <label class="form-check-label" for="brandName6">
@@ -439,7 +433,6 @@
                       type="radio"
                       name="brandType"
                       id="brandName7"
-                      data-b="아식스"
                       value="아식스"
                     />
                     <label class="form-check-label" for="brandName7">
@@ -452,7 +445,6 @@
                       type="radio"
                       name="brandType"
                       id="brandName8"
-                      data-b="리복"
                       value="리복"
                     />
                     <label class="form-check-label" for="brandName8">
@@ -465,7 +457,6 @@
                       type="radio"
                       name="brandType"
                       id="brandName9"
-                      data-b="폴더"
                       value="폴더"
                     />
                     <label class="form-check-label" for="brandName9">
@@ -478,7 +469,6 @@
                       type="radio"
                       name="brandType"
                       id="brandName10"
-                      data-b="디스커버리"
                       value="디스커버리"
                     />
                     <label class="form-check-label" for="brandName10">
@@ -491,7 +481,6 @@
                       type="radio"
                       name="brandType"
                       id="brandName11"
-                      data-b="휠라"
                       value="휠라"
                     />
                     <label class="form-check-label" for="brandName11">
@@ -506,7 +495,7 @@
                       id="brandName12"
                       value="나이키"
                     />
-                    <label class="form-check-label" for="brandName12">
+                    <label class="form-check-label" for="brandName12" >
                       나이키
                     </label>
                   </div> -->
@@ -936,7 +925,7 @@
                   <select
                     class="form-select"
                     aria-label="Default select example"
-                    name="priceType"
+                    id="priceType"
                   >
                     <option selected>가격대</option>
                     <option value="A">0 ~ 100,000</option>
@@ -1328,35 +1317,35 @@ $(document).ready(function() {
 		e.preventDefault();
 		const listType = $(this).attr("data-num");
 		const category = $('#category').attr("data-category");
-		const bName = $(#'brandName').attr("data-b");
-		fn_listType(listType, category, bName);
+		const bName = $("input[type=radio][name=brandType]:checked").val();
+		const size = $("input[type=radio][name=sizeType]:checked").val();
+		const selectedOption = $('#priceType').val();
+		fn_listType(listType, category, bName, size, selectedOption);
 	});
 	
 	$("a[name='category']").on("click", function(e) { // 정렬 검색
 		e.preventDefault();
 		const listType = $('#listType').attr("data-num");
 		const category = $(this).attr("data-category");
-		const bName = $(#'brandName').attr("data-b");
-		fn_listType(listType, category, bName);
+		const bName = $("input[type=radio][name=brandType]:checked").val();
+		const size = $("input[type=radio][name=sizeType]:checked").val();
+		const selectedOption = $('#priceType').val();
+		fn_listType(listType, category, bName, size, selectedOption);
 	}); 
 	
-	$('#brandName').on("click", function(e) { // 정렬 검색
-		e.preventDefault();
-		const listType = $('#listType').attr("data-num");
-		const category = $('#category').attr("data-category");
-		const bName = $(this).attr("data-b");
-		fn_listType(listType, category, bName);
-	}); 
-	
-	function fn_listType(listType, category, bName) {
+	function fn_listType(listType, category, bName, size, selectedOption) {
 		var formData = new FormData();
 		formData.append("listType", listType);
 		formData.append("category", category);
 		formData.append("bName", bName);
+		formData.append("size", size);
+		formData.append("priceType", selectedOption);
 		
 		alert("listType: " + listType);
 		alert("category: " + category);
 		alert("bName: " + bName);
+		alert("size: " + size);
+		alert("priceType: " + selectedOption);
 		
 		$.ajax({
 			url: '/sk/goods/totalList_ajax',
@@ -1373,6 +1362,9 @@ $(document).ready(function() {
 			}
 		});
 	}
+	
+	$('#priceType').on('change');
+	
 });
 </script>	
 </html>
