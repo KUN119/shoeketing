@@ -68,7 +68,7 @@
       <c:forEach var="brand" items="${brandList}" varStatus="status">
       <form id="id=bInfo">
       <div class="row mb-5">
-        <a class="d-flex" href="#">
+        <a class="d-flex" href="#" name='bDetail' data-num="${brand.BRAND_NUM}">
            <div class="col-1">
             <img
               src='/sk/image/display?fileName=${brand.BRAND_LOGO_FILE}'
@@ -94,7 +94,7 @@
 <c:forEach var="goods" items="${goodsList}" varStatus="status">
 	<form id='gInfo'>
          <div class="col-6 mt-4 mb-4 d-flex">
-          <a href="#" class="d-flex">
+          <a href="#" class="d-flex" name='gDetail' data-num='${goods.TOTAL_GOODS_NUM}'>
             <img
               src='/sk/image/display?fileName=${goods.GOODS_IMAGE_STD}'
               style="width: 14rem"
@@ -127,10 +127,10 @@
         
 <c:forEach var="shopList" items="${shopList}" varStatus="status">
 <form id='sInfo'>
-         <a href="#">   
+         <!-- <a href="#"> 단순 리스트만 출력하는거라 a태그 제거했음   -->
           <div class="row mt-2 mb-2">
             <div class="col-2 align-self-center text-center">
-              <p class="fw-semibold" style="font-size: large">${shopList.SHOP_NAME }</p>
+              <p class="fw-semibold" style="font-size: large">${shopList.SHOP_NAME}</p>
             </div>
             <div class="col-10">
               <div class="row">
@@ -164,7 +164,7 @@
               </div>
             </div>
           </div>
-        </a>
+  <!--       </a> -->
         <hr /> 
 </form>
 </c:forEach>
@@ -185,6 +185,32 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	
+	$("a[name='bDetail']").on("click", function(e) {  //브랜드관으로 넘어가기
+		e.preventDefault();
+		const num = $(this).attr("data-num");  //a태그 name이 title 부분 속성의 data-num값 가져와서 변수 num에 저장
+		fn_bDetail(num); //fn_bDetail()함수 매개변수로 num 전송
+		location.href="/sk/brand/main?BRNAD_NUM=" + num;
+	});
+	
+	function fn_bDetail(num) {  //num 매개변수로 넣기
+		  var formData = new FormData();
+	      var BRAND_NUM = num;
+	      formData.append("BRAND_NUM", BRAND_NUM);
+	};
+	
+	$("a[name='gDetail']").on("click", function(e) {  //상품 상세보기 페이지로 넘어가기
+		e.preventDefault();
+		const num = $(this).attr("data-num");  //a태그 name이 title 부분 속성의 data-num값 가져와서 변수 num에 저장
+		fn_gDetail(num); //fn_gDetail()함수 매개변수로 num 전송
+		location.href="/sk/goods/goodsDetail?TOTAL_GOODS_NUM=" + num;
+	});
+	
+	function fn_gDetail(num) {  //num 매개변수로 넣기
+		  var formData = new FormData();
+	      var TOTAL_GOODS_NUM = num;
+	      formData.append("TOTAL_GOODS_NUM", TOTAL_GOODS_NUM);
+	};
+	
 	$("button[name='searchBtn']").on("click", function(e) {
 		e.preventDefault();
 		fn_searchBtn();
@@ -202,7 +228,6 @@ $(document).ready(function() {
 			data: formData,
 			processData: false,
 			contentType: false,
-			
 			success: function(data) {
 				console.log(data);
 				value = data.keyword;
@@ -226,7 +251,7 @@ $(document).ready(function() {
 					
 				var b = "";
 				b +="<div class='row mb-5'>";
-				b +="<a class='d-flex' href='#'>";
+				b +="<a class='d-flex' href='#' name='bDetail' data-num='${brand.BRAND_NUM}'>";
 				b += "<div class='col-1'>";
 	            b += 	"<img src='/sk/image/display?fileName=" + bLogo + "' class='img-thumbnail'";
 	            b +=  		"style='height: 5rem; width: auto'/>";
@@ -240,32 +265,30 @@ $(document).ready(function() {
 	            b += "</div>";
 	            
                 $("#bInfo").prepend(b);
-                
 				});
 				
-                $.each(values2, function(index, value) {
-					var bName = value.BRAND_NAME;
-					var gImg = value.GOODS_IMAGE_STD;
-					var gName = value.TOTAL_GOODS_NAME;
-					var gModel = value.TOTAL_GOODS_MODEL;
-					var gPrice = value.TOTAL_GOODS_PRICE;
-                
-                var g = "";
-                g +="<div class='col-6 mt-4 mb-4 d-flex'>";
-                g +=  "<a href='#' class='d-flex'>";
-                g += "<img src='/sk/image/display?fileName=" + gImg + "'";
-                g +=    "style='width: 14rem'/>";
-                g +=  "<div class='ms-5 align-self-center'>";
-                g +=   "<p style='font-weight: 700'>" + bName + "</p>";
-                g +=  "<p>" + gName + "/" + gModel + "</p>";
-                g +=  "<p style='font-weight: 700; font-size: large'>" + gPrice + "</p>";
-                g += "</div>";
-                g += "</a>";
-                g +="</div>";
-                
-                $("#gInfo").prepend(g);
-                
-				});
+	                $.each(values2, function(index, value) {
+						var bName = value.BRAND_NAME;
+						var gImg = value.GOODS_IMAGE_STD;
+						var gName = value.TOTAL_GOODS_NAME;
+						var gModel = value.TOTAL_GOODS_MODEL;
+						var gPrice = value.TOTAL_GOODS_PRICE;
+						
+			                var g = "";
+			                g +="<div class='col-6 mt-4 mb-4 d-flex'>";
+			                g +=  "<a href='#' class='d-flex' name='gDetail' data-num='${goods.TOTAL_GOODS_NUM}'>";
+			                g += "<img src='/sk/image/display?fileName=" + gImg + "'";
+			                g +=    "style='width: 14rem'/>";
+			                g +=  "<div class='ms-5 align-self-center'>";
+			                g +=   "<p style='font-weight: 700'>" + bName + "</p>";
+			                g +=  "<p>" + gName + "/" + gModel + "</p>";
+			                g +=  "<p style='font-weight: 700; font-size: large'>" + gPrice + "</p>";
+			                g += "</div>";
+			                g += "</a>";
+			                g +="</div>";
+			                
+			                $("#gInfo").prepend(g);
+					});
                 
                 $.each(values3, function(index, value) {
 					var sBrand = value.SHOP_BRAND;
@@ -276,7 +299,7 @@ $(document).ready(function() {
                     var sClose = value.SHOP_END_TIME;
                 
                 var s = "";
-                s+="<a href='#'>";
+//                s+="<a href='#'>";
                 s+="<div class='row mt-2 mb-2'>";
                 s+="  <div class='col-2 align-self-center text-center'>";
                 s+="    <p class='fw-semibold' style='font-size: large'>"+sName+"</p>";
@@ -312,7 +335,7 @@ $(document).ready(function() {
                 s+=" </div>";
                 s+="  </div>";
                 s+="</div>";
-                s+="</a>";
+//               s+="</a>";
                 s+="<hr />";
                 
                 $("#sInfo").prepend(s);

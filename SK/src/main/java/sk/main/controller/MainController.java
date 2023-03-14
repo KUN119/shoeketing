@@ -36,6 +36,9 @@ public class MainController {
 		log.debug("###### totalSearch ######");
 		ModelAndView mv = new ModelAndView("totalSearch");
 		
+		map.put("START", 1);		
+		map.put("END", 10);		
+		
 		Object keyword = map.get("keyword");
 		if(keyword == null || ((String)keyword).isEmpty()) {
 			return mv;
@@ -58,6 +61,9 @@ public class MainController {
 	public Map<String, Object> totalSearch_ajax(@RequestParam Map<String, Object> map) throws Exception{
 		log.debug("###### totalSearch_ajax ######");
 
+		map.put("START", 1);		
+		map.put("END", 10);
+		
 		Map<String, Object> info = new HashMap<String, Object>();
 		
 		Object keyword = map.get("keyword");

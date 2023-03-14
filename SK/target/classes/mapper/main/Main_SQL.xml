@@ -5,6 +5,7 @@
 	<select id="selectBrandList" parameterType="hashmap" resultType="hashmap">
 		<![CDATA[
 			SELECT 
+					BRAND_NUM,
 					BRAND_NAME,
 					BRAND_LOGO_FILE
 			FROM BRAND
@@ -52,6 +53,7 @@
 			SELECT *
    			FROM (SELECT 
         				B.BRAND_NAME,
+        				TG.TOTAL_GOODS_NUM,
         				TG.TOTAL_GOODS_NAME,
         				TG.TOTAL_GOODS_MODEL,
         				TG.TOTAL_GOODS_PRICE,
