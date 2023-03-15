@@ -30,16 +30,22 @@
 		                    </td>
 		                    <td style="text-align: center; width: 10%; margin-bottom: 1; vertical-align: middle;">
 		                        <p style="font-weight: bolder; font-size: large;">${reservation.TOTAL_GOODS_PRICE}원</p>
-		                        <p style="font-size: medium;">${reservation.RESERVATION_STATUS}</p>
+		                        <div id="statusDiv_${reservation.RESERVATION_NUM}">
+		                        	<p style="font-size: medium;">${reservation.RESERVATION_STATUS}</p>
+		                       	</div>
 		                        <p style="font-size: medium;">${reservation.RESERVATION_DATE}</p>
 		                    </td>
 		                    <td style="font-weight: bolder; text-align: center; vertical-align:middle; width:10%;">
 		                        <c:if test="${reservation.RESERVATION_STATUS == '픽업 대기중'}">
-		                        <button type="button" class="btn btn-danger btn-sm" id="cancelReservation">픽업 취소</button>
+			                        <div id="cancelOrRejectBtnDiv_${reservation.RESERVATION_NUM}">
+			                        	<button type="button" class="btn btn-danger btn-sm" name="reservationCancelOrReject" data-reservationNum="${reservation.RESERVATION_NUM}" data-shopNum="${reservation.RESERVATION_SHOP_NUM}" data-goodsNum="${reservation.RESERVATION_PRONUM}" data-goodsSize="${reservation.RESERVATION_SIZE}">픽업 취소</button>
+			                        </div>
 		                        </c:if>
 		                        <c:if test="${reservation.RESERVATION_STATUS == '예약 대기중'}">
-		                        <button type="button" class="btn btn-primary btn-sm">예약 승인</button>
-                           		<button type="button" class="btn btn-secondary btn-sm">예약 거부</button>
+		                       	 	<div id="approveBtnDiv_${reservation.RESERVATION_NUM}">
+				                        <button type="button" class="btn btn-primary btn-sm" name="reservationApprove" data-reservationNum="${reservation.RESERVATION_NUM}" data-shopNum="${reservation.RESERVATION_SHOP_NUM}" data-goodsNum="${reservation.RESERVATION_PRONUM}" data-goodsSize="${reservation.RESERVATION_SIZE}">예약 승인</button>
+		                           		<button type="button" class="btn btn-secondary btn-sm" name="reservationCancelOrReject" data-reservationNum="${reservation.RESERVATION_NUM}">예약 거부</button>
+			                        </div>
 		                        </c:if>
 		                    </td>
 		                  </tr>
@@ -69,4 +75,79 @@
               </nav>
             </div>
 </body>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$("button[name='reservationApprove']").on("click", function(e){  // 예약 승인
+		e.preventDefault();
+	
+		const reservationNum = $(this).attr("data-reservationNum");
+		const goodsNum = $(this).attr("data-goodsNum");
+		const shopNum = $(this).attr("data-shopNum");
+		const goodsSize = $(this).attr("data-goodsSize");
+		
+		fn_reservationApprove(reservationNum, goodsNum, shopNum, goodsSize);
+	
+	});
+	
+	function fn_reservationApprove(reservationNum, goodsNum, shopNum, goodsSize){
+		
+		var formData = new FormData();
+		formData.append("RESERVATION_NUM", reservationNum);
+		formData.append("RESERVATION_PRONUM", goodsNum);
+		formData.append("RESERVATION_SHOP_NUM", shopNum);
+		formData.append("RESERVATION_SIZE", goodsSize);
+		
+		$.ajax({
+			type : 'post',
+			url : '/sk/shopPage/reservationApprove', 
+			data : formData,
+			processData : false,
+			contentType : false,
+			success : function(data){
+				if(data.result == "pass"){
+					alert("픽업 예약을 승인하였습니다.");
+					$("#approveBtnDiv_"+reservationNum).empty();
+					$("#statusDiv_"+reservationNum).empty();
+					str = '<p style="font-size: medium;">';
+					str += '픽업 대기중';
+					str += '</p>';
+					
+					$("#statusDiv_"+reservationNum).append(str);
+					
+					str2 = '<button type="button" class="btn btn-danger btn-sm" name="reservationCancelOrReject"';
+					str2 += 'data-reservationNum="';
+					str2 += data.RESERVATION_NUM;
+					str2 += 'data-shopNum="';
+					str2 += data.RESERVATION_SHOP_NUM;
+					str2 += 'data-goodsNum="';
+					str2 += data.RESERVATION_PRONUM;
+					str2 += 'data-goodsSize="';
+					str2 += data.RESERVATION_SIZE;
+					str2 += '">픽업 취소</button>';
+					
+					$("#cancelOrRejectBtnDiv_"+reservationNum).append(str2);
+				}else if(data.result == "fail"){
+					alert("실패");
+				}
+				
+			},
+			error : function(){
+				alert("오류 발생");
+			}
+		});
+	}
+	
+	
+/* 	$("button[name='reservationCancelOrReject']").on("click", function(e){  // 예약 거부 or 픽업 취소
+		e.preventDefault();
+		fn_reservationCancelOrReject();
+		
+	});
+	
+	function fn_reservationApprove(){
+		
+	} */
+});
+</script>
 </html>

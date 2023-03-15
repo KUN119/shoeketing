@@ -192,7 +192,7 @@ public class ReservationServiceImpl implements ReservationService {
 		return reservationCount;
 	}
 
-	// ajax 구현 예정
+	// ajax
 	// 픽업 예약 승인 (매장)
 	// + 예약 상태 변경에 따른 알림 (알림 유형1)
 	@Override
@@ -200,8 +200,7 @@ public class ReservationServiceImpl implements ReservationService {
 		
 		Map<String, Object> resultMap = new HashMap<>();
 		
-		map.put("RESERVATION_NUM", 28);
-//		map.put("RESERVATION_NUM", map.get("RESERVATION_NUM"));
+		map.put("RESERVATION_NUM", map.get("RESERVATION_NUM"));
 		
 		int updateResult = reservationDAO.updateReservationApprove(map);
 		

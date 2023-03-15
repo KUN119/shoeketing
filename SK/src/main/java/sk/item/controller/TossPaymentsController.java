@@ -156,13 +156,11 @@ public class TossPaymentsController {
 	@PostMapping(value = "/tossPaymentsCancel")
 	public Map<String, Object> reservationCancel(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("###### 픽업 예약금 결제 취소 ######");
-		//ModelAndView mv = new ModelAndView("tossTest"); // 추후 수정
 		log.debug("map 확인 : " + map);
 		
 		// Request
 		String paymentKey = map.get("paymentKey").toString();
 		String cancelReason = "고객이 취소를 원함";
-		
 		
 		log.debug("paymentKey 확인 :" + paymentKey);
 		
@@ -221,12 +219,12 @@ public class TossPaymentsController {
 			if (responseCode == 200) { // 정상 호출일 경우 (응답코드 200)
 				Map<String, Object> resultMap = new HashMap<>();
 				
-				// 픽업 상태가 "예약 대기중"일 경우
+				// 픽업 상태가 "예약 대기중"일 경우 (재고변동 X)_예약 거부
 				if(map.get("RESERVATION_STATUS").toString().equals("예약 대기중")){
 					resultMap = reservationService.deleteReservation(map);
 				}
 				
-				// 픽업 상태가 "픽업 대기중"일 경우
+				// 픽업 상태가 "픽업 대기중"일 경우 (재고 +1)_픽업 취소
 				if(map.get("RESERVATION_STATUS").toString().equals("픽업 대기중")){
 					resultMap = reservationService.deletePickup(map);
 				}
