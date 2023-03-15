@@ -89,10 +89,12 @@ public class GoodsController {
 		List<Map<String, Object>> goodsDetailList = goodsService.selectGoodsDetail(map);
 		List<Map<String, Object>> goodsImageList = goodsService.selectGoodsImage(map);
 		Map<String, Object> goodsReviewPercentMap = goodsService.selectReviewPercent(map);
+		int checkGoodsLike = goodsService.selectGoodsLike(map);
 
 		mv.addObject("goodsDetailList", goodsDetailList);
 		mv.addObject("goodsImageList", goodsImageList);
 		mv.addObject("goodsReviewPercent", goodsReviewPercentMap);
+		mv.addObject("checkGoodsLike", checkGoodsLike);
 
 		return mv;
 	}
@@ -106,6 +108,25 @@ public class GoodsController {
 
 		String result = "";
 		if (isSuccess == 1) {
+			goodsService.updateGoodsLikeCountIncrease(map);
+			result = "success";
+		} else {
+			result = "fail";
+		}
+
+		return result;
+	}
+
+	@ResponseBody
+	@GetMapping(value = "/goods/goodsUnlike")
+	public String goodsUnlike(@RequestParam Map<String, Object> map, HttpSession session) throws Exception {
+
+		map.put("MEM_NUM", commonService.getSession(session, "MEM_NUM"));
+		int isSuccess = goodsService.deleteGoodsLike(map);
+
+		String result = "";
+		if (isSuccess == 1) {
+			goodsService.updateGoodsLikeCountDecrease(map);
 			result = "success";
 		} else {
 			result = "fail";

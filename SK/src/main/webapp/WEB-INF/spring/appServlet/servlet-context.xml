@@ -120,15 +120,14 @@
     <beans:bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
     
     <!-- websocket -->
-    <!-- <beans:bean id="alarmHandler" class="kr.or.ddit.handler.AlarmHandler"
-		p:alarmDAO-ref="alarmDAO">
-	</beans:bean>
-	<websocket:handlers allowed-origins="*">
-	  <websocket:mapping handler="alarmHandler" path="/ws-alarm" />
-	  <websocket:handshake-interceptors>
-	  	<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
-	  </websocket:handshake-interceptors>
-	</websocket:handlers> -->
+    <beans:bean id="informHandler" class="sk.common.handler.InformHandler" />
+	<websocket:handlers>
+	    <websocket:mapping handler="informHandler" path="/inform-ws" />
+	    <websocket:handshake-interceptors>
+	        <beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
+	    </websocket:handshake-interceptors>	
+	    <websocket:sockjs />
+	</websocket:handlers>
 	
     
 </beans:beans>
