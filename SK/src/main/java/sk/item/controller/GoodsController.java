@@ -70,7 +70,31 @@ public class GoodsController {
 			listType = (String) map.get("listType");
 			map.put("listType", listType);
 		}
-
+		
+		String category = "";
+		if (map.get("category") != null) {
+			category = (String) map.get("category");
+			map.put("categoryType", category);
+		}
+		
+		String bName = "";
+		if (map.get("bName") != null) {
+			bName = (String) map.get("bName");
+			map.put("brandType", bName);
+		}
+		
+		String size = "";
+		if (map.get("size") != null) {
+			size = (String) map.get("size");
+			map.put("sizeType", size);
+		}
+		
+		String priceType = "";
+		if (map.get("priceType") != null) {
+			priceType = (String) map.get("priceType");
+			map.put("priceType", priceType);
+		}
+		
 		List<Map<String, Object>> list = goodsService.selectAllGoodsList(map);
 
 		System.out.println("list: " + list);

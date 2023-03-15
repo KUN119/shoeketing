@@ -71,17 +71,17 @@
 
 	<sql id="brandOption">
 			<if test="brandType != null">
-			<if test="brandType == 'NIKE'.toString()">AND B.BRAND_NAME = '나이키'</if>
-			<if test="brandType == 'ADIDAS'.toString()">AND B.BRAND_NAME = '아디다스'</if>
-			<if test="brandType == 'NEWBALANCE'.toString()">AND B.BRAND_NAME = '뉴발란스'</if>
-			<if test="brandType == 'PUMA'.toString()">AND B.BRAND_NAME = '푸마'</if>
-			<if test="brandType == 'CONVERSE'.toString()">AND B.BRAND_NAME = '컨버스'</if>
-			<if test="brandType == 'VANS'.toString()">AND B.BRAND_NAME = '반스'</if>
-			<if test="brandType == 'ASICS'.toString()">AND B.BRAND_NAME = '아식스'</if>
-			<if test="brandType == 'REEBOK'.toString()">AND B.BRAND_NAME = '리복'</if>
-			<if test="brandType == 'FOLDER'.toString()">AND B.BRAND_NAME = '폴더'</if>
-			<if test="brandType == 'DISCOVERY'.toString()">AND B.BRAND_NAME = '디스커버리'</if>
-			<if test="brandType == 'FILA'.toString()">AND B.BRAND_NAME = '휠라'</if>
+			<if test="brandType == '나이키'.toString()">AND B.BRAND_NAME = '나이키'</if>
+			<if test="brandType == '아디다스'.toString()">AND B.BRAND_NAME = '아디다스'</if>
+			<if test="brandType == '뉴발란스'.toString()">AND B.BRAND_NAME = '뉴발란스'</if>
+			<if test="brandType == '푸마'.toString()">AND B.BRAND_NAME = '푸마'</if>
+			<if test="brandType == '컨버스'.toString()">AND B.BRAND_NAME = '컨버스'</if>
+			<if test="brandType == '반스'.toString()">AND B.BRAND_NAME = '반스'</if>
+			<if test="brandType == '아식스'.toString()">AND B.BRAND_NAME = '아식스'</if>
+			<if test="brandType == '리복'.toString()">AND B.BRAND_NAME = '리복'</if>
+			<if test="brandType == '폴더'.toString()">AND B.BRAND_NAME = '폴더'</if>
+			<if test="brandType == '디스커버리'.toString()">AND B.BRAND_NAME = '디스커버리'</if>
+			<if test="brandType == '휠라'.toString()">AND B.BRAND_NAME = '휠라'</if>
 			</if>
 	</sql>
 
