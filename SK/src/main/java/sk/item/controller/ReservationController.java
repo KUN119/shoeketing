@@ -101,7 +101,11 @@ public class ReservationController {
 		log.debug("###### 매장 픽업 예약 승인 ######");
 
 		Map<String, Object> resultMap = reservationService.updateReservationApprove(map);
-
+		
+		// 예약 승인한 후, ajax를 사용해 '픽업 대기중'으로 변경해주기 위해 resultMap에 상태 put 
+		Map<String, Object> detailMap = reservationService.selectPickupDetail(map);
+		resultMap.put("RESERVATION_STATUS", detailMap.get("RESERVATION_STATUS"));
+		
 		System.out.println("resultMap 확인 : " + resultMap);
 		
 		return resultMap;

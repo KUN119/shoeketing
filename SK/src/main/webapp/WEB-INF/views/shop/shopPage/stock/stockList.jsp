@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="col-10" style="margin-top: 0px">
-      <%-- <table>
+     <%--  <table>
         <tr>
           <td class="col-9">
             <h3 style="margin-left: 30px; color: black; font-weight: bolder">
@@ -31,9 +31,9 @@
             </div>
           </td>
         </tr>
-      </table> --%>
+      </table>  --%>
       
-      <div class="row d-flex">
+     <div class="row d-flex">
         <div class="col-8">
 	      <h3 style="margin-left: 30px; color: black; font-weight: bolder">
 	        재고 관리
@@ -46,7 +46,7 @@
                 <option value="name" <c:out value="${searchType eq 'name' ? 'selected' : ''}"/>>상품명</option>
                 <option value="model" <c:out value="${searchType eq 'model' ? 'selected' : ''}"/>>모델명</option>
               </select>
-              <input type="text" class="form-control" name="keyword" id="keyword" value="${keyword}"/>
+              <input type="text" class="form-control" name="keyword1" id="keyword1" value="${keyword}"/>
               <button class="btn btn-outline-secondary" type="button" id="stockSearch" name="stockSearch" data-shopNum="${SHOP_NUM}">
                 검색
               </button>
@@ -194,7 +194,7 @@ $(document).ready(function(){
 		var formData = new FormData();
 		
 		var searchType = $("#searchType").val();
-		var keyword = $("#keyword").val();
+		var keyword = $("#keyword1").val();
 		
 		formData.append("searchType", searchType);
 		formData.append("keyword", keyword);

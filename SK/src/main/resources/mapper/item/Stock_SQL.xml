@@ -91,7 +91,7 @@
 		          AND S.SHOP_DEL_GB = 'N'
 		          AND S.SHOP_JOIN_APPROVE = 'Y'
 		          AND S.SHOP_BRAND LIKE '%'||#{BRAND_NAME}||'%'
-		          AND TG.TOTAL_GOODS_NAME LIKE '%'||#{GOODS_NAME}||'%'
+		          AND UPPER(TG.TOTAL_GOODS_NAME) LIKE UPPER('%'||#{GOODS_NAME}||'%')
 		          AND SG.SHOP_GOODS_SIZE = #{GOODS_SIZE}]]>
 		         <include refid="shopName"/>
 		         <![CDATA[
@@ -110,7 +110,7 @@
 	          AND S.SHOP_DEL_GB = 'N'
 	          AND S.SHOP_JOIN_APPROVE = 'Y'
 	          AND S.SHOP_BRAND LIKE '%'||#{BRAND_NAME}||'%'
-	          AND TG.TOTAL_GOODS_NAME LIKE '%'||#{GOODS_NAME}||'%'
+	          AND UPPER(TG.TOTAL_GOODS_NAME) LIKE UPPER('%'||#{GOODS_NAME}||'%')
 	          AND SG.SHOP_GOODS_SIZE = #{GOODS_SIZE}]]>
 	         <include refid="shopName"/>
 	</select>
