@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import sk.myPage.service.ShopPageService;
 import sk.user.service.LoginService;
 
 @RestController
@@ -30,6 +31,9 @@ public class LoginController {
 
 	@Resource(name = "loginService")
 	private LoginService loginService;
+	
+	@Resource(name="shopPageService")
+	private ShopPageService shopPageService;
 
 	@GetMapping(value = "/loginSelect/member")
 	public ModelAndView loginSelectMember(@RequestParam Map<String, Object> map) throws Exception {
@@ -165,6 +169,7 @@ public class LoginController {
 							// 세션영역에 회원정보 올리기
 							session.setAttribute("session_BRAND_ID", map.get("BRAND_ID"));
 							session.setAttribute("session_BRAND_PW", map.get("BRAND_PW"));
+							session.setAttribute("session_BRAND_LOGO_FILE", brand.get("BRAND_LOGO_FILE"));
 							session.setAttribute("session_BRNAD_INFO", brand);
 
 							result="success";
@@ -203,6 +208,7 @@ public class LoginController {
 
 		// 입력받은 아이디를 꺼내 변수 id에 저장
 		Map<String, Object> shop = loginService.selectIdShop(map);
+		
 		log.debug("아이디 : " + (String) map.get("SHOP_ID"));
 
 		HttpSession session = request.getSession();
@@ -215,6 +221,7 @@ public class LoginController {
 					// 세션영역에 회원정보 올리기
 					session.setAttribute("session_SHOP_ID", map.get("SHOP_ID"));
 					session.setAttribute("session_SHOP_PW", map.get("SHOP_PW"));
+					session.setAttribute("session_SHOP_NAME", shop.get("SHOP_NAME"));
 					session.setAttribute("session_SHOP_INFO", shop);
 
 					result="success";
@@ -226,8 +233,14 @@ public class LoginController {
 					log.debug("비밀번호 틀림");
 				}
 			} 
+		
+		// 로그인 한 매장의 브랜드정보 받아서, 해당 브랜드 로고 세션에 올려주기 
+		Map<String, Object> shopBrandLogoFile = shopPageService.selectBrandLogoFileOfShop(map, request.getSession());
+		session.setAttribute("session_SHOP_BRAND_LOGO_FILE", shopBrandLogoFile.get("BRAND_LOGO_FILE"));
+		
 		log.debug(result);
 		return result;
+		
 	}
 
 	@RequestMapping(value = "/logout")

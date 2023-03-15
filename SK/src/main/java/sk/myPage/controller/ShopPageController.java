@@ -149,7 +149,6 @@ public class ShopPageController {
 	@PostMapping(value = "/shopPage/csReplyWrite")
 	public Map<String, Object> shopCSReplyWrite(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("###### 매장 문의내역 답변작성 ######"); // 문의 답변 작성시 inform쪽 insertInform도 호출
-		ModelAndView mv = new ModelAndView("testMain"); // 추후 수정
 
 		Map<String, Object> insertCSReplyResult = csService.insertCSReply(map);
 		System.out.println("insertCSReplyResult 확인 : " + insertCSReplyResult);
@@ -157,22 +156,23 @@ public class ShopPageController {
 		return insertCSReplyResult;
 	}
 
-	@GetMapping(value = "/shopDetail")
-	public ModelAndView shopDetail(Map<String, Object> map) throws Exception {
-		log.debug("###### 매장 상세정보 조회 ######");
-		ModelAndView mv = new ModelAndView("testMain"); // 추후 수정
-
-		// 매장 상세정보 및 제품번호, 사이즈에 해당하는 재고수량
-		Map<String, Object> shopInfoMap = shopPageService.selectShopInfo(map);
-		int shopGoodsAmount = shopPageService.selectGoodsAmount(map);
-
-		mv.addObject("shopInfoMap", shopInfoMap);
-		mv.addObject("shopGoodsAmount", shopGoodsAmount);
-
-		System.out.println("shopInfoMap 확인 : " + shopInfoMap);
-		System.out.println("shopGoodsAmount 확인 : " + shopGoodsAmount);
-
-		return mv;
-	}
+	// StockContoller ShopSearch() 메서드에 구현
+//	@GetMapping(value = "/shopDetail")
+//	public ModelAndView shopDetail(Map<String, Object> map) throws Exception {
+//		log.debug("###### 매장 상세정보 조회 ######");
+//		ModelAndView mv = new ModelAndView("testMain"); // 추후 수정
+//
+//		// 매장 상세정보 및 제품번호, 사이즈에 해당하는 재고수량
+//		Map<String, Object> shopInfoMap = shopPageService.selectShopInfo(map);
+//		int shopGoodsAmount = shopPageService.selectGoodsAmount(map);
+//
+//		mv.addObject("shopInfoMap", shopInfoMap);
+//		mv.addObject("shopGoodsAmount", shopGoodsAmount);
+//
+//		System.out.println("shopInfoMap 확인 : " + shopInfoMap);
+//		System.out.println("shopGoodsAmount 확인 : " + shopGoodsAmount);
+//
+//		return mv;
+//	}
 
 }

@@ -1,13 +1,14 @@
 package sk.myPage.service;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
 
+import sk.common.service.CommonService;
 import sk.myPage.dao.ShopPageDAO;
 
 //ShopPageService 구현클래스
@@ -17,6 +18,9 @@ public class ShopPageServiceImpl implements ShopPageService{
 
 	@Resource(name="shopPageDAO")
 	private ShopPageDAO shopPageDAO;
+	
+	@Resource(name="sessionService")
+	private CommonService sessionService;
 
 	// 매장 기본정보 조회
 	@Override
@@ -27,7 +31,16 @@ public class ShopPageServiceImpl implements ShopPageService{
 		return shopPageDAO.selectShopInfo(map);
 	}
 
-	// 매장 기본정보 수정 
+	// 매장의 해당 브랜드 로고 조회 - selectOne()
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> selectBrandLogoFileOfShop(Map<String, Object> map, HttpSession session) throws Exception{
+		
+		map.put("SHOP_NUM", sessionService.getSessionShop(session, "SHOP_NUM"));
+		
+		return shopPageDAO.selectBrandLogoFileOfShop(map);
+	}
+
+		// 매장 기본정보 수정 
 	@Override
 	public Map<String, Object> updateShopInfo(Map<String, Object> map) throws Exception {
 		

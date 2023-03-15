@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/include/include-taglib.jspf" %>
 
-    <div class="col-8" style="margin-top: 0px;">
+    <div class="col-10" style="margin-top: 0px;">
             <h3 style="margin-left: 30px; color: black; font-weight: bolder;">매장 문의</h3>
             <hr style="border: solid 1px rgb(73, 73, 73); width: 100%; ">
             <table class="table table table-bordered" style="text-align: center;">

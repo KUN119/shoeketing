@@ -23,6 +23,20 @@
 			WHERE SHOP_NUM = #{SHOP_NUM}
 		]]>
 	</select>
+	
+	<!-- 해당 브랜드 로고파일 가져오기 -->
+	<select id="selectBrandLogoFileOfShop" parameterType="hashmap" resultType="hashmap"> 
+		<![CDATA[
+			SELECT 
+					B.BRAND_LOGO_FILE
+			FROM 
+					BRAND B, SHOP S
+			WHERE 
+					B.BRAND_NAME = S.SHOP_BRAND
+			AND 
+					SHOP_NUM = #{SHOP_NUM}
+		]]>
+	</select>
 
 	<!-- 매장 기본정보 수정 -->
 	<update id="updateShopInfo" parameterType="hashmap">
