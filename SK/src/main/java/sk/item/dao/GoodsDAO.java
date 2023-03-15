@@ -27,10 +27,9 @@ public class GoodsDAO extends AbstractDAO {
 		return (List<Map<String, Object>>) selectList("goods.selectAllBrandList", map);
 	}
 
-	@SuppressWarnings("unchecked")
-	public Map<String, Object> selectGoodsLike(Map<String, Object> map) throws Exception {
+	public int selectGoodsLike(Map<String, Object> map) throws Exception {
 		System.out.println("selectGoodsLike : " + map);
-		return (Map<String, Object>) selectOne("goods.selectGoodsLike", map);
+		return (int) selectOne("goods.selectGoodsLike", map);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -64,6 +63,21 @@ public class GoodsDAO extends AbstractDAO {
 
 	public int insertGoodsLike(Map<String, Object> map) throws Exception {
 		System.out.println("insertGoodsLike : " + map);
-		return (int) insert("insertGoodsLike", map);
+		return (int) insert("goods.insertGoodsLike", map);
+	}
+
+	public int deleteGoodsLike(Map<String, Object> map) throws Exception {
+		System.out.println("deleteGoodsLike : " + map);
+		return (int) delete("goods.deleteGoodsLike", map);
+	}
+
+	public int updateGoodsLikeCountIncrease(Map<String, Object> map) throws Exception {
+		System.out.println("updateGoodsLikeCountIncrease : " + map);
+		return (int) update("goods.updateGoodsLikeCountIncrease", map);
+	}
+
+	public int updateGoodsLikeCountDecrease(Map<String, Object> map) throws Exception {
+		System.out.println("updateGoodsLikeCountDecrease : " + map);
+		return (int) update("goods.updateGoodsLikeCountDecrease", map);
 	}
 }

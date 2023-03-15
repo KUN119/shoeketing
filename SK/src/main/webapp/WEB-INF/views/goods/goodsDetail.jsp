@@ -37,7 +37,7 @@
             <p class="mb-0 me-5 align-self-center" style="font-weight: 500">
               사이즈
             </p>
-            <select class="form-select" style="width: 25rem">
+            <select id="goodsSizeSelect" class="form-select" style="width: 25rem">
               <option selected>사이즈 선택</option>
               <c:forEach items="${goodsDetailList}" var="goods">
               	<option value="${goods.GOODS_DETAIL_SIZE }">${goods.GOODS_DETAIL_SIZE }</option>
@@ -64,30 +64,57 @@
             <p class="mb-0 align-self-center ms-2">${goodsDetailList[0].TOTAL_GOODS_SCORE_AVG }</p>
           </div>
           <div
+          	id="goodsLikeBtnDiv"
             class="d-grid gap-2 col-5"
             style="margin-left: 8rem; margin-top: 2rem"
           >
-            <button
-              class="btn btn-light mt-4"
-              style="
-                border: 1px solid rgba(0, 0, 0, 0.345);
-                border-radius: 15px;
-                height:3rem;
-              "
-              type="button"
-              name="goodsLikeBtn"
-            >
-              위시리스트 <svg id="heartIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
-              </svg>
-            </button>
-            <button
-              class="btn btn-secondary mt-3"
-              style="border-radius: 15px; height:3rem;"
-              type="button"
-            >
-              재고찾기
-            </button>
+          	<c:choose>
+          		<c:when test="${checkGoodsLike == 0 }">
+		            <button
+		              class="btn btn-light mt-4 goodsLike"
+		              style="
+		                border: 1px solid rgba(0, 0, 0, 0.345);
+		                border-radius: 15px;
+		                height:3rem;
+		              "
+		              type="button"
+		              id="goodsLikeBtn"
+		            >
+		              위시리스트 <svg id="heartIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+		                <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+		              </svg>
+		            </button>
+		    	</c:when>
+		    	<c:when test="${checkGoodsLike == 1 }">
+		            <button
+		              class="btn btn-light mt-4 goodsLike"
+		              style="
+		                border: 1px solid rgba(0, 0, 0, 0.345);
+		                border-radius: 15px;
+		                height:3rem;
+		              "
+		              type="button"
+		              id="goodsUnlikeBtn"
+		            >
+		              위시리스트 <svg id="heartIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-heart-fill" viewBox="0 0 16 16">
+		                <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+		              </svg>
+		            </button>
+		    	</c:when>
+	        </c:choose>
+	        	<form id="stockSearchForm" action="/sk/goods/stockSearchForm" method="post">
+	        		<input type="hidden" name="goodsName" value="${goodsDetailList[0].TOTAL_GOODS_NAME }"/>
+	        		<input type="hidden" name="brandName" value="${goodsDetailList[0].BRAND_NAME }"/>
+	        		<input type="hidden" name="goodsSize" value=""/>
+	        	</form>
+		            <button
+		              class="btn btn-secondary mt-3"
+		              style="border-radius: 15px; height:3rem;"
+		              type="button"
+		              id="stockSearchBtn"
+		            >
+		              재고찾기
+		            </button>
           </div>
         </div>
       </div>
@@ -199,18 +226,41 @@
       const starPoint = $("input[name='starPoint']").val() * 10;
       $(".starView").css('width', starPoint + '%');
       
-      $("button[name='goodsLikeBtn']").on("click", function(e) {
+      $("#goodsLikeBtnDiv").on("click", "#goodsLikeBtn", function(e) {
     	  $.ajax({
     		  url : '/sk/goods/goodsLike?GOODS_LIKE_PRONUM=' + ${goodsDetailList[0].GOODS_DETAIL_NUM},
     		  type : 'get',
     		  success : function(data) {
     			  if(data == "success") {
-    				  $("#heartIcon").attr('fill')
+    				  $("#heartIcon").attr('fill', 'red');
+    				  $('#goodsLikeBtnDiv').children('.goodsLike').attr('id', 'goodsUnlikeBtn');
+    			  } else {
+    				  alert("오류발생");
     			  }
     		  }
     	  });
       });
       
+      $("#goodsLikeBtnDiv").on("click", "#goodsUnlikeBtn", function(e) {
+    	  $.ajax({
+    		  url : '/sk/goods/goodsUnlike?GOODS_LIKE_PRONUM=' + ${goodsDetailList[0].GOODS_DETAIL_NUM},
+    		  type : 'get',
+    		  success : function(data) {
+    			  if(data == "success") {
+    				  $("#heartIcon").attr('fill', 'currentColor');
+    				  $('#goodsLikeBtnDiv').children('.goodsLike').attr('id', 'goodsLikeBtn');
+    			  } else {
+    				  alert("오류발생");
+    			  }
+    		  }
+    	  });
+      });
+      
+      $("#stockSearchBtn").on("click", function(e) {
+    	  event.preventDefault();
+    	  $("input[name='goodsSize']").val($("#goodsSizeSelect option:selected").val());
+    	  $("#stockSearchForm").submit();
+      });
     });
   </script>
 </html>

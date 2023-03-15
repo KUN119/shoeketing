@@ -6,7 +6,8 @@
 <meta charset="UTF-8">
 </head>
 <body>
-<div class="row">
+<div class="container" style="width:100vw">
+	<div class="row">
       <div class="portfolio-details-slider swiper">
         <div class="swiper-wrapper align-items-center">
           <div class="swiper-slide">
@@ -23,7 +24,7 @@
         </div>
         
         <div
-          style="z-index: 9999; position: relative; bottom: 12rem; left: 45rem"
+          style="z-index: 9999; position: relative; bottom: 12rem; left: 50rem"
         >
           <div class="col-auto" style="display: inline-block;">
             <a href="#">
@@ -38,5 +39,6 @@
         
       </div>
     </div>
+</div>
 </body>
 </html>

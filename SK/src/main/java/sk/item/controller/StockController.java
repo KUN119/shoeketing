@@ -10,6 +10,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -85,10 +86,26 @@ public class StockController {
 		return updateResult;
 	}
 
-	@GetMapping(value = "/goods/stockSearchForm")
+	@RequestMapping(value = "/goods/stockSearchForm")
 	public ModelAndView stockSearchForm(@RequestParam Map<String, Object> map, HttpSession session) throws Exception {
 		log.debug("###### 실시간 재고 검색폼 ######");
 		ModelAndView mv = new ModelAndView("stockSearchForm");
+
+		String goodsName = null;
+		String brandName = null;
+		String goodsSize = null;
+
+		if (map.get("goodsName") != null && map.get("goodsName") != "") {
+			goodsName = map.get("goodsName").toString();
+		}
+
+		if (map.get("brandName") != null && map.get("brandName") != "") {
+			brandName = map.get("brandName").toString();
+		}
+
+		if (map.get("goodsSize") != null && map.get("goodsSize") != "") {
+			goodsSize = map.get("goodsSize").toString();
+		}
 
 		// 로그인 한 회원 정보 세션에서 가져오기
 		String memName = sessionService.getSession(session, "MEM_NAME");
@@ -96,7 +113,9 @@ public class StockController {
 
 		mv.addObject("MEM_NAME", memName);
 		mv.addObject("MEM_EMAIL", memEmail);
-		
+		mv.addObject("goodsName", goodsName);
+		mv.addObject("brandName", brandName);
+		mv.addObject("goodsSize", goodsSize);
 
 		return mv;
 	}

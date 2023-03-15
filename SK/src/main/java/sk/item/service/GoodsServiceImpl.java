@@ -32,7 +32,7 @@ public class GoodsServiceImpl implements GoodsService {
 	}
 
 	@Override
-	public Map<String, Object> selectGoodsLike(Map<String, Object> map) throws Exception {
+	public int selectGoodsLike(Map<String, Object> map) throws Exception {
 		return goodsDAO.selectGoodsLike(map);
 	}
 
@@ -49,6 +49,7 @@ public class GoodsServiceImpl implements GoodsService {
 		long percentScore = (long) (score / 5 * 100);
 		goodsDetailList.get(0).put("TOTAL_GOODS_SCORE", roundedScore);
 		goodsDetailList.get(0).put("TOTAL_GOODS_SCORE_PERCENT", percentScore);
+
 		return goodsDetailList;
 	}
 
@@ -159,6 +160,21 @@ public class GoodsServiceImpl implements GoodsService {
 	@Override
 	public int insertGoodsLike(Map<String, Object> map) throws Exception {
 		return goodsDAO.insertGoodsLike(map);
+	}
+
+	@Override
+	public int deleteGoodsLike(Map<String, Object> map) throws Exception {
+		return goodsDAO.deleteGoodsLike(map);
+	}
+
+	@Override
+	public int updateGoodsLikeCountIncrease(Map<String, Object> map) throws Exception {
+		return goodsDAO.updateGoodsLikeCountIncrease(map);
+	}
+
+	@Override
+	public int updateGoodsLikeCountDecrease(Map<String, Object> map) throws Exception {
+		return goodsDAO.updateGoodsLikeCountDecrease(map);
 	}
 
 }
