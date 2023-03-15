@@ -152,7 +152,7 @@
 	</select>
 	
 	
-	<select id="selectGoodsLike" parameterType="hashmap" resultType="hashmap"> 
+	<select id="selectGoodsLike" parameterType="hashmap" resultType="int"> 
 		<![CDATA[
 			SELECT COUNT(*)
 			FROM GOODS_LIKE
@@ -243,4 +243,30 @@
 		]]>
 	</insert>
 	
+	<!-- 찜 취소 -->
+	<delete id="deleteGoodsLike" parameterType="hashmap">
+		<![CDATA[
+			DELETE FROM GOODS_LIKE
+			WHERE GOODS_LIKE_PRONUM = #{GOODS_LIKE_PRONUM}
+			      AND GOODS_LIKE_USER = #{MEM_NUM}
+		]]>
+	</delete>
+	
+	<!-- 찜하기 시, TOTAL_GOODS 테이블의 TOTAL_GOODS_LIKE_COUNT + 1씩 (UPDATE 쿼리) -->
+	<update id="updateGoodsLikeCountIncrease" parameterType="hashmap">
+	    <![CDATA[
+	        UPDATE TOTAL_GOODS
+	        SET TOTAL_GOODS_LIKE_COUNT = TOTAL_GOODS_LIKE_COUNT + 1
+	        WHERE TOTAL_GOODS_NUM = #{GOODS_LIKE_PRONUM}
+	    ]]>
+	</update>
+	
+	<!-- 찜하기 취소시, TOTAL_GOODS 테이블의 TOTAL_GOODS_LIKE_COUNT - 1씩 (UPDATE 쿼리) -->
+	<update id="updateGoodsLikeCountDecrease" parameterType="hashmap">
+	    <![CDATA[
+	        UPDATE TOTAL_GOODS
+	        SET TOTAL_GOODS_LIKE_COUNT = TOTAL_GOODS_LIKE_COUNT - 1
+	        WHERE TOTAL_GOODS_NUM = #{GOODS_LIKE_PRONUM}
+	    ]]>
+	</update>
 </mapper>

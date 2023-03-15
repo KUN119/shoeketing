@@ -156,6 +156,7 @@
               class="form-control"
               id="BRAND_NAME"
               name="BRAND_NAME"
+              value="${brandName }"
               placeholder="브랜드명을 입력해주세요"
               required
             />
@@ -173,6 +174,7 @@
               class="form-control"
               id="GOODS_NAME"
               name="GOODS_NAME"
+              value="${goodsName }"
               placeholder="상품명을 입력해주세요"
               required
             />
@@ -190,6 +192,7 @@
               class="form-control"
               id="GOODS_SIZE"
               name="GOODS_SIZE"
+              value="${goodsSize }"
               placeholder="사이즈를 입력해주세요"
               required
             />
@@ -209,7 +212,7 @@
               class="form-control"
               id="SHOP_NAME"
               name="SHOP_NAME"
-              placeholder="매장명을 입력해주세요"
+              placeholder="매장명을 입력해주세요(선택)"
             />
             <button
               class="btn btn-secondary ms-3"

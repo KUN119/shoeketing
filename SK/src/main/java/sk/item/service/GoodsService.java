@@ -11,7 +11,7 @@ public interface GoodsService {
 
 	public List<Map<String, Object>> selectAllBrandList(Map<String, Object> map) throws Exception;
 
-	public Map<String, Object> selectGoodsLike(Map<String, Object> map) throws Exception;
+	public int selectGoodsLike(Map<String, Object> map) throws Exception;
 
 	public Map<String, Object> selectBrandDetail(Map<String, Object> map) throws Exception;
 
@@ -24,4 +24,10 @@ public interface GoodsService {
 	public Map<String, Object> selectReviewPercent(Map<String, Object> map) throws Exception;
 
 	public int insertGoodsLike(Map<String, Object> map) throws Exception;
+
+	public int deleteGoodsLike(Map<String, Object> map) throws Exception;
+
+	public int updateGoodsLikeCountIncrease(Map<String, Object> map) throws Exception;
+
+	public int updateGoodsLikeCountDecrease(Map<String, Object> map) throws Exception;
 }
