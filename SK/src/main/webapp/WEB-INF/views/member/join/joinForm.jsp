@@ -131,6 +131,7 @@
 	              id="MEM_PHONE"
 	              name="MEM_PHONE"
 	              placeholder="휴대전화 입력"
+	              pattern="^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$"
 	              required
 	            />
 	            <button class="btn btn-outline-secondary" name="phoneCheck" type="button" id="phoneChk" style="font-size: 15px; width: 100px;">인증번호 보내기</button>
@@ -293,25 +294,26 @@ Array.from(forms).forEach((form) => {
 
         form.classList.add('was-validated');
 
-        /* var MEM_EMAIL = $('#MEM_EMAIL').val();
+        //이메일 
+        var memberEmail = $('#MEM_EMAIL').val();
         var emailRule = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
         
-        if (MEM_EMAIL == null || $.trim(MEM_EMAIL) == '' || !emailRule.test(MEM_EMAIL)) {
+        if (memberEmail == null || $.trim(memberEmail) == '') {
             $("#MEM_EMAIL").addClass('is-invalid');
             $("#email-null").show();
             $("#email-type").hide();
             $("#MEM_EMAIL").focus();
             pass = false;
-        } else {
+        } else if (!emailRule.test(memberEmail)){
             $("#email-null").hide();
-            if (!emailRule.test(MEM_EMAIL)) {
                 $("#email-type").show();
                 $("#MEM_EMAIL").focus();
                 pass = false;
-            } else {
+        }
+            else {
                 $("#email-type").hide();
             }
-        } */
+        
         
         //비밀번호
          let pwdval = $('#MEM_PW').val()
@@ -340,6 +342,16 @@ Array.from(forms).forEach((form) => {
 			  $("#pw2-same").show();
 		      $("#MEM_PW2").focus();
 	      } 
+	      
+	      //핸드폰
+	      var phoneNum = $('#MEM_PHONE').val();
+	      var phoneCheck = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+	      
+	      if(!phoneCheck.test(phoneNum)){
+	    	  alert('잘못된 휴대폰 번호입니다.');
+	    	  $('#MEM_PHONE').focus();
+	    	  
+	      }
 
     });
 });

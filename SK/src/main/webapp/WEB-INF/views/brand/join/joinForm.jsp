@@ -158,7 +158,7 @@
                 style="font-size: large; font-weight: bolder"
                 >브랜드 로고 파일</label
               >
-              <input class="form-control" type="file" id="joinImgUpload" name="joinImgUpload">
+              <input class="form-control" type="file" id="joinImgUpload" name="BRAND_LOGO_FILE">
             </div>
           </div>
 
@@ -230,6 +230,7 @@ $(document).ready(function() {
             contentType: false,
             type: 'POST',
             dataType: 'text',
+            enctype:'multipart/form-data',
             success: function(result){
             	alert("업로드 완료");
           },
@@ -242,6 +243,8 @@ $(document).ready(function() {
       });
         
 	}; 
+	
+	
 });
 
 
