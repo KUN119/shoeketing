@@ -61,6 +61,9 @@ public class StockController {
 		String searchType = (String) map.get("searchType");
 		String keyword = (String) map.get("keyword");
 		
+		System.out.println("searchType : " + searchType);
+		System.out.println("keyword : " + keyword);
+		
 		if(searchType != null) {
 			mv.addObject("searchType", searchType);
 		}

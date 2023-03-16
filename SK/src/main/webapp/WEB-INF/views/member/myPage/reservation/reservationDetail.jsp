@@ -73,27 +73,29 @@ $(document).ready(function() {
 		var formData = new FormData();
 		formData.append("RESERVATION_NUM", reservationNum);
 		formData.append("RESERVATION_STATUS", reservationStatus);
+		formData.append("paymentKey", localStorage.getItem(reservationNum));
 		
-		$.ajax({
-			type : 'post',
-			url : '/sk/myPage/reservationDelete',
-			data : formData,
-			processData : false,
-			contentType : false,
-			 success : function(data){
-				 if(data.result == "pass"){
-					 alert("픽업 예약이 취소되었습니다.");
-					 location.href="/sk/myPage/reservationList";
-				 }else if(data.result == "fail") {
-					 alert("실패");
-				 }
-			},
-			error : function(){
-				alert("오류 발생");
-			}
-			
-		});
-		
+		if(confirm("예약을 취소하시겠습니까?")) {
+			$.ajax({
+				type : 'post',
+				url : '/sk/tossPaymentsCancel',
+				data : formData,
+				processData : false,
+				contentType : false,
+				 success : function(data){
+					 if(data.result == "pass"){
+						 alert("픽업 예약이 취소되었습니다.");
+						 location.href="/sk/myPage/reservationList";
+					 }else if(data.result == "fail") {
+						 alert("실패");
+					 }
+				},
+				error : function(){
+					alert("오류 발생");
+				}
+				
+			});
+		}
 	}
 	
 });

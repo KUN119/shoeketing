@@ -201,6 +201,7 @@ public class ReservationServiceImpl implements ReservationService {
 		Map<String, Object> resultMap = new HashMap<>();
 		
 		map.put("RESERVATION_NUM", map.get("RESERVATION_NUM"));
+		map.put("RESERVATION_STATUS", map.get("RESERVATION_STATUS"));
 		
 		int updateResult = reservationDAO.updateReservationApprove(map);
 		

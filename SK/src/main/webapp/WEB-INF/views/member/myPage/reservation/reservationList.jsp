@@ -192,12 +192,12 @@ $(document).ready(function() {
 		var formData = new FormData();
 		formData.append("RESERVATION_NUM", reservationNum);
 		formData.append("RESERVATION_STATUS", reservationStatus);
-		formData.append("paymentKey", localStorage.getItem(reservationNum))
+		formData.append("paymentKey", localStorage.getItem(reservationNum));
 		
 		if(confirm("예약을 취소하시겠습니까?")) {
 			$.ajax({
 			type : 'post',
-			url : '/sk/reservationCancel',
+			url : '/sk/tossPaymentsCancel',
 			data : formData,
 			processData : false,
 			contentType : false,
