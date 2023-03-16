@@ -1,6 +1,62 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ include file="/WEB-INF/views/include/include-taglib.jspf" %>
+<!-- sockJS -->
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script>
+// 전역변수 설정
+var socket  = null;
+$(document).ready(function(){
+    // 웹소켓 연결
+    sock = new SockJS("<c:url value="/inform-ws"/>");
+    socket = sock;
+
+    // 데이터를 전달 받았을때 
+    sock.onmessage = onMessage; // toast 생성
+});
+
+// toast생성 및 추가
+function onMessage(evt){
+    var data = evt.data;
+    // toast
+    let toast = "<div class='toast' role='alert' aria-live='assertive' aria-atomic='true'>";
+    toast += "<div class='toast-header'><i class='fas fa-bell mr-2'></i><strong class='mr-auto'>알림</strong>";
+    toast += "<small class='text-muted'>just now</small><button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>";
+    toast += "<span aria-hidden='true'>&times;</span></button>";
+    toast += "</div> <div class='toast-body'>" + data + "</div></div>";
+    $("#msgStack").append(toast);   // msgStack div에 생성한 toast 추가
+    $(".toast").toast({"animation": true, "autohide": false});
+    $('.toast').toast('show');
+};	
+</script>
+
+	<div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="informOffcanvas" aria-labelledby="offcanvasWithBothOptionsLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">알림</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <!-- inform 내용 시작 -->
+      <div class="offcanvas-body">
+        <a href="#">
+          <div class="row ms-1 me-1">
+            <p style="font-weight: 500">
+              "코트버로우 로우"의 예약 상태가 "픽업 대기중"으로 변경되었습니다.
+            </p>
+            <div class="d-flex justify-content-between">
+              <p style="color: rgba(0, 0, 0, 0.361); font-size: small">
+                23/03/06
+              </p>
+              <p style="font-size: small">
+                <span style="color: rgba(0, 0, 0, 0.361);">읽지않음</span> 🔵
+              </p>
+            </div>
+            <hr />
+          </div>
+        </a>
+      </div>
+      <!-- inform 내용 끝 -->
+    </div>
+
 <!-- ======= Header ======= -->
 <header id="header" class="ms-5 me-5 mt-2 mb-1">
   <div class="container d-flex align-items-center justify-content-between">
@@ -77,18 +133,22 @@ pageEncoding="UTF-8"%>
           ></a>
         </li>
         <li>
-          <a class="nav-link scrollto" href="#about"
+          <a id="informA" class="nav-link scrollto" href="#inform" data-bs-toggle="offcanvas" data-bs-target="#informOffcanvas"
             ><svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
               height="20"
               fill="currentColor"
-              class="bi bi-bell"
+              class="bi bi-bell position-relative"
               viewBox="0 0 16 16"
             >
               <path
                 d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"
-              /></svg
+              />
+              	<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    3
+                </span>
+              </svg
           ></a>
         </li>
         <li>
@@ -105,7 +165,6 @@ pageEncoding="UTF-8"%>
                       border-bottom-left-radius: 5px;
                     "
                     type="search"
-                    id='keyword'
                     name='keyword'
                     <%-- value="<c:out value="${search}"/>" --%>
                   />
@@ -141,6 +200,8 @@ pageEncoding="UTF-8"%>
 </header>
 <hr>
 
+<div id="msgStack"></div>
+
 <script type="text/javascript">
 $(document).ready(function() {
 	
@@ -157,5 +218,31 @@ $(document).ready(function() {
 			}
 		});
 	};
+	
+	$("#informA").on("click", function(e) {
+		$.ajax({
+			url : '/sk/inform',
+			success : function(data) {
+				$(".offcanvas-body").empty();
+				$(".offcanvas-body")[0].innerHTML = data;
+			}
+		});
+	});
+	
+	$(".offcanvas-body").on("click", "a[name='informA']", function(e) {
+		e.preventDefault();
+		const informNum = {'INFORM_NUM':$(this).attr('data-num')};
+		const target = $(this).attr('href');
+		
+		$.ajax({
+			url : '/sk/inform/confirmUpdate',
+			type : 'post',
+			data : JSON.stringify(informNum),
+			contentType : "application/json; charset=utf-8",
+			success : function(data) {
+				location.href = target;
+			}
+		});
+	});
 });
 </script>

@@ -27,5 +27,27 @@
 				)
 		]]>
 	</insert>
+	
+	<select id="informList" parameterType="hashmap" resultType="hashmap"> 
+		<![CDATA[
+			SELECT 
+						INFORM_NUM, 
+						INFORM_CONTENT,
+						INFORM_CONFIRM,
+						INFORM_DATE,
+						INFORM_USER,
+						INFORM_TYPE
+			FROM INFORM 
+			WHERE (INFORM_USER = #{MEM_NUM} OR INFORM_USER IS NULL)
+			ORDER BY INFORM_NUM DESC
+		]]>
+	</select>
 
+	<update id="confirmUpdate" parameterType="hashmap">
+		<![CDATA[
+			UPDATE INFORM
+			SET INFORM_CONFIRM = 'Y'
+			WHERE INFORM_NUM = #{INFORM_NUM}
+		]]>
+	</update>
 </mapper>

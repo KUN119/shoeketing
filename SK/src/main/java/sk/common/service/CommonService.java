@@ -18,23 +18,24 @@ public class CommonService {
 
 		Map<String, Object> sessionMap = (Map<String, Object>) session.getAttribute("session_MEM_INFO");
 		String info = "";
-		Map<String, Object> map = new HashMap<>();
 
-		if (key.equals("MEM_NAME")) {
-			info = (String) sessionMap.get("MEM_NAME");
+		if (sessionMap != null) {
+			if (key.equals("MEM_NAME")) {
+				info = (String) sessionMap.get("MEM_NAME");
 
-		} else if (key.equals("MEM_PHONE")) {
-			info = (String) sessionMap.get("MEM_PHONE");
+			} else if (key.equals("MEM_PHONE")) {
+				info = (String) sessionMap.get("MEM_PHONE");
 
-		} else if (key.equals("MEM_INFORM_AGREE")) {
-			info = (String) sessionMap.get("MEM_INFORM_AGREE");
+			} else if (key.equals("MEM_INFORM_AGREE")) {
+				info = (String) sessionMap.get("MEM_INFORM_AGREE");
 
-		} else if (key.equals("MEM_NUM")) {
-			info = sessionMap.get("MEM_NUM").toString();
+			} else if (key.equals("MEM_NUM")) {
+				info = sessionMap.get("MEM_NUM").toString();
 
-		} else if (key.equals("MEM_PICKUP_COUNT")) {
-			info = sessionMap.get("MEM_PICKUP_COUNT").toString();
+			} else if (key.equals("MEM_PICKUP_COUNT")) {
+				info = sessionMap.get("MEM_PICKUP_COUNT").toString();
 
+			}
 		}
 		return info;
 	}
@@ -73,7 +74,7 @@ public class CommonService {
 		}
 		return infoMap;
 	}
-	
+
 	// 브랜드 회원정보 하나만 가져오는 메소드
 	public String getSessionBrand(HttpSession session, String key) throws Exception {
 
@@ -91,10 +92,10 @@ public class CommonService {
 			info = (String) sessionMap.get("BRAND_ID");
 
 		}
-		
+
 		return info;
 	}
-	
+
 	// 매장 회원정보 하나만 가져오는 메소드
 	public String getSessionShop(HttpSession session, String key) throws Exception {
 
@@ -112,7 +113,7 @@ public class CommonService {
 			info = (String) sessionMap.get("SHOP_ID");
 
 		}
-		
+
 		return info;
 	}
 
