@@ -189,7 +189,7 @@ $(document).ready(function() {
 		e.preventDefault();
 		const num = $(this).attr("data-num");  //a태그 name이 title 부분 속성의 data-num값 가져와서 변수 num에 저장
 		fn_bDetail(num); //fn_bDetail()함수 매개변수로 num 전송
-		location.href="/sk/brand/main?BRNAD_NUM=" + num;
+		location.href="/sk/brand/main?BRAND_NUM=" + num;
 	});
 	
 	function fn_bDetail(num) {  //num 매개변수로 넣기

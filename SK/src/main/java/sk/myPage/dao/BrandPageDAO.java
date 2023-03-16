@@ -18,6 +18,14 @@ public class BrandPageDAO extends AbstractDAO {
 		return (Map<String, Object>) selectOne("brandPage.selectBrandInfo", map);
 	}
 
+	// 브랜드 로고파일 조회 - selectOne()
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> selectBrandPageInfo(Map<String, Object> map) throws Exception {
+		System.out.println("selectBrandPageInfo 파라미터 : " + map);
+		
+		return(Map<String, Object>) selectOne("brandPage.selectBrandPageInfo", map);
+	}
+	
 	// 브랜드 기본정보 수정 - update()
 	public int updateBrandInfo(Map<String, Object> map) throws Exception {
 		System.out.println("updateBrandInfo 파라미터 : " + map);

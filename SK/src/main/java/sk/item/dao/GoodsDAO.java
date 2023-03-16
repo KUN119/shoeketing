@@ -10,6 +10,27 @@ import sk.common.dao.AbstractDAO;
 @Repository("goodsDAO")
 public class GoodsDAO extends AbstractDAO {
 
+	// 브랜드 전체 상품 리스트 selectBrandGoodsList
+	
+	// 브랜드 전체 상품 토탈 개수  selectBrandGoodsCount
+	
+	// 브랜드 상품 등록 insertGoods
+	
+	// 상품 등록시, 상품 상세(사이즈) 삽입 insertGoodsDetail
+	
+	// 상품 등록시, 상품 이미지 삽입   insertGoodsImage
+	
+	// 브랜드 상품 상세조회 selectGoodsDetail
+	
+	// 상품 이미지 삭제 deleteGoodsImage
+	
+	// 상품 이미지 수정  updateGoodsImageModify
+	
+	// 상품 수정 (상품 상세정보 수정,사이즈만 따로)  updateGoodsModify
+	
+	// 상품 상세 삭제(상품 수정시, 원래 선택되어 있던 사이즈 전체 삭제)
+	
+	
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> selectAllGoodsList(Map<String, Object> map) throws Exception {
 		System.out.println("allGoodsList : " + map);

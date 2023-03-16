@@ -32,6 +32,12 @@ public class BrandPageServiceImpl implements BrandPageService {
 
 		return brandPageDAO.selectBrandInfo(map);
 	}
+	
+	// 브랜드 로고파일 조회 - selectOne()
+	public Map<String, Object> selectBrandPageInfo(Map<String, Object> map) throws Exception{
+		
+		return brandPageDAO.selectBrandPageInfo(map);
+	}
 
 	// 브랜드 기본정보 수정
 	@Override
@@ -181,10 +187,6 @@ public class BrandPageServiceImpl implements BrandPageService {
 	@Override
 	public List<Map<String, Object>> selectNewGoodsList(Map<String, Object> map) throws Exception {
 		
-		map.put("BRAND_NUM", 1);  // 추후 삭제
-		
-//		map.put("BRAND_NUM", map.get("BRAND_NUM"));
-
 		return brandPageDAO.selectNewGoodsList(map);
 	}
 
@@ -192,9 +194,6 @@ public class BrandPageServiceImpl implements BrandPageService {
 	@Override
 	public List<Map<String, Object>> selectGoodsRankingList(Map<String, Object> map) throws Exception {
 		
-		map.put("BRAND_NUM", 1); // 추후 삭제
-
-//		map.put("BRAND_NUM", map.get("BRAND_NUM"));
 		return brandPageDAO.selectGoodsRankingList(map);
 	}
 

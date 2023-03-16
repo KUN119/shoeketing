@@ -9,6 +9,9 @@ public interface BrandPageService {
 	// 브랜드 기본정보 조회
 	public Map<String, Object> selectBrandInfo(Map<String, Object> map, HttpSession session) throws Exception;
 
+	// 브랜드 로고파일 조회 - selectOne()
+	public Map<String, Object> selectBrandPageInfo(Map<String, Object> map) throws Exception;
+	
 	// 브랜드 기본정보 수정
 	public Map<String, Object> updateBrandInfo(Map<String, Object> map) throws Exception;
 

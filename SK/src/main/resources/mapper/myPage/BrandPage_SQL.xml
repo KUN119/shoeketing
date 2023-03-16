@@ -20,6 +20,19 @@
 	    ]]>
 	</select>
 	
+	<!-- 브랜드관 정보 조회 -->
+	<select id="selectBrandPageInfo" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+        	SELECT
+        		  BRAND_NAME,
+        		  BRAND_INFO,
+                  BRAND_LOGO_FILE
+	        FROM BRAND
+	        WHERE BRAND_NUM = #{BRAND_NUM}
+	        AND BRAND_DEL_GB = 'N'
+	    ]]>
+	</select>
+	
 	<!-- 브랜드 기본정보 수정 (수정 가능한 것 : 비밀번호, 등록지 주소, 브랜드 로고파일, 브랜드 소개말) -->
 	<update id="updateBrandInfo" parameterType="hashmap">
 		<![CDATA[

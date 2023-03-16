@@ -136,10 +136,17 @@ public class BrandPageController {
 
 	// 브랜드관
 	@GetMapping(value = "/brand/main")
-	public ModelAndView brandInfo(Map<String, Object> map) throws Exception {
+	public ModelAndView brandInfo(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("###### 브랜드관 메인 페이지 ######");
 		ModelAndView mv = new ModelAndView("brandInfo"); // 추후 수정
 
+		System.out.println("BRAND_NUM 확인 : " + map.get("BRAND_NUM"));
+		
+		// 브랜드관에 표시할 정보
+		Map<String, Object> brandPageInfoMap = brandPageService.selectBrandPageInfo(map);
+		System.out.println("brandPageInfoMap 확인 : " + brandPageInfoMap);
+		mv.addObject("brandPageInfoMap", brandPageInfoMap);
+		
 		// 최신 상품 리스트(5개)
 		List<Map<String, Object>> recentGoodsList = brandPageService.selectNewGoodsList(map);
 		System.out.println("recentGoodsList 확인 : " + recentGoodsList);
