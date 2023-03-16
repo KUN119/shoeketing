@@ -25,7 +25,7 @@
                 font-size: 20px;
                 font-weight: 700;
               "
-              type="text"
+              type="search"
               name="keyword"
               id="keyword"
             />
@@ -65,34 +65,33 @@
       <!--검색 키워드 끝-->
 
       <!--브랜드 검색 결과 시작-->
+      <form id="bInfo">
+      <div class="row ms-2 mb-5 d-flex">
       <c:forEach var="brand" items="${brandList}" varStatus="status">
-      <form id="id=bInfo">
-      <div class="row mb-5">
-        <a class="d-flex" href="#" name='bDetail' data-num="${brand.BRAND_NUM}">
-           <div class="col-1">
+           <div class="col-2 d-flex mb-2">
+           <a class="d-flex" href="#" name='bDetail' data-num="${brand.BRAND_NUM}">
             <img
               src='/sk/image/display?fileName=${brand.BRAND_LOGO_FILE}'
               class="img-thumbnail"
-              style="height: 5rem; width: auto"
+              style="height: 5rem; width: 6rem"
             />
-          </div>
-          <div class="col-1 ms-3 align-self-center">
-            <h6 class="mb-0" style="font-weight: 700; font-size: 18px">
+            <h6 class="ms-3 mb-0 align-self-center" style="font-weight: 700; font-size: 18px">
               ${brand.BRAND_NAME}<i class="bi bi-chevron-right" style="font-weight: 700"></i>
             </h6>
+            </a>
           </div> 
-        </a>
+      </c:forEach>
       </div>
       </form>
-      </c:forEach>
       <!--브랜드 검색 결과 끝-->
 
       <!--상품 검색결과 리스트 시작-->
       <div class="row">
         <h5 class="mb-3" style="font-weight: 700">상품 검색결과</h5>
         <hr />
-<c:forEach var="goods" items="${goodsList}" varStatus="status">
-	<form id='gInfo'>
+
+	<div id='gInfo' class="row">
+	<c:forEach var="goods" items="${goodsList}" varStatus="status">
          <div class="col-6 mt-4 mb-4 d-flex">
           <a href="#" class="d-flex" name='gDetail' data-num='${goods.TOTAL_GOODS_NUM}'>
             <img
@@ -105,9 +104,10 @@
               <p style="font-weight: 700; font-size: large">${goods.TOTAL_GOODS_PRICE}</p>
             </div>
           </a>
-        </div> 
-	</form>
-</c:forEach>
+        </div>
+    </c:forEach>
+    </div>
+
 
         <!--상품 검색결과 더보기 시작-->
         <div class="row">
@@ -127,7 +127,6 @@
         
 <c:forEach var="shopList" items="${shopList}" varStatus="status">
 <form id='sInfo'>
-         <!-- <a href="#"> 단순 리스트만 출력하는거라 a태그 제거했음   -->
           <div class="row mt-2 mb-2">
             <div class="col-2 align-self-center text-center">
               <p class="fw-semibold" style="font-size: large">${shopList.SHOP_NAME}</p>
@@ -164,14 +163,13 @@
               </div>
             </div>
           </div>
-  <!--       </a> -->
         <hr /> 
 </form>
 </c:forEach>
 
         <!--매장 검색결과 더보기 시작-->
         <div class="row">
-          <a href="#" class="ms-4" style="font-weight: 500">
+          <a href="#" class="ms-4" style="font-weight: 500" id='shopMore'>
           <p>검색결과 더보기<i class="bi bi-chevron-down ms-2"></i></p>
           </a>
           <hr />
@@ -198,7 +196,7 @@ $(document).ready(function() {
 	      formData.append("BRAND_NUM", BRAND_NUM);
 	};
 	
-	$("a[name='gDetail']").on("click", function(e) {  //상품 상세보기 페이지로 넘어가기
+	$("#gInfo").on("click", "a[name='gDetail']", function(e) {  //상품 상세보기 페이지로 넘어가기
 		e.preventDefault();
 		const num = $(this).attr("data-num");  //a태그 name이 title 부분 속성의 data-num값 가져와서 변수 num에 저장
 		fn_gDetail(num); //fn_gDetail()함수 매개변수로 num 전송
@@ -237,60 +235,86 @@ $(document).ready(function() {
 				$("#searchKeyword").empty();
 				$("#searchKeyword").prepend(str);
 				
+				//각 vlalues애 가져온 list data넣어주기
 				values = data.brandList;
 				values2 = data.goodsList;
 				values3 = data.shopList;
 				
+				//기존의 list 비우고
 				$("#bInfo").empty();
 				$("#gInfo").empty();
 				$("#sInfo").empty();
 				
+				//index[0]부터 value 넣어서 반복문 돌려주기
 				$.each(values, function(index, value) {
 					var bName = value.BRAND_NAME;
 					var bLogo = value.BRAND_LOGO_FILE;
 					
 				var b = "";
-				b +="<div class='row mb-5'>";
+				b +="<div class='col-2 d-flex mb-2'>";
 				b +="<a class='d-flex' href='#' name='bDetail' data-num='${brand.BRAND_NUM}'>";
-				b += "<div class='col-1'>";
 	            b += 	"<img src='/sk/image/display?fileName=" + bLogo + "' class='img-thumbnail'";
-	            b +=  		"style='height: 5rem; width: auto'/>";
-	            b += "</div>";
-	            b += "<div class='col-1 ms-3 align-self-center'>";
-	            b += "<h6 class='mb-0' style='font-weight: 700; font-size: 18px'>";
+	            b +=  		"style='height: 5rem; wid	th: 6rem'/>";
+	            b += "<h6 class='ms-3 mb-0 align-self-center' style='font-weight: 700; font-size: 18px'>";
 	            b +=   bName + "<i class='bi bi-chevron-right' style='font-weight: 700'></i>";
 	            b += "</h6>";
-	            b += "</div>";
 	            b += "</a>";
 	            b += "</div>";
 	            
                 $("#bInfo").prepend(b);
 				});
 				
-	                $.each(values2, function(index, value) {
-						var bName = value.BRAND_NAME;
-						var gImg = value.GOODS_IMAGE_STD;
-						var gName = value.TOTAL_GOODS_NAME;
-						var gModel = value.TOTAL_GOODS_MODEL;
-						var gPrice = value.TOTAL_GOODS_PRICE;
-						
-			                var g = "";
-			                g +="<div class='col-6 mt-4 mb-4 d-flex'>";
-			                g +=  "<a href='#' class='d-flex' name='gDetail' data-num='${goods.TOTAL_GOODS_NUM}'>";
-			                g += "<img src='/sk/image/display?fileName=" + gImg + "'";
-			                g +=    "style='width: 14rem'/>";
-			                g +=  "<div class='ms-5 align-self-center'>";
-			                g +=   "<p style='font-weight: 700'>" + bName + "</p>";
-			                g +=  "<p>" + gName + "/" + gModel + "</p>";
-			                g +=  "<p style='font-weight: 700; font-size: large'>" + gPrice + "</p>";
-			                g += "</div>";
-			                g += "</a>";
-			                g +="</div>";
+				//values2 배열?리스트?의 크기가 0,1,2,3으로 4개 이하면 더보기 버튼 숨기기
+				if(values2.length <= 4) {
+					$("#goodsMore").hide();
+				} else { //5개 부터 더보기 버튼 보여주기
+					$("#goodsMore").show();
+				}
+				
+				////index[0]부터 value 넣어서 반복문 돌려주기
+	            $.each(values2, function(index, value) {
+	                console.log("GOODS " + index + " : " + value); //로그 한번 찍어주고 근데 값이 Object로 나옴..
+	                
+	                //value값에 맞는 변수명 설정해주고..
+					var bName = value.BRAND_NAME;
+					var gImg = value.GOODS_IMAGE_STD;
+					var gName = value.TOTAL_GOODS_NAME;
+					var gModel = value.TOTAL_GOODS_MODEL;
+					var gPrice = value.TOTAL_GOODS_PRICE;
+					
+					//위 변수 넣고 돌려
+			        var g = "";
+			            g +="<div class='col-6 mt-4 mb-4 d-flex goodsCnt'>";
+			            g +=  "<a href='#' class='d-flex' name='gDetail' data-num='${goods.TOTAL_GOODS_NUM}'>";
+			            g += "<img src='/sk/image/display?fileName=" + gImg + "'";
+			            g +=    "style='width: 14rem'/>";
+			            g +=  "<div class='ms-5 align-self-center'>";
+			            g +=   "<p style='font-weight: 700'>" + bName + "</p>";
+			            g +=  "<p>" + gName + "/" + gModel + "</p>";
+			            g +=  "<p style='font-weight: 700; font-size: large'>" + gPrice + "</p>";
+			            g += "</div>";
+			            g += "</a>";
+			            g +="</div>";
 			                
-			                $("#gInfo").prepend(g);
-					});
+			            $("#gInfo").prepend(g);
+			           	
+			            //index가 0,1,2,3해서 4개만 출력하고 이 반복문이 빠져나오고 아래서 계속
+			            if(index == 3) {
+			                return false;
+			             }
+				});
+	                
+				//위 처럼 똑같이 버튼 숨기고 보여주고 하기
+	            if(values3.length <= 4) {
+					$("#shopMore").hide();
+				} else {
+					$("#shopMore").show();
+				}    
                 
+				
                 $.each(values3, function(index, value) {
+                	console.log("SHOP " + index + " : " + value);
+                	
 					var sBrand = value.SHOP_BRAND;
 					var sName = value.SHOP_NAME;
 					var sTel = value.SHOP_TEL;
@@ -299,8 +323,7 @@ $(document).ready(function() {
                     var sClose = value.SHOP_END_TIME;
                 
                 var s = "";
-//                s+="<a href='#'>";
-                s+="<div class='row mt-2 mb-2'>";
+                s+="<div class='row mt-2 mb-2 shopCnt'>";
                 s+="  <div class='col-2 align-self-center text-center'>";
                 s+="    <p class='fw-semibold' style='font-size: large'>"+sName+"</p>";
                 s+=" </div>";
@@ -335,11 +358,13 @@ $(document).ready(function() {
                 s+=" </div>";
                 s+="  </div>";
                 s+="</div>";
-//               s+="</a>";
                 s+="<hr />";
                 
+                //여기서 분명 값을 4개 가져왔는데 이상한 값 2개가 더 들어가는 일이 발생함..
                 $("#sInfo").prepend(s);
-                
+	                if(index == 3) {
+	                	return false;
+	                }
 				});
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
@@ -347,6 +372,108 @@ $(document).ready(function() {
 		    }
 		});
 	};
+	
+	$("#goodsMore").on("click", function(e) {
+		e.preventDefault();
+		fn_goodsMore();
+	});
+	
+	function fn_goodsMore() {
+		let startNum = $(".goodsCnt").length;
+		 
+	    console.log("'goodsMore' startNum", startNum);
+	    
+	    if(values2.length-startNum <= 4){
+            $("#goodsMore").remove();   // 더보기 버튼을 div 클래스로 줘야 할 수도 있음
+        }
+            for(var i=0; i<4; i++) {
+            	var num = Number(startNum)+Number(i);
+            	
+            	var bName = values2[num].BRAND_NAME;
+				var gImg = values2[num].GOODS_IMAGE_STD;
+				var gName = values2[num].TOTAL_GOODS_NAME;
+				var gModel = values2[num].TOTAL_GOODS_MODEL;
+				var gPrice = values2[num].TOTAL_GOODS_PRICE;
+				var g = ""; 
+                g +="<div class='col-6 mt-4 mb-4 d-flex goodsCnt'>";
+                g +=  "<a href='#' class='d-flex' name='gDetail' data-num='${goods.TOTAL_GOODS_NUM}'>";
+                g += "<img src='/sk/image/display?fileName=" + gImg + "'";
+                g +=    "style='width: 14rem'/>";
+                g +=  "<div class='ms-5 align-self-center'>";
+                g +=   "<p style='font-weight: 700'>" + bName + "</p>";
+                g +=  "<p>" + gName + "/" + gModel + "</p>";
+                g +=  "<p style='font-weight: 700; font-size: large'>" + gPrice + "</p>";
+                g += "</div>";
+                g += "</a>";
+                g +="</div>";
+                
+                $("#gInfo").append(g);
+            }
+	}
+	
+	$("#shopMore").on("click", function(e) {
+		e.preventDefault();
+		fn_shopMore();
+	});
+	
+	function fn_shopMore() {
+		let startNum = $(".shopCnt").length;
+	    console.log("'SHOPlist 크기", startNum);
+	    
+	    if(values3.length-startNum <= 4){
+            $("#shopMore").remove();
+        }
+            for(let i=0; i<4; i++) {
+            	let num = Number(startNum)+Number(i);
+            	
+				let sBrand = values3[num].SHOP_BRAND;
+				let sName = values3[num].SHOP_NAME;
+				let sTel = values3[num].SHOP_TEL;
+				let sAdd = values3[num].SHOP_ADD;
+				let sOpen = values3[num].SHOP_START_TIME;
+				let sClose = values3[num].SHOP_END_TIME;
+                
+				var s = "";
+	              s+="<div class='row mt-2 mb-2 shopCnt'>";
+	              s+="  <div class='col-2 align-self-center text-center'>";
+	              s+="    <p class='fw-semibold' style='font-size: large'>"+sName+"</p>";
+	              s+=" </div>";
+	              s+="  <div class='col-10'>";
+	              s+="    <div class='row'>";
+	              s+="      <div class='col-2'>";
+	              s+="        <p style='font-weight: 500'>전화번호</p>";
+	              s+="   </div>";
+	              s+="   <div class='col-4'>";
+	              s+="     <p>"+sTel+"</p>";
+	              s+="   </div>";
+	              s+="   <div class='col-2'>";
+	              s+="  <p style='font-weight: 500'>영업시간</p>";
+	              s+="      </div>";
+	              s+="   <div class='col-4'>";
+	              s+="     <p>"+sOpen+ " ~ " +sClose+"</p>";
+	              s+="   </div>";
+	              s+="    </div>";
+	              s+="    <div class='row mt-3'>";
+	              s+="    <div class='col-2'>";
+	              s+="     <p style='font-weight: 500'>주소</p>";
+	              s+="   </div>";
+	              s+="   <div class='col-4'>";
+	              s+="     <p>"+sAdd+"</p>";
+	              s+="   </div>";
+	              s+="   <div class='col-2'>";
+	              s+="     <p style='font-weight: 500'>브랜드명</p>";
+	              s+="   </div>";
+	              s+="   <div class='col-4'>";
+	              s+="    <p>"+sBrand+"</p>";
+	              s+="      </div>";
+	              s+=" </div>";
+	              s+="  </div>";
+	              s+="</div>";
+	              s+="<hr />";
+	              
+              $("#sInfo").append(s);
+            }
+	}
 });
 </script>
 </html>

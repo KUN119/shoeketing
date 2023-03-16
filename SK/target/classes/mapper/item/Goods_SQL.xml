@@ -52,7 +52,9 @@
 			<if test="listType == null">
 				ROW_NUMBER() OVER (ORDER BY TOTAL_GOODS_NUM DESC) AS NUM,
 			</if>
+<!-- jsp에서 listType 기본 값을 null로 줘서 바로 위<if test="listType == null">문이 실행될 수가 없음 -->
 			<if test="listType != null">
+			<if test="listType == 'null'.toString()">ROW_NUMBER() OVER (ORDER BY TOTAL_GOODS_NUM DESC) AS NUM,</if>
 			<if test="listType == '최신순'.toString()">ROW_NUMBER() OVER (ORDER BY TOTAL_GOODS_NUM DESC) AS NUM,</if>
 			<if test="listType == '낮은가격순'.toString()">ROW_NUMBER() OVER (ORDER BY TOTAL_GOODS_PRICE) AS NUM,</if>
 			<if test="listType == '높은가격순'.toString()">ROW_NUMBER() OVER (ORDER BY TOTAL_GOODS_PRICE DESC) AS NUM,</if>
