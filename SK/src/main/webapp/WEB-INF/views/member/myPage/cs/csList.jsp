@@ -61,16 +61,24 @@
             <h3 style="margin-left: 30px; color: black; font-weight: bolder;">나의 문의 내역</h3>
             <hr style="border: solid 1px rgb(73, 73, 73); width: 100%; ">
             <table class="table table table-bordered" style="text-align: center;">
-                <thead>
+                <!-- <thead>
                   <tr style="width: 30%;">
                     <th>제목</th>
                     <th>작성 날짜</th>
                     <th>처리 상태</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody> -->
                 	<c:choose>
                 		<c:when test="${fn:length(CSList)>0}">
+			                <thead>
+			                  <tr style="width: 30%;">
+			                    <th>제목</th>
+			                    <th>작성 날짜</th>
+			                    <th>처리 상태</th>
+			                  </tr>
+			                </thead>
+			                <tbody>
 	                		<c:forEach var="CS" items="${CSList}" varStatus="status">
 			                  <tr>
 			                    <td style="width: 40%;"><a href="#" data-bs-toggle="modal" data-bs-target="#csDetail" name="title" data-num="${CS.CS_NUM}">${CS.CS_TITLE}</a></td>
@@ -87,29 +95,37 @@
 	                  		</c:forEach>
                 		</c:when>
                 		<c:otherwise>
-                			등록된 글이 없습니다.
+                			<div class="col" style="margin:auto;">
+                				<h6 class="text-center" style="margin-left: 30px; color: black; font-weight: bolder;"
+                				>등록된 글이 없습니다.</h6>
+                			</div>
                 		</c:otherwise>
                 	</c:choose>
                 </tbody>
               </table>
 
-              <nav aria-label="Page navigation example" style="margin-left: 40%;">
-                <ul class="pagination">
-                  <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                      <span aria-hidden="true">&laquo;</span>
-                    </a>
-                  </li>
-                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                      <span aria-hidden="true">&raquo;</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
+              <div class="row text-center justify-content-center align-self-center">
+				<div class="col-auto">
+	                   <nav aria-label="Page navigation example" class="mt-4">
+	                    <ul class="pagination">
+	                      <li class="page-item">
+	                        <a class="page-link" href="#" aria-label="Previous">
+	                          <span aria-hidden="true">&laquo;</span>
+	                        </a>
+	                      </li>
+	                      <li class="page-item"><a class="page-link" href="#">1</a></li>
+	                      <li class="page-item"><a class="page-link" href="#">2</a></li>
+	                      <li class="page-item"><a class="page-link" href="#">3</a></li>
+	                      <li class="page-item">
+	                        <a class="page-link" href="#" aria-label="Next">
+	                          <span aria-hidden="true">&raquo;</span>
+	                        </a>
+	                      </li>
+	                    </ul>
+	                  </nav>
+	                 </div>
+             	</div>
+             </div>
       </div>
 
 <script type="text/javaScript">
