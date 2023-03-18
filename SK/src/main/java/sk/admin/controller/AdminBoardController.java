@@ -105,11 +105,4 @@ public class AdminBoardController {
 		adminBoardService.adminDeleteGoods(map);
 	}
 	
-	@GetMapping(value = "/admin/goodsDelete")
-	public void adminDeleteGoodsImage(@RequestParam Map<String, Object> map) throws Exception {
-		log.debug("######### 전체 상품 삭제 ##########");
-		
-
-		adminBoardService.adminDeleteGoodsImage(map);
-	}
 }

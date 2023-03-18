@@ -44,19 +44,19 @@ public class AdminBoardDAO extends AbstractDAO {
 	public void deleteNotice(Map<String, Object> map) throws Exception {
 		System.out.println("deleteNotice 파라미터 : " + map);
 
-		delete("adminBoard.deleteNotice", map);
+		update("adminBoard.deleteNotice", map);
 	}
 	
 	public void adminDeleteGoods(Map<String, Object> map) throws Exception {
 		System.out.println("adminDeleteNotice 파라미터 : " + map);
 
-		delete("adminBoard.deleteGoods", map);
+		update("adminBoard.deleteGoods", map);
 	}
 	
 	public void adminDeleteGoodsImage(Map<String, Object> map) throws Exception {
 		System.out.println("adminDeleteGoodsImage 파라미터 : " + map);
 
-		delete("adminBoard.deleteGoodsImage", map);
+		update("adminBoard.deleteGoodsImage", map);
 	}
 	
 }

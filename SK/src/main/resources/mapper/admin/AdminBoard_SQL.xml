@@ -37,12 +37,6 @@
 				<include refid="noticeSearch"></include>
 		</select>
 
-		<sql id="noticeSearch">
-		      <if test="searchType != null">
-		         <if test="searchType == 'title'.toString()">AND NOTICE_TITLE LIKE '%' || #{keyword} || '%'</if>
-		         <if test="searchType == 'content'.toString()">AND NOTICE_CONTENT LIKE '%' || #{keyword} || '%'</if>
-		      </if>
-		</sql>	
 
 		
 		<insert id="insertNotice" parameterType="hashmap">
@@ -88,13 +82,7 @@
 		]]>
 		</update>
 
-		<update id="updateNoticeModify" parameterType="hashmap">
-		<![CDATA[
-			UPDATE NOTICE
-			SET NOTICE_DEL_GB = 'Y'
-			WHERE NOTICE_NUM = #{NOTICE_NUM}
-		]]>
-		</update>
+
 
 		<update id="deleteGoods" parameterType="hashmap">
 		<![CDATA[
