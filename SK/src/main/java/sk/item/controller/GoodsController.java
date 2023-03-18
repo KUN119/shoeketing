@@ -41,7 +41,7 @@ public class GoodsController {
 		log.debug("###### allGoodsList ######");
 		ModelAndView mv = new ModelAndView("allGoodsList");
 		map.put("START", 1);
-		map.put("END", 5);
+		map.put("END", 10);
 
 		String listType = "";
 		if (map.get("listType") != null) {

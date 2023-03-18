@@ -69,7 +69,7 @@
       <div class="row ms-2 mb-5 d-flex">
       <c:forEach var="brand" items="${brandList}" varStatus="status">
            <div class="col-2 d-flex mb-2">
-           <a class="d-flex" href="#" name='bDetail' data-num="${brand.BRAND_NUM}">
+           <a class="d-flex" name='bDetail' data-num="${brand.BRAND_NUM}">
             <img
               src='/sk/image/display?fileName=${brand.BRAND_LOGO_FILE}'
               class="img-thumbnail"
@@ -108,7 +108,6 @@
     </c:forEach>
     </div>
 
-
         <!--상품 검색결과 더보기 시작-->
         <div class="row">
           <a href="#" class="ms-4" style="font-weight: 500" id="goodsMore">
@@ -125,8 +124,8 @@
         <h5 class="mb-3" style="font-weight: 700">매장 검색결과</h5>
         <hr />
         
+<form id='sInfo'>  
 <c:forEach var="shopList" items="${shopList}" varStatus="status">
-<form id='sInfo'>
           <div class="row mt-2 mb-2">
             <div class="col-2 align-self-center text-center">
               <p class="fw-semibold" style="font-size: large">${shopList.SHOP_NAME}</p>
@@ -164,8 +163,8 @@
             </div>
           </div>
         <hr /> 
-</form>
 </c:forEach>
+</form>
 
         <!--매장 검색결과 더보기 시작-->
         <div class="row">
@@ -182,6 +181,9 @@
   
 <script type="text/javascript">
 $(document).ready(function() {
+	
+	var values2;
+	var values3;
 	
 	$("a[name='bDetail']").on("click", function(e) {  //브랜드관으로 넘어가기
 		e.preventDefault();
@@ -203,11 +205,11 @@ $(document).ready(function() {
 		location.href="/sk/goods/goodsDetail?TOTAL_GOODS_NUM=" + num;
 	});
 	
-	function fn_gDetail(num) {  //num 매개변수로 넣기
+ 	function fn_gDetail(num) {  //num 매개변수로 넣기
 		  var formData = new FormData();
 	      var TOTAL_GOODS_NUM = num;
 	      formData.append("TOTAL_GOODS_NUM", TOTAL_GOODS_NUM);
-	};
+	}; 
 	
 	$("button[name='searchBtn']").on("click", function(e) {
 		e.preventDefault();
@@ -235,7 +237,7 @@ $(document).ready(function() {
 				$("#searchKeyword").empty();
 				$("#searchKeyword").prepend(str);
 				
-				//각 vlalues애 가져온 list data넣어주기
+				//각 vlalues에 가져온 list data넣어주기
 				values = data.brandList;
 				values2 = data.goodsList;
 				values3 = data.shopList;
@@ -250,16 +252,15 @@ $(document).ready(function() {
 					var bName = value.BRAND_NAME;
 					var bLogo = value.BRAND_LOGO_FILE;
 					
-				var b = "";
-				b +="<div class='col-2 d-flex mb-2'>";
-				b +="<a class='d-flex' href='#' name='bDetail' data-num='${brand.BRAND_NUM}'>";
-	            b += 	"<img src='/sk/image/display?fileName=" + bLogo + "' class='img-thumbnail'";
-	            b +=  		"style='height: 5rem; wid	th: 6rem'/>";
-	            b += "<h6 class='ms-3 mb-0 align-self-center' style='font-weight: 700; font-size: 18px'>";
-	            b +=   bName + "<i class='bi bi-chevron-right' style='font-weight: 700'></i>";
-	            b += "</h6>";
-	            b += "</a>";
-	            b += "</div>";
+					var b = "";
+					b += "<div class='col-2 d-flex mb-2'>";
+					b += "<a class='d-flex' name='bDetail' data-num='${brand.BRAND_NUM}'>";
+					b += "<img src='/sk/image/display?fileName=" + bLogo + "' class='img-thumbnail' style='height: 5rem; width: 6rem'/>";
+					b += "<h6 class='ms-3 mb-0 align-self-center' style='font-weight: 700; font-size: 18px'>";
+					b +=  bName + "<i class='bi bi-chevron-right' style='font-weight: 700'></i>";
+					b += "</h6>";
+					b += "</a>";
+					b += "</div>";
 	            
                 $("#bInfo").prepend(b);
 				});
@@ -271,7 +272,7 @@ $(document).ready(function() {
 					$("#goodsMore").show();
 				}
 				
-				////index[0]부터 value 넣어서 반복문 돌려주기
+				//index[0]부터 value 넣어서 반복문 돌려주기
 	            $.each(values2, function(index, value) {
 	                console.log("GOODS " + index + " : " + value); //로그 한번 찍어주고 근데 값이 Object로 나옴..
 	                
@@ -360,12 +361,28 @@ $(document).ready(function() {
                 s+="</div>";
                 s+="<hr />";
                 
-                //여기서 분명 값을 4개 가져왔는데 이상한 값 2개가 더 들어가는 일이 발생함..
                 $("#sInfo").prepend(s);
+                
 	                if(index == 3) {
 	                	return false;
 	                }
 				});
+                
+                //ajax로 검색할 경우 ajax내부에 클릭 함수를 넣어줘야됨
+                $("a[name='bDetail']").on("click", function(e) {  //브랜드관으로 넘어가기
+            		e.preventDefault();
+            		const num = $(this).attr("data-num");  //a태그 name이 title 부분 속성의 data-num값 가져와서 변수 num에 저장
+            		fn_bDetail(num); //fn_bDetail()함수 매개변수로 num 전송
+            		location.href="/sk/brand/main?BRNAD_NUM=" + num;
+            	});
+                
+                $("#gInfo").on("click", "a[name='gDetail']", function(e) {  //상품 상세보기 페이지로 넘어가기
+            		e.preventDefault();
+            		const num = $(this).attr("data-num");  //a태그 name이 title 부분 속성의 data-num값 가져와서 변수 num에 저장
+            		fn_gDetail(num); //fn_gDetail()함수 매개변수로 num 전송
+            		location.href="/sk/goods/goodsDetail?TOTAL_GOODS_NUM=" + num;
+            	});
+                
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
 		        console.log('Ajax request failed: ' + textStatus + ', ' + errorThrown);
@@ -384,7 +401,7 @@ $(document).ready(function() {
 	    console.log("'goodsMore' startNum", startNum);
 	    
 	    if(values2.length-startNum <= 4){
-            $("#goodsMore").remove();   // 더보기 버튼을 div 클래스로 줘야 할 수도 있음
+            $("#goodsMore").remove();   
         }
             for(var i=0; i<4; i++) {
             	var num = Number(startNum)+Number(i);
@@ -411,27 +428,27 @@ $(document).ready(function() {
             }
 	}
 	
-	$("#shopMore").on("click", function(e) {
+	 $("#shopMore").on("click", function(e) {
 		e.preventDefault();
 		fn_shopMore();
 	});
 	
 	function fn_shopMore() {
 		let startNum = $(".shopCnt").length;
-	    console.log("'SHOPlist 크기", startNum);
+	    console.log("SHOPlist 크기", startNum);
 	    
 	    if(values3.length-startNum <= 4){
             $("#shopMore").remove();
         }
             for(let i=0; i<4; i++) {
-            	let num = Number(startNum)+Number(i);
+            	var num = Number(startNum)+Number(i);
             	
-				let sBrand = values3[num].SHOP_BRAND;
-				let sName = values3[num].SHOP_NAME;
-				let sTel = values3[num].SHOP_TEL;
-				let sAdd = values3[num].SHOP_ADD;
-				let sOpen = values3[num].SHOP_START_TIME;
-				let sClose = values3[num].SHOP_END_TIME;
+            	var sBrand = values3[num].SHOP_BRAND;
+            	var sName = values3[num].SHOP_NAME;
+            	var sTel = values3[num].SHOP_TEL;
+            	var sAdd = values3[num].SHOP_ADD;
+            	var sOpen = values3[num].SHOP_START_TIME;
+            	var sClose = values3[num].SHOP_END_TIME;
                 
 				var s = "";
 	              s+="<div class='row mt-2 mb-2 shopCnt'>";

@@ -70,7 +70,6 @@ public class MainController {
 	@RequestMapping(value = "/totalSearch_ajax")
 	public Map<String, Object> totalSearch_ajax(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("###### totalSearch_ajax ######");
-
 		map.put("START", 1);
 		map.put("END", 10);
 

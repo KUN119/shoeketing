@@ -1000,7 +1000,6 @@ $(document).ready(function() {
 	$("a[name='listType']").on("click", function(e) { // 정렬 검색
 		e.preventDefault();
 		listType = $(this).attr("data-num");
-		/* const category = $('#category').attr("data-category"); */
 		const bName = $("input[type=radio][name=brandType]:checked").val();
 		const size = $("input[type=radio][name=sizeType]:checked").val();
 		const selectedOption = $('#priceType').val();
@@ -1009,7 +1008,6 @@ $(document).ready(function() {
 	
 	$("a[name='category']").on("click", function(e) { // 정렬 검색
 		e.preventDefault();
-		/* const listType = $('#listType').attr("data-num"); */
 		category = $(this).attr("data-category");
 		const bName = $("input[type=radio][name=brandType]:checked").val();
 		const size = $("input[type=radio][name=sizeType]:checked").val();
@@ -1046,11 +1044,11 @@ $(document).ready(function() {
 		formData.append("size", size);
 		formData.append("priceType", selectedOption);
 		
-		alert("listType: " + listType);
-		alert("category: " + category);
-		alert("bName: " + bName);
-		alert("size: " + size);
-		alert("priceType: " + selectedOption);
+		console.log("listType: " + listType);
+		console.log("category: " + category);
+		console.log("bName: " + bName);
+		console.log("size: " + size);
+		console.log("priceType: " + selectedOption);
 		
 		$.ajax({
 			url: '/sk/goods/totalList_ajax',
