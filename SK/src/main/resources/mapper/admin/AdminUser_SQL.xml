@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="adminUser">
+		
+		<select id="selectUserList" parameterType="hashmap" resultType="hashmap"> 
+		<![CDATA[
+			SELECT   
+				MEM_NUM,
+		          		MEM_EMAIL,
+		          		MEM_NAME,
+		          		MEM_GRADE,
+		          		MEM_DEL_GB
+			FROM  (SELECT ROWNUM RNUM, T1.*
+				FROM (SELECT /*+ INDEX_DESC(MEMBER PK_MEMBER) */ *
+					FROM MEMBER
+					WHERE MEM_ADMIN = 'N']]>
+					<include refid="searchMember"></include><![CDATA[ )T1
+					WHERE ROWNUM <= #{END})
+			WHERE RNUM >= #{START}
+		]]>	
+		</select>
+		
+			<sql id="searchMember">
+				<if test="searchType != null">
+					<if test="searchType == 'num'.toString()">AND MEM_NUM LIKE || #{keyword} || </if>
+					<if test="searchType == 'email'.toString()">AND MEM_EMAIL LIKE '%' || #{keyword} || '%'</if>
+					<if test="searchType == 'name'.toString()">AND MEM_NAME LIKE '%' || #{keyword} || '%'</if>
+					<if test="searchType == 'grade'.toString()">AND MEM_GRADE LIKE '%' || #{keyword} || '%' </if>
+					<if test="searchType == 'del_gb'.toString()">AND MEM_DEL_GB LIKE '%' || #{keyword} || '%'</if>
+				</if>
+			</sql>
+		
+		
+		<select id="selectUserCount" parameterType="hashmap" resultType="int">
+				<![CDATA[
+					SELECT COUNT(MEM_NUM)  USER_COUNT
+					FROM MEMBER
+				]]>
+				<include refid="searchMember"></include>
+		</select>
+		
+		<sql id="searchMember">
+				<if test="searchType != null">
+					<if test="searchType == 'num'.toString()">AND MEM_NUM LIKE || #{keyword} || </if>
+					<if test="searchType == 'email'.toString()">AND MEM_EMAIL LIKE '%' || #{keyword} || '%'</if>
+					<if test="searchType == 'name'.toString()">AND MEM_NAME LIKE '%' || #{keyword} || '%'</if>
+					<if test="searchType == 'grade'.toString()">AND MEM_GRADE LIKE '%' || #{keyword} || '%' </if>
+					<if test="searchType == 'del_gb'.toString()">AND MEM_DEL_GB LIKE '%' || #{keyword} || '%'</if>
+				</if>
+		</sql>
+
+		<select id="selectUserDetail" parameterType="hashmap" resultType="hashmap"> 
+		<![CDATA[
+			SELECT 
+				MEM_NUM,
+				MEM_EMAIL,
+				MEM_NAME,
+				MEM_PHONE,
+				MEM_DEL_GB,
+				MEM_INFORM_AGREE,
+				MEM_GRADE
+			FROM MEMBER
+			WHERE MEM_NUM = #{MEM_NUM}
+		        AND MEM_ADMIN = 'Y'
+		]]>	
+		</select>
+
+		<update id="deleteAccount" parameterType="hashmap">
+		<![CDATA[
+			UPDATE MEMBER
+			SET MEM_DEL_GB='Y',
+		                MEM_DEL_TIME = SYSDATE
+			WHERE MEM_NUM = #{MEM_NUM}
+		]]>	
+		</update>
+</mapper>
