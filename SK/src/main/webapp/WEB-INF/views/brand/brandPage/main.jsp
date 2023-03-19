@@ -11,14 +11,14 @@
             <h3 style="margin-left: 30px; color: black; font-weight: bolder;">브랜드 회원 마이페이지</h3>
 
 			  <!-- 추후 data-brandNum 세션에서 꺼낸 BRAND_NUM 값으로 전송 -->
-              <h4 style="margin-left: 30px; margin-top: 60px; color: black; font-weight: bolder; text-align: center;"><a href="#" name="brandInfoModify">기본 정보 수정</a></h4> 
+              <h4 style="margin-left: 30px; margin-top: 60px; color: black; font-weight: bolder; text-align: center;"><a href="/sk/brandPage/accountModifyForm">기본 정보 수정</a></h4> 
 
               <h4 style="margin-left: 30px; margin-top: 70px; color: black; font-weight: bolder; text-align: center;"><a href="/sk/brandPage/goodsList">상품 관리</a></h4>
 
               <h4 style="margin-left: 30px; margin-top: 70px; color: black; font-weight: bolder; text-align: center;"><a href="/sk/brandPage/shopList">매장 관리</a></h4>
             </div>
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 $(document).ready(function() {
 	$("a[name='brandInfoModify']").on("click", function(e) {  // 브랜드 기본정보 수정
 		e.preventDefault();
@@ -54,7 +54,7 @@ $(document).ready(function() {
 	}  */
 });
 
-</script>
+</script> -->
 
 </body>
 </html>

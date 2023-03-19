@@ -15,6 +15,69 @@ public class GoodsServiceImpl implements GoodsService {
 
 	@Resource(name = "goodsDAO")
 	private GoodsDAO goodsDAO;
+	
+	// 브랜드 전체 상품 리스트 
+	@Override
+	public List<Map<String, Object>> selectBrandGoodsList(Map<String, Object> map) throws Exception{
+		
+		return goodsDAO.selectBrandGoodsList(map);
+	}
+		
+	// 브랜드 전체 상품 토탈 개수 
+	@Override
+	public int selectBrandGoodsCount(Map<String, Object> map) throws Exception{
+		
+		return (int)goodsDAO.selectBrandGoodsCount(map);
+	}
+	
+	// 브랜드 상품 등록 
+	@Override
+	public int insertGoods(Map<String, Object> map) throws Exception{
+		
+		return (int)goodsDAO.insertGoods(map);
+	}
+	
+	// 상품 등록시, 상품 상세(사이즈) 삽입
+	@Override
+	public int insertGoodsDetail(Map<String, Object> map) throws Exception{
+		
+		return (int)goodsDAO.insertGoodsDetail(map);
+	}
+	
+	// 상품 등록시, 상품 이미지 삽입 
+	@Override
+	public int insertGoodsImage(Map<String, Object> map) throws Exception{
+		
+		return (int)goodsDAO.insertGoodsImage(map);
+	}
+	
+	// 상품 이미지 삭제 deleteGoodsImage
+	@Override
+	public int deleteGoodsImage(Map<String, Object> map) throws Exception{
+		
+		return (int)goodsDAO.deleteGoodsImage(map);
+	}
+	
+	// 상품 이미지 수정 
+	@Override
+	public int updateGoodsImageModify(Map<String, Object> map) throws Exception{
+		
+		return (int)goodsDAO.updateGoodsImageModify(map);
+	}
+	
+	// 상품 수정 (상품 상세정보 수정,사이즈만 따로)
+	@Override
+	public int updateGoodsModify(Map<String, Object> map) throws Exception{
+		
+		return (int)goodsDAO.updateGoodsModify(map);
+	}
+	
+	// 상품 상세 삭제(상품 수정시, 원래 선택되어 있던 사이즈 전체 삭제) 
+	@Override
+	public int deleteGoodsDetail(Map<String, Object> map) throws Exception{
+	
+		return (int)goodsDAO.deleteGoodsDetail(map);
+	}
 
 	@Override
 	public List<Map<String, Object>> selectAllGoodsList(Map<String, Object> map) throws Exception {

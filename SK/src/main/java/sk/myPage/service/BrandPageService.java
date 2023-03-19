@@ -5,6 +5,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
 public interface BrandPageService {
 	// 브랜드 기본정보 조회
 	public Map<String, Object> selectBrandInfo(Map<String, Object> map, HttpSession session) throws Exception;
@@ -13,7 +15,7 @@ public interface BrandPageService {
 	public Map<String, Object> selectBrandPageInfo(Map<String, Object> map) throws Exception;
 	
 	// 브랜드 기본정보 수정
-	public Map<String, Object> updateBrandInfo(Map<String, Object> map) throws Exception;
+	public Map<String, Object> updateBrandInfo(Map<String, Object> map, MultipartHttpServletRequest request) throws Exception;
 
 	// 브랜드 입점 매장 리스트(5줄)
 	public List<Map<String, Object>> selectShopList(Map<String, Object> map, HttpSession session)

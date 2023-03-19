@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import sk.myPage.service.BrandPageService;
@@ -37,10 +38,11 @@ public class BrandPageController {
 	public ModelAndView brandModifyForm(@RequestParam Map<String, Object> map, HttpSession session)
 			throws Exception {
 		log.debug("###### 브랜드 기본 정보 수정 폼 ######");
-		ModelAndView mv = new ModelAndView("brandModifyForm"); // 추후 수정
+		ModelAndView mv = new ModelAndView("brandModifyForm"); 
 
 		Map<String, Object> brandInfoMap = brandPageService.selectBrandInfo(map, session);
-
+		
+		
 		System.out.println("brandInfoMap : " + brandInfoMap);
 		mv.addObject("brandInfoMap", brandInfoMap);
 
@@ -50,12 +52,12 @@ public class BrandPageController {
 	// ajax 구현완료
 	@ResponseBody
 	@PostMapping(value = "/brandPage/accountModify")
-	public Map<String, Object> brandModify(@RequestParam Map<String, Object> map) throws Exception {
+	public Map<String, Object> brandModify(@RequestParam Map<String, Object> map, MultipartHttpServletRequest request) throws Exception {
 		log.debug("###### 브랜드 기본 정보 수정 ######");
 
 		System.out.println("map 확인 : " + map);
 
-		Map<String, Object> resultMap = brandPageService.updateBrandInfo(map);
+		Map<String, Object> resultMap = brandPageService.updateBrandInfo(map, request);
 
 		return resultMap;
 	}

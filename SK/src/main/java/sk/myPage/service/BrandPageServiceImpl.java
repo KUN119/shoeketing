@@ -5,12 +5,13 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import sk.common.service.CommonService;
+import sk.common.util.FileUtils;
 import sk.myPage.dao.BrandPageDAO;
 
 //BrandPageService 구현클래스
@@ -23,6 +24,9 @@ public class BrandPageServiceImpl implements BrandPageService {
 	
 	@Resource(name="sessionService")
 	private CommonService commonService;
+	
+	@Resource(name="fileUtils")
+	private FileUtils fileUtils;
 
 	// 브랜드 기본정보 조회
 	@Override
@@ -41,9 +45,13 @@ public class BrandPageServiceImpl implements BrandPageService {
 
 	// 브랜드 기본정보 수정
 	@Override
-	public Map<String, Object> updateBrandInfo(Map<String, Object> map) throws Exception {
+	public Map<String, Object> updateBrandInfo(Map<String, Object> map, MultipartHttpServletRequest request) throws Exception {
 		Map<String, Object> resultMap = new HashMap<>();
 
+		Map<String, Object> updateImg = fileUtils.parseUpdateFileInfo(map, request);
+		System.out.println("updateImg 이름 확인 : " + updateImg);
+		
+		//map.put("BRAND_LOGO_FILE", updateImg.get("BRAND_LOGO_FILE"));
 		int updateResult = brandPageDAO.updateBrandInfo(map);
 
 		if (updateResult == 1) {
