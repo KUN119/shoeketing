@@ -122,6 +122,9 @@ $(document).ready(function(){
 					$("#csWrite").modal('hide');  // 답변 작성 후 모달창 숨기기
 					$("#csReplyStatus_"+csReplyNum).empty();
 					$("#csReplyStatus_"+csReplyNum).append("답변 완료");
+					
+					socket.send("<%=session.getAttribute("session_SHOP_NAME")%>,"+csWriter+",문의하신 글에 답변이 달렸습니다.,/sk/myPage/csList");	
+					
 				}else if(data.result == "fail"){
 					alert("답변 작성이 실패했습니다.");
 				}

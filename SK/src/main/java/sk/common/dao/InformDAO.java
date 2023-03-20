@@ -6,7 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Repository;
 
 @Repository("informDAO")
-public class InformDAO extends AbstractDAO{
+public class InformDAO extends AbstractDAO {
 	// 새로운 공지사항이 작성되면 알림 - insert()
 	public void insertInform(Map<String, Object> map, String str) throws Exception {
 
@@ -28,5 +28,11 @@ public class InformDAO extends AbstractDAO{
 		System.out.println("confirmUpdate 파라미터 : " + map);
 
 		update("inform.confirmUpdate", map);
+	}
+
+	public int informCount(Map<String, Object> map) throws Exception {
+		System.out.println("informCount 파라미터 : " + map);
+
+		return (int) selectOne("inform.informCount", map);
 	}
 }

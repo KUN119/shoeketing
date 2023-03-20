@@ -35,6 +35,16 @@
 		</mvc:interceptor>
 	</mvc:interceptors>
 	
+	<!-- 일반회원 읽지 않은 알림 수 인터셉터  -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/> 
+			<mvc:exclude-mapping path="/inform-ws/**"/>
+			<mvc:exclude-mapping path="/image/display/**"/>
+			<beans:bean id="InformCountInterceptor" class="sk.common.interceptor.InformCountInterceptor"></beans:bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
 	<!-- 회원 인터셉터  -->
 	<!-- <mvc:interceptors>
 		<mvc:interceptor>

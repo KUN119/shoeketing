@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="inform">
-
+<resultMap type="hashmap" id="informTest"></resultMap>
 	<!-- 알림 삽입
 		 1) 픽업 예약 상태 변경에 따른 알림 (알림유형1)
 		 2) 픽업 유효기간 -1일 때, 픽업 요청 알림 (알림유형2)
@@ -50,4 +50,14 @@
 			WHERE INFORM_NUM = #{INFORM_NUM}
 		]]>
 	</update>
+	
+	<select id="informCount" parameterType="hashmap" resultType="int"> 
+		<![CDATA[
+			SELECT 
+					COUNT(INFORM_NUM)
+			FROM INFORM 
+			WHERE (INFORM_USER = #{MEM_NUM} OR INFORM_USER IS NULL)
+			AND INFORM_CONFIRM = 'N'
+		]]>
+	</select>
 </mapper>
