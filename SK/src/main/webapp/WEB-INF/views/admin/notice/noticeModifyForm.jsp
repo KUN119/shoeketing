@@ -26,6 +26,7 @@
                   id="NOTICE_TITLE"
                   name="NOTICE_TITLE"
                   placeholder="제목을 입력해주세요"
+                  value="${noticeDetail.NOTICE_TITLE}"
                   required
                 />
               </div>
@@ -43,7 +44,7 @@
                   name="NOTICE_CONTENT"
                   rows="8"
                   required
-                ></textarea>
+                >${noticeDetail.NOTICE_CONTENT}</textarea>
               </div>
             </td>
           </tr>
@@ -51,11 +52,50 @@
       </table>
       <div class="row">
         <div class="col-12 text-end">
-          <button type="button" class="btn btn-primary" style="width: 6rem">
+          <button type="button" class="btn btn-primary" name="noticeModify" style="width: 6rem">
             수정
           </button>
         </div>
       </div>
     </div>
   </body>
+  <script>
+  $(document).ready(function() { 
+		$("button[name='noticeModify']").on("click", function(e) { 
+			e.preventDefault();
+			fn_noticeModify();
+		});
+		
+		function fn_noticeModify() {
+			var formData = new FormData();
+			
+			var NOTICE_TITLE = $("#NOTICE_TITLE").val();
+			var NOTICE_CONTENT = $("#NOTICE_CONTENT").val();
+			var NOTICE_NUM = parseInt("${noticeDetail.NOTICE_NUM}");
+			
+			formData.append("NOTICE_TITLE", NOTICE_TITLE);
+			formData.append("NOTICE_CONTENT", NOTICE_CONTENT);
+			formData.append("NOTICE_NUM", NOTICE_NUM);
+			
+			$.ajax({
+				type : 'post',
+				url : '/sk/admin/noticeModify',
+				data : formData,
+				processData : false,
+				contentType : false,
+				success : function(data){
+					if(data== 1){
+						alert("공지사항이 수정되었습니다.");
+						location.href='/sk/admin/noticeDetail?NOTICE_NUM=' + NOTICE_NUM;
+					} else {
+						alert("공지사항이 수정되지 못했습니다.");
+					}
+				},
+				error : function(){
+					alert("오류 발생");
+				}
+			});	
+		};
+	});
+</script>
 </html>

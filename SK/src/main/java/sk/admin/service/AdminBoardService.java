@@ -9,13 +9,13 @@ public interface AdminBoardService {
 	
 	int selectNoticeCount(Map<String, Object> map) throws Exception;
 	
-	void insertNotice(Map<String, Object> map) throws Exception;
+	int insertNotice(Map<String, Object> map) throws Exception;
 	
 	Map<String, Object> selectNoticeDetail(Map<String, Object> map) throws Exception;
 
-	void updateNoticeModify(Map<String, Object> map) throws Exception;
+	int updateNoticeModify(Map<String, Object> map) throws Exception;
 	
-	void adminDeleteNotice(Map<String, Object> map) throws Exception;
+	int adminDeleteNotice(Map<String, Object> map) throws Exception;
 	
 	void adminDeleteGoods(Map<String, Object> map) throws Exception;
 	
