@@ -487,18 +487,6 @@
                       휠라
                     </label>
                   </div>
-                  <!-- <div class="form-check mb-2">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="brandType"
-                      id="brandName12"
-                      value="나이키"
-                    />
-                    <label class="form-check-label" for="brandName12" >
-                      나이키
-                    </label>
-                  </div> -->
                 </div>
               </li>
             </ul>
@@ -926,6 +914,7 @@
                     class="form-select"
                     aria-label="Default select example"
                     id="priceType"
+                    name="priceType"
                   >
                     <option selected>가격대</option>
                     <option value="A">0 ~ 100,000</option>
@@ -997,288 +986,6 @@
           등록된 상품이 없습니다.
           </c:otherwise>
          </c:choose> 
-          
-            <%-- <div class="card" style="width: 14rem; margin-left: 10px; margin-right: 10px; margin-bottom: 80px; border-style: none;">
-              <a href="#">
-                <img src="<%=request.getContextPath() %>/assets/img/a7ae62bb0c3243a2af834df70e9b0d81.jpg" style="width:13rem; height: 11rem" class="card-img-top" alt="<%=request.getContextPath() %>.">
-                <div class="card-body" style="height:6rem;">
-                  <h6 class="card-title" style="font-size: 15px; font-weight: 700;">NIKE</h6>
-                  <p class="card-text" style="font-size: 13px;">코트버로우 로우 / BQ5448-104</p>
-                </div>
-                <div class="card-body">
-                  <h6 class="card-title mb-0" style="font-size: 18px; font-weight: 700;">79,000</h6>
-                </div>
-              </a>
-            </div>
-          
-
-            <div class="card" style="width: 14rem; margin-left: 10px; margin-right: 10px; margin-bottom: 80px; border-style: none;">
-              <a href="#">
-                <img src="<%=request.getContextPath() %>/assets/img/b7ae62bb0c3243a2af834df70e9b0d81.jpg" style="width:13rem; height: 11rem" class="card-img-top" alt="<%=request.getContextPath() %>.">
-                <div class="card-body" style="height:6rem;">
-                  <h6 class="card-title" style="font-size: 15px; font-weight: 700;">NIKE</h6>
-                  <p class="card-text" style="font-size: 13px;">W NIKE WAFFLE TRAINER / DA8291-200</p>
-                
-                </div>
-                <div class="card-body">
-                  <h6 class="card-title mb-0" style="font-size: 18px; font-weight: 700;">79,000</h6>
-                </div>
-              </a>
-            </div>
-
-            <div class="card" style="width: 14rem; margin-left: 10px; margin-right: 10px; margin-bottom: 80px; border-style: none;">
-              <a href="#">
-                <img src="<%=request.getContextPath() %>/assets/img/c7ae62bb0c3243a2af834df70e9b0d81.jpg" style="width:13rem; height: 11rem" class="card-img-top" alt="<%=request.getContextPath() %>.">
-                <div class="card-body" style="height:6rem;">
-                  <h6 class="card-title" style="font-size: 15px; font-weight: 700;">CONVERSE</h6>
-                  <p class="card-text" style="font-size: 13px;">CHUCK 70 OX / 162058C</p>
-                  
-                </div>
-                <div class="card-body">
-                  <h6 class="card-title mb-0" style="font-size: 18px; font-weight: 700;">79,000</h6>
-                </div>
-              </a>
-            </div>
-
-            <div class="card" style="width: 14rem; margin-left: 10px; margin-right: 10px; margin-bottom: 80px; border-style: none;">
-              <a href="#">
-                <img src="<%=request.getContextPath() %>/assets/img/d7ae62bb0c3243a2af834df70e9b0d81.jpg" style="width:13rem; height: 11rem" class="card-img-top" alt="<%=request.getContextPath() %>.">
-                <div class="card-body" style="height:6rem;">
-                  <h6 class="card-title" style="font-size: 15px; font-weight: 700;">CONVERSE</h6>
-                  <p class="card-text" style="font-size: 13px;">Converse_166800C_Run Star Hike HI_19 / 166800C</p>
-                  
-                </div>
-                <div class="card-body">
-                  <h6 class="card-title mb-0" style="font-size: 18px; font-weight: 700;">79,000</h6>
-                </div>
-              </a>
-            </div>
-
-            <div class="card" style="width: 14rem; margin-left: 10px; margin-right: 10px; margin-bottom: 80px; border-style: none;">
-              <a href="#">
-                <img src="<%=request.getContextPath() %>/assets/img/e7ae62bb0c3243a2af834df70e9b0d81.jpg" style="width:13rem; height: 11rem" class="card-img-top" alt="<%=request.getContextPath() %>.">
-                <div class="card-body" style="height:6rem;">
-                  <h6 class="card-title" style="font-size: 15px; font-weight: 700;">VANS</h6>
-                  <p class="card-text" style="font-size: 13px;">스타일36 레드 / VN0A3DZ3OXS</p>
-                
-                </div>
-                <div class="card-body">
-                  <h6 class="card-title mb-0" style="font-size: 18px; font-weight: 700;">79,000</h6>
-                </div>
-              </a>
-            </div>
-
-            <div class="card" style="width: 14rem; margin-left: 10px; margin-right: 10px; margin-bottom: 80px; border-style: none;">
-              <a href="#">
-                <img src="<%=request.getContextPath() %>/assets/img/f7ae62bb0c3243a2af834df70e9b0d81.jpg" style="width:13rem; height: 11rem" class="card-img-top" alt="<%=request.getContextPath() %>.">
-                <div class="card-body" style="height:6rem;">
-                  <h6 class="card-title" style="font-size: 15px; font-weight: 700;">NEW BALANCE</h6>
-                  <p class="card-text" style="font-size: 13px;">MR530SG / NBPDCB710W</p>
-                
-                </div>
-                <div class="card-body">
-                  <h6 class="card-title mb-0" style="font-size: 18px; font-weight: 700;">79,000</h6>
-                </div>
-              </a>
-            </div>
-
-            <div class="card" style="width: 14rem; margin-left: 10px; margin-right: 10px; margin-bottom: 80px; border-style: none;">
-              <a href="#">
-                <img src="<%=request.getContextPath() %>/assets/img/g7ae62bb0c3243a2af834df70e9b0d81.jpg" style="width:13rem; height: 11rem" class="card-img-top" alt="<%=request.getContextPath() %>.">
-                <div class="card-body" style="height:6rem;">
-                  <h6 class="card-title" style="font-size: 15px; font-weight: 700;">CONVERSE</h6>
-                  <p class="card-text" style="font-size: 13px;">컨버스 척테일러 70 / 162050C</p>
-                  
-                </div>
-                <div class="card-body">
-                  <h6 class="card-title mb-0" style="font-size: 18px; font-weight: 700;">79,000</h6>
-                </div>
-              </a>
-            </div>
-
-            <div class="card" style="width: 14rem; margin-left: 10px; margin-right: 10px; margin-bottom: 80px; border-style: none;">
-              <a href="#">
-                <img src="<%=request.getContextPath() %>/assets/img/h7ae62bb0c3243a2af834df70e9b0d81.jpg" style="width:13rem; height: 11rem" class="card-img-top" alt="<%=request.getContextPath() %>.">
-                <div class="card-body" style="height:6rem;">
-                  <h6 class="card-title" style="font-size: 15px; font-weight: 700;">NEW BALANCE</h6>
-                  <p class="card-text" style="font-size: 13px;">CM878MC1 / NBP7CB751G</p>
-                  
-                </div>
-                <div class="card-body">
-                  <h6 class="card-title mb-0" style="font-size: 18px; font-weight: 700;">79,000</h6>
-                </div>
-              </a>
-            </div>
-
-            <div class="card" style="width: 14rem; margin-left: 10px; margin-right: 10px; margin-bottom: 80px; border-style: none;">
-              <a href="#">
-                <img src="<%=request.getContextPath() %>/assets/img/i7ae62bb0c3243a2af834df70e9b0d81.jpg" style="width:13rem; height: 11rem" class="card-img-top" alt="<%=request.getContextPath() %>.">
-                <div class="card-body" style="height:6rem;">
-                  <h6 class="card-title" style="font-size: 15px; font-weight: 700;">NIKE</h6>
-                  <p class="card-text" style="font-size: 13px;">코트 비전 알타 레더 / DM0113-100</p>
-                  
-                </div>
-                <div class="card-body">
-                  <h6 class="card-title mb-0" style="font-size: 18px; font-weight: 700;">79,000</h6>
-                </div>
-              </a>
-            </div>
-
-            <div class="card" style="width: 14rem; margin-left: 10px; margin-right: 10px; margin-bottom: 80px; border-style: none;">
-              <a href="#">
-                <img src="<%=request.getContextPath() %>/assets/img/j7ae62bb0c3243a2af834df70e9b0d81.jpg" style="width:13rem; height: 11rem" class="card-img-top" alt="<%=request.getContextPath() %>.">
-                <div class="card-body" style="height:6rem;">
-                  <h6 class="card-title" style="font-size: 15px; font-weight: 700;">ADIDAS</h6>
-                  <p class="card-text" style="font-size: 13px;">포럼 로우 CL / HQ1506</p>
-                  
-                </div>
-                <div class="card-body">
-                  <h6 class="card-title mb-0" style="font-size: 18px; font-weight: 700;">79,000</h6>
-                </div>
-              </a>
-            </div>
-
-            <div class="card" style="width: 14rem; margin-left: 10px; margin-right: 10px; margin-bottom: 80px; border-style: none;">
-              <a href="#">
-                <img src="<%=request.getContextPath() %>/assets/img/a7ae62bb0c3243a2af834df70e9b0d81.jpg" style="width:13rem; height: 11rem" class="card-img-top" alt="<%=request.getContextPath() %>.">
-                <div class="card-body" style="height:6rem;">
-                  <h6 class="card-title" style="font-size: 15px; font-weight: 700;">NIKE</h6>
-                  <p class="card-text" style="font-size: 13px;">코트버로우 로우 / BQ5448-104</p>
-                
-                </div>
-                <div class="card-body">
-                  <h6 class="card-title mb-0" style="font-size: 18px; font-weight: 700;">79,000</h6>
-                </div>
-              </a>
-            </div>
-          
-
-            <div class="card" style="width: 14rem; margin-left: 10px; margin-right: 10px; margin-bottom: 80px; border-style: none;">
-              <a href="#">
-                <img src="<%=request.getContextPath() %>/assets/img/b7ae62bb0c3243a2af834df70e9b0d81.jpg" style="width:13rem; height: 11rem" class="card-img-top" alt="<%=request.getContextPath() %>.">
-                <div class="card-body" style="height:6rem;">
-                  <h6 class="card-title" style="font-size: 15px; font-weight: 700;">NIKE</h6>
-                  <p class="card-text" style="font-size: 13px;">W NIKE WAFFLE TRAINER / DA8291-200</p>
-                
-                </div>
-                <div class="card-body">
-                  <h6 class="card-title mb-0" style="font-size: 18px; font-weight: 700;">79,000</h6>
-                </div>
-              </a>
-            </div>
-
-            <div class="card" style="width: 14rem; margin-left: 10px; margin-right: 10px; margin-bottom: 80px; border-style: none;">
-              <a href="#">
-                <img src="<%=request.getContextPath() %>/assets/img/c7ae62bb0c3243a2af834df70e9b0d81.jpg" style="width:13rem; height: 11rem" class="card-img-top" alt="<%=request.getContextPath() %>.">
-                <div class="card-body" style="height:6rem;">
-                  <h6 class="card-title" style="font-size: 15px; font-weight: 700;">CONVERSE</h6>
-                  <p class="card-text" style="font-size: 13px;">CHUCK 70 OX / 162058C</p>
-                  
-                </div>
-                <div class="card-body">
-                  <h6 class="card-title mb-0" style="font-size: 18px; font-weight: 700;">79,000</h6>
-                </div>
-              </a>
-            </div>
-
-            <div class="card" style="width: 14rem; margin-left: 10px; margin-right: 10px; margin-bottom: 80px; border-style: none;">
-              <a href="#">
-                <img src="<%=request.getContextPath() %>/assets/img/d7ae62bb0c3243a2af834df70e9b0d81.jpg" style="width:13rem; height: 11rem" class="card-img-top" alt="<%=request.getContextPath() %>.">
-                <div class="card-body" style="height:6rem;">
-                  <h6 class="card-title" style="font-size: 15px; font-weight: 700;">CONVERSE</h6>
-                  <p class="card-text" style="font-size: 13px;">Converse_166800C_Run Star Hike HI_19 / 166800C</p>
-                  
-                </div>
-                <div class="card-body">
-                  <h6 class="card-title mb-0" style="font-size: 18px; font-weight: 700;">79,000</h6>
-                </div>
-              </a>
-            </div>
-
-            <div class="card" style="width: 14rem; margin-left: 10px; margin-right: 10px; margin-bottom: 80px; border-style: none;">
-              <a href="#">
-                <img src="<%=request.getContextPath() %>/assets/img/e7ae62bb0c3243a2af834df70e9b0d81.jpg" style="width:13rem; height: 11rem" class="card-img-top" alt="<%=request.getContextPath() %>.">
-                <div class="card-body" style="height:6rem;">
-                  <h6 class="card-title" style="font-size: 15px; font-weight: 700;">VANS</h6>
-                  <p class="card-text" style="font-size: 13px;">스타일36 레드 / VN0A3DZ3OXS</p>
-                
-                </div>
-                <div class="card-body">
-                  <h6 class="card-title mb-0" style="font-size: 18px; font-weight: 700;">79,000</h6>
-                </div>
-              </a>
-            </div>
-
-            <div class="card" style="width: 14rem; margin-left: 10px; margin-right: 10px; margin-bottom: 80px; border-style: none;">
-              <a href="#">
-                <img src="<%=request.getContextPath() %>/assets/img/f7ae62bb0c3243a2af834df70e9b0d81.jpg" style="width:13rem; height: 11rem" class="card-img-top" alt="<%=request.getContextPath() %>.">
-                <div class="card-body" style="height:6rem;">
-                  <h6 class="card-title" style="font-size: 15px; font-weight: 700;">NEW BALANCE</h6>
-                  <p class="card-text" style="font-size: 13px;">MR530SG / NBPDCB710W</p>
-                
-                </div>
-                <div class="card-body">
-                  <h6 class="card-title mb-0" style="font-size: 18px; font-weight: 700;">79,000</h6>
-                </div>
-              </a>
-            </div>
-
-            <div class="card" style="width: 14rem; margin-left: 10px; margin-right: 10px; margin-bottom: 80px; border-style: none;">
-              <a href="#">
-                <img src="<%=request.getContextPath() %>/assets/img/g7ae62bb0c3243a2af834df70e9b0d81.jpg" style="width:13rem; height: 11rem" class="card-img-top" alt="<%=request.getContextPath() %>.">
-                <div class="card-body" style="height:6rem;">
-                  <h6 class="card-title" style="font-size: 15px; font-weight: 700;">CONVERSE</h6>
-                  <p class="card-text" style="font-size: 13px;">컨버스 척테일러 70 / 162050C</p>
-                  
-                </div>
-                <div class="card-body">
-                  <h6 class="card-title mb-0" style="font-size: 18px; font-weight: 700;">79,000</h6>
-                </div>
-              </a>
-            </div>
-
-            <div class="card" style="width: 14rem; margin-left: 10px; margin-right: 10px; margin-bottom: 80px; border-style: none;">
-              <a href="#">
-                <img src="<%=request.getContextPath() %>/assets/img/h7ae62bb0c3243a2af834df70e9b0d81.jpg" style="width:13rem; height: 11rem" class="card-img-top" alt="<%=request.getContextPath() %>.">
-                <div class="card-body" style="height:6rem;">
-                  <h6 class="card-title" style="font-size: 15px; font-weight: 700;">NEW BALANCE</h6>
-                  <p class="card-text" style="font-size: 13px;">CM878MC1 / NBP7CB751G</p>
-                  
-                </div>
-                <div class="card-body">
-                  <h6 class="card-title mb-0" style="font-size: 18px; font-weight: 700;">79,000</h6>
-                </div>
-              </a>
-            </div>
-
-            <div class="card" style="width: 14rem; margin-left: 10px; margin-right: 10px; margin-bottom: 80px; border-style: none;">
-              <a href="#">
-                <img src="<%=request.getContextPath() %>/assets/img/i7ae62bb0c3243a2af834df70e9b0d81.jpg" style="width:13rem; height: 11rem" class="card-img-top" alt="<%=request.getContextPath() %>.">
-                <div class="card-body" style="height:6rem;">
-                  <h6 class="card-title" style="font-size: 15px; font-weight: 700;">NIKE</h6>
-                  <p class="card-text" style="font-size: 13px;">코트 비전 알타 레더 / DM0113-100</p>
-                  
-                </div>
-                <div class="card-body">
-                  <h6 class="card-title mb-0" style="font-size: 18px; font-weight: 700;">79,000</h6>
-                </div>
-              </a>
-            </div>
-
-            <div class="card" style="width: 14rem; margin-left: 10px; margin-right: 10px; margin-bottom: 80px; border-style: none;">
-              <a href="#">
-                <img src="<%=request.getContextPath() %>/assets/img/j7ae62bb0c3243a2af834df70e9b0d81.jpg" style="width:13rem; height: 11rem" class="card-img-top" alt="<%=request.getContextPath() %>.">
-                <div class="card-body" style="height:6rem;">
-                  <h6 class="card-title" style="font-size: 15px; font-weight: 700;">ADIDAS</h6>
-                  <p class="card-text" style="font-size: 13px;">포럼 로우 CL / HQ1506</p>
-                  
-                </div>
-                <div class="card-body">
-                  <h6 class="card-title mb-0" style="font-size: 18px; font-weight: 700;">79,000</h6>
-                </div>
-              </a>
-            </div> --%>
-            
           </div>
         </div>
     </div>
@@ -1287,36 +994,12 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	
-	/* $("a[name='title']").on("click", function(e) {
-		e.preventDefault();
-		const num = $(this).attr("data-num");
-		fn_goodsDetail(num);
-	});
-	
-	function fn_goodsDetail(num) {
-		
-		var formData = new FormData();
-		
-		formData.append("GOODS_NUM", num);
-		
-		$.ajax({
-			url: '/sk/goods/goodsDetail',
-			type: 'POST',
-			data: formData,
-			processData: false,
-			contentType: false,
-			success: function(data) {
-			},
-			error: function(xhr, status, error) {
-				console.log('실패');
-			}
-		});
-	}; */
+	let listType = null;
+	let category = null;
 	
 	$("a[name='listType']").on("click", function(e) { // 정렬 검색
 		e.preventDefault();
-		const listType = $(this).attr("data-num");
-		const category = $('#category').attr("data-category");
+		listType = $(this).attr("data-num");
 		const bName = $("input[type=radio][name=brandType]:checked").val();
 		const size = $("input[type=radio][name=sizeType]:checked").val();
 		const selectedOption = $('#priceType').val();
@@ -1325,13 +1008,33 @@ $(document).ready(function() {
 	
 	$("a[name='category']").on("click", function(e) { // 정렬 검색
 		e.preventDefault();
-		const listType = $('#listType').attr("data-num");
-		const category = $(this).attr("data-category");
+		category = $(this).attr("data-category");
 		const bName = $("input[type=radio][name=brandType]:checked").val();
 		const size = $("input[type=radio][name=sizeType]:checked").val();
 		const selectedOption = $('#priceType').val();
 		fn_listType(listType, category, bName, size, selectedOption);
 	}); 
+	
+	$("input[name='brandType']").change(function(){
+		const bName = $("input[type=radio][name=brandType]:checked").val();
+		const size = $("input[type=radio][name=sizeType]:checked").val();
+		const selectedOption = $('#priceType').val();
+		fn_listType(listType, category, bName, size, selectedOption);		
+	});
+	
+	$("input[name='sizeType']").change(function(){
+		const bName = $("input[type=radio][name=brandType]:checked").val();
+		const size = $("input[type=radio][name=sizeType]:checked").val();
+		const selectedOption = $('#priceType').val();
+		fn_listType(listType, category, bName, size, selectedOption);		
+	});
+	
+	$("select[name='priceType']").change(function(){
+		const bName = $("input[type=radio][name=brandType]:checked").val();
+		const size = $("input[type=radio][name=sizeType]:checked").val();
+		const selectedOption = $('#priceType').val();
+		fn_listType(listType, category, bName, size, selectedOption);		
+	});
 	
 	function fn_listType(listType, category, bName, size, selectedOption) {
 		var formData = new FormData();
@@ -1341,11 +1044,11 @@ $(document).ready(function() {
 		formData.append("size", size);
 		formData.append("priceType", selectedOption);
 		
-		alert("listType: " + listType);
-		alert("category: " + category);
-		alert("bName: " + bName);
-		alert("size: " + size);
-		alert("priceType: " + selectedOption);
+		console.log("listType: " + listType);
+		console.log("category: " + category);
+		console.log("bName: " + bName);
+		console.log("size: " + size);
+		console.log("priceType: " + selectedOption);
 		
 		$.ajax({
 			url: '/sk/goods/totalList_ajax',

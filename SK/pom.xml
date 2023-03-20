@@ -291,6 +291,13 @@
 			<version>1.4</version>
 		</dependency>
 		
+		<!-- 흔한개발자 보고 페이징 하려고 따옴 -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.9.6</version>
+		</dependency>
+		
 		<!-- json -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
