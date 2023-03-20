@@ -1,5 +1,6 @@
 package sk.admin.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -26,6 +27,29 @@ public class AdminBoardController {
 		log.debug("######### 관리자 페이지 공지사항 리스트 ##########");
 		ModelAndView mv = new ModelAndView("adminNoticeList");
 
+	
+				map.put("START", 1);
+				map.put("END", 5);
+				
+				String searchType = (String) map.get("searchType");
+				String keyword = "";
+				
+				if(map.get("keyword") != null) {
+					keyword = (String) map.get("keyword");
+				}
+				
+				if(searchType != null) {
+					map.put("searchType", searchType);
+				}
+				
+				if(keyword != null) {
+					map.put("keyword", keyword);
+				}
+				
+				List<Map<String, Object>> noticeList = adminBoardService.selectNoticeList(map);
+				mv.addObject("noticeList", noticeList);
+				
+				System.out.println("map: " +map);
 		return mv;
 	}
 
@@ -34,6 +58,10 @@ public class AdminBoardController {
 		log.debug("######### 관리자 페이지 공지사항 상세보기 ##########");
 		ModelAndView mv = new ModelAndView("adminNoticeDetail");
 
+		System.out.println("map: " + map);
+		
+		Map<String, Object> noticeDetail = adminBoardService.selectNoticeDetail(map);
+		mv.addObject("noticeDetail", noticeDetail);
 		return mv;
 	}
 
@@ -53,6 +81,14 @@ public class AdminBoardController {
 		return mv;
 	}
 
+	@GetMapping(value = "/admin/noticeDelete")
+	public void adminDeleteNotice(@RequestParam Map<String, Object> map) throws Exception {
+		log.debug("######### 공지 사항 삭제 ##########");
+		
+
+		adminBoardService.adminDeleteNotice(map);
+	}
+	
 	@GetMapping(value = "/admin/goodsTotalList")
 	public ModelAndView adminGoodsTotalList(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("######### 관리자 페이지 상품 전체 리스트 ##########");
@@ -60,4 +96,13 @@ public class AdminBoardController {
 
 		return mv;
 	}
+	
+	@GetMapping(value = "/admin/goodsDelete")
+	public void adminDeleteGoods(@RequestParam Map<String, Object> map) throws Exception {
+		log.debug("######### 전체 상품 삭제 ##########");
+		
+
+		adminBoardService.adminDeleteGoods(map);
+	}
+	
 }
