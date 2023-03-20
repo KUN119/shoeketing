@@ -112,7 +112,6 @@
                   name="BRAND_BUSINESS_NUM"
                   pattern="^[0-9]{3}[0-9]{2}[0-9]{5}$"
                   placeholder="사업자 등록번호 입력"
-                  max="10"
                   required
                 />
                 
@@ -296,7 +295,15 @@ form.addEventListener('submit', (event) => {
 	      $("#BRAND_PW2").focus();
      } 
      
+   //사업자 번호
+     var brandNum = $('#BRAND_BUSINESS_NUM').val();
+     var brandNumCheck = /^[0-9]{3}[0-9]{2}[0-9]{5}$/;
      
+     if(!brandNumCheck.test(brandNum)){
+   	  alert('잘못된 번호입니다.');
+   	  $('#BRAND_BUSINESS_NUM').focus();
+   	  
+     }
       
     
 });

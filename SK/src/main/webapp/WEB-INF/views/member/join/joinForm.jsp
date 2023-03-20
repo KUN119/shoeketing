@@ -272,6 +272,30 @@
      		$(this).attr("autofocus",true);
      	}
      });
+   
+   	/* //가입여부
+     var name = $("#MEM_NAME").val();
+     var phone = $("#MEM_PHONE").val();
+     
+     $.ajax({
+         url: "/sk/memberJoin/joinAvailable",
+         type: "post",
+         data: {
+             MEM_NAME: name,
+             MEM_PHONE: phone
+         },
+         dataType: "json",
+         success: function(data) {
+             if (data.withdrawal == true) {
+                 $("#result").text("해당 회원은 이미 탈퇴한 회원입니다.");
+             } else {
+                 $("#result").text("해당 회원은 탈퇴하지 않았습니다.");
+             }
+         },
+         error: function(xhr, status, error) {
+             console.log("에러 발생: " + error);
+         }
+     }); */
 
      
    //유효성검증

@@ -113,7 +113,7 @@
                 id="SHOP_TEL"
                 name="SHOP_TEL"
                 placeholder="전화번호입력"
-                pattern="^[0-9]{3}-[0-9]{4}-[0-9]{4}$"
+                pattern="^(02|0[3-9]{1}[0-9]{1})-[1-9]{1}[0-9]{2,3}-[0-9]{4}$"
                 
                 required
               />
@@ -335,7 +335,7 @@ form.addEventListener('submit', (event) => {
      
    //전화번호
      var shopTel = $('#SHOP_TEL').val();
-     var shopTelCheck = /^[0-9]{3}-[0-9]{4}-[0-9]{4}$/;
+     var shopTelCheck = /^(02|0[3-9]{1}[0-9]{1})-[1-9]{1}[0-9]{2,3}-[0-9]{4}$/;
      
      if(!shopTelCheck.test(shopTel)){
    	  alert('잘못된 전화 번호입니다.');
