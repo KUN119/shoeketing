@@ -2,6 +2,177 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="goods">
+	
+	<!-- 브랜드 전체 상품 리스트 -->
+	<select id="selectBrandGoodsList" parameterType="hashmap" resultType="hashmap"> 
+		<![CDATA[
+            SELECT *
+            FROM (SELECT
+	                       B.BRAND_NUM,
+	                       B.BRAND_NAME,
+	                       TG.TOTAL_GOODS_NUM,
+	                       TG.TOTAL_GOODS_NAME,
+	                       TG.TOTAL_GOODS_MODEL,
+	                       TG.TOTAL_GOODS_CATEGORY,
+	                       TG.TOTAL_GOODS_PRICE,
+	                       GI.GOODS_IMAGE_STD,
+	                       ROW_NUMBER() OVER (ORDER BY TOTAL_GOODS_NUM DESC) AS NUM
+                  FROM 
+                           TOTAL_GOODS TG, BRAND B, GOODS_IMAGE GI       
+                  WHERE    TG.TOTAL_GOODS_BRAND = B.BRAND_NUM AND TG.TOTAL_GOODS_NUM = GI.GOODS_IMAGE_PARENT
+                           AND TG.TOTAL_GOODS_DEL_GB = 'N'
+                           AND GI.GOODS_IMAGE_ORDER = 1
+                           AND B.BRAND_NAME = #{BRAND_NAME}
+		]]>
+        <include refid="goodsNameSearch"></include>
+        <include refid="goodsModelSearch"></include>
+        <![CDATA[
+        	)WHERE NUM BETWEEN #{START} AND #{END}
+        ]]>
+	</select>
+    
+    <sql id="goodsNameSearch">
+		<if test="nameKeyword!=null and nameKeyword!=''">
+	         AND UPPER(TG.TOTAL_GOODS_NAME) like UPPER('%' || #{nameKeyword} ||'%')
+		</if>
+	</sql>
+    
+    <sql id="goodsModelSearch">
+		<if test="modelKeyword!=null and modelKeyword!=''">
+	           AND UPPER(TG.TOTAL_GOODS_MODEL) like UPPER('%' || #{modelKeyword} ||'%')
+		</if>
+	</sql>
+	
+	
+	<!-- 브랜드 전체 상품 토탈 개수 -->
+	<select id="selectBrandGoodsCount" parameterType="hashmap" resultType="int">
+		<![CDATA[
+			SELECT COUNT(TOTAL_GOODS_NAME) BRAND_GOODS_COUNT
+            FROM TOTAL_GOODS TG, BRAND B
+            WHERE  TG.TOTAL_GOODS_BRAND = B.BRAND_NUM
+            AND TG.TOTAL_GOODS_DEL_GB = 'N'
+            AND B.BRAND_NAME = #{BRAND_NAME}
+        ]]>
+		<include refid="goodsNameSearch"></include>
+        <include refid="goodsModelSearch"></include>
+	</select>
+
+
+	<!-- 브랜드 상품 등록 -->
+	<insert id="insertGoods" parameterType="hashmap" useGeneratedKeys="true" keyProperty="TOTAL_GOODS_NUM">
+		<selectKey keyProperty="TOTAL_GOODS_NUM" resultType="int" order="BEFORE">
+            SELECT TOTAL_GOODS_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		<![CDATA[
+        INSERT INTO TOTAL_GOODS (TOTAL_GOODS_NUM, 
+                                 TOTAL_GOODS_BRAND, 
+                                 TOTAL_GOODS_NAME, 
+                                 TOTAL_GOODS_MODEL, 
+                                 TOTAL_GOODS_CATEGORY, 
+                                 TOTAL_GOODS_PRICE, 
+                                 TOTAL_GOODS_DEL_GB)
+        VALUES(#{TOTAL_GOODS_NUM}, 
+               #{BRAND_NUM}, 
+               #{TOTAL_GOODS_NAME}, 
+               #{TOTAL_GOODS_MODEL}, 
+               #{TOTAL_GOODS_CATEGORY},  
+               #{TOTAL_GOODS_PRICE}, 
+               'N')
+        ]]>
+	</insert>      
+
+	<!-- 상품 등록시, 상품 상세(사이즈) 삽입 -->
+	<!-- 상품 수정 폼에서 선택한 사이즈 반복문 돌려서 새로 삽입 -->
+	<insert id="insertGoodsDetail" parameterType="hashmap">
+    <![CDATA[
+        INSERT INTO GOODS_DETAIL(GOODS_DETAIL_NUM,
+                                 GOODS_DETAIL_SIZE)
+        VALUES(#{TOTAL_GOODS_NUM},
+               #{GOODS_DETAIL_SIZE})
+    ]]>
+	</insert>
+
+	<!-- 상품 등록시, 상품 이미지 삽입 -->
+	<insert id="insertGoodsImage" parameterType="hashmap">
+		<![CDATA[
+            INSERT INTO GOODS_IMAGE(GOODS_IMAGE_NUM, 
+                                    GOODS_IMAGE_PARENT, 
+                                    GOODS_IMAGE_ORG, 
+                                    GOODS_IMAGE_STD, 
+                                    GOODS_IMAGE_DEL_GB, 
+                                    GOODS_IMAGE_ORDER)
+            VALUES(GOODS_IMAGE_SEQ.NEXTVAL, 
+                   #{GOODS_IMAGE_PARENT}, 
+                   #{GOODS_IMAGE_ORG},
+                   #{GOODS_IMAGE_STD},
+                   'N', 
+                   #{GOODS_IMAGE_ORDER}            
+        ]]>
+	</insert>
+
+	<!-- 브랜드 상품 상세조회 -->
+	<select id="selectGoodsDetail" parameterType="hashmap" resultType="hashmap"> 
+	    <![CDATA[
+	        SELECT  
+                  B.BRAND_NUM,
+                  B.BRAND_NAME,
+                  TG.TOTAL_GOODS_NUM,
+                  TG.TOTAL_GOODS_NAME,
+                  TG.TOTAL_GOODS_MODEL,
+                  TG.TOTAL_GOODS_CATEGORY,
+                  TG.TOTAL_GOODS_PRICE,
+                  TG.TOTAL_GOODS_SCORE_AVG,
+                  GD.GOODS_DETAIL_SIZE,
+                  GD.GOODS_DETAIL_NUM,
+                  GD.GOODS_DETAIL_SIZE
+	        FROM BRAND B, TOTAL_GOODS TG, GOODS_DETAIL GD
+	        WHERE B.BRAND_NUM = TG.TOTAL_GOODS_BRAND
+	        AND TG.TOTAL_GOODS_NUM = GD.GOODS_DETAIL_NUM
+	        AND TG.TOTAL_GOODS_DEL_GB = 'N'
+	        AND TG.TOTAL_GOODS_NUM = #{TOTAL_GOODS_NUM}
+	    ]]>
+	</select>
+
+	<!-- 상품 이미지 삭제 (실제 삭제X. DEL_GB만 Y로 변경) -->
+	<update id="deleteGoodsImage" parameterType="hashmap">
+		<![CDATA[
+            UPDATE GOODS_IMAGE
+            SET GOODS_IMAGE_DEL_GB = 'Y'
+            WHERE GOODS_IMAGE_PARENT = #{TOTAL_GOODS_NUM}
+        ]]>
+	</update>
+
+	<!-- 상품 이미지 수정 -->
+	<update id="updateGoodsImageModify" parameterType="hashMap">
+		<![CDATA[
+			UPDATE GOODS_IMAGE
+			SET GOODS_IMAGE_DEL_GB = 'N',
+                GOODS_IMAGE_ORDER = #{GOODS_IMAGE_ORDER}
+			WHERE GOODS_IMAGE_NUM = #{GOODS_IMAGE_NUM}
+		]]>
+	</update>
+
+	<!-- 상품 수정 (상품 상세정보 수정,사이즈만 따로) -->
+	<update id="updateGoodsModify" parameterType="hashmap">
+	    <![CDATA[
+	        UPDATE TOTAL_GOODS
+	        SET TOTAL_GOODS_NAME = #{TOTAL_GOODS_NAME},
+	              TOTAL_GOODS_MODEL = #{TOTAL_GOODS_MODEL},
+	              TOTAL_GOODS_CATEGORY = #{TOTAL_GOODS_CATEGORY},
+	              TOTAL_GOODS_PRICE = #{TOTAL_GOODS_PRICE}
+	        WHERE TOTAL_GOODS_NUM = #{TOTAL_GOODS_NUM}
+	    ]]>
+	</update>
+    
+    <!-- 상품 상세 삭제(상품 수정시, 원래 선택되어 있던 사이즈 전체 삭제) -->
+	<delete id="deleteGoodsDetail" parameterType="hashmap">
+	    <![CDATA[
+	        DELETE 
+	        FROM GOODS_DETAIL
+	        WHERE GOODS_DETAIL_NUM = #{TOTAL_GOODS_NUM}
+	    ]]>
+	</delete>
+
 
 	<select id="selectAllGoodsList" parameterType="hashmap" resultType="hashmap"> 
 		<![CDATA[    
@@ -52,7 +223,9 @@
 			<if test="listType == null">
 				ROW_NUMBER() OVER (ORDER BY TOTAL_GOODS_NUM DESC) AS NUM,
 			</if>
+<!-- jsp에서 listType 기본 값을 null로 줘서 바로 위<if test="listType == null">문이 실행될 수가 없음 -->
 			<if test="listType != null">
+			<if test="listType == 'null'.toString()">ROW_NUMBER() OVER (ORDER BY TOTAL_GOODS_NUM DESC) AS NUM,</if>
 			<if test="listType == '최신순'.toString()">ROW_NUMBER() OVER (ORDER BY TOTAL_GOODS_NUM DESC) AS NUM,</if>
 			<if test="listType == '낮은가격순'.toString()">ROW_NUMBER() OVER (ORDER BY TOTAL_GOODS_PRICE) AS NUM,</if>
 			<if test="listType == '높은가격순'.toString()">ROW_NUMBER() OVER (ORDER BY TOTAL_GOODS_PRICE DESC) AS NUM,</if>
@@ -172,23 +345,8 @@
 		]]>
 	</select>
 
-	<select id="selectGoodsDetail" parameterType="hashmap" resultType="hashmap"> 
-		<![CDATA[
-			SELECT
-				G.GOODS_DETAIL_NUM,
-				G.GOODS_DETAIL_SIZE,
-				T.TOTAL_GOODS_NAME,
-                B.BRAND_NAME,
-				T.TOTAL_GOODS_MODEL,
-				T.TOTAL_GOODS_PRICE,
-				T.TOTAL_GOODS_SCORE_AVG
-			FROM GOODS_DETAIL G, TOTAL_GOODS T, BRAND B
-			WHERE G.GOODS_DETAIL_NUM = T.TOTAL_GOODS_NUM
-            AND T.TOTAL_GOODS_BRAND = B.BRAND_NUM
-            AND T.TOTAL_GOODS_NUM = #{TOTAL_GOODS_NUM}
-		]]>
-	</select>
 
+	<!-- 상품 상세조회시, 상품 이미지 조회 -->
 	<select id="selectGoodsImage" parameterType="hashmap" resultType="hashmap"> 
 		<![CDATA[
 			SELECT

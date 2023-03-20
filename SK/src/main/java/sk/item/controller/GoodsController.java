@@ -41,7 +41,7 @@ public class GoodsController {
 		log.debug("###### allGoodsList ######");
 		ModelAndView mv = new ModelAndView("allGoodsList");
 		map.put("START", 1);
-		map.put("END", 5);
+		map.put("END", 10);
 
 		String listType = "";
 		if (map.get("listType") != null) {
@@ -63,7 +63,7 @@ public class GoodsController {
 		log.debug("###### allGoodsList ######");
 		ModelAndView mv = new ModelAndView("allGoodsList_ajax");
 		map.put("START", 1);
-		map.put("END", 5);
+		map.put("END", 10);
 
 		String listType = "";
 		if (map.get("listType") != null) {
@@ -107,6 +107,7 @@ public class GoodsController {
 	@RequestMapping(value = "/goods/goodsDetail")
 	public ModelAndView goodsDetail(@RequestParam Map<String, Object> map, HttpSession session) throws Exception {
 		log.debug("###### goodsDetail ######");
+		System.out.println("goodsDeatil map : " + map);
 		ModelAndView mv = new ModelAndView("goodsDetail");
 		map.put("MEM_NUM", commonService.getSession(session, "MEM_NUM"));
 
@@ -155,7 +156,6 @@ public class GoodsController {
 		} else {
 			result = "fail";
 		}
-
 		return result;
 	}
 

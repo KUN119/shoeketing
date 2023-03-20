@@ -20,7 +20,8 @@ public class LoggerInterceptor extends HandlerInterceptorAdapter {
 		String URICheck = request.getRequestURI();
 
 		// 로그 메세지 출력
-		if (log.isDebugEnabled() && URICheck.indexOf("/sk/assets/") == -1 && URICheck != null && URICheck != "") {
+		if (log.isDebugEnabled() && URICheck.indexOf("/sk/assets/") == -1 && URICheck.indexOf("/sk/image/display") == -1
+				&& URICheck.indexOf("/sk/inform-ws") == -1 && URICheck != null && URICheck != "") {
 			log.debug(
 					"======================================          START         ======================================");
 			log.debug(" Request URI \t:  " + request.getRequestURI());
@@ -36,7 +37,8 @@ public class LoggerInterceptor extends HandlerInterceptorAdapter {
 
 		String URICheck = request.getRequestURI();
 
-		if (log.isDebugEnabled() && URICheck.indexOf("/sk/assets/") == -1 && URICheck != null && URICheck != "") {
+		if (log.isDebugEnabled() && URICheck.indexOf("/sk/assets/") == -1 && URICheck.indexOf("/sk/image/display") == -1
+				&& URICheck.indexOf("/sk/inform-ws") == -1 && URICheck != null && URICheck != "") {
 			log.debug(
 					"======================================           END          ======================================\n");
 		}

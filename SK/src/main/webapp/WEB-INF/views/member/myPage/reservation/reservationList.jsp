@@ -10,7 +10,7 @@
 <body>
  <body>
 <!-- 모달 -->
-<div class="modal fade" id="reviewWrite" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content" style="width:600px; height: auto;">
       <div class="modal-header">
@@ -50,13 +50,13 @@
               <p style="font-weight: bolder; font-size: medium; margin-bottom: 0;">사이즈</p>
             </td>
               <td>
-                <input type="radio" name="size" value="1" id="size1" style="font-size: medium;">  정사이즈보다 작음
+                <input type="radio" name="size" value="0" id="size1" style="font-size: medium;"><span>  정사이즈보다 작음</span>
               </td>
               <td>  
-              <input type="radio" name="size" value="4" id="size2">  정사이즈
+              <input type="radio" name="size" value="1" id="size2"><span>  정사이즈</span>
               </td>
               <td>  
-              <input type="radio" name="size" value="3" id="size3">  정사이즈보다 큼
+              <input type="radio" name="size" value="2" id="size3"><span>  정사이즈보다 큼</span>
               </td>
           </tr>
 
@@ -65,13 +65,13 @@
               <p style="font-weight: bolder; font-size: medium; margin-bottom: 0;">착화감</p>
             </td>
             <td>
-              <input type="radio" name="size" value="1" id="size1">&nbsp;&nbsp;나&nbsp;&nbsp;쁨
+              <input type="radio" name="comfort" value="0" id="size1"><span>  나   쁨</span>
             </td>
             <td>  
-            <input type="radio" name="size" value="4" id="size2">&nbsp;&nbsp;보&nbsp;&nbsp;통
+            <input type="radio" name="comfort" value="1" id="size2"><span>  보   통</span>
             </td>
             <td>  
-            <input type="radio" name="size" value="3" id="size3">&nbsp;&nbsp;좋&nbsp;음
+            <input type="radio" name="comfort" value="2" id="size3"><span>  좋   음</span>
             </td>
           </tr>
 
@@ -80,20 +80,21 @@
               <p style="font-weight: bolder; font-size: medium; margin-bottom: 0;">색상</p>
             </td>
             <td>
-              <input type="radio" name="size" value="1" id="size1" style="font-size: medium;">  화면보다 어두움
+              <input type="radio" name="color" value="0" id="size1" style="font-size: medium;"><span>  화면보다 어두움</span>
             </td>
             <td>  
-            <input type="radio" name="size" value="4" id="size2">  화면과 동일함
+            <input type="radio" name="color" value="1" id="size2"><span>  화면과 동일함</span>
             </td>
             <td>  
-            <input type="radio" name="size" value="3" id="size3">  화면보다 밝음
+            <input type="radio" name="color" value="2" id="size3"><span>  화면보다 밝음</span>
             </td>
           </tr>
         </table>
           </div>
           <br>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary">후기 작성</button>
+          	<c:set var="totalGoodsNum" value="${pickup.TOTAL_GOODS_NUM}"/>
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" name="write" data-num="${totalGoodsNum}">후기 작성</button>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
           </div>
       </div>
@@ -134,6 +135,11 @@
 			                        <button type="button" name="reservationDelete" class="btn btn-secondary btn-sm" data-num="${pickup.RESERVATION_NUM}" data-status="${pickup.RESERVATION_STATUS}">취소</button>
 			                        </div>
 			                        </c:if>
+			                         <c:if test="${pickup.RESERVATION_STATUS == '픽업 완료'}">
+			                         <div id="deleteBtnDiv_${pickup.TOTAL_GOODS_NUM}">
+			                        <button type="button" class="btn btn-secondary btn-sm" name="openForm" data-num="${pickup.TOTAL_GOODS_NUM}">리뷰<br/>작성</button>
+			                        </div>
+			                        </c:if>
 			                        <br>
 			                    </td>
 		                  </tr>
@@ -165,6 +171,11 @@
 </body>
 <script type="text/javascript">
 $(document).ready(function() {
+	 var star = "";
+	 var size = "";
+	 var comfort = "";
+	 var color = "";
+	 var goodsNum = "";
 	
 	// 토스 페이먼츠 결제 후, 픽업 예약 리스트 화면이 표시될 때 웹 스토리지에 paymentKey값 저장
 	//주문번호 받아와서, 웹 스토리지에 key=주문번호, value=paymentKey로 저장
@@ -187,17 +198,55 @@ $(document).ready(function() {
 		fn_reservationDelete(reservationNum, reservationStatus);
 	}); 
 	
+	 $("button[name='openForm']").on("click", function(e) {  // 목록에서 리뷰 작성 버튼
+		e.preventDefault();
+		goodsNum = $(this).attr("data-num");
+		$("button[name='write']").attr("data-num", goodsNum);
+		
+		checkReviewExists(goodsNum);
+			
+		});  
+	
+	 $("button[name='write']").on("click", function(e) {  // 모달에서 리뷰 등록 버튼
+		e.preventDefault();
+		var goodsNum = $(this).attr("data-num");
+		//alert(goodsNum);
+		
+		writeReview(goodsNum, star, size, comfort, color);
+	});  
+	 
+	 $("label").on("click", function(e) { //별점 선택 시
+		 star = $(this).prev("input").val(); //prev() : 이전 형제노드를 찾음
+		//alert(star);	
+	 });
+	 
+	 $("input[name='size']").on("click", function(e) { //사이즈 후기 선택 시
+		 size = $.trim($(this).next("span").text()); //선택한 문자열 가져옴
+		// alert(size);	
+	 });
+	 
+	 $("input[name='comfort']").on("click", function(e) { //착화감 후기 선택 시
+		var str = $(this).next("span").text(); //선택한 착화감 가져오기
+	 	comfort = str.replaceAll(' ', ''); //문자열 사이 공백 제거
+	 	//alert(comfort);
+	 });
+	  	
+	 $("input[name='color']").on("click", function(e) { //색상 후기 선택 시
+		 color = $.trim($(this).next("span").text());
+		 //alert(color);
+	 });
+	
 	function fn_reservationDelete(reservationNum, reservationStatus){
 		
 		var formData = new FormData();
 		formData.append("RESERVATION_NUM", reservationNum);
 		formData.append("RESERVATION_STATUS", reservationStatus);
-		formData.append("paymentKey", localStorage.getItem(reservationNum));
+		formData.append("paymentKey", localStorage.getItem(reservationNum))
 		
 		if(confirm("예약을 취소하시겠습니까?")) {
 			$.ajax({
 			type : 'post',
-			url : '/sk/tossPaymentsCancel',
+			url : '/sk/reservationCancel',
 			data : formData,
 			processData : false,
 			contentType : false,
@@ -220,14 +269,39 @@ $(document).ready(function() {
 			
 		});
 		}
-		
-		
 	}
 	
-	function writeReview() {
+	function checkReviewExists(goodsNum) { //리뷰 등록 전에 리뷰 작성 이력을 검사
+		var jsonGoodsNum = {TOTAL_GOODS_NUM:goodsNum};
+	
+		$.ajax({
+			type : 'post',
+			url : '/sk/myPage/checkReviewExists',
+			contentType:"application/json; charset=UTF-8",
+			data:JSON.stringify(jsonGoodsNum),
+			 success : function(data){
+				 if(data > 0) { //리뷰가 존재하면
+					 alert("이미 리뷰를 작성한 상품입니다!");
+				 } else {
+					 $('#reviewModal').modal('show'); //모달창 열기
+				 }
+			},
+			error : function(){
+				alert("잠시 후 다시 시도해주세요.");
+			}
+		});
+	}
+	
+	function writeReview(goodsNum, star, size, comfort, color) { //리뷰 등록 처리
+		var formData = new FormData();
+		formData.append("TOTAL_GOODS_NUM", goodsNum);
+		formData.append("REVIEW_SCORE", star);
+		formData.append("REVIEW_SIZE", size);
+		formData.append("REVIEW_COMFORT", comfort);
+		formData.append("REVIEW_COLOR", color);
 		
 		
-		if(confirm("후기를 등록하시겠습니까?")) {
+		if(confirm("리뷰를 등록하시겠습니까?")) {
 			$.ajax({
 			type : 'post',
 			url : '/sk/myPage/reviewWrite',
@@ -235,29 +309,15 @@ $(document).ready(function() {
 			processData : false,
 			contentType : false,
 			 success : function(data){
-				 if(data.result == "pass"){
-					 alert("픽업 예약이 취소되었습니다.");
-					 $("#deleteBtnDiv_"+reservationNum).empty();
-					 $("#statusDiv_"+reservationNum).empty();
-					 str = '<p style="font-size: medium;">';
-					 str += data.RESERVATION_STATUS;
-					 str += '</p>';
-					 $("#statusDiv_"+reservationNum).append(str);
-				 }else if(data.result == "fail") {
-					 alert("실패");
-				 }
+				 alert("리뷰가 등록되었습니다.");
+				 location.reload();
 			},
 			error : function(){
-				alert("오류 발생");
+				alert("잠시 후 다시 시도해주세요.");
 			}
-			
 		});
 		}
-		
 	}
-	
-	
-
 });
 
 
