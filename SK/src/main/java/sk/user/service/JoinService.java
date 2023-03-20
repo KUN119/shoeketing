@@ -3,6 +3,10 @@ package sk.user.service;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
 
 public interface JoinService {
 
@@ -23,7 +27,7 @@ public interface JoinService {
 	Map<String, Object> selectbNumAuth(Map<String, Object> map) throws Exception;
 	
 	// 브랜드 회원가입 처리
-	void insertBrand(Map<String, Object> map) throws Exception;
+	void insertBrand(Map<String, Object> map, MultipartHttpServletRequest request) throws Exception;
 	
 	// 매장 위치정보 확인
 	Map<String, Object> selectshopLocationInfo(Map<String, Object> map) throws Exception;

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import sk.user.service.JoinService;
@@ -137,12 +138,11 @@ public class JoinController {
 
 	//브랜드 회원가입 성공
 	@PostMapping(value = "/brandJoin/joinSuccess")
-	public ModelAndView brandInsertMember(@RequestParam Map<String, Object> map) throws Exception {
+	public ModelAndView brandInsertMember(@RequestParam Map<String, Object> map, MultipartHttpServletRequest request) throws Exception {
 		log.debug("###### 브랜드회원가입 성공 ######");
 
 		ModelAndView mv = new ModelAndView("main");
-		
-		joinService.insertBrand(map);
+		joinService.insertBrand(map, request);
 
 		return mv;
 	}
@@ -167,6 +167,7 @@ public class JoinController {
 		log.debug("###### 매장 회원가입성공 ######");
 		ModelAndView mv = new ModelAndView("main");
 		joinService.insertShop(map);
+
 		return mv;
 	}
 
