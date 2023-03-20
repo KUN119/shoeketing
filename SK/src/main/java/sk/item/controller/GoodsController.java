@@ -107,6 +107,7 @@ public class GoodsController {
 	@RequestMapping(value = "/goods/goodsDetail")
 	public ModelAndView goodsDetail(@RequestParam Map<String, Object> map, HttpSession session) throws Exception {
 		log.debug("###### goodsDetail ######");
+		System.out.println("goodsDeatil map : " + map);
 		ModelAndView mv = new ModelAndView("goodsDetail");
 		map.put("MEM_NUM", commonService.getSession(session, "MEM_NUM"));
 

@@ -48,7 +48,7 @@
                         <tr>
                         <td style="width: 60%;">
                             <div class="mb-3">
-                                <input class="form-control" name="BRAND_LOGO_FILE" type="file" id="formFile">
+                                <input class="form-control" name="BRAND_LOGO_FILE" type="file" id="formFile">${brandInfoMap.BRAND_LOGO_FILE}
                               </div>
                         </tr>
                     </table>
@@ -84,6 +84,7 @@ $(document).ready(function() {
 		var brandNum = ${brandInfoMap.BRAND_NUM}; 
 		
 		formData.append("BRAND_LOGO_FILE", files[0]);
+		alert(files[0]);
 		formData.append("BRAND_PW", brandPW);
 		formData.append("BRAND_ADD", brandAdd);
 		formData.append("BRAND_INFO", brandInfo);

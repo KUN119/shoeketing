@@ -38,13 +38,41 @@
 		                    <td style="font-weight: bolder; text-align: center; vertical-align:middle; width:10%;">
 		                        <c:if test="${reservation.RESERVATION_STATUS == '픽업 대기중'}">
 			                        <div id="cancelBtnDiv_${reservation.RESERVATION_NUM}" data-reservationStatus="${reservation.RESERVATION_STATUS}">
-			                        	<button type="button" class="btn btn-danger btn-sm" name="reservationCancel" data-reservationNum="${reservation.RESERVATION_NUM}" data-shopNum="${reservation.RESERVATION_SHOP_NUM}" data-goodsNum="${reservation.RESERVATION_PRONUM}" data-goodsSize="${reservation.RESERVATION_SIZE}" data-reservationStatus="${reservation.RESERVATION_STATUS}">픽업 취소</button>
+			                        	<button type="button"
+			                        			class="btn btn-danger btn-sm"
+			                        			name="reservationCancel"
+			                        			data-reservationNum="${reservation.RESERVATION_NUM}"
+			                        			data-shopNum="${reservation.RESERVATION_SHOP_NUM}"
+			                        	        data-goodsNum="${reservation.RESERVATION_PRONUM}"
+			                        	        data-goodsSize="${reservation.RESERVATION_SIZE}"
+			                        	        data-reservationStatus="${reservation.RESERVATION_STATUS}"
+			                        	        data-memNum="${reservation.MEM_NUM}"
+			                        	        data-goodsName="${reservation.TOTAL_GOODS_NAME}"
+			                        	        >픽업 취소</button>
 			                        </div>
 		                        </c:if>
 		                        <c:if test="${reservation.RESERVATION_STATUS == '예약 대기중'}">
 		                       	 	<div id="approveBtnDiv_${reservation.RESERVATION_NUM}">
-				                        <button type="button" class="btn btn-primary btn-sm" name="reservationApprove" data-reservationNum="${reservation.RESERVATION_NUM}" data-shopNum="${reservation.RESERVATION_SHOP_NUM}" data-goodsNum="${reservation.RESERVATION_PRONUM}" data-goodsSize="${reservation.RESERVATION_SIZE}">예약 승인</button>
-		                           		<button type="button" class="btn btn-secondary btn-sm" name="reservationReject" data-reservationNum="${reservation.RESERVATION_NUM}" data-reservationStatus="${reservation.RESERVATION_STATUS}">예약 거부</button>
+				                        <button type="button"
+				                        		class="btn btn-primary btn-sm"
+				                        		name="reservationApprove"
+				                        		data-reservationNum="${reservation.RESERVATION_NUM}"
+				                        		data-shopNum="${reservation.RESERVATION_SHOP_NUM}"
+				                        		data-goodsNum="${reservation.RESERVATION_PRONUM}"
+				                        		data-goodsSize="${reservation.RESERVATION_SIZE}"
+				                        		data-memNum="${reservation.MEM_NUM}"
+				                        		data-goodsName="${reservation.TOTAL_GOODS_NAME}"
+				                        		>예약 승인
+				                        </button>
+		                           		<button type="button"
+		                           				class="btn btn-secondary btn-sm"
+		                           				name="reservationReject"
+		                           				data-reservationNum="${reservation.RESERVATION_NUM}"
+		                           				data-reservationStatus="${reservation.RESERVATION_STATUS}"
+		                           				data-memNum="${reservation.MEM_NUM}"
+		                           				data-goodsName="${reservation.TOTAL_GOODS_NAME}"
+		                           				>예약 거부
+		                           		</button>
 			                        </div>
 		                        </c:if>
 		                    </td>
@@ -86,12 +114,14 @@ $(document).ready(function() {
 		const shopNum = $(this).attr("data-shopNum");
 		const goodsSize = $(this).attr("data-goodsSize");
 		const reservationStatus = $(this).attr("data-reservationStatus");
+		const memNum = $(this).attr("data-memNum");
+		const goodsName = $(this).attr("data-goodsName");
 		
-		fn_reservationApprove(reservationNum, goodsNum, shopNum, goodsSize, reservationStatus);
+		fn_reservationApprove(reservationNum, goodsNum, shopNum, goodsSize, reservationStatus, memNum, goodsName);
 	
 	});
 	
-	function fn_reservationApprove(reservationNum, goodsNum, shopNum, goodsSize, reservationStatus){
+	function fn_reservationApprove(reservationNum, goodsNum, shopNum, goodsSize, reservationStatus, memNum, goodsName){
 		
 		var formData = new FormData();
 		formData.append("RESERVATION_NUM", reservationNum);
@@ -129,10 +159,16 @@ $(document).ready(function() {
 					str2 += goodsSize;
 					str2 += '" data-reservationStatus="';
 					str2 += data.RESERVATION_STATUS;
+					str2 += '" data-memNum="';
+					str2 += memNum;
+					str2 += '" data-goodsName="';
+					str2 += goodsName;
 					str2 += '">픽업 취소</button>';
 					
 					alert(str2);
 					$("#approveBtnDiv_"+reservationNum).append(str2);
+					
+					socket.send("<%=session.getAttribute("session_SHOP_NAME")%>,"+memNum+",회원님께서 예약하신 '"+goodsName+"'의 예약 상태가 '픽업 대기중'으로 변경되었습니다.,/sk/myPage/reservationList");
 				}else if(data.result == "fail"){
 					alert("실패");
 				}
@@ -150,12 +186,14 @@ $(document).ready(function() {
  	
  		const reservationNum = $(this).attr("data-reservationNum");
  		const reservationStatus = $(this).attr("data-reservationStatus");
+ 		const memNum = $(this).attr("data-memNum");
+		const goodsName = $(this).attr("data-goodsName");
  		
-		fn_reservationReject(reservationNum, reservationStatus);
+		fn_reservationReject(reservationNum, reservationStatus, memNum, goodsName);
 		
 	});
 	
-	function fn_reservationReject(reservationNum, reservationStatus){
+	function fn_reservationReject(reservationNum, reservationStatus, memNum, goodsName){
 		var formData = new FormData();
 		
 		formData.append("RESERVATION_NUM", reservationNum);
@@ -180,6 +218,7 @@ $(document).ready(function() {
 						str += '</p>';
 						
 						$("#statusDiv_"+reservationNum).append(str);
+						socket.send("<%=session.getAttribute("session_SHOP_NAME")%>,"+memNum+",회원님께서 예약하신 '"+goodsName+"'의 예약 상태가 '예약 취소'로 변경되었으며 픽업 예약금도 함께 취소되었습니다.,/sk/myPage/reservationList");
 					 }else if(data.result == "fail"){
 						 alert("실패");
 					 }
@@ -200,12 +239,14 @@ $(document).ready(function() {
  	
  		const reservationNum = $(this).attr("data-reservationNum");
  		const reservationStatus = $(this).attr("data-reservationStatus");
+ 		const memNum = $(this).attr("data-memNum");
+		const goodsName = $(this).attr("data-goodsName");
  		
-		fn_reservationCancel(reservationNum, reservationStatus);
+		fn_reservationCancel(reservationNum, reservationStatus, memNum, goodsName);
 		
 	});
 	
-	function fn_reservationCancel(reservationNum, reservationStatus){
+	function fn_reservationCancel(reservationNum, reservationStatus, memNum, goodsName){
 		var formData = new FormData();
 		
 		formData.append("RESERVATION_NUM", reservationNum);
@@ -231,6 +272,8 @@ $(document).ready(function() {
 						str += '</p>';
 						
 						$("#statusDiv_"+reservationNum).append(str);
+						
+						socket.send("<%=session.getAttribute("session_SHOP_NAME")%>,"+memNum+",회원님께서 예약하신 '"+goodsName+"'의 예약 상태가 '픽업 취소'로 변경되었으며 픽업 예약금도 함께 취소되었습니다.,/sk/myPage/reservationList");
 					 }else if(data.result == "fail"){
 						 alert("실패");
 					 }

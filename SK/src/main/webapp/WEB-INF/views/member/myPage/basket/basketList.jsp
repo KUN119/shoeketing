@@ -93,9 +93,7 @@ function pickup(num) { //픽업예약 함수
         width: 1200px; /*기본값 1500px*/
         max-width: none !important;
       }
- #soldoutDiv {
-	filter: opacity(30%);
-}
+
 /* .align-self-end h6:not(#notification) { filter: opacity(100%); }
 button :not(#delete) { filter: opacity(100%); } */
 </style>
@@ -122,16 +120,24 @@ button :not(#delete) { filter: opacity(100%); } */
       <c:when test="${fn:length(list)>0 }">
       <c:forEach items="${list}" var="basket" varStatus="status">
         <!--장바구니 데이터 한줄 시작-->
-        <c:choose>
-          <c:when test="${basket.SHOP_GOODS_AMOUNT > 0}">
-          	<div class="row mt-4 mb-4" id="basketGoods">
-          </c:when>
-          <c:otherwise>
-      	  <!--   <div class="row mt-4 mb-4" id="soldoutDiv" style="filter: opacity(30%);"> -->
-      	    <div class="row mt-4 mb-4" id="soldoutDiv">
-          </c:otherwise>
+         <c:choose>
+         <c:when test="${basket.SHOP_GOODS_AMOUNT == 0}"> 
+	         <style>
+				 .soldoutDiv_${basket.BASKET_NUM} {
+					opacity:30%;
+				}
+			</style>
+         </c:when>
+         <c:when test="${basket.SHOP_GOODS_AMOUNT > 0}"> 
+	         <style>
+				 .soldoutDiv_${basket.BASKET_NUM} {
+					opacity:100%;
+				}
+			</style>
+         </c:when>
          </c:choose>
-          <div class="col-auto align-self-center ms-2">
+         <div class="row mt-4 mb-4">
+          <div class="col-auto align-self-center ms-2 soldoutDiv_${basket.BASKET_NUM}">
             <div class="form-check">
             	<c:choose>
           			<c:when test="${basket.SHOP_GOODS_AMOUNT > 0}">
@@ -143,24 +149,29 @@ button :not(#delete) { filter: opacity(100%); } */
          		 </c:choose>
             </div>
           </div>
-          <div class="col-2 align-self-center">
+          <div class="col-2 align-self-center soldoutDiv_${basket.BASKET_NUM}">
             <img
               src="/sk/image/display?fileName=${basket.GOODS_IMAGE_STD}"
               style="width: 10rem"
             />
           </div>
-          <div class="col-4">
+          <div class="col-4 soldoutDiv_${basket.BASKET_NUM}" data-num="${basket.BASKET_NUM}">
             <div class="ms-1 align-self-center">
-              <p class="mb-2" style="font-weight: 700"> ${basket.BRAND_NAME}</p>
+              <p class="mb-2" style="font-weight: 700">${basket.BRAND_NAME}</p>
               <p class="mb-2" style="font-weight: 700">
-                ${basket.TOTAL_GOODS_NAME} / ${basket.TOTAL_GOODS_MODEL}
+                <c:if test="${basket.SHOP_GOODS_AMOUNT > 0}">
+                	<a href="#" id="goodsName" data-name="${basket.TOTAL_GOODS_NAME}" data-num="${basket.TOTAL_GOODS_NUM}">${basket.TOTAL_GOODS_NAME} / ${basket.TOTAL_GOODS_MODEL}</a> 
+              	</c:if>
+              	 <c:if test="${basket.SHOP_GOODS_AMOUNT == 0}">
+              	 	${basket.TOTAL_GOODS_NAME} / ${basket.TOTAL_GOODS_MODEL}
+             	</c:if>
               </p>
               <p class="mb-2"> ${basket.SHOP_NAME} - ${basket.SHOP_ADD}</p>
               <p class="mb-2"> ${basket.BASKET_SIZE}</p>
             </div>
           </div>
           <div
-            class="col-auto align-self-center text-center"
+            class="col-auto align-self-center text-center soldoutDiv_${basket.BASKET_NUM}"
             style="width: 10rem"
           >
             <h5 class="mb-4">상품가격</h5>
@@ -170,7 +181,7 @@ button :not(#delete) { filter: opacity(100%); } */
             </div>
           </div>
           <div
-            class="col-auto align-self-center text-center"
+            class="col-auto align-self-center text-center soldoutDiv_${basket.BASKET_NUM}"
             style="width: 10rem"
           >
             <h5 class="mb-4">예약금</h5>
@@ -198,21 +209,21 @@ button :not(#delete) { filter: opacity(100%); } */
 	            </button>
           	</c:when>
           	<c:otherwise>
-          		<div class="d-flex justify-content-center">
+          		<div class="d-flex justify-content-center soldoutDiv_${basket.BASKET_NUM}">
           			 <h6 class="align-self-end" id="notification">재고가 없습니다.</h6>
           		</div>
           	</c:otherwise>
           </c:choose>
-            <button
-              class="btn btn-sm btn-secondary ms-5"
-              type="button"
-              style="width: 5rem"
-              name="delete"
-              id="delete"
-              onclick="fn_chkDelete(${basket.BASKET_NUM});"
-            >
-              삭제
-            </button>
+	            <button
+	              class="btn btn-sm btn-secondary ms-5"
+	              type="button"
+	              style="width: 5rem;"
+	              name="delete"
+	              id="delete"
+	              onclick="fn_chkDelete(${basket.BASKET_NUM});"
+	            >
+	              삭제
+	            </button>
           </div>
         </div>
         <!--장바구니 데이터 한줄 끝-->
@@ -235,7 +246,7 @@ button :not(#delete) { filter: opacity(100%); } */
           <p class="mb-1">예약금액</p>
           <div class="d-flex justify-content-center">
          	 <c:set var="totalDeposit" value="${fn:length(list)*totalDeposit}"/>
-            <h4 id="totalDeposit"><fmt:formatNumber type='number' maxFractionDigits='3' value='${totalDeposit}'/></h4>
+            <h4 id="totalDeposit"></h4>
             <h5 class="align-self-end ms-1">원</h5>
           </div>
         </div>
@@ -301,25 +312,30 @@ $(document).ready(function() {
 		 fn_chkDelete();
 	});
 	
-	//var chks = document.getElementsByName("chk");
-	//var chksChecked = 0;
+	$("a[id='goodsName']").on("click", function(e) { //상품명을 클릭하면
+		 e.preventDefault();
+		const goodsNum = $(this).attr("data-num");
+		location.href="/sk/goods/goodsDetail?TOTAL_GOODS_NUM="+goodsNum;
+	});
 	
 	checkAll();
-	calcPrice();
+	fn_calcPrice();
 	
 });
 
 //https://ivory-room.tistory.com/67
 function checkAll() { //전체 체크 함수
-	if($("#selectAll").is(':checked')) {
+	if($("#selectAll").is(':checked')) { //체크되어있으면
 		$("input[name=chk]").prop("checked", true);
+		fn_calcPrice();
 	} else {
 		$("input[name=chk]").prop("checked", false);
+		fn_calcPrice();
 	}
 }
 
-function calcPrice() {
-	var chks = $("input[name=chk]").not()
+function fn_calcPrice() {
+	var chks = document.getElementsByName("chk");
 	var chksChecked = 0;
 	
 	for(var i=0; i<chks.length; i++) {
@@ -354,7 +370,7 @@ $(document).on("click", "input:checkbox[name=chk]", function(e) { //개별 체�
 		}
 	}
 	
-	calcPrice(chks, chksChecked); //체크박스를 클릭할 때마다 금액이 변동되도록 함수 호출
+	fn_calcPrice(chks, chksChecked); //체크박스를 클릭할 때마다 금액이 변동되도록 함수 호출
 	
 	if(chks.length == chksChecked){ //모든 체크박스가 체크되어있으면
 		$("#selectAll").prop("checked", true); //전체선택 버튼을 true로
@@ -364,9 +380,24 @@ $(document).on("click", "input:checkbox[name=chk]", function(e) { //개별 체�
 	
 });
 
+ /* function fn_goodsDetail(goodsNum) {
+//	 const jsonGoodsNum = {TOTAL_GOODS_NUM:goodsNum};
 
+	$.ajax({
+		url:"/sk/goods/goodsDetail",
+		type:'get',
+		contentType:"text",
+		data:goodsNum,
+		success:function() {
+			location.href="/sk/goods/goodsDetail?"+goodsNum;
+		},
+		error:function() {
+			alert("잠시 후 다시 시도해주세요.");
+		}	
+		});
 	
-
+	
+}  */
 
 </script>  
 </html>

@@ -24,19 +24,20 @@
                 	<c:when test="${fn:length(goodsLikeList) > 0}">
                 		<div class="row row-cols-5 g-5" style="margin-left: 6px;">
                 		<c:forEach var="list" items="${goodsLikeList}">
-	                		<a href="#" name="goods">
 	                    		<div class="col">
 			                 		 <div class="card shadow-sm">
+			                 		 	<a href="#" id="goodsImg">
 					                        <img src="/sk/image/display?fileName=${list.GOODS_IMAGE_STD}" height="150px" width="200px" id="like" data-num="${list.TOTAL_GOODS_NUM}"/>
+					                    </a>
 					                    <div class="card-body">
 					                      <p class="card-text mb-1">${list.BRAND_NAME}</p>
-					                      <p class="card-text mb-1" style="font-size: x-small; color: rgb(94, 95, 95);">${list.TOTAL_GOODS_NAME}</p>
+					                      <p class="card-text mb-1" style="font-size: x-small; color: rgb(94, 95, 95);" ><a href="#" id="goodsName">${list.TOTAL_GOODS_NAME}</a></p>
 					                      <p class="card-text mb-1" style="font-size: x-small; color: rgb(94, 95, 95);">${list.TOTAL_GOODS_MODEL}</p>
 					                      <p class="card-text" style="font-size: medium; color: rgb(0, 0, 0); font-weight: bolder;"><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.TOTAL_GOODS_PRICE}"/>원</p>
 					                    </div>
 					                  </div>
 					             </div>
-			                </a>
+			                
 						</c:forEach>
 						</div>
                 	</c:when>
@@ -92,16 +93,22 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
-	
-		$("a[name='goods']").on("click", function(e) { //회원 탈퇴 버튼을 누르면
+		const goodsNum = $('img').attr("data-num");
+		
+		$("a[name='goodsImg']").on("click", function(e) { //상품 이미지를 클릭하면
 			 e.preventDefault();
-			 fn_unlike();
+			 fn_unlike(goodsNum);
+		});
+		
+		$("a[id='goodsName']").on("click", function(e) { //상품명을 클릭하면
+			 e.preventDefault();
+			location.href="/sk/goods/goodsDetail?TOTAL_GOODS_NUM="+goodsNum;
 		});
 
-		function fn_unlike() { //찜 취소 처리
+		function fn_unlike(goodsNum) { //찜 취소 처리
 			//이 함수를 호출할 버튼이 필요함. 임시로 이미지 a태그에 넣어서 구현해봄
-			var goodsNum = $('img').attr("data-num");
-			if(confirm("상품을 목록에서 삭제하시겠습니까?")) {
+			
+			if(confirm("해당 상품을 찜 목록에서 삭제하시겠습니까?")) {
 				$.ajax({
 					url:"/sk/myPage/goodsUnlike",
 					method:'get',
