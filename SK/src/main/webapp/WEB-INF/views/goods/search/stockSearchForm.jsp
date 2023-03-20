@@ -413,7 +413,7 @@
 	  	paymentWidget.renderPaymentMethods('#payment-method', 30000);
 	  	
 	  	paymentWidget.requestPayment({
-	    	  orderId: 10000200,   // selectKey로 max 예약번호 가져와서 가져다쓰기!!!!! 구현필요
+	    	  orderId: 5674238,   // selectKey로 max 예약번호 가져와서 가져다쓰기!!!!! 구현필요
 	    	  orderName: goodsName,
 	    	  successUrl: 'http://localhost:8080/sk/tossPaymentsSuccess?goodsNum=' + goodsNum + '&shopNum=' + shopNum + '&goodsSize=' + goodsSize + '&pickupDate=' + pickupDate,
 	    	  failUrl: 'http://localhost:8080/sk',

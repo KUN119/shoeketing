@@ -13,5 +13,7 @@ public interface InformService {
 
 	// 알림 확인
 	public void confirmUpdate(Map<String, Object> map) throws Exception;
-	
+
+	public int informCount(Map<String, Object> map) throws Exception;
+
 }
