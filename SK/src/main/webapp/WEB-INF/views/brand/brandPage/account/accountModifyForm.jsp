@@ -78,13 +78,18 @@ $(document).ready(function() {
 		var brandLogoFile = $("input[name='BRAND_LOGO_FILE']");
 		var files = brandLogoFile[0].files;
 		
- 		var brandPW = $("#BRAND_PW").val();
+		var brandPW = $("#BRAND_PW").val();
 		var brandAdd = $("#BRAND_ADD").val();
 		var	brandInfo = $("#BRAND_INFO").val();
 		var brandNum = ${brandInfoMap.BRAND_NUM}; 
 		
-		formData.append("BRAND_LOGO_FILE", files[0]);
-		alert(files[0]);
+		// 파일 수정 안했을경우, 기존 파일이름 BRAND_LOGO_FILE로 넣어주기
+		if(files.length == 0){
+			formData.append("BRAND_LOGO_FILE", "${brandInfoMap.BRAND_LOGO_FILE}");
+		}else{  // 파일 수정했을경우, 수정한 파일 BRAND_LOGO_FILE로 넣어주기
+			formData.append("BRAND_LOGO_FILE", files[0]);
+		}
+		
 		formData.append("BRAND_PW", brandPW);
 		formData.append("BRAND_ADD", brandAdd);
 		formData.append("BRAND_INFO", brandInfo);

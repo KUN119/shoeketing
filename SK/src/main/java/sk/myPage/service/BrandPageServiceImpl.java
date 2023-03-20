@@ -48,19 +48,17 @@ public class BrandPageServiceImpl implements BrandPageService {
 	public Map<String, Object> updateBrandInfo(Map<String, Object> map, MultipartHttpServletRequest request) throws Exception {
 		Map<String, Object> resultMap = new HashMap<>();
 
-		Map<String, Object> updateImg = fileUtils.parseUpdateFileInfo(map, request);
-		System.out.println("updateImg 이름 확인 : " + updateImg);
+		Map<String, Object> updateMap = fileUtils.parseUpdateFileInfo(map, request);
+		System.out.println("updateMap 이름 확인 : " + updateMap);
 		
 		//map.put("BRAND_LOGO_FILE", updateImg.get("BRAND_LOGO_FILE"));
-		int updateResult = brandPageDAO.updateBrandInfo(map);
+		int updateResult = brandPageDAO.updateBrandInfo(updateMap);
 
 		if (updateResult == 1) {
 			resultMap.put("updateResult", "pass");
 		} else {
 			resultMap.put("updateResult", "fail");
 		}
-
-		brandPageDAO.updateBrandInfo(map);
 
 		return resultMap;
 	}

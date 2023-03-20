@@ -9,10 +9,12 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import sk.common.service.CommonService;
@@ -161,8 +163,27 @@ public class GoodsController {
 
 	@GetMapping(value = "/brandPage/goodsWriteForm")
 	public ModelAndView goodsWriteForm(Map<String, Object> map) throws Exception {
+		log.debug("###### 브랜드 상품 등록 폼 ######");
 		ModelAndView mv = new ModelAndView("goodsWriteForm");
+		
 		return mv;
+	}
+	
+	@PostMapping(value = "/brandPage/goodsWrite")
+	public Map<String, Object> goodsWrite(MultipartFile[] uploadFile, @RequestParam Map<String, Object> map, HttpSession session) throws Exception {
+		log.debug("###### 브랜드 상품 등록 ######");
+		
+		String a = uploadFile[0].getOriginalFilename();
+		String b = uploadFile[1].getOriginalFilename();
+		String c = uploadFile[2].getOriginalFilename();
+		System.out.println("#########################" + a);
+		System.out.println("#########################" + b);
+		System.out.println("#########################" + c);
+		
+		Map<String, Object> goodsWrite = goodsService.insertGoods(map, session, uploadFile);
+		System.out.println("goodsWrite Map 확인 : " + goodsWrite);
+		
+		return goodsWrite;
 	}
 
 }
