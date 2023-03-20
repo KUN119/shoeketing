@@ -8,7 +8,6 @@
 	<![CDATA[
 		SELECT
          B.BASKET_NUM,
-	     B.BASKET_PRONUM,
 	     B.BASKET_MEM_NUM,
 	     B.BASKET_SHOP_NUM,
 	     B.BASKET_SIZE,

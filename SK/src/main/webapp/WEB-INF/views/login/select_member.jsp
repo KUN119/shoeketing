@@ -240,7 +240,6 @@ $(document).ready(function() {
 	});
 		
 	function fn_findPw() { //비밀번호찾기
-		
 	       var MEM_NAME = $('#reissuePwName').val();
 	       var MEM_EMAIL = $('#reissuePwEmail').val();
 	       var findData = new FormData();
@@ -257,20 +256,22 @@ $(document).ready(function() {
 	            processData: false,
 				contentType: false,
 	            success:function(data) {
-	            	if(data != null) {
+	            	if(data == "success") {
 	            		$(".findPwResultDiv").empty();
 	            		$(".findPwResultDiv").append("입력하신 이메일을 확인해주세요.");
+	            		alert("입력하신 이메일을 확인해주세요.");
 	            		$("#findPwModal").modal("hide");
 	            		$("#findPwResultModal").modal("show");
-	            	}
-	            },
-	            error:function(data) {
-	            	if(data === 'fail'){
-		            	$(".findPwResultDiv").empty();
+	            	} else if (data == "fail") {
+	            		$(".findPwResultDiv").empty();
 		         		$(".findPwResultDiv").append("입력하신 정보와 일치한 회원정보가 없습니다.");
+		         		alert("입력하신 정보와 일치한 회원정보가 없습니다.");
 		         		$("#findPwModal").modal("hide");
 		         		$("#findPwResultModal").modal("show");
 	            	}
+	            },
+	            error:function() {
+	            	alert("서버 오류");
 	            }
 	       }); 
 	};

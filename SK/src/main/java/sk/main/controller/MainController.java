@@ -1,5 +1,6 @@
 package sk.main.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import sk.common.service.CommonService;
 import sk.common.service.InformService;
@@ -46,9 +50,6 @@ public class MainController {
 		log.debug("###### totalSearch ######");
 		ModelAndView mv = new ModelAndView("totalSearch");
 
-		map.put("START", 1);
-		map.put("END", 10);
-
 		Object keyword = map.get("keyword");
 		if (keyword == null || ((String) keyword).isEmpty()) {
 			return mv;
@@ -56,22 +57,39 @@ public class MainController {
 		mv.addObject("keyword", keyword);
 		System.out.println("keyword: " + keyword);
 
-		List<Map<String, Object>> barndList = mainService.BrandSearch(map);
+		List<Map<String, Object>> brandList = mainService.BrandSearch(map);
 		List<Map<String, Object>> goodsList = mainService.GoodsSearch(map);
 		List<Map<String, Object>> shopList = mainService.ShopSearch(map);
 
-		mv.addObject("brandList", barndList);
+		mv.addObject("brandList", brandList);
 		mv.addObject("shopList", shopList);
 		mv.addObject("goodsList", goodsList);
-
+		
+		// 더보기 로직 실행 시(totalSearch.jsp 187번행) List<Map<String, Object>> 대신 List<JsonObject>가 필요함
+		List<JsonObject> goodsJson = new ArrayList<>();
+		
+		for(Map<String, Object> goodsMap : goodsList) {
+			Gson gson = new Gson();
+	        JsonObject json = gson.toJsonTree(goodsMap).getAsJsonObject();
+	        goodsJson.add(json);
+		}
+		mv.addObject("goodsJson", goodsJson);
+		
+		List<JsonObject> shopJson = new ArrayList<>();
+		
+		for(Map<String, Object> shopMap : shopList) {
+			Gson gson = new Gson();
+	        JsonObject json = gson.toJsonTree(shopMap).getAsJsonObject();
+	        shopJson.add(json);
+		}
+		mv.addObject("shopJson", shopJson);
+		
 		return mv;
 	}
 
 	@RequestMapping(value = "/totalSearch_ajax")
 	public Map<String, Object> totalSearch_ajax(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("###### totalSearch_ajax ######");
-		map.put("START", 1);
-		map.put("END", 10);
 
 		Map<String, Object> info = new HashMap<String, Object>();
 

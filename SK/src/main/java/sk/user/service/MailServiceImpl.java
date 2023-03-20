@@ -30,16 +30,15 @@ public class MailServiceImpl implements MailService {
 	@Override
 	public String joinEmail(Map<String, Object> map) throws Exception {
 		System.out.println("map: " + map);
-		
 		Map<String, Object> pw = loginDAO.findPwWithEmail(map);
 		String pww = "";
 		
-		Object memPw = pw.get("MEM_PW");
-		if (memPw == null || ((String) memPw).isEmpty()) {
+		if (pw == null) {
 		    pww = "";
 		} else {
-		    pww = (String) memPw;
+		    pww = pw.get("MEM_PW").toString();
 		}
+		System.out.println("pww: " + pww);
 		
 		if(pww == "" || pww == null) {
 			return "fail";

@@ -18,8 +18,8 @@
 			SELECT COUNT(*)
 			FROM MEMBER
 			WHERE MEM_NAME = #{MEM_NAME} 
-            	AND MEM_PHONE = #{MEM_PHONE}
-            	AND MEM_DEL_GB = 'Y'     
+            AND MEM_PHONE = #{MEM_PHONE}
+            AND MEM_DEL_GB = 'Y'     
 	]]>
 	</select>
 	
