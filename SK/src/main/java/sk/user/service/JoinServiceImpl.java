@@ -6,16 +6,22 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
+import sk.common.util.FileUtils;
 import sk.user.dao.JoinDAO;
 
 @Service("joinService")
 public class JoinServiceImpl implements JoinService {
+	
+	@Resource(name = "fileUtils")
+	private FileUtils filesUtils;
 	
 	@Resource(name = "joinDAO")
 	private JoinDAO joinDAO;
@@ -58,9 +64,13 @@ public class JoinServiceImpl implements JoinService {
 	
 	// 브래드 회원가입 성공
 	@Override
-	public void insertBrand(Map<String, Object> map) throws Exception {
+	public void insertBrand(Map<String, Object> map, MultipartHttpServletRequest request) throws Exception {
+		
+		String BRAND_LOGO_FILE = filesUtils.parseBrandLogoFile(map, request);
+		map.put("BRAND_LOGO_FILE", BRAND_LOGO_FILE);
 		
 		joinDAO.insertBrand(map);
+
 	}
 
 	//매장 위치정보 확인

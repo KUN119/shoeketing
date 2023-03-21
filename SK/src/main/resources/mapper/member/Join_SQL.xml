@@ -18,8 +18,8 @@
 			SELECT COUNT(*)
 			FROM MEMBER
 			WHERE MEM_NAME = #{MEM_NAME} 
-            	AND MEM_PHONE = #{MEM_PHONE}
-            	AND MEM_DEL_GB = 'Y'     
+            AND MEM_PHONE = #{MEM_PHONE}
+            AND MEM_DEL_GB = 'Y'     
 	]]>
 	</select>
 	
@@ -85,7 +85,7 @@
    </insert>
    
    <!-- 매장 회원 가입성공 -->
-   <insert id="insertShop" parameterType="hashmap">
+   <insert id="insertShop" parameterType="hashmap" >
    <![CDATA[  
       INSERT INTO SHOP(
                 	SHOP_NUM,

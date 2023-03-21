@@ -51,11 +51,49 @@
       </table>
       <div class="row">
         <div class="col-12 text-end">
-          <button type="button" class="btn btn-primary" style="width: 6rem">
+          <button type="button" class="btn btn-primary" name="noticeWrite" style="width: 6rem">
             작성
           </button>
         </div>
       </div>
     </div>
   </body>
+  
+ <script>
+  $(document).ready(function() { 
+		$("button[name='noticeWrite']").on("click", function(e) { 
+			e.preventDefault();
+			fn_noticeWrite();
+		});
+		
+		function fn_noticeWrite() {
+			var formData = new FormData();
+			
+			var NOTICE_TITLE = $("#NOTICE_TITLE").val();
+			var NOTICE_CONTENT = $("#NOTICE_CONTENT").val();
+			
+			formData.append("NOTICE_TITLE", NOTICE_TITLE);
+			formData.append("NOTICE_CONTENT", NOTICE_CONTENT);
+			
+			$.ajax({
+				type : 'post',
+				url : '/sk/admin/noticeWrite',
+				data : formData,
+				processData : false,
+				contentType : false,
+				success : function(data){
+					if(data== 1){
+						alert("공지사항이 작성되었습니다.");
+						location.href='/sk/admin/noticeList';
+					} else {
+						alert("공지사항이 작성 실패");
+					}
+				},
+				error : function(){
+					alert("오류 발생");
+				}
+			});	
+		};
+	});
+</script>
 </html>

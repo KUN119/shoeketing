@@ -131,6 +131,7 @@
 	              id="MEM_PHONE"
 	              name="MEM_PHONE"
 	              placeholder="휴대전화 입력"
+	              pattern="^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$"
 	              required
 	            />
 	            <button class="btn btn-outline-secondary" name="phoneCheck" type="button" id="phoneChk" style="font-size: 15px; width: 100px;">인증번호 보내기</button>
@@ -227,6 +228,42 @@
     			  }
     		});
     	};
+    	
+    	$("button[name='userJoin']").on("click", function(e) { 
+    		e.preventDefault();
+    		fn_delCheck();
+    	});
+
+    	function fn_delCheck() { 
+    		var MEM_NAME = $('#MEM_NAME').val();
+    		var MEM_PHONE = $('#MEM_PHONE').val();
+    		alert(MEM_NAME);
+    		alert(MEM_PHONE);
+    		
+    		var formData = new FormData();
+    		
+    		formData.append("MEM_NAME", MEM_NAME);
+    		formData.append("MEM_PHONE", MEM_PHONE);
+    		
+	    	$.ajax({
+	            url: '/sk/memberJoin/joinAvailable',
+	            type:'POST',
+	            data:formData,
+	            processData: false,
+				contentType: false,
+	            success:function(data) {
+	            	if(data == "success") {
+	            		alert("회원가입에 성공하였습니다.");
+	            	} else if (data == "fail") {
+	            		alert("회원탈퇴 후 7일이 지나지 않았습니다.");
+	            	}
+	            },
+	            error:function() {
+	            	alert("서버 오류");
+	            }
+	       }); 
+    	};
+    	
     });
    
    //휴대폰 번호 인증
@@ -271,6 +308,30 @@
      		$(this).attr("autofocus",true);
      	}
      });
+   
+   	/* //가입여부
+     var name = $("#MEM_NAME").val();
+     var phone = $("#MEM_PHONE").val();
+     
+     $.ajax({
+         url: "/sk/memberJoin/joinAvailable",
+         type: "post",
+         data: {
+             MEM_NAME: name,
+             MEM_PHONE: phone
+         },
+         dataType: "json",
+         success: function(data) {
+             if (data.withdrawal == true) {
+                 $("#result").text("해당 회원은 이미 탈퇴한 회원입니다.");
+             } else {
+                 $("#result").text("해당 회원은 탈퇴하지 않았습니다.");
+             }
+         },
+         error: function(xhr, status, error) {
+             console.log("에러 발생: " + error);
+         }
+     }); */
 
      
    //유효성검증
@@ -293,25 +354,26 @@ Array.from(forms).forEach((form) => {
 
         form.classList.add('was-validated');
 
-        /* var MEM_EMAIL = $('#MEM_EMAIL').val();
+        //이메일 
+        var memberEmail = $('#MEM_EMAIL').val();
         var emailRule = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
         
-        if (MEM_EMAIL == null || $.trim(MEM_EMAIL) == '' || !emailRule.test(MEM_EMAIL)) {
+        if (memberEmail == null || $.trim(memberEmail) == '') {
             $("#MEM_EMAIL").addClass('is-invalid');
             $("#email-null").show();
             $("#email-type").hide();
             $("#MEM_EMAIL").focus();
             pass = false;
-        } else {
+        } else if (!emailRule.test(memberEmail)){
             $("#email-null").hide();
-            if (!emailRule.test(MEM_EMAIL)) {
                 $("#email-type").show();
                 $("#MEM_EMAIL").focus();
                 pass = false;
-            } else {
+        }
+            else {
                 $("#email-type").hide();
             }
-        } */
+        
         
         //비밀번호
          let pwdval = $('#MEM_PW').val()
@@ -340,6 +402,16 @@ Array.from(forms).forEach((form) => {
 			  $("#pw2-same").show();
 		      $("#MEM_PW2").focus();
 	      } 
+	      
+	      //핸드폰
+	      var phoneNum = $('#MEM_PHONE').val();
+	      var phoneCheck = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+	      
+	      if(!phoneCheck.test(phoneNum)){
+	    	  alert('잘못된 휴대폰 번호입니다.');
+	    	  $('#MEM_PHONE').focus();
+	    	  
+	      }
 
     });
 });

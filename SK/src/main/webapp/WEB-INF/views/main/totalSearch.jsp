@@ -65,8 +65,7 @@
       <!--검색 키워드 끝-->
 
       <!--브랜드 검색 결과 시작-->
-      <form id="bInfo">
-      <div class="row ms-2 mb-5 d-flex">
+      <div id="bInfo" class="row ms-2 mb-5 d-flex">
       <c:forEach var="brand" items="${brandList}" varStatus="status">
            <div class="col-2 d-flex mb-2">
            <a class="d-flex" name='bDetail' data-num="${brand.BRAND_NUM}">
@@ -82,7 +81,6 @@
           </div> 
       </c:forEach>
       </div>
-      </form>
       <!--브랜드 검색 결과 끝-->
 
       <!--상품 검색결과 리스트 시작-->
@@ -91,8 +89,8 @@
         <hr />
 
 	<div id='gInfo' class="row">
-	<c:forEach var="goods" items="${goodsList}" varStatus="status">
-         <div class="col-6 mt-4 mb-4 d-flex">
+	<c:forEach begin="0" end="3" var="goods" items="${goodsList}" varStatus="status">
+         <div class="col-6 mt-4 mb-4 d-flex goodsCnt">
           <a href="#" class="d-flex" name='gDetail' data-num='${goods.TOTAL_GOODS_NUM}'>
             <img
               src='/sk/image/display?fileName=${goods.GOODS_IMAGE_STD}'
@@ -110,9 +108,18 @@
 
         <!--상품 검색결과 더보기 시작-->
         <div class="row">
-          <a href="#" class="ms-4" style="font-weight: 500" id="goodsMore">
-          	<p>검색결과 더보기<i class="bi bi-chevron-down ms-2"></i></p>
-          </a>
+        	<c:choose>
+	        	<c:when test="${fn:length(goodsList) > 4}">
+		          <a href="#" class="ms-4" style="font-weight: 500" id="goodsMore">
+		          	<p>검색결과 더보기<i class="bi bi-chevron-down ms-2"></i></p>
+		          </a>
+		        </c:when>
+		        <c:when test="${fn:length(goodsList) == 0 }">
+				    <class="ms-4" style="font-weight: 500" >
+				        <p>해당 상품 검색결과가 없습니다.</p>
+				    </class>
+				</c:when>
+			</c:choose>
           <hr/>
         </div>
         <!--상품 검색결과 더보기 끝-->
@@ -125,8 +132,8 @@
         <hr />
         
 <form id='sInfo'>  
-<c:forEach var="shopList" items="${shopList}" varStatus="status">
-          <div class="row mt-2 mb-2">
+	<c:forEach begin="0" end="3" var="shopList" items="${shopList}" varStatus="status">
+          <div class="row mt-2 mb-2 shopCnt">
             <div class="col-2 align-self-center text-center">
               <p class="fw-semibold" style="font-size: large">${shopList.SHOP_NAME}</p>
             </div>
@@ -136,13 +143,13 @@
                   <p style="font-weight: 500">전화번호</p>
                 </div>
                 <div class="col-4">
-                  <p>${shopList.SHOP_TEL }</p>
+                  <p>${shopList.SHOP_TEL}</p>
                 </div>
                 <div class="col-2">
                   <p style="font-weight: 500">영업시간</p>
                 </div>
                 <div class="col-4">
-                  <p>${shopList.SHOP_START_TIME } ~ ${shopList.SHOP_END_TIME}</p>
+                  <p>${shopList.SHOP_START_TIME} ~ ${shopList.SHOP_END_TIME}</p>
                 </div>
               </div>
 
@@ -151,26 +158,35 @@
                   <p style="font-weight: 500">주소</p>
                 </div>
                 <div class="col-4">
-                  <p>${shopList.SHOP_ADD }</p>
+                  <p>${shopList.SHOP_ADD}</p>
                 </div>
                 <div class="col-2">
                   <p style="font-weight: 500">브랜드명</p>
                 </div>
                 <div class="col-4">
-                  <p>${shopList.SHOP_BRAND }</p>
+                  <p>${shopList.SHOP_BRAND}</p>
                 </div>
               </div>
             </div>
           </div>
         <hr /> 
-</c:forEach>
+	</c:forEach>
 </form>
 
         <!--매장 검색결과 더보기 시작-->
         <div class="row">
-          <a href="#" class="ms-4" style="font-weight: 500" id='shopMore'>
-          <p>검색결과 더보기<i class="bi bi-chevron-down ms-2"></i></p>
-          </a>
+        	<c:choose>
+		        <c:when test="${fn:length(shopList) > 4 }">
+			       <a href="#" class="ms-4" style="font-weight: 500" id='shopMore'>
+			          <p>검색결과 더보기<i class="bi bi-chevron-down ms-2"></i></p>
+			       </a>
+			     </c:when>
+			     <c:when test="${fn:length(shopList) == 0 }">
+			       <class="ms-4" style="font-weight: 500" >
+			          <p>해당 매장 검색결과가 없습니다.</p>
+			       </class>
+			     </c:when>
+			 </c:choose>
           <hr />
         </div>
         <!--매장 검색결과 더보기 끝-->
@@ -182,8 +198,11 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	
-	var values2;
-	var values3;
+	var values2 = ${goodsJson};
+	var values3 = ${shopJson};
+	
+	console.log(values2);
+	console.log(values3);
 	
 	$("a[name='bDetail']").on("click", function(e) {  //브랜드관으로 넘어가기
 		e.preventDefault();
@@ -242,6 +261,9 @@ $(document).ready(function() {
 				values2 = data.goodsList;
 				values3 = data.shopList;
 				
+				console.log(values2);
+				console.log(values3);
+				
 				//기존의 list 비우고
 				$("#bInfo").empty();
 				$("#gInfo").empty();
@@ -249,12 +271,13 @@ $(document).ready(function() {
 				
 				//index[0]부터 value 넣어서 반복문 돌려주기
 				$.each(values, function(index, value) {
+					var bNum = value.BRAND_NUM;
 					var bName = value.BRAND_NAME;
 					var bLogo = value.BRAND_LOGO_FILE;
 					
 					var b = "";
 					b += "<div class='col-2 d-flex mb-2'>";
-					b += "<a class='d-flex' name='bDetail' data-num='${brand.BRAND_NUM}'>";
+					b += "<a class='d-flex' name='bDetail' data-num='"+ bNum +"'>";
 					b += "<img src='/sk/image/display?fileName=" + bLogo + "' class='img-thumbnail' style='height: 5rem; width: 6rem'/>";
 					b += "<h6 class='ms-3 mb-0 align-self-center' style='font-weight: 700; font-size: 18px'>";
 					b +=  bName + "<i class='bi bi-chevron-right' style='font-weight: 700'></i>";
@@ -263,6 +286,15 @@ $(document).ready(function() {
 					b += "</div>";
 	            
                 $("#bInfo").prepend(b);
+                
+              //ajax로 검색할 경우 ajax내부에 클릭 함수를 넣어줘야됨
+                $("a[name='bDetail']").on("click", function(e) {  //브랜드관으로 넘어가기
+					e.preventDefault();
+					const num = $(this).attr("data-num");  //a태그 name이 title 부분 속성의 data-num값 가져와서 변수 num에 저장
+					fn_bDetail(num); //fn_bDetail()함수 매개변수로 num 전송
+					location.href="/sk/brand/main?BRAND_NUM=" + num;
+				});
+              
 				});
 				
 				//values2 배열?리스트?의 크기가 0,1,2,3으로 4개 이하면 더보기 버튼 숨기기
@@ -277,6 +309,7 @@ $(document).ready(function() {
 	                console.log("GOODS " + index + " : " + value); //로그 한번 찍어주고 근데 값이 Object로 나옴..
 	                
 	                //value값에 맞는 변수명 설정해주고..
+	                var gNum = value.TOTAL_GOODS_NUM;
 					var bName = value.BRAND_NAME;
 					var gImg = value.GOODS_IMAGE_STD;
 					var gName = value.TOTAL_GOODS_NAME;
@@ -286,7 +319,7 @@ $(document).ready(function() {
 					//위 변수 넣고 돌려
 			        var g = "";
 			            g +="<div class='col-6 mt-4 mb-4 d-flex goodsCnt'>";
-			            g +=  "<a href='#' class='d-flex' name='gDetail' data-num='${goods.TOTAL_GOODS_NUM}'>";
+			            g +=  "<a href='#' class='d-flex' name='gDetail' data-num='"+ gNum +"'>";
 			            g += "<img src='/sk/image/display?fileName=" + gImg + "'";
 			            g +=    "style='width: 14rem'/>";
 			            g +=  "<div class='ms-5 align-self-center'>";
@@ -303,6 +336,13 @@ $(document).ready(function() {
 			            if(index == 3) {
 			                return false;
 			             }
+			            
+			            $("#gInfo").on("click", "a[name='gDetail']", function(e) {  //상품 상세보기 페이지로 넘어가기
+		            		e.preventDefault();
+		            		const num = $(this).attr("data-num");  //a태그 name이 title 부분 속성의 data-num값 가져와서 변수 num에 저장
+		            		fn_gDetail(num); //fn_gDetail()함수 매개변수로 num 전송
+		            		location.href="/sk/goods/goodsDetail?TOTAL_GOODS_NUM=" + num;
+		            	});
 				});
 	                
 				//위 처럼 똑같이 버튼 숨기고 보여주고 하기
@@ -362,27 +402,10 @@ $(document).ready(function() {
                 s+="<hr />";
                 
                 $("#sInfo").prepend(s);
-                
 	                if(index == 3) {
 	                	return false;
 	                }
 				});
-                
-                //ajax로 검색할 경우 ajax내부에 클릭 함수를 넣어줘야됨
-                $("a[name='bDetail']").on("click", function(e) {  //브랜드관으로 넘어가기
-            		e.preventDefault();
-            		const num = $(this).attr("data-num");  //a태그 name이 title 부분 속성의 data-num값 가져와서 변수 num에 저장
-            		fn_bDetail(num); //fn_bDetail()함수 매개변수로 num 전송
-            		location.href="/sk/brand/main?BRNAD_NUM=" + num;
-            	});
-                
-                $("#gInfo").on("click", "a[name='gDetail']", function(e) {  //상품 상세보기 페이지로 넘어가기
-            		e.preventDefault();
-            		const num = $(this).attr("data-num");  //a태그 name이 title 부분 속성의 data-num값 가져와서 변수 num에 저장
-            		fn_gDetail(num); //fn_gDetail()함수 매개변수로 num 전송
-            		location.href="/sk/goods/goodsDetail?TOTAL_GOODS_NUM=" + num;
-            	});
-                
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
 		        console.log('Ajax request failed: ' + textStatus + ', ' + errorThrown);

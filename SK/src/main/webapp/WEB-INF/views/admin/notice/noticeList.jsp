@@ -42,31 +42,17 @@
           </tr>
         </thead>
         <tbody class="table-group-divider">
-          <tr>
-            <td>1</td>
-            <td><a href="/sk/admin/noticeDetail">[공지] 회원 탈퇴 안내</a></td>
-            <td>23/03/03</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td><a href="/sk/admin/noticeDetail">개인정보처리방침 변경 내역_2023년 2월 13일 이후</a></td>
-            <td>23/03/03</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td><a href="/sk/admin/noticeDetail">뉴발란스 신발 소비자 가격 인상 안내</a></td>
-            <td>23/03/03</td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td><a href="/sk/admin/noticeDetail">헌신 줄게, 새신다오 이벤트 당첨자 안내</a></td>
-            <td>23/03/03</td>
-          </tr>
-          <tr>
-            <td>5</td>
-            <td><a href="/sk/admin/noticeDetail">크리스마스 기획전 당첨자 발표 관련 안내</a></td>
-            <td>23/03/03</td>
-          </tr>
+         <c:choose>
+        	<c:when test="${fn:length(noticeList) > 0}">
+        		<c:forEach items="${noticeList}" var="notice" varStatus="status" begin="0" end="10">
+		          <tr>
+				  <th scope="row">${notice.NOTICE_NUM}</th> 
+		          	<td style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap; max-width:200px;" title="${notice.NOTICE_TITLE}"><a href="#" name="title" class="text-dark" data-num="${notice.NOTICE_NUM}">${notice.NOTICE_TITLE}</a></td> <!-- NOTICE_TITLE -->
+		            <td>${notice.NOTICE_DATE}</td> <!-- NOTCIE_DATE -->
+		          </tr>  
+		    	</c:forEach>
+			</c:when>
+         </c:choose>
         </tbody>
       </table>
 
@@ -89,4 +75,53 @@
       </nav>
     </div>
 </body>
+<script>
+$(document).ready(function() {
+
+  $("a[name='title']").on("click", function(e) {  // 공지사항 상세보기
+		e.preventDefault();
+		const num = $(this).attr("data-num");  //a태그 name이 title 부분 속성의 data-num값 가져와서 변수 num에 저장
+		fn_noticeDetail(num); //fn_noticeDetail()함수 매개변수로 num 전송
+		location.href="/sk/admin/noticeDetail?NOTICE_NUM=" + num;
+	});
+  
+  function fn_noticeDetail(num) {  //num 매개변수로 넣기
+	  
+	  var formData = new FormData();
+      var NOTICE_NUM = num;
+  
+      formData.append("NOTICE_NUM", NOTICE_NUM);
+  };
+  
+  $("button[name='noticeSearch']").on("click", function(e){  //공지사항 검색
+		e.preventDefault();
+		fn_noticeSearch();
+	});
+  
+  function fn_noticeSearch(){
+		
+		var formData = new FormData();
+		var keyword = $('#keyword').val();
+		var searchType = $('#searchType').val();
+		
+		formData.append("keyword", keyword);
+		formData.append("searchType", searchType);
+		
+		$.ajax({
+			url: '/sk/noticeList_ajax',
+			type: 'POST',
+			data: formData,
+			processData: false,
+			contentType: false,
+			success: function(data) {
+				$("#noticeListBody").empty();
+				$('#noticeListBody')[0].innerHTML=data;
+			},
+			error: function(xhr, status, error) {
+				console.log('실패');
+			}
+		});
+	};
+});
+</script>
 </html>

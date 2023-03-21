@@ -15,9 +15,10 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 public class FileUtils {
 	
 	// 브랜드 기본 정보 로고 파일 수정
-	public Map<String, Object> parseUpdateFileInfo(Map<String, Object> map, MultipartHttpServletRequest request)
+	public String parseBrandLogoFile(Map<String, Object> map, MultipartHttpServletRequest request)
 			throws Exception {
 		String filePath_temp = "C:\\goods_image\\"; // 로컬 경로에 업로드
+		// String filePath_temp = "/Users/book/uploadImage/"; // 맥북 경로  /Users/macbook-id/uploadImage/
 		System.out.println(filePath_temp);
 		System.out.println("map : " + map);
 		
@@ -26,7 +27,7 @@ public class FileUtils {
 		String originalFileName = null;
 		String originalFileExtension = null;
 		String storedFileName = null;
-		File file = new File(filePath_temp);
+		File file = new File(filePath_temp);  //경로에 폴더 없으면 만들어줌
 
 		// 업로드할 폴더가 없을경우, 폴더 생성
 		if (file.exists() == false) {

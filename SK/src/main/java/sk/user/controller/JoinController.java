@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import sk.user.service.JoinService;
@@ -78,29 +78,27 @@ public class JoinController {
 	public @ResponseBody String joinAvailable(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("###### 회원가입 가능 여부 검토 ######");
 		
-		String result = "";
-		    
-//		int check = joinService.selectDelGB(map);
-//		    System.out.println("check : " + check);
-//
-//		    String result = "";
-//
-//			if (check == 1) {
-//				// DB에 회원가입 처리 전, 회원 탈퇴한 이력이 있고 7일 지났는지 여부 확인
-//				int delCount = joinService.selectDelCount(map);
-//				System.out.println("delCount : " + delCount);
-//
-//				if (delCount == 0) { // 회원 탈퇴 후 7일이 지나지 않았을 경우
-//					result = "fail";
-//				} else { // 회원 탈퇴 후 7일이 지났거나, 혹은 처음으로 가입할 경우
-//					// DB에 회원가입 처리
-//					joinService.insertMember(map);
-//					result = "success";
-//				}
-//			} else {
-//				joinService.insertMember(map);
-//				result = "success";
-//			}
+		int check = joinService.selectDelGB(map);
+		    System.out.println("check : " + check);
+
+		    String result = "";
+
+			if (check == 1) {
+				// DB에 회원가입 처리 전, 회원 탈퇴한 이력이 있고 7일 지났는지 여부 확인
+				int delCount = joinService.selectDelCount(map);
+				System.out.println("delCount : " + delCount);
+
+				if (delCount == 0) { // 회원 탈퇴 후 7일이 지나지 않았을 경우
+					result = "fail";
+				} else { // 회원 탈퇴 후 7일이 지났거나, 혹은 처음으로 가입할 경우
+					// DB에 회원가입 처리
+					joinService.insertMember(map);
+					result = "success";
+				}
+			} else {
+				joinService.insertMember(map);
+				result = "success";
+			}
 
 			return result;
 	}
@@ -137,12 +135,11 @@ public class JoinController {
 
 	//브랜드 회원가입 성공
 	@PostMapping(value = "/brandJoin/joinSuccess")
-	public ModelAndView brandInsertMember(@RequestParam Map<String, Object> map) throws Exception {
+	public ModelAndView brandInsertMember(@RequestParam Map<String, Object> map, MultipartHttpServletRequest request) throws Exception {
 		log.debug("###### 브랜드회원가입 성공 ######");
 
 		ModelAndView mv = new ModelAndView("main");
-		
-		joinService.insertBrand(map);
+		joinService.insertBrand(map, request);
 
 		return mv;
 	}
@@ -167,6 +164,7 @@ public class JoinController {
 		log.debug("###### 매장 회원가입성공 ######");
 		ModelAndView mv = new ModelAndView("main");
 		joinService.insertShop(map);
+
 		return mv;
 	}
 

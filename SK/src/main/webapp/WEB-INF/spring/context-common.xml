@@ -60,7 +60,7 @@
       <beans:property name="host" value="smtp.gmail.com" />
       <beans:property name="port" value="587" />
       <beans:property name="username" value="shoeketing@gmail.com" />
-      <beans:property name="password" value="ybmambjefsllkzjc" />
+      <beans:property name="password" value="ysvrkwidextljpcu" />
       <beans:property name="javaMailProperties">
          <beans:props>
             <beans:prop key="mail.transport.protocol">smtp</beans:prop>
