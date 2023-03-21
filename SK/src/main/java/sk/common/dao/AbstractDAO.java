@@ -1,7 +1,9 @@
 package sk.common.dao;
 
 import java.util.List;
+import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -57,30 +59,25 @@ public class AbstractDAO {
 		return sqlSession.selectList(queryId, params);
 	}
 
-	// 페이징 세부사항 수정이 필요할 수 있음
+	@SuppressWarnings("unchecked")
+	public Object selectPagingList(String queryId, Object params) {
+		printQueryId(queryId);
+		Map<String, Object> map = (Map<String, Object>) params;
 
-//	@SuppressWarnings("unchecked")
-//	public Object selectPagingList(String queryId, Object params) {
-//		printQueryId(queryId);
-//		Map<String, Object> map = (Map<String, Object>) params;
-//
-//		String strPageIndex = (String) map.get("PAGE_INDEX");
-//		String strPageRow = (String) map.get("PAGE_ROW");
-//		int nPageIndex = 0;
-//		int nPageRow = 15;
-//
-//		if (StringUtils.isEmpty(strPageIndex) == false) {
-//			nPageIndex = Integer.parseInt(strPageIndex) - 1;
-//		}
-//		if (StringUtils.isEmpty(strPageRow) == false) {
-//			nPageRow = Integer.parseInt(strPageRow);
-//		}
-//		map.put("START", (nPageIndex * nPageRow) + 1);
-//		map.put("END", (nPageIndex * nPageRow) + nPageRow);
-//		map.put("KEYWORD", (String) map.get("KEYWORD"));
-//		map.put("SEARCHTYPE", (String) map.get("SEARCHTYPE"));
-//
-//		return sqlSession.selectList(queryId, map);
-//	}
+		String strPageIndex = (String) map.get("PAGE_INDEX"); // 현제 페이지
+		String strPageRow = (String) map.get("PAGE_ROW"); // 페이지 당 표시될 게시들 수
+		int nPageIndex = 0;
+		int nPageRow = 10;
+
+		if (StringUtils.isEmpty(strPageIndex) == false) {
+			nPageIndex = Integer.parseInt(strPageIndex) - 1;
+		}
+		if (StringUtils.isEmpty(strPageRow) == false) {
+			nPageRow = Integer.parseInt(strPageRow);
+		}
+		map.put("START", (nPageIndex * nPageRow) + 1);
+		map.put("END", (nPageIndex * nPageRow) + nPageRow);
+
+		return sqlSession.selectList(queryId, map);
+	}
 }
-

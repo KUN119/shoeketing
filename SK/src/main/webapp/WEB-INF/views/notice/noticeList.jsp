@@ -39,7 +39,7 @@
 
       <div class="row">
         <table class="table text-center">
-          <thead>
+          <thead id="asd">
           <tr>
             <th>번호</th>
             <th>제목</th>
@@ -54,7 +54,7 @@
         		<c:forEach items="${noticeList}" var="notice" varStatus="status" begin="0" end="10">
 		          <tr>
 				  <th scope="row">${notice.NOTICE_NUM}</th> 
-		          	<td style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap; max-width:200px;" title="${notice.NOTICE_TITLE}"><a href="#" name="title" class="text-dark" data-num="${notice.NOTICE_NUM}">${notice.NOTICE_TITLE}</a></td> <!-- NOTICE_TITLE -->
+		          	<td style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap; max-width:200px;"><a href="#" name="title" class="text-dark" data-num="${notice.NOTICE_NUM}">${notice.NOTICE_TITLE}</a></td> <!-- NOTICE_TITLE -->
 		            <td>${notice.NOTICE_DATE}</td> <!-- NOTCIE_DATE -->
 		          </tr>  
 		    	</c:forEach>
@@ -63,32 +63,44 @@
         </tbody>
         </table>
       </div>
+      	
+      	<!-- 페이징 화면 처리 부분 시작 -->
+      	<div id="PAGE_NAVI"></div>
+		<input type="hidden" id="PAGE_INDEX" name="PAGE_INDEX"/>
+		<!-- 페이징 화면 처리 부분 끝 -->
+		
     </div>
   </body>
 <script>
 $(document).ready(function() {
+	
+	// 페이지 로딩 시 자동으로 1페이지 가져오기
+	fn_selectNoticeList(1);
 
-  $("a[name='title']").on("click", function(e) {  // 공지사항 상세보기
+   $("a[name='title']").on("click", function(e) {  // 공지사항 상세보기
 		e.preventDefault();
 		const num = $(this).attr("data-num");  //a태그 name이 title 부분 속성의 data-num값 가져와서 변수 num에 저장
 		fn_noticeDetail(num); //fn_noticeDetail()함수 매개변수로 num 전송
 		location.href="/sk/noticeDetail?NOTICE_NUM=" + num;
 	});
   
-  function fn_noticeDetail(num) {  //num 매개변수로 넣기
+  
+});
+
+function fn_noticeDetail(num) {  //num 매개변수로 넣기
 	  
-	  var formData = new FormData();
-      var NOTICE_NUM = num;
-  
-      formData.append("NOTICE_NUM", NOTICE_NUM);
-  };
-  
-  $("button[name='noticeSearch']").on("click", function(e){  //공지사항 검색
+	var formData = new FormData();
+    var NOTICE_NUM = num;
+
+    formData.append("NOTICE_NUM", NOTICE_NUM);
+};
+
+	$("button[name='noticeSearch']").on("click", function(e){  //공지사항 검색
 		e.preventDefault();
 		fn_noticeSearch();
 	});
-  
-  function fn_noticeSearch(){
+
+	function fn_noticeSearch(){
 		
 		var formData = new FormData();
 		var keyword = $('#keyword').val();
@@ -112,6 +124,58 @@ $(document).ready(function() {
 			}
 		});
 	};
-});
+	
+	// 페이징 함수
+	function fn_selectNoticeList(pageNo){
+		var comAjax = new ComAjax();
+		comAjax.setUrl("/sk/noticeList/paging");
+		comAjax.setCallback("fn_selectNoticeListCallback");
+		comAjax.addParam("PAGE_INDEX",pageNo);
+		comAjax.addParam("PAGE_ROW", 10); //한 페이지에 보여줄 게시글 수 정하기
+		comAjax.ajax();
+	}
+	
+	// 페이징 콜백 함수
+	function fn_selectNoticeListCallback(data){ // 페이지 선택 시 화면에 보여줄 결과 콜백함수
+		var total = data.TOTAL;
+		var body = $("table>tbody"); // 페이징 한 결과가 반영될 태그
+		
+		body.empty();
+		
+		if(total == 0){ // 결과가 없을 경우
+			var str = "<tr>" + 
+							"<td colspan='3'>조회된 결과가 없습니다.</td>" + 
+						"</tr>";
+			body.append(str);
+		} else { // 결과가 있을 경우
+			var params = {
+				divId : "PAGE_NAVI",
+				pageIndex : "PAGE_INDEX",
+				totalCount : total,
+				eventName : "fn_selectNoticeList" // 페이징 함수이름 동일하게
+			};
+			gfn_renderPaging(params);
+			
+			var str = "";
+			$.each(data.list, function(key, value){ // 가져온 게시글 수 만큼 반복 실행
+				str += "<tr>" + 
+							"<th scope='row'>" + value.NOTICE_NUM + "</td>" + 
+							"<td style='text-overflow:ellipsis; overflow:hidden; white-space:nowrap; max-width:200px;'>" +
+								"<a href='#' name='title' class='text-dark' data-num='" + value.NOTICE_NUM + "'>" + value.NOTICE_TITLE + "</a>" +
+							"</td>" +
+							"<td>" + value.NOTICE_DATE + "</td>" + 
+						"</tr>";
+			});
+			body.append(str);
+			
+			// 게시글 클릭 시 작동될 함수 추가
+			$("a[name='title']").on("click", function(e){ //제목 
+				e.preventDefault();
+				const num = $(this).attr("data-num");  //a태그 name이 title 부분 속성의 data-num값 가져와서 변수 num에 저장
+				fn_noticeDetail(num); //fn_noticeDetail()함수 매개변수로 num 전송
+				location.href="/sk/noticeDetail?NOTICE_NUM=" + num;
+			});
+		}
+	}
 </script>
 </html>
