@@ -26,7 +26,7 @@
       </if>
    </sql>
 
-<select id="selectNoticeCount" parameterType="hashmap" resultType="hashmap"> 
+<select id="selectNoticeCount" parameterType="hashmap" resultType="int"> 
 	<![CDATA[
 		SELECT COUNT(NOTICE_NUM) NOTICE_COUNT
 		FROM NOTICE

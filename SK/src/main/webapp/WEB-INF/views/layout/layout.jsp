@@ -30,6 +30,7 @@ body, pre {
 	<!-- body1 --> 
 	<main id="main">
 	<tiles:insertAttribute name="body1"/>
+	<%@ include file="../include/include-body.jspf" %>
 	</main>
 	<!-- body1 end -->
 	

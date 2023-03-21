@@ -1,16 +1,56 @@
-var gfv_ajaxCallback = "";
+function gfn_isNull(str) {
+	if (str == null) return true;
+	if (str == "NaN") return true;
+	if (new String(str).valueOf() == "undefined") return true;    
+    var chkStr = new String(str);
+    if( chkStr.valueOf() == "undefined" ) return true;
+    if (chkStr == null) return true;    
+    if (chkStr.toString().length == 0 ) return true;   
+    return false; 
+}
+
+function ComSubmit(opt_formId) {
+	this.formId = gfn_isNull(opt_formId) == true ? "commonForm" : opt_formId;
+	this.url = "";
+	
+	if(this.formId=="commonForm"){
+		var frm = $("#commonForm");
+		if(frm.length>0){
+			frm.remove();
+		}
+		var str = "<form id='commonForm' name='commonForm'></form>";
+		$('body').append(str);
+	}
+	
+	this.setUrl = function setUrl(url){
+		this.url = url;
+	};
+	
+	this.addParam = function addParam(key, value){
+		$("#"+this.formId).append($("<input type='hidden' name='"+key+"' id='"+key+"' value='"+value+"' >"));
+	};
+	
+	this.submit = function submit(){
+		var frm = $("#"+this.formId)[0];
+		frm.action = this.url;
+		frm.method = "post";
+		frm.submit();	
+	};
+}
+
+var fv_ajaxCallback = "";
 function ComAjax(opt_formId){
 	this.url = "";		
 	this.formId = gfn_isNull(opt_formId) == true ? "commonForm" : opt_formId;
 	this.param = "";
 	
-	if(this.formId == "commonForm"){
-        var frm = $("#commonForm");
-        if(frm.length > 0){
-	        frm.remove();
-        }
-        var str = "<form id='commonForm' name='commonForm'></form>";
-        $('body').append(str);
+	if(this.formId=="commonForm"){
+		var frm = $("#commonForm");
+		if(frm.length>0){
+			frm.remove();
+		}
+		var str = "<form id='commonForm' name='commonForm'></form>";
+		$('body').append(str);
 	}
 	
 	this.setUrl = function setUrl(url){
@@ -66,7 +106,7 @@ function gfn_renderPaging(params){
 	
 	var recordCount = params.recordCount; //페이지당 레코드 수
 	if(gfn_isNull(recordCount) == true){
-		recordCount = 20;
+		recordCount = 10;
 	}
 	var totalIndexCount = Math.ceil(totalCount / recordCount); // 전체 인덱스 수
 	gfv_eventName = params.eventName;
@@ -102,7 +142,7 @@ function gfn_renderPaging(params){
 			str += "<a href='#this' class='pad_5' onclick='_movePage("+i+")'>"+i+"</a>";
 		}
 		else{
-			str += "<b><a href='#this' class='pad_5' onclick='_movePage("+i+")'>"+i+"</a></b>";
+			str += "<strong><a href='#this' class='pad_5' onclick='_movePage("+i+")'>"+i+"</a></strong>";
 		}
 	}
 	$("#"+divId).append(preStr + str + postStr);
