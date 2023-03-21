@@ -112,8 +112,8 @@
                 type="tel"
                 id="SHOP_TEL"
                 name="SHOP_TEL"
-                placeholder="00-000-0000"
-                pattern="^\d{2,3}-?\d{3,4}-?\d{4}$"
+                placeholder="전화번호입력"
+                pattern="^(02|0[3-9]{1}[0-9]{1})-[1-9]{1}[0-9]{2,3}-[0-9]{4}$"
                 
                 required
               />
@@ -180,6 +180,8 @@
             class="btn btn-primary btn-lg"
             style="margin-left: 30%; width: 45%"
             type="submit"
+            id="shopJoin"
+          	name="shopJoin"
           >
             가입하기
           </button>
@@ -267,12 +269,21 @@
                       
                       console.log($("#SHOP_POS1").val());
                       console.log($("#SHOP_POS2").val());
+                      
                     }
                   }
                 );
             }
         }).open();
+        
+        
     }
+    
+    
+    
+    
+   
+    
     
   //유효성검증
 	(() => {
@@ -321,6 +332,16 @@ form.addEventListener('submit', (event) => {
 		  $("#pw2-same").show();
 	      $("#SHOP_PW2").focus();
      } 
+     
+   //전화번호
+     var shopTel = $('#SHOP_TEL').val();
+     var shopTelCheck = /^(02|0[3-9]{1}[0-9]{1})-[1-9]{1}[0-9]{2,3}-[0-9]{4}$/;
+     
+     if(!shopTelCheck.test(shopTel)){
+   	  alert('잘못된 전화 번호입니다.');
+   	  $('#SHOP_TEL').focus();
+   	  
+     }
     
 });
 });

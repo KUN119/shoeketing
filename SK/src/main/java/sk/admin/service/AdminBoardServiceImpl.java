@@ -27,8 +27,8 @@ public class AdminBoardServiceImpl implements AdminBoardService {
 	}
 	
 	@Override
-	public void insertNotice(Map<String, Object> map) throws Exception {
-		adminBoardDAO.insertNotice(map);
+	public int insertNotice(Map<String, Object> map) throws Exception {
+		return adminBoardDAO.insertNotice(map);
 		
 	}
 	
@@ -39,15 +39,15 @@ public class AdminBoardServiceImpl implements AdminBoardService {
 	}
 	
 	@Override
-	public void updateNoticeModify(Map<String, Object> map) throws Exception {
+	public int updateNoticeModify(Map<String, Object> map) throws Exception {
 
-		adminBoardDAO.updateNoticeModify(map);
+		return adminBoardDAO.updateNoticeModify(map);
 	}
 	
 	@Override
-	public void adminDeleteNotice(Map<String, Object> map) throws Exception {
+	public int adminDeleteNotice(Map<String, Object> map) throws Exception {
 
-		adminBoardDAO.deleteNotice(map);
+		return adminBoardDAO.deleteNotice(map);
 	}
 	
 	@Override

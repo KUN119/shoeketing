@@ -67,7 +67,7 @@
 						NOTICE_CONTENT
 				FROM NOTICE
 				WHERE NOTICE_NUM = #{NOTICE_NUM}
-					AND NOTICE_DEL_GB='N';	
+					AND NOTICE_DEL_GB='N'
 			]]>
 		</select>
 
@@ -82,7 +82,13 @@
 		]]>
 		</update>
 
-
+		<update id="deleteNotice" parameterType="hashmap">
+			<![CDATA[
+				UPDATE NOTICE
+				SET NOTICE_DEL_GB = 'Y'
+				WHERE NOTICE_NUM = #{NOTICE_NUM}
+			]]>
+		</update>
 
 		<update id="deleteGoods" parameterType="hashmap">
 		<![CDATA[

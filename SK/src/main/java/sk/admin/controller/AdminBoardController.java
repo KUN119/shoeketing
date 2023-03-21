@@ -9,7 +9,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import sk.admin.service.AdminBoardService;
@@ -72,21 +74,46 @@ public class AdminBoardController {
 
 		return mv;
 	}
+	
+	@ResponseBody
+	@PostMapping(value = "/admin/noticeWrite")
+	public int adminNoticeWrite(@RequestParam Map<String, Object> map) throws Exception {
+		log.debug("######### 관리자 페이지 공지사항 작성 ##########");
+		
+		int result = adminBoardService.insertNotice(map);
+		return result;
+		
+	}
 
 	@GetMapping(value = "/admin/noticeModifyForm")
 	public ModelAndView adminNoticeModifyForm(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("######### 관리자 페이지 공지사항 수정 폼 ##########");
 		ModelAndView mv = new ModelAndView("adminNoticeModifyForm");
 
+		Map<String, Object> noticeDetail = adminBoardService.selectNoticeDetail(map);
+		mv.addObject("noticeDetail", noticeDetail);
+		
 		return mv;
 	}
 
-	@GetMapping(value = "/admin/noticeDelete")
-	public void adminDeleteNotice(@RequestParam Map<String, Object> map) throws Exception {
+	@ResponseBody
+	@PostMapping(value = "/admin/noticeModify")
+	public int adminNoticeModify(@RequestParam Map<String, Object> map) throws Exception {
+		log.debug("######### 관리자 페이지 공지사항 수정 ##########");
+		
+		int result = adminBoardService.updateNoticeModify(map);
+		return result;
+		
+	}
+	
+	@ResponseBody
+	@PostMapping(value = "/admin/noticeDelete")
+	public int adminDeleteNotice(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("######### 공지 사항 삭제 ##########");
 		
 
-		adminBoardService.adminDeleteNotice(map);
+		int result = adminBoardService.adminDeleteNotice(map);
+		return result;
 	}
 	
 	@GetMapping(value = "/admin/goodsTotalList")

@@ -22,10 +22,10 @@ public class AdminBoardDAO extends AbstractDAO {
 		return (int) selectOne("adminBoard.selectNoticeCount", map);
 	}
 	
-	public void insertNotice(Map<String, Object> map) throws Exception {
+	public int insertNotice(Map<String, Object> map) throws Exception {
 		System.out.println("insertNotice 파라미터 : " + map);
 
-		insert("adminBoard.insertNotice", map);
+		return (int) insert("adminBoard.insertNotice", map);
 	}
 	
     public Map<String, Object> selectNoticeDetail(Map<String, Object> map) throws Exception {
@@ -34,17 +34,17 @@ public class AdminBoardDAO extends AbstractDAO {
 		return (Map<String, Object>) selectOne("adminBoard.selectNoticeDetail", map);
     }
     
-	public void updateNoticeModify(Map<String, Object> map) throws Exception {
+	public int updateNoticeModify(Map<String, Object> map) throws Exception {
 		System.out.println("updateNoticeModify 파라미터 : " + map);
 
-		update("adminBoard.updateNoticeModify", map);
+		return (int)update("adminBoard.updateNoticeModify", map);
 	}
 	
 	
-	public void deleteNotice(Map<String, Object> map) throws Exception {
+	public int deleteNotice(Map<String, Object> map) throws Exception {
 		System.out.println("deleteNotice 파라미터 : " + map);
 
-		update("adminBoard.deleteNotice", map);
+		return (int)update("adminBoard.deleteNotice", map);
 	}
 	
 	public void adminDeleteGoods(Map<String, Object> map) throws Exception {

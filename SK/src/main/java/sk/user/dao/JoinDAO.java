@@ -49,8 +49,8 @@ public class JoinDAO extends AbstractDAO {
 	}
 
 	// 매장 회원가입 성공
-	public void insertShop(Map<String, Object> map) throws Exception {
-		insert("join.insertShop", map);
+	public int insertShop(Map<String, Object> map) throws Exception {
+		return (int) insert("join.insertShop", map);
 	}
 
 }
