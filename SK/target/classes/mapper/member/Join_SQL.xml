@@ -85,7 +85,7 @@
    </insert>
    
    <!-- 매장 회원 가입성공 -->
-   <insert id="insertShop" parameterType="hashmap">
+   <insert id="insertShop" parameterType="hashmap" >
    <![CDATA[  
       INSERT INTO SHOP(
                 	SHOP_NUM,
