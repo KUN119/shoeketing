@@ -33,8 +33,7 @@
                   WHERE SHOP_DEL_GB = 'N'
                   AND SHOP_JOIN_APPROVE = 'Y'
                   AND SHOP_BRAND LIKE '%' || #{keyword} || '%')
-        	WHERE NUM BETWEEN #{START} AND #{END}
-        	AND SHOP_NAME LIKE '%' || #{keyword} || '%'
+        	WHERE SHOP_NAME LIKE '%' || #{keyword} || '%'
         ]]>
 	</select>
 
@@ -67,7 +66,6 @@
     			AND (B.BRAND_NAME LIKE  '%' || #{keyword} || '%' 
     			OR TG.TOTAL_GOODS_NAME LIKE  '%' || #{keyword} || '%' 
     			OR TG.TOTAL_GOODS_MODEL LIKE  '%' || #{keyword} || '%'))
-    		WHERE NUM BETWEEN #{START} AND #{END}
 		]]>
 	</select>
 	

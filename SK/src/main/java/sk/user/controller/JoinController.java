@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -79,29 +78,27 @@ public class JoinController {
 	public @ResponseBody String joinAvailable(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("###### 회원가입 가능 여부 검토 ######");
 		
-		String result = "";
-		    
-//		int check = joinService.selectDelGB(map);
-//		    System.out.println("check : " + check);
-//
-//		    String result = "";
-//
-//			if (check == 1) {
-//				// DB에 회원가입 처리 전, 회원 탈퇴한 이력이 있고 7일 지났는지 여부 확인
-//				int delCount = joinService.selectDelCount(map);
-//				System.out.println("delCount : " + delCount);
-//
-//				if (delCount == 0) { // 회원 탈퇴 후 7일이 지나지 않았을 경우
-//					result = "fail";
-//				} else { // 회원 탈퇴 후 7일이 지났거나, 혹은 처음으로 가입할 경우
-//					// DB에 회원가입 처리
-//					joinService.insertMember(map);
-//					result = "success";
-//				}
-//			} else {
-//				joinService.insertMember(map);
-//				result = "success";
-//			}
+		int check = joinService.selectDelGB(map);
+		    System.out.println("check : " + check);
+
+		    String result = "";
+
+			if (check == 1) {
+				// DB에 회원가입 처리 전, 회원 탈퇴한 이력이 있고 7일 지났는지 여부 확인
+				int delCount = joinService.selectDelCount(map);
+				System.out.println("delCount : " + delCount);
+
+				if (delCount == 0) { // 회원 탈퇴 후 7일이 지나지 않았을 경우
+					result = "fail";
+				} else { // 회원 탈퇴 후 7일이 지났거나, 혹은 처음으로 가입할 경우
+					// DB에 회원가입 처리
+					joinService.insertMember(map);
+					result = "success";
+				}
+			} else {
+				joinService.insertMember(map);
+				result = "success";
+			}
 
 			return result;
 	}

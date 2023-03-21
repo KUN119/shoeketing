@@ -228,6 +228,42 @@
     			  }
     		});
     	};
+    	
+    	$("button[name='userJoin']").on("click", function(e) { 
+    		e.preventDefault();
+    		fn_delCheck();
+    	});
+
+    	function fn_delCheck() { 
+    		var MEM_NAME = $('#MEM_NAME').val();
+    		var MEM_PHONE = $('#MEM_PHONE').val();
+    		alert(MEM_NAME);
+    		alert(MEM_PHONE);
+    		
+    		var formData = new FormData();
+    		
+    		formData.append("MEM_NAME", MEM_NAME);
+    		formData.append("MEM_PHONE", MEM_PHONE);
+    		
+	    	$.ajax({
+	            url: '/sk/memberJoin/joinAvailable',
+	            type:'POST',
+	            data:formData,
+	            processData: false,
+				contentType: false,
+	            success:function(data) {
+	            	if(data == "success") {
+	            		alert("회원가입에 성공하였습니다.");
+	            	} else if (data == "fail") {
+	            		alert("회원탈퇴 후 7일이 지나지 않았습니다.");
+	            	}
+	            },
+	            error:function() {
+	            	alert("서버 오류");
+	            }
+	       }); 
+    	};
+    	
     });
    
    //휴대폰 번호 인증
