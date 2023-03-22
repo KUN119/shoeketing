@@ -71,9 +71,9 @@ public class BrandPageServiceImpl implements BrandPageService {
 		// 세션에 로그인한 브랜드회원의 정보중 BRAND_NAME 가져와서 map에 넣어주기
 		map.put("BRAND_NAME", commonService.getSessionBrand(session, "BRAND_NAME"));
 		
-		// 임시로 리스트 페이징 START랑 END값 넣어주기 (추후 수정. 한페이지에 5줄씩 표시)
-		map.put("START", 1);
-		map.put("END", 5);
+//		// 임시로 리스트 페이징 START랑 END값 넣어주기 (추후 수정. 한페이지에 5줄씩 표시)
+//		map.put("START", 1);
+//		map.put("END", 5);
 
 		return brandPageDAO.selectShopList(map);
 	}
@@ -97,16 +97,19 @@ public class BrandPageServiceImpl implements BrandPageService {
 		map.put("BRAND_NAME", commonService.getSessionBrand(session, "BRAND_NAME"));
 
 		// 임시로 리스트 페이징 START랑 END값 넣어주기 (추후 수정. 한페이지에 5줄씩 표시)
-		map.put("START", 1);
-		map.put("END", 5);
+//		map.put("START", 1);
+//		map.put("END", 5);
 
 		return brandPageDAO.selectRequestShopList(map);
 	}
 
 	// 브랜드 입점 요청 매장 토탈 개수 (아직 승인 전)
 	@Override
-	public int selectRequestShopCount(Map<String, Object> map) throws Exception {
+	public int selectRequestShopCount(Map<String, Object> map, HttpSession session) throws Exception {
 
+		// 세션에 로그인한 브랜드회원의 정보중 BRAND_NAME 가져와서 map에 넣어주기
+		map.put("BRAND_NAME", commonService.getSessionBrand(session, "BRAND_NAME"));
+		
 		return brandPageDAO.selectRequestShopCount(map);
 	}
 

@@ -79,13 +79,32 @@ public class BrandPageController {
 		log.debug("###### 브랜드 입점 매장 리스트 ######");
 		ModelAndView mv = new ModelAndView("shopList"); 
 
-		List<Map<String, Object>> shopList = brandPageService.selectShopList(map, session);
+//		List<Map<String, Object>> shopList = brandPageService.selectShopList(map, session);
+//
+//		mv.addObject("shopList", shopList); 
+//
+//		// 해당 브랜드 입점 매장 토탈 개수
+//		int shopCount = brandPageService.selectShopCount(map, session);
+//		System.out.println("shopCount 확인 : " + shopCount);
 
+		return mv;
+	}
+	
+	@PostMapping(value = "/brandPage/shopList/paging")
+	public ModelAndView shopList_paging(@RequestParam Map<String, Object> map, HttpSession session) throws Exception {
+		log.debug("###### 브랜드 입점 매장 리스트 ######");
+		ModelAndView mv = new ModelAndView("jsonView"); 
+
+		List<Map<String, Object>> shopList = brandPageService.selectShopList(map, session);
 		mv.addObject("shopList", shopList); 
 
-		// 해당 브랜드 입점 매장 토탈 개수
-		int shopCount = brandPageService.selectShopCount(map, session);
-		System.out.println("shopCount 확인 : " + shopCount);
+		if (shopList.size() > 0) {
+			int shopCount = brandPageService.selectShopCount(map, session); // 해당 브랜드 입점 매장 토탈 개수
+			System.out.println("shopCount 확인 : " + shopCount); 
+			mv.addObject("TOTAL", shopCount);
+		} else {
+			mv.addObject("TOTAL", 0);
+		}
 
 		return mv;
 	}
@@ -95,12 +114,32 @@ public class BrandPageController {
 		log.debug("###### 브랜드 매장 입점 요청 리스트 ######");
 		ModelAndView mv = new ModelAndView("shopRequestList");
 
-		List<Map<String, Object>> shopRequestList = brandPageService.selectRequestShopList(map, session);
-		
-		mv.addObject("shopRequestList", shopRequestList); 
+//		List<Map<String, Object>> shopRequestList = brandPageService.selectRequestShopList(map, session);
+//		mv.addObject("shopRequestList", shopRequestList); 
 
 		return mv;
 	}
+	
+	@PostMapping(value = "/brandPage/shopRequestList/paging")
+	public ModelAndView shopRequestList_paging(@RequestParam Map<String, Object> map, HttpSession session) throws Exception {
+		log.debug("###### 브랜드 매장 입점 요청 리스트 ######");
+		ModelAndView mv = new ModelAndView("jsonView");
+
+		List<Map<String, Object>> shopRequestList = brandPageService.selectRequestShopList(map, session);
+		mv.addObject("shopRequestList", shopRequestList); 
+		
+		if (shopRequestList.size() > 0) {
+			int shopRequestCount = brandPageService.selectRequestShopCount(map, session); // 해당 브랜드 입점 매장 토탈 개수
+			System.out.println("shopRequestCount 확인 : " + shopRequestCount); 
+			mv.addObject("TOTAL", shopRequestCount);
+		} else {
+			mv.addObject("TOTAL", 0);
+		}
+
+
+		return mv;
+	}
+
 
 	// ajax 구현
 	@ResponseBody
