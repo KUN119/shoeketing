@@ -24,14 +24,24 @@
                            AND GI.GOODS_IMAGE_ORDER = 1
                            AND B.BRAND_NAME = #{BRAND_NAME}
 		]]>
-        <include refid="goodsNameSearch"></include>
-        <include refid="goodsModelSearch"></include>
+        <include refid="searchGoods"></include>
+       <!--  <include refid="goodsNameSearch"></include>
+        <include refid="goodsModelSearch"></include> -->
         <![CDATA[
         	)WHERE NUM BETWEEN #{START} AND #{END}
         ]]>
 	</select>
     
-    <sql id="goodsNameSearch">
+    <sql id="searchGoods">
+		<if test='searchType == "모델명" and keyword != ""'>
+			  AND UPPER(TG.TOTAL_GOODS_NAME) like UPPER('%' || #{keyword} ||'%')
+		</if>
+		<if test='searchType == "모델 번호" and keyword != ""'>
+			  AND UPPER(TG.TOTAL_GOODS_MODEL) like UPPER('%' || #{keyword} ||'%')
+		</if>
+	</sql>
+    
+     <sql id="goodsNameSearch">
 		<if test="nameKeyword!=null and nameKeyword!=''">
 	         AND UPPER(TG.TOTAL_GOODS_NAME) like UPPER('%' || #{nameKeyword} ||'%')
 		</if>
@@ -43,7 +53,6 @@
 		</if>
 	</sql>
 	
-	
 	<!-- 브랜드 전체 상품 토탈 개수 -->
 	<select id="selectBrandGoodsCount" parameterType="hashmap" resultType="int">
 		<![CDATA[
@@ -53,8 +62,9 @@
             AND TG.TOTAL_GOODS_DEL_GB = 'N'
             AND B.BRAND_NAME = #{BRAND_NAME}
         ]]>
-		<include refid="goodsNameSearch"></include>
-        <include refid="goodsModelSearch"></include>
+		<!-- <include refid="goodsNameSearch"></include>
+        <include refid="goodsModelSearch"></include> -->
+		 <include refid="searchGoods"></include>
 	</select>
 
 
