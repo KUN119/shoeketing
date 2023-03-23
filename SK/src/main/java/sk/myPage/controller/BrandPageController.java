@@ -79,13 +79,13 @@ public class BrandPageController {
 		log.debug("###### 브랜드 입점 매장 리스트 ######");
 		ModelAndView mv = new ModelAndView("shopList"); 
 
-//		List<Map<String, Object>> shopList = brandPageService.selectShopList(map, session);
-//
-//		mv.addObject("shopList", shopList); 
-//
-//		// 해당 브랜드 입점 매장 토탈 개수
-//		int shopCount = brandPageService.selectShopCount(map, session);
-//		System.out.println("shopCount 확인 : " + shopCount);
+		List<Map<String, Object>> shopList = brandPageService.selectShopList(map, session);
+
+		mv.addObject("shopList", shopList); 
+
+		// 해당 브랜드 입점 매장 토탈 개수
+		int shopCount = brandPageService.selectShopCount(map, session);
+		System.out.println("shopCount 확인 : " + shopCount);
 
 		return mv;
 	}
@@ -129,7 +129,7 @@ public class BrandPageController {
 		mv.addObject("shopRequestList", shopRequestList); 
 		
 		if (shopRequestList.size() > 0) {
-			int shopRequestCount = brandPageService.selectRequestShopCount(map, session); // 해당 브랜드 입점 매장 토탈 개수
+			int shopRequestCount = brandPageService.selectRequestShopCount(map, session); // 해당 브랜드 입점 요청 매장 토탈 개수
 			System.out.println("shopRequestCount 확인 : " + shopRequestCount); 
 			mv.addObject("TOTAL", shopRequestCount);
 		} else {

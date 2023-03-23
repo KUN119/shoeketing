@@ -57,7 +57,7 @@ public class CSDAO extends AbstractDAO {
 	public List<Map<String, Object>> selectShopCSList(Map<String, Object> map) throws Exception {
 		System.out.println("selectShopCSList 파라미터 : " + map);
 
-		return (List<Map<String, Object>>) selectList("cs.selectShopCSList", map);
+		return (List<Map<String, Object>>) selectPagingList("cs.selectShopCSList", map);
 	}
 
 	// 매장 문의내역 글 토탈 개수 (int 타입으로 리턴) - selectOne()

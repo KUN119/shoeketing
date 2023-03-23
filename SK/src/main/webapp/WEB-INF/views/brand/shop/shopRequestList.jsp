@@ -226,7 +226,7 @@ function fn_selectShopRequestList(pageNo){
 	comAjax.setUrl("/sk/brandPage/shopRequestList/paging");
 	comAjax.setCallback("fn_selectShopRequestListCallback");
 	comAjax.addParam("PAGE_INDEX",pageNo);
-	comAjax.addParam("PAGE_ROW", 2); //한 페이지에 보여줄 게시글 수 정하기
+	comAjax.addParam("PAGE_ROW", 5); //한 페이지에 보여줄 게시글 수 정하기
 	comAjax.ajax();
 }
 
@@ -247,7 +247,7 @@ function fn_selectShopRequestListCallback(data){ // 페이지 선택 시 화면�
 			divId : "PAGE_NAVI",
 			pageIndex : "PAGE_INDEX",
 			totalCount : total,
-			recordCount : 2,
+			recordCount : 5,
 			eventName : "fn_selectShopRequestList" // 페이징 함수이름 동일하게
 		};
 		gfn_renderPaging(params);
