@@ -95,7 +95,7 @@
 		          AND SG.SHOP_GOODS_SIZE = #{GOODS_SIZE}]]>
 		         <include refid="shopName"/>
 		         <![CDATA[
-		WHERE NUM BETWEEN #{START} AND #{END}
+		) WHERE NUM BETWEEN #{START} AND #{END}
 		]]>
 	</select>
 
@@ -117,7 +117,7 @@
 	
 	<sql id="shopName">
 	    <if test="SHOP_NAME != null">
-	        AND S.SHOP_NAME LIKE '%'||#{SHOP_NAME}||'%')
+	        AND S.SHOP_NAME LIKE '%'||#{SHOP_NAME}||'%'
 	    </if>
 	</sql>
 </mapper>

@@ -64,10 +64,12 @@
         </table>
       </div>
       	
+      	<div class="row">
       	<!-- 페이징 화면 처리 부분 시작 -->
       	<div id="PAGE_NAVI"></div>
 		<input type="hidden" id="PAGE_INDEX" name="PAGE_INDEX"/>
 		<!-- 페이징 화면 처리 부분 끝 -->
+		</div>
 		
     </div>
   </body>
@@ -138,7 +140,7 @@ function fn_noticeDetail(num) {  //num 매개변수로 넣기
 	// 페이징 콜백 함수
 	function fn_selectNoticeListCallback(data){ // 페이지 선택 시 화면에 보여줄 결과 콜백함수
 		var total = data.TOTAL;
-		var body = $("table>tbody"); // 페이징 한 결과가 반영될 태그
+		var body = $("#noticeListBody"); // 페이징 한 결과가 반영될 태그
 		
 		body.empty();
 		
@@ -152,6 +154,7 @@ function fn_noticeDetail(num) {  //num 매개변수로 넣기
 				divId : "PAGE_NAVI",
 				pageIndex : "PAGE_INDEX",
 				totalCount : total,
+				recordCount : 10,
 				eventName : "fn_selectNoticeList" // 페이징 함수이름 동일하게
 			};
 			gfn_renderPaging(params);

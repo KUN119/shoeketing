@@ -102,12 +102,37 @@
                                     GOODS_IMAGE_DEL_GB, 
                                     GOODS_IMAGE_ORDER)
             VALUES(GOODS_IMAGE_SEQ.NEXTVAL, 
-                   #{GOODS_IMAGE_PARENT}, 
+                   #{TOTAL_GOODS_NUM}, 
                    #{GOODS_IMAGE_ORG},
                    #{GOODS_IMAGE_STD},
                    'N', 
                    #{GOODS_IMAGE_ORDER}            
         ]]>
+	</insert>
+	
+	<!-- 브랜드에 해당하는 매장 이름 및 매장번호 조회 -->
+    <select id="selectShopNumName" parameterType="hashmap" resultType="hashmap"> 
+		<![CDATA[
+			SELECT
+				SHOP_NAME,
+				SHOP_NUM
+			FROM SHOP
+			WHERE SHOP_BRAND = #{BRAND_NAME}
+		]]>
+	</select> 
+	
+	<!-- 브랜드가 새로운 상품 등록시, 해당 브랜드의 매장들에 상품 등록 -->
+    <insert id="insertShopGoodsAddByBrand" parameterType="hashmap">
+	    <![CDATA[
+	        INSERT INTO SHOP_GOODS(SHOP_GOODS_SHOP_NUM, 
+                                   SHOP_GOODS_GOODS_NUM,
+                                   SHOP_GOODS_AMOUNT, 
+                                   SHOP_GOODS_SIZE)
+	        VALUES(#{SHOP_GOODS_SHOP_NUM},
+                   #{TOTAL_GOODS_NUM},
+                   0,
+                   #{GOODS_DETAIL_SIZE})
+	    ]]>
 	</insert>
 
 	<!-- 브랜드 상품 상세조회 -->
