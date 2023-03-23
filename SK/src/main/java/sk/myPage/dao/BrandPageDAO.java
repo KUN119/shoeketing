@@ -38,7 +38,7 @@ public class BrandPageDAO extends AbstractDAO {
 	public List<Map<String, Object>> selectShopList(Map<String, Object> map) throws Exception {
 		System.out.println("selectShopList 파라미터 : " + map);
 
-		return (List<Map<String, Object>>) selectList("brandPage.selectShopList", map);
+		return (List<Map<String, Object>>) selectPagingList("brandPage.selectShopList", map);
 	}
 
 	// 브랜드 입점 매장 토탈 개수 (int 타입으로 리턴)
@@ -53,7 +53,7 @@ public class BrandPageDAO extends AbstractDAO {
 	public List<Map<String, Object>> selectRequestShopList(Map<String, Object> map) throws Exception {
 		System.out.println("selectRequestShopList 파라미터 : " + map);
 
-		return (List<Map<String, Object>>) selectList("brandPage.selectRequestShopList", map);
+		return (List<Map<String, Object>>) selectPagingList("brandPage.selectRequestShopList", map);
 	}
 
 	// 브랜드 입점 요청 매장 토탈 개수 (아직 승인 전) (int 타입으로 리턴)

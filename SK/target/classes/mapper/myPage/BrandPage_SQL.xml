@@ -104,7 +104,7 @@
 	</select>
 	
 	<!-- 브랜드 입점 요청 매장 토탈 개수 (아직 승인 전) -->
-	<select id="selectRequestShopCount" parameterType="hashmap" resultType="hashmap"> 
+	<select id="selectRequestShopCount" parameterType="hashmap" resultType="int"> 
 	    <![CDATA[
 	        SELECT COUNT(SHOP_NUM)
 	        FROM SHOP

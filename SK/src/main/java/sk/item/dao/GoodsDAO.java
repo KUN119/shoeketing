@@ -46,6 +46,20 @@ public class GoodsDAO extends AbstractDAO {
 		return (int) insert("goods.insertGoodsImage", map);
 	}
 	
+	// 브랜드에 해당하는 매장 이름 및 매장번호 조회 
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> selectShopNumName(Map<String, Object> map) throws Exception {
+		System.out.println("selectShopNumName : " + map);
+		return (List<Map<String, Object>>) selectList("goods.selectShopNumName", map);
+	}
+	
+	// 브랜드가 상품 등록시, 해당 브랜드의 매장들도 상품 등록
+	public int insertShopGoodsAddByBrand(Map<String, Object> map) throws Exception{
+		System.out.println("insertShopGoodsAddByBrand : " + map);
+		
+		return (int) insert("goods.insertShopGoodsAddByBrand", map);
+	}
+	
 	// 상품 이미지 삭제 deleteGoodsImage
 	public int deleteGoodsImage(Map<String, Object> map) throws Exception{
 		System.out.println("deleteGoodsImage : " + map);

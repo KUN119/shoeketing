@@ -1,13 +1,18 @@
 package sk.item.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import sk.common.service.CommonService;
+import sk.common.util.FileUtils;
 import sk.item.dao.GoodsDAO;
 
 @Service("goodsService")
@@ -15,6 +20,12 @@ public class GoodsServiceImpl implements GoodsService {
 
 	@Resource(name = "goodsDAO")
 	private GoodsDAO goodsDAO;
+	
+	@Resource(name = "sessionService")
+	private CommonService sessionService;
+	
+	@Resource(name = "fileUtils")
+	private FileUtils fileUtils;
 	
 	// 브랜드 전체 상품 리스트 
 	@Override
@@ -30,11 +41,42 @@ public class GoodsServiceImpl implements GoodsService {
 		return (int)goodsDAO.selectBrandGoodsCount(map);
 	}
 	
-	// 브랜드 상품 등록 
+	// 브랜드 상품 등록. ajax 구현
 	@Override
-	public int insertGoods(Map<String, Object> map) throws Exception{
+	public Map<String, Object> insertGoods(Map<String, Object> map, HttpSession session, MultipartFile[] uploadFile) throws Exception{
+		System.out.println("map 확인 : " + map);
+		System.out.println("uploadFile 확인 : " + uploadFile);
 		
-		return (int)goodsDAO.insertGoods(map);
+		Map<String, Object> result = new HashMap<>();
+		List<Map<String, Object>> shopNumList = new ArrayList<>();
+		
+		// 필요한 파라미터 넣어주기 (BRAND_NUM 값)
+		map.put("BRAND_NUM", sessionService.getSessionBrand(session, "BRAND_NUM"));
+		map.put("BRAND_NAME", sessionService.getSessionBrand(session, "BRAND_NAME"));
+		
+		int insertGoods = goodsDAO.insertGoods(map);
+		
+		if(insertGoods == 1) {
+			// 상품 정상 등록시, 상품 상세(사이즈) 및 이미지 삽입
+			insertGoodsDetail(map);
+			insertGoodsImage(map, uploadFile);
+			
+			shopNumList = selectShopNumName(map);
+			System.out.println("shopNumList : " + shopNumList);
+			System.out.println("shopNumList 크기 : " + shopNumList.size());
+			
+			for(int i=0; i<shopNumList.size(); i++) {
+				Map<String, Object> shopNumMap = shopNumList.get(i);
+				map.put("SHOP_GOODS_SHOP_NUM", shopNumMap.get("SHOP_NUM"));
+				insertShopGoodsAddByBrand(map);
+			}
+			result.put("result", "pass");
+			result.put("TOTAL_GOODS_NUM", map.get("TOTAL_GOODS_NUM"));
+		}else {
+			result.put("result", "fail");
+		}
+		
+		return result;
 	}
 	
 	// 상품 등록시, 상품 상세(사이즈) 삽입
@@ -46,9 +88,23 @@ public class GoodsServiceImpl implements GoodsService {
 	
 	// 상품 등록시, 상품 이미지 삽입 
 	@Override
-	public int insertGoodsImage(Map<String, Object> map) throws Exception{
+	public int insertGoodsImage(Map<String, Object> map, MultipartFile[] uploadFile) throws Exception{
 		
-		return (int)goodsDAO.insertGoodsImage(map);
+		Map<String, Object> insertImgMap = fileUtils.parseInsertFileInfo(map, uploadFile);
+		
+		return (int)goodsDAO.insertGoodsImage(insertImgMap);
+	}
+	
+	// 브랜드에 해당하는 매장 이름 및 매장번호 조회 
+	public List<Map<String, Object>> selectShopNumName(Map<String, Object> map) throws Exception{
+		
+		return (List<Map<String, Object>>)goodsDAO.selectShopNumName(map);
+	}
+	
+	// 브랜드가 상품 등록시, 해당 브랜드의 매장들도 상품 등록
+	public int insertShopGoodsAddByBrand(Map<String, Object> map) throws Exception{
+		
+		return (int)goodsDAO.insertShopGoodsAddByBrand(map);
 	}
 	
 	// 상품 이미지 삭제 deleteGoodsImage
