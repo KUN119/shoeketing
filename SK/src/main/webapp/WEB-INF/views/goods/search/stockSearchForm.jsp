@@ -230,6 +230,13 @@
 	<div id="shopListDiv">
       <!-- 검색한 매장 리스트 위치 -->
     </div>
+    
+    	<!-- 페이징 화면 처리 부분 시작 -->
+    	<div class="row">
+	      	<div id="PAGE_NAVI"></div>
+			<input type="hidden" id="PAGE_INDEX" name="PAGE_INDEX"/>
+		</div>
+		<!-- 페이징 화면 처리 부분 끝 -->
 
       <!--카카오 지도 API 적용 div-->
       <div class="row justify-content-center">
@@ -247,27 +254,12 @@
   ></script>
   
   <script>
-  $(document).ready(function(e) {
-	  
-	  
-	  $("button[name='searchShop']").on("click", function(e) {
-		 var formData = new FormData(document.getElementById("findStockForm"));
-		 
-		 $.ajax({
-			url : "/sk/goods/stockSearch",
-			type : "POST",
-			data : formData,
-			contentType : false,
-			processData : false,
-			success : function(data) {
-				$("#shopListDiv").empty();
-				$("#shopListDiv")[0].innerHTML = data;
-			}
-		 });
+$(document).ready(function() {
+	$("button[name='searchShop']").on("click", function(e) {
+		  fn_selectShopList(1);
 	  });
-	  
-		
-	  $("#shopListDiv").on("click", "a", function(e) {
+	
+	$("#shopListDiv").on("click", "a", function(e) {
 		  e.preventDefault();
 		  const shopNum = $(this).attr('data-num');
 		  const goodsAmount = $(this).attr('data-amount');
@@ -390,8 +382,62 @@
 			 });
 		  
 	  });
-  });
-	  
+});
+  
+	//페이징 함수
+	function fn_selectShopList(pageNo){
+		var comAjax = new ComAjax();
+		comAjax.setUrl("/sk/goods/stockSearch");
+		comAjax.setCallback("fn_selectShopListCallback");
+		comAjax.addParam("PAGE_INDEX",pageNo);
+		comAjax.addParam("PAGE_ROW", 9); //한 페이지에 보여줄 게시글 수 정하기
+		comAjax.addParam("BRAND_NAME", $("#BRAND_NAME").val());
+		comAjax.addParam("GOODS_NAME", $("#GOODS_NAME").val());
+		comAjax.addParam("GOODS_SIZE", $("#GOODS_SIZE").val());
+		comAjax.addParam("SHOP_NAME", $("#SHOP_NAME").val());
+		comAjax.ajax();
+	}
+	
+	// 페이징 콜백 함수
+	function fn_selectShopListCallback(data){ // 페이지 선택 시 화면에 보여줄 결과 콜백함수
+		var total = data.TOTAL;
+		var body = $("#shopListDiv"); // 페이징 한 결과가 반영될 태그
+		
+		body.empty();
+		var str = '<table class="table table-bordered text-center mt-5"';
+		str += 'style="border-left-color: white; border-right-color: white">';
+		str += '<thead><tr style="font-size: 12px; font-weight: 400">';
+		str += '<th class="col-3" scope="col">매장명</th>';
+		str += '<th class="col-1" scope="col" style="border-right-color: rgba(0, 0, 0, 0.121)">재고보유여부</th>';
+		str += '<th class="col-3" scope="col">매장명</th>';
+		str += '<th class="col-1" scope="col" style="border-right-color: rgba(0, 0, 0, 0.121)">재고보유여부</th>';
+		str += '<th class="col-3" scope="col">매장명</th>';
+		str += '<th class="col-1" scope="col">재고보유여부</th>';
+		str += '</tr></thead><tbody class="table-group-divider">';
+		
+		if(total == 0){ // 결과가 없을 경우
+			str += '<tr><td colspan="6">검색하신 재고를 보유하는 매장이 존재하지 않습니다.</td></tr></tbody></table>';
+			body.append(str);
+		} else { // 결과가 있을 경우
+			var params = {
+				divId : "PAGE_NAVI",
+				pageIndex : "PAGE_INDEX",
+				totalCount : total,
+				recordCount : 9,
+				eventName : "fn_selectShopList" // 페이징 함수이름 동일하게
+			};
+			gfn_renderPaging(params);
+			
+			for(var i=1; i<=(data.list.length)-1/3+1; i++) {
+				str += '<tr>';
+			}
+				for(var j=i*3-2)
+			
+			body.append(str);
+			
+		}
+	}
+	
 	  </script>
 	  
 	   <!-- 토스 페이먼츠 API -->
