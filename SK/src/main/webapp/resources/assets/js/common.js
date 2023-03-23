@@ -112,7 +112,7 @@ function gfn_renderPaging(params){
 	gfv_eventName = params.eventName;
 	
 	$("#"+divId).empty();
-	var preStr = "";
+	var preStr = "<nav><ul class='pagination justify-content-center'>";
 	var postStr = "";
 	var str = "";
 	
@@ -122,27 +122,31 @@ function gfn_renderPaging(params){
 	var next = (parseInt((currentIndex-1)/10)+1) * 10 + 1 < totalIndexCount ? (parseInt((currentIndex-1)/10)+1) * 10 + 1 : totalIndexCount;
 	
 	if(totalIndexCount > 10){ //전체 인덱스가 10이 넘을 경우, 맨앞, 앞 태그 작성
-		preStr += "<a href='#this' class='pad_5' onclick='_movePage(1)'>[<<]</a>" +
-				"<a href='#this' class='pad_5' onclick='_movePage("+prev+")'>[<]</a>";
+		preStr += "<li class='page-item'>"
+		+ "<a href='#this' class='page-link' onclick='_movePage(1)'><span>&laquo;</span></a></li>" +
+				"<li class='page-item'><a href='#this' class='page-link' onclick='_movePage("+prev+")'><span>&lt;</span></a></li>";
 	}
 	else if(totalIndexCount <=10 && totalIndexCount > 1){ //전체 인덱스가 10보다 작을경우, 맨앞 태그 작성
-		preStr += "<a href='#this' class='pad_5' onclick='_movePage(1)'>[<<]</a>";
+		preStr += "<li class='page-item'>"
+		+ "<a href='#this' class='page-link' onclick='_movePage(1)'><span>&laquo;</span></a></li>";
 	}
 	
 	if(totalIndexCount > 10){ //전체 인덱스가 10이 넘을 경우, 맨뒤, 뒤 태그 작성
-		postStr += "<a href='#this' class='pad_5' onclick='_movePage("+next+")'>[>]</a>" +
-					"<a href='#this' class='pad_5' onclick='_movePage("+totalIndexCount+")'>[>>]</a>";
+		postStr += "<li class='page-item'><a href='#this' class='page-link' onclick='_movePage("+next+")'><span>&gt;</span></a></li>" +
+					"<li class='page-item'><a href='#this' class='page-link' onclick='_movePage("+totalIndexCount+")'><span>&raquo;</span></a></li>";
 	}
 	else if(totalIndexCount <=10 && totalIndexCount > 1){ //전체 인덱스가 10보다 작을경우, 맨뒤 태그 작성
-		postStr += "<a href='#this' class='pad_5' onclick='_movePage("+totalIndexCount+")'>[>>]</a>";
+		postStr += "<li class='page-item'><a href='#this' class='page-link' onclick='_movePage("+totalIndexCount+")'><span>&raquo;</span></a></li>";
 	}
+	
+	postStr += "</ul></nav>";
 	
 	for(var i=first; i<(first+last); i++){
 		if(i != currentIndex){
-			str += "<a href='#this' class='pad_5' onclick='_movePage("+i+")'>"+i+"</a>";
+			str += "<li class='page-item'><a href='#this' class='page-link' onclick='_movePage("+i+")'>"+i+"</a></li>";
 		}
 		else{
-			str += "<strong><a href='#this' class='pad_5' onclick='_movePage("+i+")'>"+i+"</a></strong>";
+			str += "<li class='page-item'><strong><a href='#this' class='page-link' onclick='_movePage("+i+")'>"+i+"</a></strong></li>";
 		}
 	}
 	$("#"+divId).append(preStr + str + postStr);
