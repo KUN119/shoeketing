@@ -142,7 +142,7 @@ function fn_selectShopCSList(pageNo){
 	comAjax.setUrl("/sk/shopPage/csList/paging");
 	comAjax.setCallback("fn_selectShopCSListCallback");
 	comAjax.addParam("PAGE_INDEX",pageNo);
-	comAjax.addParam("PAGE_ROW", 2); //한 페이지에 보여줄 게시글 수 정하기
+	comAjax.addParam("PAGE_ROW", 10); //한 페이지에 보여줄 게시글 수 정하기
 	comAjax.ajax();
 }
 
@@ -163,7 +163,7 @@ function fn_selectShopCSListCallback(data){ // 페이지 선택 시 화면에 �
 			divId : "PAGE_NAVI",
 			pageIndex : "PAGE_INDEX",
 			totalCount : total,
-			recordCount : 2,
+			recordCount : 10,
 			eventName : "fn_selectShopCSList" // 페이징 함수이름 동일하게
 		};
 		gfn_renderPaging(params);
@@ -178,11 +178,7 @@ function fn_selectShopCSListCallback(data){ // 페이지 선택 시 화면에 �
 				   data.csReplyStatusList[key].csReplyStatus + "</td></tr>"
 		});
 		body.append(str);
-		
-		
-		// 게시글 클릭 시 작동될 함수 추가
-		
-		
+
 	}
 }
 	
