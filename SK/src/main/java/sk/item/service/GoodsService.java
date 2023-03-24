@@ -3,6 +3,10 @@ package sk.item.service;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
+import org.springframework.web.multipart.MultipartFile;
+
 public interface GoodsService {
 	
 	// 브랜드 전체 상품 리스트 
@@ -12,13 +16,19 @@ public interface GoodsService {
 	public int selectBrandGoodsCount(Map<String, Object> map) throws Exception;
 	
 	// 브랜드 상품 등록 
-	public int insertGoods(Map<String, Object> map) throws Exception;
+	public Map<String, Object> insertGoods(Map<String, Object> map, HttpSession session, MultipartFile[] uploadFile) throws Exception;
 	
 	// 상품 등록시, 상품 상세(사이즈) 삽입
 	public int insertGoodsDetail(Map<String, Object> map) throws Exception;
 	
 	// 상품 등록시, 상품 이미지 삽입 
-	public int insertGoodsImage(Map<String, Object> map) throws Exception;
+	public int insertGoodsImage(Map<String, Object> map, MultipartFile[] uploadFile) throws Exception;
+	
+	// 브랜드에 해당하는 매장 이름 및 매장번호 조회 
+	public List<Map<String, Object>> selectShopNumName(Map<String, Object> map) throws Exception;
+	
+	// 브랜드가 상품 등록시, 해당 브랜드의 매장들도 상품 등록
+	public int insertShopGoodsAddByBrand(Map<String, Object> map) throws Exception;
 	
 	// 상품 이미지 삭제 deleteGoodsImage
 	public int deleteGoodsImage(Map<String, Object> map) throws Exception;

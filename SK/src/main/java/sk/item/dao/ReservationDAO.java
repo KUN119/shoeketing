@@ -16,7 +16,7 @@ public class ReservationDAO extends AbstractDAO{
 	public List<Map<String, Object>> selectPickupList(Map<String, Object> map) throws Exception {
 		System.out.println("selectPickupList 파라미터 : " + map);
 
-		return (List<Map<String, Object>>) selectList("reservation.selectPickupList", map);
+		return (List<Map<String, Object>>) selectPagingList("reservation.selectPickupList", map);
 	}
 	
 	// 픽업 예약 리스트 토탈개수 (일반회원)

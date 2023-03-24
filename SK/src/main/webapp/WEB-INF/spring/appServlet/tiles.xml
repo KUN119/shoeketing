@@ -206,7 +206,7 @@
     	  <put-attribute name="myPage_main" value="/WEB-INF/views/brand/brandPage/account/accountModifyForm.jsp" />
     </definition>
    
-    <!-- 브랜드 회원 마이페이지 전체 상품 리스트  goodsWriteForm -->
+    <!-- 브랜드 회원 마이페이지 전체 상품 리스트  goodsList -->
    <definition name="goodsList" extends="myPageTemplate">
     	  <put-attribute name="myPage_header" value="/WEB-INF/views/layout/myPage/brand_myPage_header.jsp" />
     	  <put-attribute name="myPage_side" value="/WEB-INF/views/layout/myPage/brand_myPage_side.jsp" />

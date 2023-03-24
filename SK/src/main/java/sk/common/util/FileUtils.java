@@ -19,8 +19,10 @@ public class FileUtils {
 		String filePath_temp = "/Users/book/uploadImage/"; // 맥북 경로 /Users/macbook-id/uploadImage/
 
 		System.out.println(filePath_temp);
-
+		System.out.println("map : " + map);
+		
 		MultipartFile multipartFile = request.getFile("BRAND_LOGO_FILE");
+		System.out.println("multipartFile 확인 : " + multipartFile);
 		String originalFileName = null;
 		String originalFileExtension = null;
 		String storedFileName = null;

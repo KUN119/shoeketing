@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.LogManager;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import sk.common.service.CommonService;
 import sk.myPage.service.BrandPageService;
 
 @Controller
@@ -26,11 +28,15 @@ public class BrandPageController {
 
 	@Resource(name = "brandPageService")
 	private BrandPageService brandPageService;
-
+	
+	@Resource(name = "sessionService")
+	private CommonService sessionService;
+	
 	@GetMapping(value = "/brandPage")
-	public ModelAndView brandPage(Map<String, Object> map) throws Exception {
+	public ModelAndView brandPage(Map<String, Object> map, HttpSession session) throws Exception {
 		log.debug("###### 브랜드 마이 페이지 메인 ######");
 		ModelAndView mv = new ModelAndView("brandPageMain");
+		
 		return mv;
 	}
 
@@ -42,7 +48,6 @@ public class BrandPageController {
 
 		Map<String, Object> brandInfoMap = brandPageService.selectBrandInfo(map, session);
 		
-		
 		System.out.println("brandInfoMap : " + brandInfoMap);
 		mv.addObject("brandInfoMap", brandInfoMap);
 
@@ -52,13 +57,20 @@ public class BrandPageController {
 	// ajax 구현완료
 	@ResponseBody
 	@PostMapping(value = "/brandPage/accountModify")
-	public Map<String, Object> brandModify(@RequestParam Map<String, Object> map, MultipartHttpServletRequest request) throws Exception {
+	public Map<String, Object> brandModify(@RequestParam Map<String, Object> map, MultipartHttpServletRequest request, HttpServletRequest sessionRequest) throws Exception {
 		log.debug("###### 브랜드 기본 정보 수정 ######");
 
 		System.out.println("map 확인 : " + map);
 
 		Map<String, Object> resultMap = brandPageService.updateBrandInfo(map, request);
-
+		System.out.println("resultMap 확인 : " + resultMap);
+		
+		// 기본 정보 수정시, 브랜드 로고 파일 다시 세션에 올리기
+		HttpSession session = sessionRequest.getSession();
+		if(resultMap != null) {
+			session.setAttribute("session_BRAND_LOGO_FILE", map.get("BRAND_LOGO_FILE"));
+		}
+		
 		return resultMap;
 	}
 
@@ -77,18 +89,57 @@ public class BrandPageController {
 
 		return mv;
 	}
+	
+	@PostMapping(value = "/brandPage/shopList/paging")
+	public ModelAndView shopList_paging(@RequestParam Map<String, Object> map, HttpSession session) throws Exception {
+		log.debug("###### 브랜드 입점 매장 리스트 ######");
+		ModelAndView mv = new ModelAndView("jsonView"); 
+
+		List<Map<String, Object>> shopList = brandPageService.selectShopList(map, session);
+		mv.addObject("shopList", shopList); 
+
+		if (shopList.size() > 0) {
+			int shopCount = brandPageService.selectShopCount(map, session); // 해당 브랜드 입점 매장 토탈 개수
+			System.out.println("shopCount 확인 : " + shopCount); 
+			mv.addObject("TOTAL", shopCount);
+		} else {
+			mv.addObject("TOTAL", 0);
+		}
+
+		return mv;
+	}
 
 	@GetMapping(value = "/brandPage/shopRequestList")
 	public ModelAndView shopRequestList(Map<String, Object> map, HttpSession session) throws Exception {
 		log.debug("###### 브랜드 매장 입점 요청 리스트 ######");
 		ModelAndView mv = new ModelAndView("shopRequestList");
 
-		List<Map<String, Object>> shopRequestList = brandPageService.selectRequestShopList(map, session);
-		
-		mv.addObject("shopRequestList", shopRequestList); 
+//		List<Map<String, Object>> shopRequestList = brandPageService.selectRequestShopList(map, session);
+//		mv.addObject("shopRequestList", shopRequestList); 
 
 		return mv;
 	}
+	
+	@PostMapping(value = "/brandPage/shopRequestList/paging")
+	public ModelAndView shopRequestList_paging(@RequestParam Map<String, Object> map, HttpSession session) throws Exception {
+		log.debug("###### 브랜드 매장 입점 요청 리스트 ######");
+		ModelAndView mv = new ModelAndView("jsonView");
+
+		List<Map<String, Object>> shopRequestList = brandPageService.selectRequestShopList(map, session);
+		mv.addObject("shopRequestList", shopRequestList); 
+		
+		if (shopRequestList.size() > 0) {
+			int shopRequestCount = brandPageService.selectRequestShopCount(map, session); // 해당 브랜드 입점 요청 매장 토탈 개수
+			System.out.println("shopRequestCount 확인 : " + shopRequestCount); 
+			mv.addObject("TOTAL", shopRequestCount);
+		} else {
+			mv.addObject("TOTAL", 0);
+		}
+
+
+		return mv;
+	}
+
 
 	// ajax 구현
 	@ResponseBody
@@ -204,4 +255,14 @@ public class BrandPageController {
 		return mv;
 	}
 
+	// 상품 등록
+	
+	// 상품 수정
+	@GetMapping(value = "/brandPage/goodsModifyForm")
+	public ModelAndView goodsModifyForm(Map<String, Object> map) throws Exception {
+		log.debug("###### 브랜드관 상품 수정 ######");
+		ModelAndView mv = new ModelAndView("goodsWriteForm"); // 추후 수정
+		
+		return mv;
+	}
 }

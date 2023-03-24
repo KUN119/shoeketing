@@ -12,8 +12,8 @@
             <h3 style="margin-left: 30px; color: black; font-weight: bolder;">픽업 예약 상세 정보</h3>
             <hr style="border: solid 1px rgb(0, 0, 0); width: 100%; margin-left: 30px">
 
-            <div class="row row-cols-3 align-items-stretch g-2 py-3">
-                <div class="col">
+            <div class="row align-items-stretch ps-5">
+                <div class="col-4">
                   <div>
                     <div>
                         <a href="#"><img src="/sk/image/display?fileName=${pickupDetailMap.GOODS_IMAGE_STD}" height="300" width="300" /></a>
@@ -21,7 +21,7 @@
                   </div>
                 </div>
             
-                <div class="mt-4 ms-4 row-cols-1">
+                <div class="mt-4 ms-4 col-7">
                     <a href="#"><p style="font-size: small; margin-left: 10%;">예약 번호 : ${pickupDetailMap.RESERVATION_NUM}</p></a>
                     <p style="font-weight: bolder; font-size: x-large; margin-left: 10%;">${pickupDetailMap.TOTAL_GOODS_PRICE}원</p>
                     <p style="font-weight: bolder; font-size: x-large; margin-left: 10%;">${pickupDetailMap.SHOP_BRAND }</p>

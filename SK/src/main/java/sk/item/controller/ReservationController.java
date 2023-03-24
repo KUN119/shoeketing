@@ -35,11 +35,30 @@ public class ReservationController {
 		log.debug("###### 내가 픽업 예약한 리스트 ######");
 		ModelAndView mv = new ModelAndView("reservationList");
 		
-		List<Map<String, Object>> pickupList = reservationService.selectPickupList(map, session);
-		int pickupCount = reservationService.selectPickupCount(map, session);
+//		List<Map<String, Object>> pickupList = reservationService.selectPickupList(map, session);
+//		int pickupCount = reservationService.selectPickupCount(map, session);
+//		
+//		mv.addObject("pickupList", pickupList);
+//		mv.addObject("pickupCount", pickupCount);
 		
+		return mv;
+	}
+	
+	@PostMapping(value = "/myPage/reservationList/paging")
+	public ModelAndView reservationList_paging(@RequestParam Map<String, Object> map, HttpSession session) throws Exception {
+		log.debug("###### 내가 픽업 예약한 리스트 ######");
+		ModelAndView mv = new ModelAndView("jsonView");
+		
+		List<Map<String, Object>> pickupList = reservationService.selectPickupList(map, session);
 		mv.addObject("pickupList", pickupList);
-		mv.addObject("pickupCount", pickupCount);
+		
+		if (pickupList.size() > 0) {
+			int pickupCount = reservationService.selectPickupCount(map, session); // 픽업 예약 토탈 개수
+			System.out.println("pickupCount 확인 : " + pickupCount); 
+			mv.addObject("TOTAL", pickupCount);
+		} else {
+			mv.addObject("TOTAL", 0);
+		}
 		
 		return mv;
 	}
@@ -56,28 +75,29 @@ public class ReservationController {
 		return mv;
 	}
 	
-	@PostMapping(value = "/myPage/reservationDelete")
-	public Map<String, Object> reservationDelete(@RequestParam Map<String, Object> map) throws Exception {
-		log.debug("###### 픽업 예약 취소 ######");
-		System.out.println("map 확인 : " + map);
-		
-		Map<String, Object> result = new HashMap<>();
-		
-		// 픽업 상태가 "예약 대기중"일 경우
-		if(map.get("RESERVATION_STATUS").toString().equals("예약 대기중")){
-			result = reservationService.deleteReservation(map);
-		}
-		
-		// 픽업 상태가 "픽업 대기중"일 경우
-		if(map.get("RESERVATION_STATUS").toString().equals("픽업 대기중")){
-			result = reservationService.deletePickup(map);
-		}
-		
-		Map<String, Object> detailMap = reservationService.selectPickupDetail(map);
-		result.put("RESERVATION_STATUS", detailMap.get("RESERVATION_STATUS"));
-		
-		return result;
-	}
+	//TossPaymentsController에 구현 (reservationCancel() 메서드)
+//	@PostMapping(value = "/myPage/reservationDelete")
+//	public Map<String, Object> reservationDelete(@RequestParam Map<String, Object> map) throws Exception {
+//		log.debug("###### 픽업 예약 취소 ######");
+//		System.out.println("map 확인 : " + map);
+//		
+//		Map<String, Object> result = new HashMap<>();
+//		
+//		// 픽업 상태가 "예약 대기중"일 경우
+//		if(map.get("RESERVATION_STATUS").toString().equals("예약 대기중")){
+//			result = reservationService.deleteReservation(map);
+//		}
+//		
+//		// 픽업 상태가 "픽업 대기중"일 경우
+//		if(map.get("RESERVATION_STATUS").toString().equals("픽업 대기중")){
+//			result = reservationService.deletePickup(map);
+//		}
+//		
+//		Map<String, Object> detailMap = reservationService.selectPickupDetail(map);
+//		result.put("RESERVATION_STATUS", detailMap.get("RESERVATION_STATUS"));
+//		
+//		return result;
+//	}
 
 	@GetMapping(value = "/shopPage/reservationList")
 	public ModelAndView shopReservationList(Map<String, Object> map, HttpSession session) throws Exception {

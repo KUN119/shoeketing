@@ -29,7 +29,7 @@ public interface BrandPageService {
 			throws Exception;
 
 	// 브랜드 입점 요청 매장 토탈 개수 (아직 승인 전)
-	public int selectRequestShopCount(Map<String, Object> map) throws Exception;
+	public int selectRequestShopCount(Map<String, Object> map, HttpSession session) throws Exception;
 
 	// 브랜드 매장 입점 요청 승인
 	public Map<String, Object> updateShopJoinApprove(Map<String, Object> map) throws Exception;

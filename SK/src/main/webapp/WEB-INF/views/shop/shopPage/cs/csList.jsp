@@ -14,7 +14,7 @@
                     <th>처리 상태</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody id="shopCSListTbody">
              	   <c:choose>
 						<c:when test="${fn:length(shopCSList) > 0 }">
 							<c:forEach items="${shopCSList}" var="shopCS" varStatus="status">
@@ -31,23 +31,11 @@
                 </tbody>
               </table>
 
-              <nav aria-label="Page navigation example" style="margin-left: 40%;">
-                <ul class="pagination">
-                  <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                      <span aria-hidden="true">&laquo;</span>
-                    </a>
-                  </li>
-                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                      <span aria-hidden="true">&raquo;</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
+              <!-- 페이징 화면 처리 부분 시작 -->
+	      	<div id="PAGE_NAVI"></div>
+			<input type="hidden" id="PAGE_INDEX" name="PAGE_INDEX"/>
+			<!-- 페이징 화면 처리 부분 끝 -->
+			
       </div>
       
       <!-- CS_TITLE 클릭 시 ajax 동작할 부분 -->
@@ -57,14 +45,25 @@
     
 <script>
 $(document).ready(function(){
-	$("a[name='shopCSDetail']").on("click", function(e){   // 매장 문의 상세보기
+	
+	// 페이지 로딩 시 자동으로 1페이지 가져오기
+	fn_selectShopCSList(1);
+	
+	$("#shopCSListTbody").on("click", "a[name='shopCSDetail']", function(e){  // 매장 문의 상세보기
 		e.preventDefault();
 		const csNum = $(this).attr("data-csNum");
 		const csWriter = $(this).attr("data-csWriter");
 		
 		fn_shopCSDetail(csNum, csWriter);
-		
 	});
+	
+/* 	$("a[name='shopCSDetail']").on("click", function(e){   // 매장 문의 상세보기
+		e.preventDefault();
+		const csNum = $(this).attr("data-csNum");
+		const csWriter = $(this).attr("data-csWriter");
+		
+		fn_shopCSDetail(csNum, csWriter);
+	}); */
 	
 	function fn_shopCSDetail(csNum, csWriter){
 		var formData = new FormData();
@@ -88,7 +87,8 @@ $(document).ready(function(){
 			}
 		});
 	};
-	/* $("button[name='shopCSReplyWrite']").on("click", function(e){ */
+	
+	 /* $("button[name='shopCSReplyWrite']").on("click", function(e){ */
 	$("#csDetailBody").on("click", "#shopCSReplyWrite", function(e){  // 매장 문의 답변 작성하기
 		e.preventDefault();
 	
@@ -132,9 +132,60 @@ $(document).ready(function(){
 				console.log('실패');
 			}
 		});
-	};
+	}; 
 });
 
+//페이징 함수
+function fn_selectShopCSList(pageNo){
+	var comAjax = new ComAjax();
+	comAjax.setUrl("/sk/shopPage/csList/paging");
+	comAjax.setCallback("fn_selectShopCSListCallback");
+	comAjax.addParam("PAGE_INDEX",pageNo);
+	comAjax.addParam("PAGE_ROW", 2); //한 페이지에 보여줄 게시글 수 정하기
+	comAjax.ajax();
+}
+
+// 페이징 콜백 함수
+function fn_selectShopCSListCallback(data){ // 페이지 선택 시 화면에 보여줄 결과 콜백함수
+	var total = data.TOTAL;
+	var body = $("#shopCSListTbody"); // 페이징 한 결과가 반영될 태그
+	
+	body.empty();
+	
+	if(total == 0){ // 결과가 없을 경우
+		var str = "<tr>" + 
+						"<td colspan='4'>조회된 결과가 없습니다.</td>" + 
+					"</tr>";
+		body.append(str);
+	} else { // 결과가 있을 경우
+		var params = {
+			divId : "PAGE_NAVI",
+			pageIndex : "PAGE_INDEX",
+			totalCount : total,
+			recordCount : 2,
+			eventName : "fn_selectShopCSList" // 페이징 함수이름 동일하게
+		};
+		gfn_renderPaging(params);
+		
+		var str = "";
+		$.each(data.shopCSList, function(key, value){ // 가져온 게시글 수 만큼 반복 실행
+			str += "<tr><td style='width: 25%;'>" + value.MEM_EMAIL + "</td>" +
+				   "<td style='width: 45%;'><a href='#' name='shopCSDetail' id='shopCSDetail' " + 
+				   "data-csNum='" + value.CS_NUM + "' data-csWriter='" + value.CS_WRITER +
+				   "'>" + value.CS_TITLE + "</a></td><td style='width: 15%;'>" + 
+				   value.CS_DATE + "</td><td style='width: 25%;' id='csReplyStatus_" + value.CS_NUM + "'>" +
+				   data.csReplyStatusList[key].csReplyStatus + "</td></tr>"
+		});
+		body.append(str);
+		
+		
+		// 게시글 클릭 시 작동될 함수 추가
+		
+		
+	}
+}
+	
+	
 
 </script>    
     
