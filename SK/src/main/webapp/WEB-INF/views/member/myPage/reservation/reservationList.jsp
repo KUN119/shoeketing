@@ -246,7 +246,7 @@ $(document).ready(function() {
 		if(confirm("예약을 취소하시겠습니까?")) {
 			$.ajax({
 			type : 'post',
-			url : '/sk/reservationCancel',
+			url : '/sk/tossPaymentsCancel',
 			data : formData,
 			processData : false,
 			contentType : false,

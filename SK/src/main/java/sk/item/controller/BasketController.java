@@ -12,6 +12,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -42,18 +43,37 @@ public class BasketController {
 		return mv;
 	}
 
+	@RequestMapping(value = "/basket/basketAdd")
+	public ModelAndView basketAdd(@RequestParam Map<String, Object> map, HttpSession session) throws Exception {
+		log.debug("###### 장바구니 추가 ######");
+		ModelAndView mv = new ModelAndView("jsonView");
+
+		map.put("MEM_NUM", sessionService.getSession(session, "MEM_NUM"));
+
+		int result = basketService.insertBasket(map);
+		if (result == 1) {
+			mv.addObject("result", "success");
+		} else if (result == 2) {
+			mv.addObject("result", "full");
+		} else {
+			mv.addObject("result", "fail");
+		}
+
+		return mv;
+	}
+
 	@PostMapping(value = "/basket/basketDelete")
 	public void basketDelete(@RequestBody List<String> basketList, HttpSession session) throws Exception {
-			log.debug("###### 장바구니 삭제 ######");
-			System.out.println("컨트롤러 파라미터 : " + basketList);
-			
-			Map<String, Object> map = new HashMap<>();
-			
+		log.debug("###### 장바구니 삭제 ######");
+		System.out.println("컨트롤러 파라미터 : " + basketList);
+
+		Map<String, Object> map = new HashMap<>();
+
 		// 여러개 선택하여 삭제할 수 있으므로 반복문 처리
-		for(String basket : basketList) {
+		for (String basket : basketList) {
 			map.put("BASKET_NUM", basket);
 			System.out.println("BASKET_NUM : " + basket);
-			
+
 			// 맵에 세션의 mem_num 넣어주기
 			map.put("BASKET_MEM_NUM", sessionService.getSession(session, "MEM_NUM"));
 
@@ -61,7 +81,5 @@ public class BasketController {
 			basketService.deleteBasket(map);
 		}
 	}
-	
-	
 
 }

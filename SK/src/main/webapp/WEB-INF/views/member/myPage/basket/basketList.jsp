@@ -99,6 +99,57 @@ button :not(#delete) { filter: opacity(100%); } */
 </style>
 </head>
 <body>
+
+<!-- 장바구니 픽업 시작 날짜 선택 모달 -->
+<div class="modal fade" id="pickupDateModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">픽업 시작 날짜 선택</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!--상품별 픽업 날짜 선택 시작-->
+        <div class="row ms-3 me-3 mb-3 p-3" style="border: 1px solid rgba(0, 0, 0, 0.228); border-radius: 12px; background-color: rgba(0, 0, 0, 0.05);">
+          <div class="d-flex justify-content-between">
+            <h6>코트 비전 알타 레더 / DM0113-100</h6>
+            <p class="mb-1">245</p>
+          </div>
+          <p class="mb-2" style="font-size: small;">나이키 수원점</p>
+          <input class="form-control" type="date" id="" name="" />
+        </div>
+        <!--상품별 픽업 날짜 선택 끝-->
+        
+        <!--상품별 픽업 날짜 선택 시작-->
+        <div class="row ms-3 me-3 mb-3 p-3" style="border: 1px solid rgba(0, 0, 0, 0.228); border-radius: 12px; background-color: rgba(0, 0, 0, 0.05);">
+          <div class="d-flex justify-content-between">
+            <h6>코트 비전 알타 레더 / DM0113-100</h6>
+            <p class="mb-1">245</p>
+          </div>
+          <p class="mb-2" style="font-size: small;">나이키 수원점</p>
+          <input class="form-control" type="date" id="" name="" />
+        </div>
+        <!--상품별 픽업 날짜 선택 끝-->
+
+        <!--상품별 픽업 날짜 선택 시작-->
+        <div class="row ms-3 me-3 mb-3 p-3" style="border: 1px solid rgba(0, 0, 0, 0.228); border-radius: 12px; background-color: rgba(0, 0, 0, 0.05);">
+          <div class="d-flex justify-content-between">
+            <h6>코트 비전 알타 레더 / DM0113-100</h6>
+            <p class="mb-1">245</p>
+          </div>
+          <p class="mb-2" style="font-size: small;">나이키 수원점</p>
+          <input class="form-control" type="date" id="" name="" />
+        </div>
+        <!--상품별 픽업 날짜 선택 끝-->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+        <button type="button" class="btn btn-primary">예약하기</button>
+      </div>
+    </div>
+  </div>
+</div>
+
     <div class="container">
       <h3 class="mb-4 mt-5" style="font-weight: 700">장바구니</h3>
 
@@ -114,7 +165,7 @@ button :not(#delete) { filter: opacity(100%); } */
       <hr class="mt-3" style="border: 1px solid black;"/>
       
       <!--장바구니 리스트 시작-->
-      <div class="row" style="border: 1px solid rgba(0, 0, 0, 0.226)">
+      <div class="row justify-content-center" style="border: 1px solid rgba(0, 0, 0, 0.226)">
       
    	  <c:choose>
       <c:when test="${fn:length(list)>0 }">
@@ -204,6 +255,8 @@ button :not(#delete) { filter: opacity(100%); } */
 	              style="width: 5rem"
 	              name="pickup"
 	              id="pickup"
+	              data-bs-toggle="modal"
+	              data-bs-target="#pickupDateModal"
 	            >
 	              픽업예약
 	            </button>
@@ -292,6 +345,8 @@ button :not(#delete) { filter: opacity(100%); } */
               class="btn btn-sm btn-secondary ms-2"
               type="button"
               style="width: 5rem"
+              data-bs-toggle="modal"
+              data-bs-target="#pickupDateModal"
             >
             선택 예약
             </button>

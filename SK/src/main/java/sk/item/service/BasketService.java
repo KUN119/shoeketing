@@ -5,9 +5,12 @@ import java.util.Map;
 
 public interface BasketService {
 
-	//장바구니 리스트
+	// 장바구니 리스트
 	public List<Map<String, Object>> selectBasketList(Map<String, Object> map) throws Exception;
 
-	//장바구니 삭제
+	// 장바구니 추가
+	int insertBasket(Map<String, Object> map) throws Exception;
+
+	// 장바구니 삭제
 	void deleteBasket(Map<String, Object> map) throws Exception;
 }

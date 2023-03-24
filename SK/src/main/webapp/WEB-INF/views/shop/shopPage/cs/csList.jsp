@@ -94,7 +94,6 @@ $(document).ready(function(){
 	
 		const csReplyNum = $(this).attr("data-csNum");
 		const csWriter = $(this).attr("data-csWriter");
-		alert(csWriter);
 		
 		fn_shopCSReplyWrite(csReplyNum, csWriter);
 		

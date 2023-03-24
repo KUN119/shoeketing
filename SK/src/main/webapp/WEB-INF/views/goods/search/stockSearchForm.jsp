@@ -334,6 +334,7 @@ $(document).ready(function() {
 				              픽업예약
 				            </button>
 				            <button
+				              id="basketBtn"
 				              class="button"
 				              type="button"
 				              style="border: 1px solid rgba(0, 0, 0, 0.116)"
@@ -418,6 +419,7 @@ $(document).ready(function() {
 		if(total == 0){ // 결과가 없을 경우
 			str += '<tr><td colspan="6">검색하신 재고를 보유하는 매장이 존재하지 않습니다.</td></tr></tbody></table>';
 			body.append(str);
+			$("#PAGE_NAVI").empty();
 		} else { // 결과가 있을 경우
 			var params = {
 				divId : "PAGE_NAVI",
@@ -428,17 +430,90 @@ $(document).ready(function() {
 			};
 			gfn_renderPaging(params);
 			
-			for(var i=1; i<=(data.list.length)-1/3+1; i++) {
+			for(var i=1; i<=(data.list.length-1)/3+1; i++) {
 				str += '<tr>';
+			
+				for(var j=i*3-2; j<=i*3; j++) {
+					var json = data.list[j-1];
+					if(json == null) {
+						break;
+					}
+					if(json.SHOP_NAME != null) {
+						str += '<th scope="row">';
+						str += '<a name="shopName" data-num="';
+						str += json.SHOP_NUM;
+						str += '" data-amount="';
+						str += json.SHOP_GOODS_AMOUNT;
+						str += '" data-goods_name="';
+						str += json.TOTAL_GOODS_NAME;
+						str += '" data-goods_size="';
+						str += json.SHOP_GOODS_SIZE;
+						str += '" data-goods_num="';
+						str += json.TOTAL_GOODS_NUM;
+						str += '" style="cursor:pointer;">';
+						str += json.SHOP_NAME;
+						str += ' (';
+						str += json.TOTAL_GOODS_NAME;
+						str += ')</a></th>';
+					} else if(json.SHOP_NAME == null) {
+						str += '<th scope="row"></th>';
+					}
+					
+					if(json.SHOP_NAME != null) {
+						if(json.SHOP_GOODS_AMOUNT == 0) {
+							str += '<td style="border-right-color: rgba(0, 0, 0, 0.121)">X</td>';
+						} else if(json.SHOP_GOODS_AMOUNT != 0) {
+							str += '<td style="border-right-color: rgba(0, 0, 0, 0.121)">O</td>';
+						}
+					} else {
+						str += '<td style="border-right-color: rgba(0, 0, 0, 0.121)"></td>';
+					}
+				}
+				
+				str += '</tr>';
 			}
-				for(var j=i*3-2)
 			
 			body.append(str);
 			
 		}
 	}
 	
-	  </script>
+	$("#map").on("click", "#basketBtn", function(e) {
+		
+			var formData = new FormData();
+			var TOTAL_GOODS_NUM = $('#RESERVATION_PRONUM').val();
+			var SHOP_NUM = $('#RESERVATION_SHOP_NUM').val();
+			var BASKET_SIZE = $('#RESERVATION_SIZE').val();
+			
+			formData.append("TOTAL_GOODS_NUM", TOTAL_GOODS_NUM);
+			formData.append("SHOP_NUM", SHOP_NUM);
+			formData.append("BASKET_SIZE", BASKET_SIZE);
+			
+			$.ajax({
+				url : '/sk/basket/basketAdd',
+				type : 'post',
+				data : formData,
+				contentType : false,
+				processData : false,
+				success : function(data) {
+					if(data.result == 'success') {
+						if(confirm('상품이 장바구니에 성공적으로 추가되었습니다.\n장바구니로 이동하시겠습니까?')){
+							location.href='/sk/basket/basketList';
+						}
+					} else if(data.result == 'full') {
+						alert('더이상 장바구에 상품을 추가할 수 없습니다.\n장바구니에는 상품을 최대 10개까지 추가할 수 있습니다.')
+					} else {
+						alert('상품을 장바구니에 추가하는 과정에서 오류가 발생했습니다.');
+					}
+				},
+				fail : function() {
+					alert("서버 오류");
+				}
+			});
+		
+	});
+	
+</script>
 	  
 	   <!-- 토스 페이먼츠 API -->
 	  <script src="https://js.tosspayments.com/v1/payment-widget"></script>

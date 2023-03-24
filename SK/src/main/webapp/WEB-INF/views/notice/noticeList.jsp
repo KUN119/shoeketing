@@ -154,7 +154,6 @@ function fn_noticeDetail(num) {  //num 매개변수로 넣기
 				divId : "PAGE_NAVI",
 				pageIndex : "PAGE_INDEX",
 				totalCount : total,
-				recordCount : 10,
 				eventName : "fn_selectNoticeList" // 페이징 함수이름 동일하게
 			};
 			gfn_renderPaging(params);

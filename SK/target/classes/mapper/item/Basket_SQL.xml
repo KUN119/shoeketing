@@ -37,6 +37,55 @@
 	]]>
 </select>
 
+<!-- 장바구니 추가 -->
+<insert id="insertBasket" parameterType="hashmap">
+<![CDATA[
+	INSERT INTO BASKET(
+		BASKET_NUM,
+		BASKET_PRONUM,
+		BASKET_MEM_NUM,
+		BASKET_SHOP_NUM,
+		BASKET_SIZE
+		)
+	VALUES(
+		BASKET_SEQ.NEXTVAL,
+		#{TOTAL_GOODS_NUM},
+		#{MEM_NUM},
+		#{SHOP_NUM},
+		#{BASKET_SIZE}
+		)
+]]>
+</insert>
+
+<!-- 이미 장바구니에 추가된 상품 확인 -->
+<select id="selectBasketCheck" parameterType="hashmap" resultType="int">
+<![CDATA[
+	SELECT
+		COUNT(*)
+	FROM
+		BASKET
+	WHERE
+		BASKET_PRONUM = #{TOTAL_GOODS_NUM}
+		AND BASKET_MEM_NUM = #{MEM_NUM}
+		AND BASKET_SHOP_NUM = #{SHOP_NUM}
+		AND BASKET_SIZE = #{BASKET_SIZE}
+		AND BASKET_DEL_GB = 'N'
+]]>
+</select>
+
+<!-- 장바구니 상품 개수 확인 -->
+<select id="selectBasketCnt" parameterType="hashmap" resultType="int">
+<![CDATA[
+	SELECT
+		COUNT(*)
+	FROM
+		BASKET
+	WHERE
+		BASKET_MEM_NUM = #{MEM_NUM}
+		AND BASKET_DEL_GB = 'N'
+]]>
+</select>
+
 <!-- 장바구니 삭제 -->
 <update id="deleteBasket" parameterType="hashmap">
 	<![CDATA[

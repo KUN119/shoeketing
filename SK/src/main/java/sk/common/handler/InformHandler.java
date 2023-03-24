@@ -37,13 +37,14 @@ public class InformHandler extends TextWebSocketHandler {
 				String target = strs[1]; // m_id 저장
 				String content = strs[2];
 				String url = strs[3];
-				WebSocketSession targetSession = users.get(target); // 메시지를 받을 세션 조회
+//				WebSocketSession targetSession = users.get(target); // 메시지를 받을 세션 조회
+				WebSocketSession targetSession = users.get("나이키 홍대점"); // 임시 삭제
 
 				// 실시간 접속시
 				if (targetSession != null) {
 					// ex: [&분의일] 신청이 들어왔습니다.
 					TextMessage tmpMsg = new TextMessage(
-							"<a target='_blank' href='" + url + "'>[<b>" + type + "</b>] " + content + "</a>");
+							"<a href='" + url + "'>[<b>" + type + "</b>] " + content + "</a>");
 					targetSession.sendMessage(tmpMsg);
 				}
 			}
@@ -76,7 +77,8 @@ public class InformHandler extends TextWebSocketHandler {
 	// 접속한 유저의 http세션을 조회하여 id를 얻는 함수
 	private String getMemberId(WebSocketSession session) {
 		Map<String, Object> httpSession = session.getAttributes();
-		String MEM_NUM = (String) httpSession.get("MEM_NUM"); // 세션에 저장된 MEM_NUM 기준 조회
+//		String MEM_NUM = (String) httpSession.get("MEM_NUM"); // 세션에 저장된 MEM_NUM 기준 조회
+		String MEM_NUM = (String) httpSession.get("session_SHOP_NAME"); // 임시 삭제
 		return MEM_NUM == null ? null : MEM_NUM;
 	}
 }
