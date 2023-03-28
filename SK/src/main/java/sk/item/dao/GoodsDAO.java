@@ -91,7 +91,7 @@ public class GoodsDAO extends AbstractDAO {
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> selectAllGoodsList(Map<String, Object> map) throws Exception {
 		System.out.println("allGoodsList : " + map);
-		return (List<Map<String, Object>>) selectPagingList("goods.selectAllGoodsList", map);
+		return (List<Map<String, Object>>) selectList("goods.selectAllGoodsList", map);
 	}
 
 	public int selectAllGoodsCount(Map<String, Object> map) throws Exception {

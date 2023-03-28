@@ -38,7 +38,7 @@ public class GoodsController {
 		ModelAndView mv = new ModelAndView("goodsList");
 		
 		map.put("START", 1);
-		map.put("END", 100);
+		map.put("END", 10);
 		System.out.println("BRAND_NAME : " + commonService.getSessionBrand(session, "BRAND_NAME"));
 		map.put("BRAND_NAME", commonService.getSessionBrand(session, "BRAND_NAME"));
 		
@@ -63,97 +63,20 @@ public class GoodsController {
 	public ModelAndView allGoodsList(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("###### allGoodsList ######");
 		ModelAndView mv = new ModelAndView("allGoodsList");
-		
-//		map.put("START", 1);
-//		map.put("END", 100);
-//
-//		String listType = "";
-//		if (map.get("listType") != null) {
-//			listType = (String) map.get("listType");
-//			map.put("listType", listType);
-//		}
-//		
-//		String category = "";
-//		if (map.get("category") != null) {
-//			category = (String) map.get("category");
-//			map.put("categoryType", category);
-//		}
-//		
-//		String bName = "";
-//		if (map.get("bName") != null) {
-//			bName = (String) map.get("bName");
-//			map.put("brandType", bName);
-//		}
-//		
-//		String size = "";
-//		if (map.get("size") != null) {
-//			size = (String) map.get("size");
-//			map.put("sizeType", size);
-//		}
-//		
-//		String priceType = "";
-//		if (map.get("priceType") != null) {
-//			priceType = (String) map.get("priceType");
-//			map.put("priceType", priceType);
-//		}
-//
-//		List<Map<String, Object>> list = goodsService.selectAllGoodsList(map);
-//
-//		System.out.println("list: " + list);
-//		System.out.println("map: " + map);
-//
-//		mv.addObject("list", list);
-		return mv;
-	}
-	
-	@RequestMapping(value = "/goods/totalList/paging")
-	public ModelAndView allGoodsListPaging(@RequestParam Map<String, Object> map) throws Exception {
-		log.debug("###### allGoodsListPaging ######");
-		ModelAndView mv = new ModelAndView("jsonView");
+		map.put("START", 1);
+		map.put("END", 10);
 
 		String listType = "";
 		if (map.get("listType") != null) {
 			listType = (String) map.get("listType");
 			map.put("listType", listType);
 		}
-		
-		String category = "";
-		if (map.get("category") != null) {
-			category = (String) map.get("category");
-			map.put("categoryType", category);
-		}
-		
-		String bName = "";
-		if (map.get("bName") != null) {
-			bName = (String) map.get("bName");
-			map.put("brandType", bName);
-		}
-		
-		String size = "";
-		if (map.get("size") != null) {
-			size = (String) map.get("size");
-			map.put("sizeType", size);
-		}
-		
-		String priceType = "";
-		if (map.get("priceType") != null) {
-			priceType = (String) map.get("priceType");
-			map.put("priceType", priceType);
-		}
 
 		List<Map<String, Object>> list = goodsService.selectAllGoodsList(map);
 
 		System.out.println("list: " + list);
 		System.out.println("map: " + map);
-		
-		if (list.size() > 0) {
-			int count = goodsService.selectAllGoodsCount(map);
-			mv.addObject("TOTAL", count);
-			System.out.println(count);
-		} else {
-			mv.addObject("TOTAL", 0);
-		}
-		
+
 		mv.addObject("list", list);
 		return mv;
 	}
@@ -162,8 +85,8 @@ public class GoodsController {
 	public ModelAndView allGoodsList_ajax(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("###### allGoodsList ######");
 		ModelAndView mv = new ModelAndView("allGoodsList_ajax");
-//		map.put("START", 1);
-//		map.put("END", 100);
+		map.put("START", 1);
+		map.put("END", 10);
 
 		String listType = "";
 		if (map.get("listType") != null) {
