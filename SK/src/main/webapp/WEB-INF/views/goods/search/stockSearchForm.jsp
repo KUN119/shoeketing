@@ -86,7 +86,7 @@
             ></button>
           </div>
           <div class="modal-body">
-            <form>
+            <form id="csForm">
               <div class="d-flex">
                 <label
                   for="CS_TITLE"
@@ -132,7 +132,7 @@
             >
               취소
             </button>
-            <button type="button" class="btn btn-primary">문의작성</button>
+            <button type="button" id="csWriteBtn" class="btn btn-primary">문의작성</button>
           </div>
         </div>
       </div>
@@ -383,6 +383,8 @@ $(document).ready(function() {
 			 });
 		  
 	  });
+	
+	
 });
   
 	//페이징 함수
@@ -511,6 +513,24 @@ $(document).ready(function() {
 				}
 			});
 		
+	});
+	
+	$("#csWriteBtn").on("click", function(e) {
+		var shopNum = $('#RESERVATION_SHOP_NUM').val();
+		var formData = new FormData(document.getElementById('csForm'));
+		formData.append("CS_SHOP_NUM", shopNum);
+		
+		$.ajax({
+			url : '/sk/myPage/csWrite',
+			type : 'post',
+			data : formData,
+			contentType : false,
+			processData : false,
+			success : function(data) {
+				alert('매장 문의가 성공적으로 작성되었습니다.');
+				$("#CSModal").modal('hide');
+			}
+		});
 	});
 	
 </script>
