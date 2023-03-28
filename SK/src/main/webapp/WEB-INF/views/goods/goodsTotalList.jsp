@@ -964,7 +964,6 @@
           <!--정렬 기준 nav 끝-->
 
           <div class="row" id="goodsListDiv">
-          
           <c:choose>
           <c:when test="${fn:length(list)>0}">
           	<c:forEach items="${list}" var="goods">
@@ -987,6 +986,14 @@
           </c:otherwise>
          </c:choose> 
           </div>
+          
+          <div class="row">
+      	<!-- 페이징 화면 처리 부분 시작 -->
+      	<div id="PAGE_NAVI"></div>
+		<input type="hidden" id="PAGE_INDEX" name="PAGE_INDEX"/>
+		<!-- 페이징 화면 처리 부분 끝 -->
+		</div>
+		
         </div>
     </div>
   </body>
@@ -994,80 +1001,160 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	
-	let listType = null;
-	let category = null;
+	//페이지 로딩 시 자동으로 1페이지 가져오기
+	fn_totalGoodsList(1);
 	
-	$("a[name='listType']").on("click", function(e) { // 정렬 검색
+	$("a[name='title']").on("click", function(e) {  // 공지사항 상세보기
 		e.preventDefault();
-		listType = $(this).attr("data-num");
-		const bName = $("input[type=radio][name=brandType]:checked").val();
-		const size = $("input[type=radio][name=sizeType]:checked").val();
-		const selectedOption = $('#priceType').val();
-		fn_listType(listType, category, bName, size, selectedOption);
+		const num = $(this).attr("data-num");  //a태그 name이 title 부분 속성의 data-num값 가져와서 변수 num에 저장
+		fn_noticeDetail(num); //fn_noticeDetail()함수 매개변수로 num 전송
+		location.href="/sk/goods/goodsDetail?TOTAL_GOODS_NUM=" + num;
 	});
+});
+
+function fn_noticeDetail(num) {  //num 매개변수로 넣기
+	  
+	var formData = new FormData();
+    var TOTAL_GOODS_NUM = num;
+
+    formData.append("TOTAL_GOODS_NUM", TOTAL_GOODS_NUM);
+};
+
+let listType = null;
+let category = null;
+
+$("a[name='listType']").on("click", function(e) { // 정렬 검색
+	e.preventDefault();
+	listType = $(this).attr("data-num");
+	const bName = $("input[type=radio][name=brandType]:checked").val();
+	const size = $("input[type=radio][name=sizeType]:checked").val();
+	const selectedOption = $('#priceType').val();
+	fn_listType(listType, category, bName, size, selectedOption);
+});
+
+$("a[name='category']").on("click", function(e) { // 정렬 검색
+	e.preventDefault();
+	category = $(this).attr("data-category");
+	const bName = $("input[type=radio][name=brandType]:checked").val();
+	const size = $("input[type=radio][name=sizeType]:checked").val();
+	const selectedOption = $('#priceType').val();
+	fn_listType(listType, category, bName, size, selectedOption);
+}); 
+
+$("input[name='brandType']").change(function(){
+	const bName = $("input[type=radio][name=brandType]:checked").val();
+	const size = $("input[type=radio][name=sizeType]:checked").val();
+	const selectedOption = $('#priceType').val();
+	fn_listType(listType, category, bName, size, selectedOption);		
+});
+
+$("input[name='sizeType']").change(function(){
+	const bName = $("input[type=radio][name=brandType]:checked").val();
+	const size = $("input[type=radio][name=sizeType]:checked").val();
+	const selectedOption = $('#priceType').val();
+	fn_listType(listType, category, bName, size, selectedOption);		
+});
+
+$("select[name='priceType']").change(function(){
+	const bName = $("input[type=radio][name=brandType]:checked").val();
+	const size = $("input[type=radio][name=sizeType]:checked").val();
+	const selectedOption = $('#priceType').val();
+	fn_listType(listType, category, bName, size, selectedOption);		
+});
+
+function fn_listType(listType, category, bName, size, selectedOption) {
+	var formData = new FormData();
+	formData.append("listType", listType);
+	formData.append("category", category);
+	formData.append("bName", bName);
+	formData.append("size", size);
+	formData.append("priceType", selectedOption);
 	
-	$("a[name='category']").on("click", function(e) { // 정렬 검색
-		e.preventDefault();
-		category = $(this).attr("data-category");
-		const bName = $("input[type=radio][name=brandType]:checked").val();
-		const size = $("input[type=radio][name=sizeType]:checked").val();
-		const selectedOption = $('#priceType').val();
-		fn_listType(listType, category, bName, size, selectedOption);
-	}); 
+	alert("listType: " + listType);
+	alert("category: " + category);
+	alert("bName: " + bName);
+	alert("size: " + size);
+	alert("priceType: " + selectedOption);
 	
-	$("input[name='brandType']").change(function(){
-		const bName = $("input[type=radio][name=brandType]:checked").val();
-		const size = $("input[type=radio][name=sizeType]:checked").val();
-		const selectedOption = $('#priceType').val();
-		fn_listType(listType, category, bName, size, selectedOption);		
+	console.log("listType: " + listType);
+	console.log("category: " + category);
+	console.log("bName: " + bName);
+	console.log("size: " + size);
+	console.log("priceType: " + selectedOption);
+	
+	$.ajax({
+		url: '/sk/goods/totalList_ajax',
+		type: 'POST',
+		data: formData,
+		processData: false,
+		contentType: false,
+		success: function(data) {
+			$('#goodsListDiv').empty();
+			$('#goodsListDiv')[0].innerHTML=data;
+		},
+		error: function(xhr, status, error) {
+			console.log('실패');
+		}
 	});
+}
+$('#priceType').on('change');
+
+//페이징 함수
+function fn_totalGoodsList(pageNo){
+	var comAjax = new ComAjax();
+	comAjax.setUrl("/sk/goods/totalList/paging");
+	comAjax.setCallback("fn_totalGoodsListCallback");
+	comAjax.addParam("PAGE_INDEX",pageNo);
+	comAjax.addParam("PAGE_ROW", 10); //한 페이지에 보여줄 게시글 수 정하기
+	comAjax.ajax();
+}
+
+// 페이징 콜백 함수
+function fn_totalGoodsListCallback(data){ // 페이지 선택 시 화면에 보여줄 결과 콜백함수
+	var total = data.TOTAL;
+	var body = $("#goodsListDiv"); // 페이징 한 결과가 반영될 태그
 	
-	$("input[name='sizeType']").change(function(){
-		const bName = $("input[type=radio][name=brandType]:checked").val();
-		const size = $("input[type=radio][name=sizeType]:checked").val();
-		const selectedOption = $('#priceType').val();
-		fn_listType(listType, category, bName, size, selectedOption);		
-	});
+	body.empty();
 	
-	$("select[name='priceType']").change(function(){
-		const bName = $("input[type=radio][name=brandType]:checked").val();
-		const size = $("input[type=radio][name=sizeType]:checked").val();
-		const selectedOption = $('#priceType').val();
-		fn_listType(listType, category, bName, size, selectedOption);		
-	});
-	
-	function fn_listType(listType, category, bName, size, selectedOption) {
-		var formData = new FormData();
-		formData.append("listType", listType);
-		formData.append("category", category);
-		formData.append("bName", bName);
-		formData.append("size", size);
-		formData.append("priceType", selectedOption);
+	if(total == 0){ // 결과가 없을 경우
+		var str = "<tr>" + 
+						"<td colspan='3'>등록된 상품이 없습니다.</td>" + 
+					"</tr>";
+		body.append(str);
+	} else { // 결과가 있을 경우
+		var params = {
+			divId : "PAGE_NAVI",
+			pageIndex : "PAGE_INDEX",
+			totalCount : total,
+			recordCount : 10,
+			eventName : "fn_totalGoodsList" // 페이징 함수이름 동일하게
+		};
+		gfn_renderPaging(params);
 		
-		console.log("listType: " + listType);
-		console.log("category: " + category);
-		console.log("bName: " + bName);
-		console.log("size: " + size);
-		console.log("priceType: " + selectedOption);
+		var str = "";
+		$.each(data.list, function(key, value){ // 가져온 게시글 수 만큼 반복 실행
+			str += "<div class='card' style='width: 14rem; margin-left: 10px; margin-right: 10px; margin-bottom: 80px; border-style: none;'>" +
+            "<a href='/sk/goods/goodsDetail?TOTAL_GOODS_NUM='" + value.TOTAL_GOODS_NUM+ "' name='title' data-num='" + value.TOTAL_GOODS_NUM + "'>" +
+            "<img src='/sk/image/display?fileName='" + value.GOODS_IMAGE_STD + "' style='width:13rem; height: 11rem' class='card-img-top'>" +
+            "<div class='card-body' style='height:6rem;'>" +
+              "<h6 class='card-title' style='font-size: 15px; font-weight: 700;'>" + value.BRAND_NAME + "</h6>" +
+              "<p class='card-text' style='font-size: 13px;'>" + value.TOTAL_GOODS_NAME + "/" +  value.TOTAL_GOODS_MODEL + "</p>" +
+            "</div>" +
+            "<div class='card-body'>" +
+              "<h6 class='card-title mb-0' style='font-size: 18px; font-weight: 700;'>" + value.TOTAL_GOODS_PRICE + "원" +"</h6>" +
+            "</div>" +
+          "</a>" +
+        "</div>"
+		});
+		body.append(str);
 		
-		$.ajax({
-			url: '/sk/goods/totalList_ajax',
-			type: 'POST',
-			data: formData,
-			processData: false,
-			contentType: false,
-			success: function(data) {
-				$('#goodsListDiv').empty();
-				$('#goodsListDiv')[0].innerHTML=data;
-			},
-			error: function(xhr, status, error) {
-				console.log('실패');
-			}
+		$("a[name='title']").on("click", function(e) {  // 공지사항 상세보기
+			e.preventDefault();
+			const num = $(this).attr("data-num");  //a태그 name이 title 부분 속성의 data-num값 가져와서 변수 num에 저장
+			fn_noticeDetail(num); //fn_noticeDetail()함수 매개변수로 num 전송
+			location.href="/sk/goods/goodsDetail?TOTAL_GOODS_NUM=" + num;
 		});
 	}
-	
-	$('#priceType').on('change');
-	
-});
+}
 </script>	
 </html>

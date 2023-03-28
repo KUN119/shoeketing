@@ -10,88 +10,88 @@ import sk.common.dao.AbstractDAO;
 @Repository("goodsDAO")
 public class GoodsDAO extends AbstractDAO {
 
-	// 브랜드 전체 상품 리스트 
+	// 브랜드 전체 상품 리스트
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> selectBrandGoodsList(Map<String, Object> map) throws Exception {
 		System.out.println("selectBrandGoodsList : " + map);
-		
-		return (List<Map<String, Object>>) selectList("goods.selectBrandGoodsList", map);
+
+		return (List<Map<String, Object>>) selectPagingList("goods.selectBrandGoodsList", map);
 	}
-	
-	// 브랜드 전체 상품 토탈 개수 
+
+	// 브랜드 전체 상품 토탈 개수
 	public int selectBrandGoodsCount(Map<String, Object> map) throws Exception {
 		System.out.println("selectBrandGoodsCount : " + map);
-		
+
 		return (int) selectOne("goods.selectBrandGoodsCount", map);
 	}
-	
-	// 브랜드 상품 등록 
-	public int insertGoods(Map<String, Object> map) throws Exception{
+
+	// 브랜드 상품 등록
+	public int insertGoods(Map<String, Object> map) throws Exception {
 		System.out.println("insertGoods : " + map);
-		
+
 		return (int) insert("goods.insertGoods", map);
 	}
-	
+
 	// 상품 등록시, 상품 상세(사이즈) 삽입
-	public int insertGoodsDetail(Map<String, Object> map) throws Exception{
+	public int insertGoodsDetail(Map<String, Object> map) throws Exception {
 		System.out.println("insertGoodsDetail : " + map);
-		
+
 		return (int) insert("goods.insertGoodsDetail", map);
 	}
-	
-	// 상품 등록시, 상품 이미지 삽입 
-	public int insertGoodsImage(Map<String, Object> map) throws Exception{
+
+	// 상품 등록시, 상품 이미지 삽입
+	public int insertGoodsImage(Map<String, Object> map) throws Exception {
 		System.out.println("insertGoodsImage : " + map);
-		
+
 		return (int) insert("goods.insertGoodsImage", map);
 	}
-	
-	// 브랜드에 해당하는 매장 이름 및 매장번호 조회 
+
+	// 브랜드에 해당하는 매장 이름 및 매장번호 조회
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> selectShopNumName(Map<String, Object> map) throws Exception {
 		System.out.println("selectShopNumName : " + map);
 		return (List<Map<String, Object>>) selectList("goods.selectShopNumName", map);
 	}
-	
+
 	// 브랜드가 상품 등록시, 해당 브랜드의 매장들도 상품 등록
-	public int insertShopGoodsAddByBrand(Map<String, Object> map) throws Exception{
+	public int insertShopGoodsAddByBrand(Map<String, Object> map) throws Exception {
 		System.out.println("insertShopGoodsAddByBrand : " + map);
-		
+
 		return (int) insert("goods.insertShopGoodsAddByBrand", map);
 	}
-	
+
 	// 상품 이미지 삭제 deleteGoodsImage
-	public int deleteGoodsImage(Map<String, Object> map) throws Exception{
+	public int deleteGoodsImage(Map<String, Object> map) throws Exception {
 		System.out.println("deleteGoodsImage : " + map);
-		
+
 		return (int) update("goods.deleteGoodsImage", map);
 	}
-	
-	// 상품 이미지 수정 
-	public int updateGoodsImageModify(Map<String, Object> map) throws Exception{
+
+	// 상품 이미지 수정
+	public int updateGoodsImageModify(Map<String, Object> map) throws Exception {
 		System.out.println("updateGoodsImageModify : " + map);
-		
+
 		return (int) update("goods.updateGoodsImageModify", map);
 	}
-	
+
 	// 상품 수정 (상품 상세정보 수정,사이즈만 따로)
-	public int updateGoodsModify(Map<String, Object> map) throws Exception{
+	public int updateGoodsModify(Map<String, Object> map) throws Exception {
 		System.out.println("updateGoodsModify : " + map);
-		
+
 		return (int) update("goods.updateGoodsModify", map);
 	}
-	
-	// 상품 상세 삭제(상품 수정시, 원래 선택되어 있던 사이즈 전체 삭제) 
-	public int deleteGoodsDetail(Map<String, Object> map) throws Exception{
+
+	// 상품 상세 삭제(상품 수정시, 원래 선택되어 있던 사이즈 전체 삭제)
+	public int deleteGoodsDetail(Map<String, Object> map) throws Exception {
 		System.out.println("deleteGoodsDetail : " + map);
-		
+
 		return (int) delete("goods.deleteGoodsDetail", map);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> selectAllGoodsList(Map<String, Object> map) throws Exception {
 		System.out.println("allGoodsList : " + map);
-		return (List<Map<String, Object>>) selectList("goods.selectAllGoodsList", map);
+		return (List<Map<String, Object>>) selectPagingList("goods.selectAllGoodsList", map);
 	}
 
 	public int selectAllGoodsCount(Map<String, Object> map) throws Exception {
