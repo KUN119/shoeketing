@@ -102,15 +102,35 @@ public class ReservationController {
 	@GetMapping(value = "/shopPage/reservationList")
 	public ModelAndView shopReservationList(Map<String, Object> map, HttpSession session) throws Exception {
 		log.debug("###### 매장 픽업 예약 요청 리스트 ######");
-		ModelAndView mv = new ModelAndView("reservationRequestList"); // 수정 완
+		ModelAndView mv = new ModelAndView("reservationRequestList"); 
 
-		List<Map<String, Object>> reservaionList = reservationService.selectReservationRequestList(map, session);
-		int reservationCount = reservationService.selectReservationCount(map, session);
-		System.out.println("reservationList 확인 : " + reservaionList);
-		System.out.println("reservationCount 확인 : " + reservationCount);
-		
-		mv.addObject("reservationList", reservaionList);
+//		List<Map<String, Object>> reservaionList = reservationService.selectReservationRequestList(map, session);
+//		int reservationCount = reservationService.selectReservationCount(map, session);
+//		System.out.println("reservationList 확인 : " + reservaionList);
+//		System.out.println("reservationCount 확인 : " + reservationCount);
+//		
+//		mv.addObject("reservationList", reservaionList);
 	
+		return mv;
+	}
+	
+	@PostMapping(value = "/shopPage/reservationList/paging")
+	public ModelAndView shopReservationList_paging(@RequestParam Map<String, Object> map, HttpSession session) throws Exception {
+		log.debug("###### 매장 픽업 예약 요청 리스트 ######");
+		ModelAndView mv = new ModelAndView("jsonView"); 
+
+		List<Map<String, Object>> reservationList = reservationService.selectReservationRequestList(map, session);
+		System.out.println("reservationList 확인 : " + reservationList);
+		mv.addObject("reservationList", reservationList);
+
+		if (reservationList.size() > 0) {
+			int reservationCount = reservationService.selectReservationCount(map, session); // 픽업 예약 요청 토탈 개수
+			System.out.println("reservationCount 확인 : " + reservationCount); 
+			mv.addObject("TOTAL", reservationCount);
+		} else {
+			mv.addObject("TOTAL", 0);
+		}
+		
 		return mv;
 	}
 

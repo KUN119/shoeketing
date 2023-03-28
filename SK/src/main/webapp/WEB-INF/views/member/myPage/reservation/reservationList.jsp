@@ -150,7 +150,7 @@
                 </tbody>
               </table>
               
-              <!-- 페이징 화면 처리 부분 시작 -->
+            <!-- 페이징 화면 처리 부분 시작 -->
 	      	<div id="PAGE_NAVI"></div>
 			<input type="hidden" id="PAGE_INDEX" name="PAGE_INDEX"/>
 			<!-- 페이징 화면 처리 부분 끝 -->
