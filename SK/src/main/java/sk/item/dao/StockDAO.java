@@ -15,7 +15,7 @@ public class StockDAO extends AbstractDAO {
 	public List<Map<String, Object>> selectStockList(Map<String, Object> map) throws Exception {
 		System.out.println("selectStockList 파라미터 : " + map);
 
-		return (List<Map<String, Object>>) selectList("stock.selectStockList", map);
+		return (List<Map<String, Object>>) selectPagingList("stock.selectStockList", map);
 	}
 
 	// 재고 리스트 토탈개수
