@@ -66,7 +66,7 @@ public class ReservationDAO extends AbstractDAO{
 	public List<Map<String, Object>> selectReservationRequestList(Map<String, Object> map) throws Exception {
 		System.out.println("selectReservationRequestList 파라미터 : " + map);
 
-		return (List<Map<String, Object>>) selectList("reservation.selectReservationRequestList", map);
+		return (List<Map<String, Object>>) selectPagingList("reservation.selectReservationRequestList", map);
 	}
 	
 	// 해당매장의 총 픽업 예약개수 (매장)
