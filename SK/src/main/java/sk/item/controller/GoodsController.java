@@ -31,31 +31,38 @@ public class GoodsController {
 	@Resource(name = "sessionService")
 	private CommonService commonService;
 
-	// 브랜드 회원 정보 전체 상품 리스트
 	@GetMapping(value = "/brandPage/goodsList")
 	public ModelAndView goodsList(@RequestParam Map<String, Object> map, HttpSession session) throws Exception {
 		log.debug("###### 브랜드회원 전체상품 리스트 ######");
 		ModelAndView mv = new ModelAndView("goodsList");
-		
-		map.put("START", 1);
-		map.put("END", 10);
+		return mv;
+	}
+
+	// 브랜드 회원 정보 전체 상품 리스트
+	@PostMapping(value = "/brandPage/goodsList/paging")
+	public ModelAndView goodsListPaging(@RequestParam Map<String, Object> map, HttpSession session) throws Exception {
+		log.debug("###### 브랜드회원 전체상품 리스트 페이징 ######");
+		ModelAndView mv = new ModelAndView("jsonView");
+
+//      map.put("START", 1);
+//      map.put("END", 10);
 		System.out.println("BRAND_NAME : " + commonService.getSessionBrand(session, "BRAND_NAME"));
 		map.put("BRAND_NAME", commonService.getSessionBrand(session, "BRAND_NAME"));
-		
+
 		System.out.println("map : " + map);
-		
-		//전체상품 리스트 가져오기
+
+		// 전체상품 리스트 가져오기
 		List<Map<String, Object>> list = goodsService.selectBrandGoodsList(map);
-		
-		//브랜드의 상품 전체 개수 가져오기
-		int count = goodsService.selectBrandGoodsCount(map); 
-		
+
+		// 브랜드의 상품 전체 개수 가져오기
+		int count = goodsService.selectBrandGoodsCount(map);
+
 		System.out.println("브랜드 전체상품 리스트 : " + list);
 		mv.addObject("list", list);
 		mv.addObject("keyword", map.get("keyword"));
 		mv.addObject("searchType", map.get("searchType"));
-		//검색 후 화면에 검색어와 검색조건이 유지되도록 파라미터를 뷰로 전송
-		mv.addObject("BRAND_GOODS_COUNT", count); //브랜드 전체 상품 토탈 개수
+		// 검색 후 화면에 검색어와 검색조건이 유지되도록 파라미터를 뷰로 전송
+		mv.addObject("TOTAL", count); // 브랜드 전체 상품 토탈 개수
 		return mv;
 	}
 
@@ -93,31 +100,31 @@ public class GoodsController {
 			listType = (String) map.get("listType");
 			map.put("listType", listType);
 		}
-		
+
 		String category = "";
 		if (map.get("category") != null) {
 			category = (String) map.get("category");
 			map.put("categoryType", category);
 		}
-		
+
 		String bName = "";
 		if (map.get("bName") != null) {
 			bName = (String) map.get("bName");
 			map.put("brandType", bName);
 		}
-		
+
 		String size = "";
 		if (map.get("size") != null) {
 			size = (String) map.get("size");
 			map.put("sizeType", size);
 		}
-		
+
 		String priceType = "";
 		if (map.get("priceType") != null) {
 			priceType = (String) map.get("priceType");
 			map.put("priceType", priceType);
 		}
-		
+
 		List<Map<String, Object>> list = goodsService.selectAllGoodsList(map);
 
 		System.out.println("list: " + list);
@@ -146,23 +153,23 @@ public class GoodsController {
 
 		return mv;
 	}
-	
-//	@RequestMapping(value="/brandPage/goodsModifyForm")
-//	public ModelAndView goodsModifyForm(Map<String, Object> map, HttpSession session) throws Exception {
-//		log.debug("###### goodsModifyForm ######");
-//		System.out.println("goodsModifyForm map : " + map);
-//		ModelAndView mv = new ModelAndView("goodsWriteForm");
-//		
-//		//TOTAL_GOODS_NUM
-//		
-//		return mv;
-//	}
-	//상품명
-	//모델번호
-	//카테고리
-	//가격
-	//사이즈
-	//파일
+
+//   @RequestMapping(value="/brandPage/goodsModifyForm")
+//   public ModelAndView goodsModifyForm(Map<String, Object> map, HttpSession session) throws Exception {
+//      log.debug("###### goodsModifyForm ######");
+//      System.out.println("goodsModifyForm map : " + map);
+//      ModelAndView mv = new ModelAndView("goodsWriteForm");
+//      
+//      //TOTAL_GOODS_NUM
+//      
+//      return mv;
+//   }
+	// 상품명
+	// 모델번호
+	// 카테고리
+	// 가격
+	// 사이즈
+	// 파일
 
 	@ResponseBody
 	@GetMapping(value = "/goods/goodsLike")
@@ -203,24 +210,25 @@ public class GoodsController {
 	public ModelAndView goodsWriteForm(Map<String, Object> map) throws Exception {
 		log.debug("###### 브랜드 상품 등록 폼 ######");
 		ModelAndView mv = new ModelAndView("goodsWriteForm");
-		
+
 		return mv;
 	}
-	
+
 	@PostMapping(value = "/brandPage/goodsWrite")
-	public Map<String, Object> goodsWrite(MultipartFile[] uploadFile, @RequestParam Map<String, Object> map, HttpSession session) throws Exception {
+	public Map<String, Object> goodsWrite(MultipartFile[] uploadFile, @RequestParam Map<String, Object> map,
+			HttpSession session) throws Exception {
 		log.debug("###### 브랜드 상품 등록 ######");
-		
+
 		String a = uploadFile[0].getOriginalFilename();
 		String b = uploadFile[1].getOriginalFilename();
 		String c = uploadFile[2].getOriginalFilename();
 		System.out.println("#########################" + a);
 		System.out.println("#########################" + b);
 		System.out.println("#########################" + c);
-		
+
 		Map<String, Object> goodsWrite = goodsService.insertGoods(map, session, uploadFile);
 		System.out.println("goodsWrite Map 확인 : " + goodsWrite);
-		
+
 		return goodsWrite;
 	}
 

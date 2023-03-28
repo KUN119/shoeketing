@@ -57,7 +57,7 @@
     </div>
     <!-- 모달 끝 -->
 
-        <div class="col-8" style="margin-top: 0px;">
+        <div class="col-10" style="margin-top: 0px;">
             <h3 style="margin-left: 30px; color: black; font-weight: bolder;">나의 문의 내역</h3>
             <hr style="border: solid 1px rgb(73, 73, 73); width: 100%; ">
             <table class="table table table-bordered" style="text-align: center;">
