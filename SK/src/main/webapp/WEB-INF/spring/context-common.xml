@@ -35,7 +35,6 @@
 	<aop:aspectj-autoproxy/>
     <beans:bean id="loggerAspect" class="sk.common.logger.LoggerAspect" />
     
-    
     <!-- JDBC -->
     <beans:bean id="dataSourceSpied" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <beans:property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"/>

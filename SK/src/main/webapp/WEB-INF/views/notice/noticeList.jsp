@@ -68,6 +68,10 @@
       	<!-- 페이징 화면 처리 부분 시작 -->
       	<div id="PAGE_NAVI"></div>
 		<input type="hidden" id="PAGE_INDEX" name="PAGE_INDEX"/>
+			<!-- 페이징 검색 조건 및 검색 키워드 input type hidden 시작 -->
+			<input type="hidden" id="PAGE_SEARCHTYPE" name="PAGE_SEARCHTYPE"/>
+			<input type="hidden" id="PAGE_KEYWORD" name="PAGE_KEYWORD"/>
+			<!-- 페이징 검색 조건 및 검색 키워드 input type hidden 시작 -->
 		<!-- 페이징 화면 처리 부분 끝 -->
 		</div>
 		
@@ -96,13 +100,27 @@ function fn_noticeDetail(num) {  //num 매개변수로 넣기
 
     formData.append("NOTICE_NUM", NOTICE_NUM);
 };
-
+	/* 검색버튼 이벤트에 기존 ajax 함수 제거하고 페이징 함수 연결하기 */
 	$("button[name='noticeSearch']").on("click", function(e){  //공지사항 검색
 		e.preventDefault();
-		fn_noticeSearch();
+		
+		/* 페이징 검색 조건 및 검색 키워드 변수 초기화 시작 */
+		var keyword = $('#keyword').val();
+		var searchType = $('#searchType').val();
+		/* 페이징 검색 조건 및 검색 키워드 변수 초기화 끝 */
+		
+		$('#PAGE_INDEX').val(1); /* 검색 시 1페이지로 */
+		
+		/* 페이징 검색 조건 및 검색 키워드 input type hidden에 값 넣어주기 시작 */
+		$('#PAGE_KEYWORD').val(keyword);
+		$('#PAGE_SEARCHTYPE').val(searchType);
+		/* 페이징 검색 조건 및 검색 키워드 input type hidden에 값 넣어주기 끝 */
+		
+		/* 페이징 함수 매개변수에 맞게 함수 호출(매개변수 순서 및 위치 주의!!) */
+		fn_selectNoticeList(1, searchType, keyword)
 	});
 
-	function fn_noticeSearch(){
+	/* function fn_noticeSearch(){
 		
 		var formData = new FormData();
 		var keyword = $('#keyword').val();
@@ -125,15 +143,21 @@ function fn_noticeDetail(num) {  //num 매개변수로 넣기
 				console.log('실패');
 			}
 		});
-	};
+	}; */
 	
 	// 페이징 함수
-	function fn_selectNoticeList(pageNo){
+	function fn_selectNoticeList(pageNo, searchType, keyword){ /* 매개변수 순서에 맞게 추가하기!! */
 		var comAjax = new ComAjax();
 		comAjax.setUrl("/sk/noticeList/paging");
 		comAjax.setCallback("fn_selectNoticeListCallback");
 		comAjax.addParam("PAGE_INDEX",pageNo);
 		comAjax.addParam("PAGE_ROW", 10); //한 페이지에 보여줄 게시글 수 정하기
+		
+		/* 페이징 검색 조건 및 검색 키워드 파라미터 추가 시작 */
+		comAjax.addParam("keyword", keyword);
+		comAjax.addParam("searchType", searchType);
+		/* 페이징 검색 조건 및 검색 키워드 파라미터 추가 끝 */
+		
 		comAjax.ajax();
 	}
 	
@@ -153,7 +177,12 @@ function fn_noticeDetail(num) {  //num 매개변수로 넣기
 			var params = {
 				divId : "PAGE_NAVI",
 				pageIndex : "PAGE_INDEX",
+				/* 페이징 검색 조건 및 검색 키워드 객체에 추가 시작 */
+				searchType : "PAGE_SEARCHTYPE",
+				keyword : "PAGE_KEYWORD",
+				/* 페이징 검색 조건 및 검색 키워드 객체에 추가 끝 */
 				totalCount : total,
+				recordCount : 10,
 				eventName : "fn_selectNoticeList" // 페이징 함수이름 동일하게
 			};
 			gfn_renderPaging(params);

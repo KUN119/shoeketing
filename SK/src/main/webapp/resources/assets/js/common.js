@@ -93,11 +93,24 @@ recordCount : 페이지당 레코드 수
 totalCount : 전체 조회 건수 
 eventName : 페이징 하단의 숫자 등의 버튼이 클릭되었을 때 호출될 함수 이름
 */
+
 var gfv_pageIndex = null;
 var gfv_eventName = null;
+
+/* 페이징 검색 조건 및 검색 키워드 변수 선언 시작 */
+var gfv_searchType = null;
+var gfv_keyword = null;
+/* 페이징 검색 조건 및 검색 키워드 변수 선언 끝 */
+
 function gfn_renderPaging(params){
 	var divId = params.divId; //페이징이 그려질 div id
 	gfv_pageIndex = params.pageIndex; //현재 위치가 저장될 input 태그
+	
+	/* 페이징 검색 조건 및 검색 키워드 변수 초기화 시작 */
+	gfv_searchType = params.searchType; //검색 조건이 저장될 input 태그
+	gfv_keyword = params.keyword; //검색 키워드가 저장될 input 태그
+	/* 페이징 검색 조건 및 검색 키워드 변수 초기화 끝 */
+	
 	var totalCount = params.totalCount; //전체 조회 건수
 	var currentIndex = $("#"+params.pageIndex).val(); //현재 위치
 	if($("#"+params.pageIndex).length == 0 || gfn_isNull(currentIndex) == true){
@@ -117,7 +130,7 @@ function gfn_renderPaging(params){
 	var str = "";
 	
 	var first = (parseInt((currentIndex-1) / 10) * 10) + 1;
-	var last = (parseInt(totalIndexCount/10) == parseInt(currentIndex/10)) ? totalIndexCount%10 : 10;
+	var last = (parseInt(first+9) > parseInt(totalIndexCount)) ? parseInt(totalIndexCount) : parseInt(first+9);
 	var prev = (parseInt((currentIndex-1)/10)*10) - 9 > 0 ? (parseInt((currentIndex-1)/10)*10) - 9 : 1; 
 	var next = (parseInt((currentIndex-1)/10)+1) * 10 + 1 < totalIndexCount ? (parseInt((currentIndex-1)/10)+1) * 10 + 1 : totalIndexCount;
 	
@@ -141,7 +154,7 @@ function gfn_renderPaging(params){
 	
 	postStr += "</ul></nav>";
 	
-	for(var i=first; i<(first+last); i++){
+	for(var i=first; i<=last; i++){
 		if(i != currentIndex){
 			str += "<li class='page-item'><a href='#this' class='page-link' onclick='_movePage("+i+")'>"+i+"</a></li>";
 		}
@@ -154,10 +167,18 @@ function gfn_renderPaging(params){
 
 function _movePage(value){
 	$("#"+gfv_pageIndex).val(value);
+	
+	/* 페이징 검색 조건 및 검색 키워드 값 가져오기 시작 */
+	var searchType = $("#"+gfv_searchType).val();
+	var keyword = $("#"+gfv_keyword).val();
+	/* 페이징 검색 조건 및 검색 키워드 값 가져오기 끝 */
+	
 	if(typeof(gfv_eventName) == "function"){
-		gfv_eventName(value);
+		/* 매개변수 순서에 맞게 추가하기!! */
+		gfv_eventName(value, searchType, keyword);
 	}
 	else {
-		eval(gfv_eventName + "(value);");
+		/* 매개변수 순서에 맞게 추가하기!! */
+		eval(gfv_eventName + "(value, searchType, keyword);");
 	}
 }
