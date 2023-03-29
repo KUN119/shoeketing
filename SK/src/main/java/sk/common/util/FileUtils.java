@@ -1,6 +1,9 @@
 package sk.common.util;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Component;
@@ -95,9 +98,12 @@ public class FileUtils {
 	}
 
 	// 브랜드 상품 이미지 등록
-	public Map<String, Object> parseInsertFileInfo(Map<String, Object> map, MultipartFile[] uploadGoodsImg)
+	public List<Map<String, Object>> parseInsertFileInfo(Map<String, Object> map, MultipartFile[] uploadGoodsImg)
 			throws Exception {
 
+		// 파일 여러개일 때, uploadImgMap 담아줄 리스트 생성
+		List<Map<String, Object>> uploadImgList = new ArrayList<>();
+		
 		String filePath_temp = "C:\\goods_image\\"; // 로컬 경로에 업로드
 		System.out.println(filePath_temp);
 		System.out.println("map : " + map);
@@ -117,10 +123,11 @@ public class FileUtils {
 
 		// 업로드된 상품 이미지 개수만큼 반복문 실행해서 multipartFile 객체 생성
 		for (MultipartFile multipartFile : uploadGoodsImg) {
-			System.out.println("multipartFile 크기 확인 : " + multipartFile.getSize());
-//			if (uploadFile!= null) {
+			if (uploadGoodsImg!= null) {
 			imgNum++; // 상품 이미지 순서 1씩 증가시키고
 
+			Map<String, Object> uploadImgMap = new HashMap<>();
+			
 			originalFileName = multipartFile.getOriginalFilename();
 			originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
 			storedFileName = CommonUtils.getRandomString() + originalFileExtension;
@@ -131,17 +138,20 @@ public class FileUtils {
 			System.out.println(" storedFileName: " + storedFileName);
 			System.out.println(" imgNum: " + imgNum);
 
-			// Map에 파일 이름 넣기
-			map.put("GOODS_IMAGE_ORG", originalFileName);
-			map.put("GOODS_IMAGE_STD", storedFileName);
-			map.put("GOODS_IMAGE_ORDER", imgNum);
+			// Map에 파일 이름, 이미지 순서, 상품 번호 넣기
+			uploadImgMap.put("TOTAL_GOODS_NUM", map.get("TOTAL_GOODS_NUM"));
+			uploadImgMap.put("GOODS_IMAGE_ORG", originalFileName);
+			uploadImgMap.put("GOODS_IMAGE_STD", storedFileName);
+			uploadImgMap.put("GOODS_IMAGE_ORDER", imgNum);
 
-			System.out.println("map 확인 : " + map);
+			System.out.println("uploadImgMap 확인 : " + uploadImgMap);
 			
-			return map;
-//			}
+			// 리스트에 맵 하나씩 담아주기
+			uploadImgList.add(uploadImgMap);
+			
+			}
 		}
 
-		return null;
+		return uploadImgList;
 	}
 }

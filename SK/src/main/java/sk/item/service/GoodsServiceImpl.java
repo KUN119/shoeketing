@@ -91,12 +91,14 @@ public class GoodsServiceImpl implements GoodsService {
 	@Override
 	public int insertGoodsImage(Map<String, Object> map, MultipartFile[] uploadGoodsImg) throws Exception{
 		
-		System.out.println("####insertGoodsImage map 확인 : " + map);
-		System.out.println("####insertGoodsImage uploadGoodsImg 확인 : " + uploadGoodsImg);
-		Map<String, Object> insertImgMap = fileUtils.parseInsertFileInfo(map, uploadGoodsImg);
-		System.out.println("####insertGoodsImage insertImgMap 확인 : " + insertImgMap);
+		List<Map<String, Object>> insertImgList = fileUtils.parseInsertFileInfo(map, uploadGoodsImg);
+		System.out.println("####insertGoodsImage insertImgList 확인 : " + insertImgList);
 		
-		return (int)goodsDAO.insertGoodsImage(insertImgMap);
+		for(Map<String, Object> uploadImgMap : insertImgList) {
+			goodsDAO.insertGoodsImage(uploadImgMap);
+		}
+		
+		return 1;
 	}
 	
 	// 브랜드에 해당하는 매장 이름 및 매장번호 조회 
