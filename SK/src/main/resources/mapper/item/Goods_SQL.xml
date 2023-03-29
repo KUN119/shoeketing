@@ -241,7 +241,7 @@
                     WHERE B.BRAND_NUM = TG.TOTAL_GOODS_BRAND
                     AND TG.TOTAL_GOODS_NUM = GD.GOODS_DETAIL_NUM
                     AND TG.TOTAL_GOODS_NUM = GI.GOODS_IMAGE_PARENT
-                    AND TG.TOTAL_GOODS_NUM = GL.GOODS_LIKE_PRONUM
+                    AND TG.TOTAL_GOODS_NUM = GL.GOODS_LIKE_PRONUM(+)
                     AND TG.TOTAL_GOODS_DEL_GB = 'N'
                     AND GI.GOODS_IMAGE_ORDER = 1
 		  ]]>
@@ -331,26 +331,29 @@
 
 	<select id="selectAllGoodsCount" parameterType="hashmap" resultType="int"> 
 	<![CDATA[    
-	SELECT 
-	            COUNT(*) AS ALL_GOODS_COUNT
-	FROM 
-	            BRAND B, TOTAL_GOODS TG, GOODS_DETAIL GD, GOODS_IMAGE GI
-	WHERE 
-	            B.BRAND_NUM = TG.TOTAL_GOODS_BRAND
-	            AND TG.TOTAL_GOODS_NUM = GD.GOODS_DETAIL_NUM
-	            AND TG.TOTAL_GOODS_NUM = GI.GOODS_IMAGE_PARENT
-	            AND TG.TOTAL_GOODS_DEL_GB = 'N'
-	            AND GI.GOODS_IMAGE_ORDER = 1
+		SELECT COUNT(R)
+		FROM (SELECT ROWNUM R 
+			FROM (SELECT COUNT(*) AS ALL_GOODS_COUNT
+				FROM BRAND B, TOTAL_GOODS TG, GOODS_DETAIL GD, GOODS_IMAGE GI
+				WHERE B.BRAND_NUM = TG.TOTAL_GOODS_BRAND
+				AND TG.TOTAL_GOODS_NUM = GD.GOODS_DETAIL_NUM
+				AND TG.TOTAL_GOODS_NUM = GI.GOODS_IMAGE_PARENT
+				AND TG.TOTAL_GOODS_DEL_GB = 'N'
+				AND GI.GOODS_IMAGE_ORDER = 1
+				
 	]]>
 			  <include refid="categoryOption"></include>
 	 		  <include refid="brandOption"></include>
 			  <include refid="sizeOption"></include>
 			  <include refid="priceOption"></include>
+	<![CDATA[
+			GROUP BY TG.TOTAL_GOODS_NAME))
+	]]>
 	</select>
 
 	<select id="selectAllBrandList" parameterType="hashmap" resultType="hashmap">
 		<![CDATA[
-			SELECT
+			SELECT	
     				BRAND_NAME,
     				BRAND_LOGO_FILE
 			FROM BRAND

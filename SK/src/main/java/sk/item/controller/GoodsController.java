@@ -149,14 +149,14 @@ public class GoodsController {
 		}
 
 		List<Map<String, Object>> list = goodsService.selectAllGoodsList(map);
+		int count = goodsService.selectAllGoodsCount(map);
 
+		System.out.println("count: " + count);
 		System.out.println("list: " + list);
 		System.out.println("map: " + map);
 		
 		if (list.size() > 0) {
-			int count = goodsService.selectAllGoodsCount(map);
 			mv.addObject("TOTAL", count);
-			System.out.println(count);
 		} else {
 			mv.addObject("TOTAL", 0);
 		}
@@ -203,9 +203,17 @@ public class GoodsController {
 		}
 
 		List<Map<String, Object>> list = goodsService.selectAllGoodsList(map);
+		int count = goodsService.selectAllGoodsCount(map);
 
 		System.out.println("list: " + list);
 		System.out.println("map: " + map);
+		System.out.println("count: " + count);
+		
+		if (list.size() > 0) {
+			mv.addObject("TOTAL", count);
+		} else {
+			mv.addObject("TOTAL", 0);
+		}
 
 		mv.addObject("list", list);
 		return mv;

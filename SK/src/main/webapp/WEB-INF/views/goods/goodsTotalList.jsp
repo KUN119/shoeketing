@@ -1135,7 +1135,7 @@ function fn_totalGoodsListCallback(data){ // 페이지 선택 시 화면에 보�
 		$.each(data.list, function(key, value){ // 가져온 게시글 수 만큼 반복 실행
 			str += "<div class='card' style='width: 14rem; margin-left: 10px; margin-right: 10px; margin-bottom: 80px; border-style: none;'>" +
             "<a href='/sk/goods/goodsDetail?TOTAL_GOODS_NUM='" + value.TOTAL_GOODS_NUM+ "' name='title' data-num='" + value.TOTAL_GOODS_NUM + "'>" +
-            "<img src='/sk/image/display?fileName='" + value.GOODS_IMAGE_STD + "' style='width:13rem; height: 11rem' class='card-img-top'>" +
+            "<img src='/sk/image/display?fileName=" + value.GOODS_IMAGE_STD + "' style='width:13rem; height: 11rem' class='card-img-top'>" +
             "<div class='card-body' style='height:6rem;'>" +
               "<h6 class='card-title' style='font-size: 15px; font-weight: 700;'>" + value.BRAND_NAME + "</h6>" +
               "<p class='card-text' style='font-size: 13px;'>" + value.TOTAL_GOODS_NAME + "/" +  value.TOTAL_GOODS_MODEL + "</p>" +
