@@ -561,9 +561,12 @@ $(document).ready(function(){
 					alert("상품 등록에 실패하였습니다.");
 				}
 			},
-			error : function(){
-				alert("오류 발생");
-			}
+			error : function(request, status, error) {
+			        console.log("code: " + request.status);
+			        console.log("message: " + request.responseText);
+			        console.log("error: " + error);
+					alert("오류 발생");
+			}	
 			
 		});
 	}

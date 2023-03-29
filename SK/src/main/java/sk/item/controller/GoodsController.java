@@ -292,18 +292,18 @@ public class GoodsController {
 	}
 
 	@PostMapping(value = "/brandPage/goodsWrite")
-	public Map<String, Object> goodsWrite(MultipartFile[] uploadFile, @RequestParam Map<String, Object> map,
+	public Map<String, Object> goodsWrite(MultipartFile[] uploadGoodsImg, @RequestParam Map<String, Object> map,
 			HttpSession session) throws Exception {
 		log.debug("###### 브랜드 상품 등록 ######");
 
-		String a = uploadFile[0].getOriginalFilename();
-		String b = uploadFile[1].getOriginalFilename();
-		String c = uploadFile[2].getOriginalFilename();
+		String a = uploadGoodsImg[0].getOriginalFilename();
+		String b = uploadGoodsImg[1].getOriginalFilename();
+		String c = uploadGoodsImg[2].getOriginalFilename();
 		System.out.println("#########################" + a);
 		System.out.println("#########################" + b);
 		System.out.println("#########################" + c);
 
-		Map<String, Object> goodsWrite = goodsService.insertGoods(map, session, uploadFile);
+		Map<String, Object> goodsWrite = goodsService.insertGoods(map, session, uploadGoodsImg);
 		System.out.println("goodsWrite Map 확인 : " + goodsWrite);
 
 		return goodsWrite;

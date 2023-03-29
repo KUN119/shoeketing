@@ -95,13 +95,13 @@ public class FileUtils {
 	}
 
 	// 브랜드 상품 이미지 등록
-	public Map<String, Object> parseInsertFileInfo(Map<String, Object> map, MultipartFile[] uploadFile)
+	public Map<String, Object> parseInsertFileInfo(Map<String, Object> map, MultipartFile[] uploadGoodsImg)
 			throws Exception {
 
 		String filePath_temp = "C:\\goods_image\\"; // 로컬 경로에 업로드
 		System.out.println(filePath_temp);
 		System.out.println("map : " + map);
-		System.out.println("uploadFile : " + uploadFile);
+		System.out.println("uploadFile : " + uploadGoodsImg);
 
 		int imgNum = 0; // 상품 이미지 순서 결정
 
@@ -116,7 +116,8 @@ public class FileUtils {
 		}
 
 		// 업로드된 상품 이미지 개수만큼 반복문 실행해서 multipartFile 객체 생성
-		for (MultipartFile multipartFile : uploadFile) {
+		for (MultipartFile multipartFile : uploadGoodsImg) {
+			System.out.println("multipartFile 크기 확인 : " + multipartFile.getSize());
 //			if (uploadFile!= null) {
 			imgNum++; // 상품 이미지 순서 1씩 증가시키고
 
@@ -136,7 +137,8 @@ public class FileUtils {
 			map.put("GOODS_IMAGE_ORDER", imgNum);
 
 			System.out.println("map 확인 : " + map);
-
+			
+			return map;
 //			}
 		}
 
