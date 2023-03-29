@@ -43,9 +43,9 @@ public class GoodsServiceImpl implements GoodsService {
 	
 	// 브랜드 상품 등록. ajax 구현
 	@Override
-	public Map<String, Object> insertGoods(Map<String, Object> map, HttpSession session, MultipartFile[] uploadFile) throws Exception{
+	public Map<String, Object> insertGoods(Map<String, Object> map, HttpSession session, MultipartFile[] uploadGoodsImg) throws Exception{
 		System.out.println("map 확인 : " + map);
-		System.out.println("uploadFile 확인 : " + uploadFile);
+		System.out.println("uploadFile 확인 : " + uploadGoodsImg);
 		
 		Map<String, Object> result = new HashMap<>();
 		List<Map<String, Object>> shopNumList = new ArrayList<>();
@@ -59,7 +59,8 @@ public class GoodsServiceImpl implements GoodsService {
 		if(insertGoods == 1) {
 			// 상품 정상 등록시, 상품 상세(사이즈) 및 이미지 삽입
 			insertGoodsDetail(map);
-			insertGoodsImage(map, uploadFile);
+			System.out.println("########TOTALGOODSNUM 확인 " + map.get("TOTAL_GOODS_NUM"));
+			insertGoodsImage(map, uploadGoodsImg);
 			
 			shopNumList = selectShopNumName(map);
 			System.out.println("shopNumList : " + shopNumList);
@@ -88,9 +89,12 @@ public class GoodsServiceImpl implements GoodsService {
 	
 	// 상품 등록시, 상품 이미지 삽입 
 	@Override
-	public int insertGoodsImage(Map<String, Object> map, MultipartFile[] uploadFile) throws Exception{
+	public int insertGoodsImage(Map<String, Object> map, MultipartFile[] uploadGoodsImg) throws Exception{
 		
-		Map<String, Object> insertImgMap = fileUtils.parseInsertFileInfo(map, uploadFile);
+		System.out.println("####insertGoodsImage map 확인 : " + map);
+		System.out.println("####insertGoodsImage uploadGoodsImg 확인 : " + uploadGoodsImg);
+		Map<String, Object> insertImgMap = fileUtils.parseInsertFileInfo(map, uploadGoodsImg);
+		System.out.println("####insertGoodsImage insertImgMap 확인 : " + insertImgMap);
 		
 		return (int)goodsDAO.insertGoodsImage(insertImgMap);
 	}

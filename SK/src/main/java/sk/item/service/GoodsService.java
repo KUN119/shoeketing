@@ -22,7 +22,7 @@ public interface GoodsService {
 	public int insertGoodsDetail(Map<String, Object> map) throws Exception;
 	
 	// 상품 등록시, 상품 이미지 삽입 
-	public int insertGoodsImage(Map<String, Object> map, MultipartFile[] uploadFile) throws Exception;
+	public int insertGoodsImage(Map<String, Object> map, MultipartFile[] uploadGoodsImg) throws Exception;
 	
 	// 브랜드에 해당하는 매장 이름 및 매장번호 조회 
 	public List<Map<String, Object>> selectShopNumName(Map<String, Object> map) throws Exception;

@@ -116,7 +116,7 @@
                    #{GOODS_IMAGE_ORG},
                    #{GOODS_IMAGE_STD},
                    'N', 
-                   #{GOODS_IMAGE_ORDER}            
+                   #{GOODS_IMAGE_ORDER})            
         ]]>
 	</insert>
 	
