@@ -13,7 +13,7 @@
           전체 상품 리스트
         </h3>
         <form id="searchForm" action="/sk/brandPage/goodsList">
-        <div class="row mt-3">
+        <div class="row mt-4">
         	<div class="col-8 align-self-center">
         		<h5 style="margin-left: 30px;">전체 총 ${TOTAL } 개</h4>
         	</div>
@@ -71,7 +71,7 @@
 	          </div>
 	       </div>
         </form>
-      </div>
+      
       <br />
       <div
         class="row"
@@ -79,8 +79,8 @@
         id="goodsListDiv"
       >
         <c:forEach var="list" items="${list}">
-          <a href="#" name="goodsImg" data-num="${list.TOTAL_GOODS_NUM}">
-            <div class="col-3">
+          <div class="col-3">
+            <a href="#" name="goodsImg" data-num="${list.TOTAL_GOODS_NUM}">
               <div class="card shadow-sm">
                   <img src="/sk/image/display?fileName=${list.GOODS_IMAGE_STD}"
                   class="bd-placeholder-img card-img-top"
@@ -118,32 +118,19 @@
                   </p>
                 </div>
               </div>
-            </div>
-          </a>
+            </a>
+          </div>
         </c:forEach>
 
-        <!-- <nav aria-label="Page navigation example" style="margin-left: 40%;">
-                  <ul class="pagination">
-                    <li class="page-item">
-                      <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                      </a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                      <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                      </a>
-                    </li>
-                  </ul>
-                </nav> -->
+      	</div>
+      	
+      	<!-- 페이징 화면 처리 부분 시작 -->
+      	<div id="PAGE_NAVI"></div>
+      	<input type="hidden" id="PAGE_INDEX" name="PAGE_INDEX" />
+      	<!--  페이징 화면 처리 부분 끝 -->
+      	
       </div>
-      <!-- 페이징 화면 처리 부분 시작 -->
-      <div id="PAGE_NAVI"></div>
-      <input type="hidden" id="PAGE_INDEX" name="PAGE_INDEX" />
-      <!--  페이징 화면 처리 부분 끝 -->
+      
 <script type="text/javaScript">
 
 $(document).ready(function() {
@@ -195,19 +182,20 @@ $(document).ready(function() {
     
     $.each(data.list, function(key, value) {
        
-          str +=    "<a href='#' name='goodsImg' data-num='"+ value.TOTAL_GOODS_NUM +"' >";
-          str +=     "<div class='col-3'>";
-          str +=     "<div class='card shadow-sm'>";
-          str +=     "<img src='/sk/image/display?fileName="+value.GOODS_IMAGE_STD + "' class='bd-placeholder-img card-img-top' width='150' height='200' />";
-          str +=     "<div class='card-body>";
-          str +=     "<p class='card-text mb-1' id='brandName'>"+value.BRAND_NAME+"</p>";
-          str +=     "<p class='card-text mb-1' style='font-size: x-small; color: rgb(94, 95, 95);'>"+value.TOTAL_GOODS_NAME+"</p>";
-          str +=     "<p class='card-text mb-1' style='font-size: x-small; color: rgb(94, 95, 95);'>"+value.TOTAL_GOODS_MODEL+"</p>";
-          str +=     "<p class='card-text' style='font-size: medium; color: rgb(0, 0, 0); font-weight: bolder;'>"+value.TOTAL_GOODS_PRICE+"원</p>";
-          str +=      "</div>";
+          str +=     "<div class='card' style='width: 14rem; margin-left: 10px; margin-right: 10px; margin-bottom: 80px; border-style: none;'>";
+          str +=     "<a href='#' name='goodsImg' data-num='"+ value.TOTAL_GOODS_NUM +"' >";
+          str +=     "<img src='/sk/image/display?fileName="+value.GOODS_IMAGE_STD + "' class='card-img-top' style='width:13rem; height: 11rem' />";
+          str +=     "<div class='card-body' style='height:6rem;'>";
+          str +=     "<h6 class='card-title' id='brandName' style='font-size: 15px; font-weight: 700;'>"+value.BRAND_NAME+"</h6>";
+          str +=     "<p class='card-text' style='font-size: 13px;'>"+value.TOTAL_GOODS_NAME+"</p>";
+          str +=     "<p class='card-text' style='font-size: 13px;'>"+value.TOTAL_GOODS_MODEL+"</p>";
           str +=     "</div>";
-          str +=      "</div>";
+          str +=     "<div class='card-body'>";
+          str +=     "<h6 class='card-title mb-0' style='font-size: 18px; font-weight: 700;'>"+value.TOTAL_GOODS_PRICE+"원</h6>";
+          str +=     "</div>";
           str +=     "</a>";
+          str +=     "</div>";
+          
          });
          body.append(str);
     }

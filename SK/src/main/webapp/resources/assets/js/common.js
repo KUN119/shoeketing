@@ -94,10 +94,14 @@ totalCount : 전체 조회 건수
 eventName : 페이징 하단의 숫자 등의 버튼이 클릭되었을 때 호출될 함수 이름
 */
 var gfv_pageIndex = null;
+var gfv_searchType = null;
+var gfv_keyword = null;
 var gfv_eventName = null;
 function gfn_renderPaging(params){
 	var divId = params.divId; //페이징이 그려질 div id
 	gfv_pageIndex = params.pageIndex; //현재 위치가 저장될 input 태그
+	gfv_searchType = params.searchType; //검색 조건이 저장될 input 태그
+	gfv_keyword = params.keyword; //검색 키워드가 저장될 input 태그
 	var totalCount = params.totalCount; //전체 조회 건수
 	var currentIndex = $("#"+params.pageIndex).val(); //현재 위치
 	if($("#"+params.pageIndex).length == 0 || gfn_isNull(currentIndex) == true){
@@ -154,10 +158,12 @@ function gfn_renderPaging(params){
 
 function _movePage(value){
 	$("#"+gfv_pageIndex).val(value);
+	var searchType = $("#"+gfv_searchType).val();
+	var keyword = $("#"+gfv_keyword).val();
 	if(typeof(gfv_eventName) == "function"){
-		gfv_eventName(value);
+		gfv_eventName(value, searchType, keyword);
 	}
 	else {
-		eval(gfv_eventName + "(value);");
+		eval(gfv_eventName + "(value, searchType, keyword);");
 	}
 }

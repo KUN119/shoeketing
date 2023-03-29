@@ -68,6 +68,8 @@
       	<!-- 페이징 화면 처리 부분 시작 -->
       	<div id="PAGE_NAVI"></div>
 		<input type="hidden" id="PAGE_INDEX" name="PAGE_INDEX"/>
+		<input type="hidden" id="PAGE_SEARCHTYPE" name="PAGE_SEARCHTYPE"/>
+		<input type="hidden" id="PAGE_KEYWORD" name="PAGE_KEYWORD"/>
 		<!-- 페이징 화면 처리 부분 끝 -->
 		</div>
 		
@@ -99,7 +101,14 @@ function fn_noticeDetail(num) {  //num 매개변수로 넣기
 
 	$("button[name='noticeSearch']").on("click", function(e){  //공지사항 검색
 		e.preventDefault();
-		fn_noticeSearch();
+		
+		var keyword = $('#keyword').val();
+		var searchType = $('#searchType').val();
+		
+		$('#PAGE_KEYWORD').val(keyword);
+		$('#PAGE_SEARCHTYPE').val(searchType);
+		
+		fn_selectNoticeList(1, searchType, keyword)
 	});
 
 	function fn_noticeSearch(){
@@ -128,12 +137,15 @@ function fn_noticeDetail(num) {  //num 매개변수로 넣기
 	};
 	
 	// 페이징 함수
-	function fn_selectNoticeList(pageNo){
+	function fn_selectNoticeList(pageNo, searchType, keyword){
 		var comAjax = new ComAjax();
 		comAjax.setUrl("/sk/noticeList/paging");
 		comAjax.setCallback("fn_selectNoticeListCallback");
 		comAjax.addParam("PAGE_INDEX",pageNo);
-		comAjax.addParam("PAGE_ROW", 10); //한 페이지에 보여줄 게시글 수 정하기
+		comAjax.addParam("PAGE_ROW", 5); //한 페이지에 보여줄 게시글 수 정하기
+		
+		comAjax.addParam("keyword", keyword);
+		comAjax.addParam("searchType", searchType);
 		comAjax.ajax();
 	}
 	
@@ -153,7 +165,10 @@ function fn_noticeDetail(num) {  //num 매개변수로 넣기
 			var params = {
 				divId : "PAGE_NAVI",
 				pageIndex : "PAGE_INDEX",
+				searchType : "PAGE_SEARCHTYPE",
+				keyword : "PAGE_KEYWORD",
 				totalCount : total,
+				recordCount : 5,
 				eventName : "fn_selectNoticeList" // 페이징 함수이름 동일하게
 			};
 			gfn_renderPaging(params);
