@@ -29,29 +29,55 @@ public class AdminBoardController {
 		log.debug("######### 관리자 페이지 공지사항 리스트 ##########");
 		ModelAndView mv = new ModelAndView("adminNoticeList");
 
-	
-				map.put("START", 1);
-				map.put("END", 5);
-				
-				String searchType = (String) map.get("searchType");
-				String keyword = "";
-				
-				if(map.get("keyword") != null) {
-					keyword = (String) map.get("keyword");
-				}
-				
-				if(searchType != null) {
-					map.put("searchType", searchType);
-				}
-				
-				if(keyword != null) {
-					map.put("keyword", keyword);
-				}
-				
-				List<Map<String, Object>> noticeList = adminBoardService.selectNoticeList(map);
-				mv.addObject("noticeList", noticeList);
-				
-				System.out.println("map: " +map);
+		int page = 1;
+
+		if (map.get("page") != null && map.get("page") != "") {
+			page = Integer.parseInt(map.get("page").toString());
+		}
+		mv.addObject("page", page);
+
+		if (map.get("searchType") != null && map.get("searchType") != "") {
+			mv.addObject("searchType", map.get("searchType"));
+		}
+
+		if (map.get("keyword") != null && map.get("keyword") != "") {
+			mv.addObject("keyword", map.get("keyword"));
+		}
+
+		return mv;
+	}
+
+	@PostMapping(value = "/admin/noticeList/paging")
+	public ModelAndView adminNoticeListPaging(@RequestParam Map<String, Object> map) throws Exception {
+		log.debug("######### 관리자 페이지 공지사항 리스트 페이징 ##########");
+		ModelAndView mv = new ModelAndView("jsonView");
+
+		String searchType = (String) map.get("searchType");
+		String keyword = "";
+
+		if (map.get("keyword") != null) {
+			keyword = (String) map.get("keyword");
+		}
+
+		if (searchType != null) {
+			map.put("searchType", searchType);
+		}
+
+		if (keyword != null) {
+			map.put("keyword", keyword);
+		}
+
+		List<Map<String, Object>> noticeList = adminBoardService.selectNoticeList(map);
+		mv.addObject("noticeList", noticeList);
+		int TOTAL = 0;
+		if (noticeList.size() > 0) {
+			TOTAL = adminBoardService.selectNoticeCount(map);
+		} else {
+			TOTAL = 0;
+		}
+		mv.addObject("TOTAL", TOTAL);
+
+		System.out.println("map: " + map);
 		return mv;
 	}
 
@@ -60,8 +86,23 @@ public class AdminBoardController {
 		log.debug("######### 관리자 페이지 공지사항 상세보기 ##########");
 		ModelAndView mv = new ModelAndView("adminNoticeDetail");
 
+		int page = 1;
+
+		if (map.get("page") != null && map.get("page") != "") {
+			page = Integer.parseInt(map.get("page").toString());
+		}
+		mv.addObject("page", page);
+
+		if (map.get("searchType") != null && map.get("searchType") != "") {
+			mv.addObject("searchType", map.get("searchType"));
+		}
+
+		if (map.get("keyword") != null && map.get("keyword") != "") {
+			mv.addObject("keyword", map.get("keyword"));
+		}
+
 		System.out.println("map: " + map);
-		
+
 		Map<String, Object> noticeDetail = adminBoardService.selectNoticeDetail(map);
 		mv.addObject("noticeDetail", noticeDetail);
 		return mv;
@@ -74,15 +115,15 @@ public class AdminBoardController {
 
 		return mv;
 	}
-	
+
 	@ResponseBody
 	@PostMapping(value = "/admin/noticeWrite")
 	public int adminNoticeWrite(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("######### 관리자 페이지 공지사항 작성 ##########");
-		
+
 		int result = adminBoardService.insertNotice(map);
 		return result;
-		
+
 	}
 
 	@GetMapping(value = "/admin/noticeModifyForm")
@@ -92,7 +133,7 @@ public class AdminBoardController {
 
 		Map<String, Object> noticeDetail = adminBoardService.selectNoticeDetail(map);
 		mv.addObject("noticeDetail", noticeDetail);
-		
+
 		return mv;
 	}
 
@@ -100,22 +141,21 @@ public class AdminBoardController {
 	@PostMapping(value = "/admin/noticeModify")
 	public int adminNoticeModify(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("######### 관리자 페이지 공지사항 수정 ##########");
-		
+
 		int result = adminBoardService.updateNoticeModify(map);
 		return result;
-		
+
 	}
-	
+
 	@ResponseBody
 	@PostMapping(value = "/admin/noticeDelete")
 	public int adminDeleteNotice(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("######### 공지 사항 삭제 ##########");
-		
 
 		int result = adminBoardService.adminDeleteNotice(map);
 		return result;
 	}
-	
+
 	@GetMapping(value = "/admin/goodsTotalList")
 	public ModelAndView adminGoodsTotalList(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("######### 관리자 페이지 상품 전체 리스트 ##########");
@@ -123,13 +163,39 @@ public class AdminBoardController {
 
 		return mv;
 	}
-	
-	@GetMapping(value = "/admin/goodsDelete")
-	public void adminDeleteGoods(@RequestParam Map<String, Object> map) throws Exception {
-		log.debug("######### 전체 상품 삭제 ##########");
-		
 
-		adminBoardService.adminDeleteGoods(map);
+	@PostMapping(value = "/admin/goodsTotalList/paging")
+	public ModelAndView adminGoodsTotalListPaging(@RequestParam Map<String, Object> map) throws Exception {
+		log.debug("######### 관리자 페이지 상품 전체 리스트 페이징 ##########");
+		ModelAndView mv = new ModelAndView("jsonView");
+
+		List<Map<String, Object>> resultList = adminBoardService.selectTotalGoodsList(map);
+		int count = 0;
+		if (resultList.size() > 0) {
+			count = adminBoardService.selectTotalGoodsListCount(map);
+		} else {
+			count = 0;
+		}
+
+		mv.addObject("list", resultList);
+		mv.addObject("TOTAL", count);
+
+		return mv;
 	}
-	
+
+	@PostMapping(value = "/admin/goodsDelete")
+	public ModelAndView adminDeleteGoods(@RequestParam Map<String, Object> map) throws Exception {
+		log.debug("######### 관리자 상품 삭제 ##########");
+		ModelAndView mv = new ModelAndView("jsonView");
+		int result = adminBoardService.adminDeleteGoods(map);
+		String message = null;
+		if (result > 0) {
+			message = "success";
+		} else if (result == 0) {
+			message = "fail";
+		}
+		mv.addObject("result", message);
+		return mv;
+	}
+
 }

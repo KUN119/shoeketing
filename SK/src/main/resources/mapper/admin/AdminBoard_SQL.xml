@@ -23,12 +23,13 @@
 
 	   <sql id="noticeSearch">
 	      <if test="searchType != null">
+	         <if test="searchType == 'total'.toString()">AND ((NOTICE_TITLE LIKE '%' || #{keyword} || '%') OR (NOTICE_CONTENT LIKE '%' || #{keyword} || '%'))</if>
 	         <if test="searchType == 'title'.toString()">AND NOTICE_TITLE LIKE '%' || #{keyword} || '%'</if>
 	         <if test="searchType == 'content'.toString()">AND NOTICE_CONTENT LIKE '%' || #{keyword} || '%'</if>
 	      </if>
 	   </sql>
 
-		<select id="selectNoticeCount" parameterType="hashmap" resultType="hashmap"> 
+		<select id="selectNoticeCount" parameterType="hashmap" resultType="int"> 
 			<![CDATA[
 				SELECT COUNT(NOTICE_NUM) NOTICE_COUNT
 				FROM NOTICE
@@ -89,6 +90,62 @@
 				WHERE NOTICE_NUM = #{NOTICE_NUM}
 			]]>
 		</update>
+		
+		<select id="selectTotalGoodsList" parameterType="hashmap" resultType="hashmap">
+			<![CDATA[
+			SELECT *
+			FROM
+				(SELECT
+					ROW_NUMBER() OVER (ORDER BY TOTAL_GOODS_NUM DESC) AS NUM,
+				    TG.TOTAL_GOODS_NUM,
+				    TG.TOTAL_GOODS_NAME,
+				    TG.TOTAL_GOODS_MODEL,
+				    TG.TOTAL_GOODS_PRICE,
+				    B.BRAND_NAME,
+				    GI.GOODS_IMAGE_STD
+				FROM
+				    TOTAL_GOODS TG, BRAND B, GOODS_IMAGE GI
+				WHERE
+				    TG.TOTAL_GOODS_BRAND = B.BRAND_NUM
+				    AND TG.TOTAL_GOODS_NUM = GI.GOODS_IMAGE_PARENT
+				    AND TG.TOTAL_GOODS_DEL_GB = 'N'
+				    AND GI.GOODS_IMAGE_ORDER = 1
+				    ]]><include refid="searchGoods"></include><![CDATA[
+				    )
+			WHERE NUM BETWEEN #{START} AND #{END}
+			]]>
+		</select>
+		
+		<select id="selectTotalGoodsListCount" parameterType="hashmap" resultType="int">
+			<![CDATA[
+				SELECT
+				    COUNT(*)
+				FROM
+				    TOTAL_GOODS TG, BRAND B, GOODS_IMAGE GI
+				WHERE
+				    TG.TOTAL_GOODS_BRAND = B.BRAND_NUM
+				    AND TG.TOTAL_GOODS_NUM = GI.GOODS_IMAGE_PARENT
+				    AND TG.TOTAL_GOODS_DEL_GB = 'N'
+				    AND GI.GOODS_IMAGE_ORDER = 1
+				    ]]><include refid="searchGoods"></include><![CDATA[
+				    
+			]]>
+		</select>
+		
+		<sql id="searchGoods">
+			<if test='searchType == "전체" and keyword != ""'>
+				AND (UPPER(TG.TOTAL_GOODS_NAME) like UPPER('%' || #{keyword} ||'%') OR UPPER(TG.TOTAL_GOODS_NAME) like UPPER('%' || #{keyword} ||'%') OR UPPER(B.BRAND_NAME) like UPPER('%' || #{keyword} ||'%'))
+			</if>
+			<if test='searchType == "상품명" and keyword != ""'>
+				  AND UPPER(TG.TOTAL_GOODS_NAME) like UPPER('%' || #{keyword} ||'%')
+			</if>
+			<if test='searchType == "모델 번호" and keyword != ""'>
+				  AND UPPER(TG.TOTAL_GOODS_MODEL) like UPPER('%' || #{keyword} ||'%')
+			</if>
+			<if test='searchType == "브랜드명" and keyword != ""'>
+				  AND UPPER(B.BRAND_NAME) like UPPER('%' || #{keyword} ||'%')
+			</if>
+		</sql>
 
 		<update id="deleteGoods" parameterType="hashmap">
 		<![CDATA[
@@ -101,7 +158,7 @@
 		<update id="deleteGoodsImage" parameterType="hashmap">
 		<![CDATA[
 			UPDATE GOODS_IMAGE
-			SET  GOODS_IMAGE_DEL_GB
+			SET  GOODS_IMAGE_DEL_GB = 'Y'
 			WHERE GOODS_IMAGE_PARENT = #{TOTAL_GOODS_NUM}
 		]]>	
 		</update>

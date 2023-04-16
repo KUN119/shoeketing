@@ -14,58 +14,71 @@ public class AdminUserServiceImpl implements AdminUserService {
 
 	@Resource(name = "adminUserDAO")
 	private AdminUserDAO adminUserDAO;
-	
-	@Override
-	public List<Map<String, Object>> adminMemberList(Map<String, Object> map) throws Exception {
 
-		return adminUserDAO.adminMemberList(map);
-	}
-	
 	@Override
-	public Map<String, Object> adminMemberDetail(Map<String, Object> map) throws Exception {
+	public List<Map<String, Object>> selectMemberList(Map<String, Object> map) throws Exception {
 
-		return adminUserDAO.adminMemberDetail(map);
+		return adminUserDAO.selectMemberList(map);
 	}
-	
+
 	@Override
-	public List<Map<String, Object>> adminShopList(Map<String, Object> map) throws Exception {
-
-		return adminUserDAO.adminShopList(map);
+	public int selectMemberCount(Map<String, Object> map) throws Exception {
+		return adminUserDAO.selectMemberCount(map);
 	}
-	
+
 	@Override
-	public Map<String, Object> adminShopDetail(Map<String, Object> map) throws Exception {
+	public Map<String, Object> selectMemberDetail(Map<String, Object> map) throws Exception {
 
-		return adminUserDAO.adminShopDetail(map);
+		return adminUserDAO.selectMemberDetail(map);
 	}
-	
+
 	@Override
-	public List<Map<String, Object>> adminBrandList(Map<String, Object> map) throws Exception {
-
-		return adminUserDAO.adminBrandList(map);
+	public int deleteMember(Map<String, Object> map) throws Exception {
+		return adminUserDAO.deleteMember(map);
 	}
-	
+
 	@Override
-	public Map<String, Object> adminBrandDetail(Map<String, Object> map) throws Exception {
+	public List<Map<String, Object>> selectShopList(Map<String, Object> map) throws Exception {
 
-		return adminUserDAO.adminBrandDetail(map);
+		return adminUserDAO.selectShopList(map);
 	}
+
+	@Override
+	public int selectShopCount(Map<String, Object> map) throws Exception {
+		return adminUserDAO.selectShopCount(map);
+	}
+
+	@Override
+	public Map<String, Object> selectShopDetail(Map<String, Object> map) throws Exception {
+
+		return adminUserDAO.selectShopDetail(map);
+	}
+
+	@Override
+	public int deleteShop(Map<String, Object> map) throws Exception {
+		return adminUserDAO.deleteShop(map);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectBrandList(Map<String, Object> map) throws Exception {
+
+		return adminUserDAO.selectBrandList(map);
+	}
+
+	@Override
+	public int selectBrandCount(Map<String, Object> map) throws Exception {
+		return adminUserDAO.selectBrandCount(map);
+	}
+
+	@Override
+	public Map<String, Object> selectBrandDetail(Map<String, Object> map) throws Exception {
+
+		return adminUserDAO.selectBrandDetail(map);
+	}
+
+	@Override
+	public int deleteBrand(Map<String, Object> map) throws Exception {
+		return adminUserDAO.deleteBrand(map);
+	}
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
