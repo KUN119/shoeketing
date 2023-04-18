@@ -109,6 +109,21 @@ public class AdminUserController {
 		log.debug("######### 관리자 페이지 매장회원 리스트 ##########");
 		ModelAndView mv = new ModelAndView("adminShopList");
 
+		int page = 1;
+
+		if (map.get("page") != null && map.get("page") != "") {
+			page = Integer.parseInt(map.get("page").toString());
+		}
+		mv.addObject("page", page);
+
+		if (map.get("searchType") != null && map.get("searchType") != "") {
+			mv.addObject("searchType", map.get("searchType"));
+		}
+
+		if (map.get("keyword") != null && map.get("keyword") != "") {
+			mv.addObject("keyword", map.get("keyword"));
+		}
+
 		return mv;
 	}
 
@@ -116,6 +131,19 @@ public class AdminUserController {
 	public ModelAndView adminShopListPaging(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("######### 관리자 페이지 매장회원 리스트 페이징 ##########");
 		ModelAndView mv = new ModelAndView("jsonView");
+
+		List<Map<String, Object>> memberList = adminUserService.selectShopList(map);
+		mv.addObject("shopList", memberList);
+
+		int TOTAL = 0;
+		if (memberList.size() > 0) {
+			TOTAL = adminUserService.selectMemberCount(map);
+		} else {
+			TOTAL = 0;
+		}
+		mv.addObject("TOTAL", TOTAL);
+
+		System.out.println("map: " + map);
 
 		return mv;
 	}

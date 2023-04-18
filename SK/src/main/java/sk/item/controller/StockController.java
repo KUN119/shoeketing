@@ -47,7 +47,7 @@ public class StockController {
 		return mv;
 	}
 
-	// 상품명/모델명 검색시, ajax 구현
+	// 상품명/모델명 검색 시, ajax 구현
 	@ResponseBody
 	@PostMapping(value = "/shopPage/stockList_ajax")
 	public ModelAndView shopStockList_ajax(@RequestParam Map<String, Object> map, HttpSession session)
