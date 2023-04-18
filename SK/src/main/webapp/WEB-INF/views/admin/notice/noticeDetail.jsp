@@ -47,7 +47,7 @@
         <div class="col-12 text-end">
           <button type="button" class="btn btn-primary" name="adminNoticeModify" style="width:6rem">수정</button>
           <button type="button" class="btn btn-danger" name="adminNoticeDelete" style="width:6rem">삭제</button>
-          <button type="button" class="btn btn-secondary" onclick="location.href='/sk/admin/noticeList'" style="width:6rem">목록</button>
+          <button type="button" class="btn btn-secondary" id="noticeListBtn" style="width:6rem">목록</button>
         </div>
       </div>
     </div>
@@ -97,6 +97,13 @@
 			var noticeModify =  ${noticeDetail.NOTICE_NUM};
 			location.href="/sk/admin/noticeModifyForm?NOTICE_NUM=" + noticeModify;
 	};
+	
+	$("#noticeListBtn").on("click", function(e) {
+		var page = ${page};
+		var searchType = '${searchType}';
+		var keyword = '${keyword}';
+		location.href = '/sk/admin/noticeList?page=' + page + '&searchType=' + searchType + '&keyword=' + keyword;
+	});
   
   });
 

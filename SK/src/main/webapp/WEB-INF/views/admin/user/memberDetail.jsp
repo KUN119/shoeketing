@@ -19,7 +19,7 @@
         <p class="ms-5 mb-0" style="font-weight: 700;">회원번호</p>
       </div>
       <div class="col-9 text-start">
-        <p style="font-weight: 500;">8</p>
+        <p style="font-weight: 500;">${memberMap.MEM_NUM }</p>
       </div>
     </div>
 
@@ -28,7 +28,7 @@
         <p class="ms-5 mb-0" style="font-weight: 700;">아이디</p>
       </div>
       <div class="col-9 text-start">
-        <p style="font-weight: 500;">kimst@naver.com</p>
+        <p style="font-weight: 500;">${memberMap.MEM_EMAIL }</p>
       </div>
     </div>
 
@@ -37,7 +37,7 @@
         <p class="ms-5 mb-0" style="font-weight: 700;">이름</p>
       </div>
       <div class="col-9 text-start">
-        <p style="font-weight: 500;">김성택</p>
+        <p style="font-weight: 500;">${memberMap.MEM_NAME }</p>
       </div>
     </div>
 
@@ -46,7 +46,7 @@
         <p class="ms-5 mb-0" style="font-weight: 700;">휴대전화</p>
       </div>
       <div class="col-9 text-start">
-        <p style="font-weight: 500;">01075837725</p>
+        <p style="font-weight: 500;">${memberMap.MEM_PHONE }</p>
       </div>
     </div>
     
@@ -55,7 +55,7 @@
         <p class="ms-5 mb-0" style="font-weight: 700;">탈퇴여부</p>
       </div>
       <div class="col-9 text-start">
-        <p style="font-weight: 500;">N</p>
+        <p style="font-weight: 500;">${memberMap.MEM_DEL_GB }</p>
       </div>
     </div>
 
@@ -64,7 +64,7 @@
         <p class="ms-5 mb-0" style="font-weight: 700;">마케팅 수신 동의 여부</p>
       </div>
       <div class="col-9 text-start">
-        <p style="font-weight: 500;">N</p>
+        <p style="font-weight: 500;">${memberMap.MEM_INFORM_AGREE }</p>
       </div>
     </div>  
 
@@ -73,16 +73,47 @@
         <p class="ms-5 mb-0" style="font-weight: 700;">회원등급</p>
       </div>
       <div class="col-9 text-start">
-        <p style="font-weight: 500;">다이아</p>
+        <p style="font-weight: 500;">${memberMap.MEM_GRADE }</p>
       </div>
     </div>
     
     <div class="row">
       <div class="col-12 text-end">
-        <button type="button" class="btn btn-danger" style="width:6rem">회원탈퇴</button>
-        <button type="button" class="btn btn-secondary" style="width:6rem">목록</button>
+        <button id="deleteMemberBtn" type="button" class="btn btn-danger" style="width:6rem">회원탈퇴</button>
+        <button id="memberListBtn" type="button" class="btn btn-secondary" style="width:6rem">목록</button>
       </div>
     </div>
   </div>
 </body>
+<script>
+$(document).ready(function() {
+	$("#deleteMemberBtn").on("click", function(e) {
+		var formData = new FormData();
+		formData.append("MEM_NUM", ${memberMap.MEM_NUM });
+		
+		$.ajax({
+			url : '/sk/admin/memberDelete',
+			type : 'POST',
+			data : formData,
+			contentType : false,
+			processData : false,
+			success : function(data) {
+				if(data.result == 1) {
+					alert("'" + ${memberMap.MEM_NAME } + "'" + " 님을 탈퇴하였습니다.");
+					location.href = '/sk/admin/memberList';
+				} else {
+					alert("회원탈퇴 실패");
+				}
+			}
+		});
+	});
+	
+	$("#memberListBtn").on("click", function(e) {
+		var page = ${page};
+		var searchType = '${searchType}';
+		var keyword = '${keyword}';
+		location.href = '/sk/admin/memberList?page=' + page + '&searchType=' + searchType + '&keyword=' + keyword;
+	});
+});
+</script>
 </html>

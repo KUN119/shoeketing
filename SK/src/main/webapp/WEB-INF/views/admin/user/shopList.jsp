@@ -17,12 +17,12 @@
 		</div>
       	<div class="col input-group">
           <select class="form-select-sm" style="width: 4rem; border-color: rgba(0, 0, 0, 0.263);" id="searchType" name="searchType">
-            <option selected value="total" <c:out value="${searchType eq 'total' ? 'selected' :''}"/>>전체</option>
-            <option value="num" <c:out value="${searchType eq 'num' ? 'selected' :''}"/>>회원번호</option>
-            <option value="id" <c:out value="${searchType eq 'id' ? 'selected' :''}"/>>아이디</option>
-            <option value="brandName" <c:out value="${searchType eq 'brandName' ? 'selected' :''}"/>>브랜드명</option>
-            <option value="shopName" <c:out value="${searchType eq 'shopName' ? 'selected' :''}"/>>지점명</option>
-            <option value="del_gb" <c:out value="${searchType eq 'del_gb' ? 'selected' :''}"/>>탈퇴여부</option>
+            <option selected value="total">전체</option>
+            <option value="num">회원번호</option>
+            <option value="id">아이디</option>
+            <option value="brandName">브랜드명</option>
+            <option value="shopName">지점명</option>
+            <option value="del_gb">탈퇴여부</option>
           </select>
           <input type="text" class="form-control" name="keyword" id="keyword" />
           <button
@@ -49,35 +49,7 @@
         <tbody class="table-group-divider">
           <tr>
             <td>1</td>
-            <td><a href="#">nike_md03</a></td>
-            <td>나이키</td>
-            <td>나이키 명동</td>
-            <td>N</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td><a href="#">nike_md03</a></td>
-            <td>나이키</td>
-            <td>나이키 명동</td>
-            <td>N</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td><a href="#">nike_md03</a></td>
-            <td>나이키</td>
-            <td>나이키 명동</td>
-            <td>N</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td><a href="#">nike_md03</a></td>
-            <td>나이키</td>
-            <td>나이키 명동</td>
-            <td>N</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td><a href="#">nike_md03</a></td>
+            <td><a href="/sk/admin/shopDetail">nike_md03</a></td>
             <td>나이키</td>
             <td>나이키 명동</td>
             <td>N</td>
