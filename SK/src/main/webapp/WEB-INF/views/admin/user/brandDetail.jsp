@@ -19,7 +19,7 @@
         <p class="ms-5 mb-0" style="font-weight: 700;">회원번호</p>
       </div>
       <div class="col-9 text-start">
-        <p style="font-weight: 500;">8</p>
+        <p style="font-weight: 500;">${brandMap.BRAND_NUM }</p>
       </div>
     </div>
 
@@ -28,7 +28,7 @@
         <p class="ms-5 mb-0" style="font-weight: 700;">아이디</p>
       </div>
       <div class="col-9 text-start">
-        <p style="font-weight: 500;">nike_0156</p>
+        <p style="font-weight: 500;">${brandMap.BRAND_ID }</p>
       </div>
     </div>
 
@@ -37,7 +37,7 @@
         <p class="ms-5 mb-0" style="font-weight: 700;">브랜드명</p>
       </div>
       <div class="col-9 text-start">
-        <p style="font-weight: 500;">나이키</p>
+        <p style="font-weight: 500;">${brandMap.BRAND_NAME }</p>
       </div>
     </div>
 
@@ -46,7 +46,7 @@
         <p class="ms-5 mb-0" style="font-weight: 700;">사업자 등록번호</p>
       </div>
       <div class="col-9 text-start">
-        <p style="font-weight: 500;">119-86-38589</p>
+        <p style="font-weight: 500;">${brandMap.BRAND_BUSINESS_NUM }</p>
       </div>
     </div>
     
@@ -55,7 +55,7 @@
         <p class="ms-5 mb-0" style="font-weight: 700;">등록지 주소</p>
       </div>
       <div class="col-9 text-start">
-        <p style="font-weight: 500;">서울특별시 중구 남대문로 83</p>
+        <p style="font-weight: 500;">${brandMap.BRAND_ADD }</p>
       </div>
     </div>
     
@@ -64,7 +64,7 @@
         <p class="ms-5 mb-0" style="font-weight: 700;">계약일자</p>
       </div>
       <div class="col-9 text-start">
-        <p style="font-weight: 500;">2023-02-10</p>
+        <p style="font-weight: 500;">${brandMap.BRAND_JOINDATE }</p>
       </div>
     </div>
     
@@ -73,17 +73,48 @@
         <p class="ms-5 mb-0" style="font-weight: 700;">탈퇴여부</p>
       </div>
       <div class="col-9 text-start">
-        <p style="font-weight: 500;">N</p>
+        <p style="font-weight: 500;">${brandMap.BRAND_DEL_GB }</p>
       </div>
     </div>
 
     
     <div class="row">
       <div class="col-12 text-end">
-        <button type="button" class="btn btn-danger" style="width:6rem">회원탈퇴</button>
-        <button type="button" class="btn btn-secondary" style="width:6rem">목록</button>
+        <button type="button" id="deleteBrandBtn" class="btn btn-danger" style="width:6rem">회원탈퇴</button>
+        <button type="button" id="brandListBtn" class="btn btn-secondary" style="width:6rem">목록</button>
       </div>
     </div>
   </div>
 </body>
+<script>
+$(document).ready(function() {
+	$("#deleteBrandBtn").on("click", function(e) {
+		var formData = new FormData();
+		formData.append("BRAND_NUM", ${brandMap.BRAND_NUM });
+		
+		$.ajax({
+			url : '/sk/admin/brandDelete',
+			type : 'POST',
+			data : formData,
+			contentType : false,
+			processData : false,
+			success : function(data) {
+				if(data.result == 1) {
+					alert("'" + "${brandMap.BRAND_NAME }" + "'" + " 님을 탈퇴하였습니다.");
+					location.href = '/sk/admin/brandList';
+				} else {
+					alert("회원탈퇴 실패");
+				}
+			}
+		});
+	});
+	
+	$("#brandListBtn").on("click", function(e) {
+		var page = ${page};
+		var searchType = '${searchType}';
+		var keyword = '${keyword}';
+		location.href = '/sk/admin/brandList?page=' + page + '&searchType=' + searchType + '&keyword=' + keyword;
+	});
+});
+</script>
 </html>

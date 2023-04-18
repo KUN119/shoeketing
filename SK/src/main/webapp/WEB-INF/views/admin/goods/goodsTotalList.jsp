@@ -63,8 +63,18 @@
 <script>
 $(document).ready(function() {
 	
+	$('#PAGE_INDEX').val(${page});
+	$('#PAGE_KEYWORD').val('${keyword}');
+	$('#PAGE_SEARCHTYPE').val('${searchType}');
+	if('${searchType}' != null && '${searchType}' != "") {
+		$("#searchType").val("${searchType}").prop("selected", true);
+	}
+	if('${keyword}' != null && '${keyword}' != "") {
+		$("#keyword").val('${keyword}');
+	}
+	
 	// 페이지 로딩 시 자동으로 1페이지 가져오기
-	fn_selectTotalGoodsList(1);
+	fn_selectTotalGoodsList(${page}, '${searchType}', '${keyword}');
 
   $("#goodsListTbody").on("click", "a[name='goodsDetail']", function(e) {  // 상품 상세보기
 		e.preventDefault();
@@ -92,7 +102,7 @@ $(document).ready(function() {
 			success : function(data) {
 				if(data.result == "success") {
 					alert("상품이 삭제되었습니다.");
-					fn_selectTotalGoodsList(1);
+					fn_selectTotalGoodsList($('#PAGE_INDEX').val(), "$('#PAGE_KEYWORD').val('${keyword}')", "$('#PAGE_SEARCHTYPE').val('${searchType}')");
 				} else if(data.result == "fail") {
 					alert("상품을 삭제하는 과정에서 오류가 발생했습니다.");
 				}

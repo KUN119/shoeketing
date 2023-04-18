@@ -52,21 +52,6 @@ public class AdminBoardController {
 		log.debug("######### 관리자 페이지 공지사항 리스트 페이징 ##########");
 		ModelAndView mv = new ModelAndView("jsonView");
 
-		String searchType = (String) map.get("searchType");
-		String keyword = "";
-
-		if (map.get("keyword") != null) {
-			keyword = (String) map.get("keyword");
-		}
-
-		if (searchType != null) {
-			map.put("searchType", searchType);
-		}
-
-		if (keyword != null) {
-			map.put("keyword", keyword);
-		}
-
 		List<Map<String, Object>> noticeList = adminBoardService.selectNoticeList(map);
 		mv.addObject("noticeList", noticeList);
 		int TOTAL = 0;
@@ -160,6 +145,21 @@ public class AdminBoardController {
 	public ModelAndView adminGoodsTotalList(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("######### 관리자 페이지 상품 전체 리스트 ##########");
 		ModelAndView mv = new ModelAndView("adminGoodsTotalList");
+
+		int page = 1;
+
+		if (map.get("page") != null && map.get("page") != "") {
+			page = Integer.parseInt(map.get("page").toString());
+		}
+		mv.addObject("page", page);
+
+		if (map.get("searchType") != null && map.get("searchType") != "") {
+			mv.addObject("searchType", map.get("searchType"));
+		}
+
+		if (map.get("keyword") != null && map.get("keyword") != "") {
+			mv.addObject("keyword", map.get("keyword"));
+		}
 
 		return mv;
 	}

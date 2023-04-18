@@ -51,7 +51,7 @@
         </tbody>
       </table>
 
-      <div class="row">
+        <div class="row">
       	<!-- 페이징 화면 처리 부분 시작 -->
       	<div id="PAGE_NAVI"></div>
 			<input type="hidden" id="PAGE_INDEX" name="PAGE_INDEX"/>

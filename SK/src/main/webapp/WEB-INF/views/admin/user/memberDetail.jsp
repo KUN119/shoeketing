@@ -99,7 +99,7 @@ $(document).ready(function() {
 			processData : false,
 			success : function(data) {
 				if(data.result == 1) {
-					alert("'" + ${memberMap.MEM_NAME } + "'" + " 님을 탈퇴하였습니다.");
+					alert("'" + "${memberMap.MEM_NAME }" + "'" + " 님을 탈퇴하였습니다.");
 					location.href = '/sk/admin/memberList';
 				} else {
 					alert("회원탈퇴 실패");

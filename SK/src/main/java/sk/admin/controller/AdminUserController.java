@@ -94,7 +94,7 @@ public class AdminUserController {
 	}
 
 	@PostMapping(value = "/admin/memberDelete")
-	public ModelAndView adminmemberDelete(@RequestParam Map<String, Object> map) throws Exception {
+	public ModelAndView adminMemberDelete(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("######### 관리자 페이지 일반회원 탈퇴 ##########");
 		ModelAndView mv = new ModelAndView("jsonView");
 
@@ -132,12 +132,12 @@ public class AdminUserController {
 		log.debug("######### 관리자 페이지 매장회원 리스트 페이징 ##########");
 		ModelAndView mv = new ModelAndView("jsonView");
 
-		List<Map<String, Object>> memberList = adminUserService.selectShopList(map);
-		mv.addObject("shopList", memberList);
+		List<Map<String, Object>> shopList = adminUserService.selectShopList(map);
+		mv.addObject("shopList", shopList);
 
 		int TOTAL = 0;
-		if (memberList.size() > 0) {
-			TOTAL = adminUserService.selectMemberCount(map);
+		if (shopList.size() > 0) {
+			TOTAL = adminUserService.selectShopCount(map);
 		} else {
 			TOTAL = 0;
 		}
@@ -153,6 +153,35 @@ public class AdminUserController {
 		log.debug("######### 관리자 페이지 매장회원 상세보기 ##########");
 		ModelAndView mv = new ModelAndView("adminShopDetail");
 
+		Map<String, Object> shopMap = adminUserService.selectShopDetail(map);
+		mv.addObject("shopMap", shopMap);
+
+		int page = 1;
+
+		if (map.get("page") != null && map.get("page") != "") {
+			page = Integer.parseInt(map.get("page").toString());
+		}
+		mv.addObject("page", page);
+
+		if (map.get("searchType") != null && map.get("searchType") != "") {
+			mv.addObject("searchType", map.get("searchType"));
+		}
+
+		if (map.get("keyword") != null && map.get("keyword") != "") {
+			mv.addObject("keyword", map.get("keyword"));
+		}
+
+		return mv;
+	}
+
+	@PostMapping(value = "/admin/shopDelete")
+	public ModelAndView adminShopDelete(@RequestParam Map<String, Object> map) throws Exception {
+		log.debug("######### 관리자 페이지 매장회원 탈퇴 ##########");
+		ModelAndView mv = new ModelAndView("jsonView");
+
+		int result = adminUserService.deleteShop(map);
+		mv.addObject("result", result);
+
 		return mv;
 	}
 
@@ -160,6 +189,21 @@ public class AdminUserController {
 	public ModelAndView adminBrandList(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("######### 관리자 페이지 브랜드회원 리스트 ##########");
 		ModelAndView mv = new ModelAndView("adminBrandList");
+
+		int page = 1;
+
+		if (map.get("page") != null && map.get("page") != "") {
+			page = Integer.parseInt(map.get("page").toString());
+		}
+		mv.addObject("page", page);
+
+		if (map.get("searchType") != null && map.get("searchType") != "") {
+			mv.addObject("searchType", map.get("searchType"));
+		}
+
+		if (map.get("keyword") != null && map.get("keyword") != "") {
+			mv.addObject("keyword", map.get("keyword"));
+		}
 
 		return mv;
 	}
@@ -169,6 +213,19 @@ public class AdminUserController {
 		log.debug("######### 관리자 페이지 브랜드회원 리스트 페이징 ##########");
 		ModelAndView mv = new ModelAndView("jsonView");
 
+		List<Map<String, Object>> brandList = adminUserService.selectBrandList(map);
+		mv.addObject("brandList", brandList);
+
+		int TOTAL = 0;
+		if (brandList.size() > 0) {
+			TOTAL = adminUserService.selectBrandCount(map);
+		} else {
+			TOTAL = 0;
+		}
+		mv.addObject("TOTAL", TOTAL);
+
+		System.out.println("map: " + map);
+
 		return mv;
 	}
 
@@ -176,6 +233,35 @@ public class AdminUserController {
 	public ModelAndView adminBrandDetail(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("######### 관리자 페이지 브랜드회원 상세보기 ##########");
 		ModelAndView mv = new ModelAndView("adminBrandDetail");
+
+		Map<String, Object> brandMap = adminUserService.selectBrandDetail(map);
+		mv.addObject("brandMap", brandMap);
+
+		int page = 1;
+
+		if (map.get("page") != null && map.get("page") != "") {
+			page = Integer.parseInt(map.get("page").toString());
+		}
+		mv.addObject("page", page);
+
+		if (map.get("searchType") != null && map.get("searchType") != "") {
+			mv.addObject("searchType", map.get("searchType"));
+		}
+
+		if (map.get("keyword") != null && map.get("keyword") != "") {
+			mv.addObject("keyword", map.get("keyword"));
+		}
+
+		return mv;
+	}
+
+	@PostMapping(value = "/admin/brandDelete")
+	public ModelAndView adminBrandDelete(@RequestParam Map<String, Object> map) throws Exception {
+		log.debug("######### 관리자 페이지 브랜드회원 탈퇴 ##########");
+		ModelAndView mv = new ModelAndView("jsonView");
+
+		int result = adminUserService.deleteBrand(map);
+		mv.addObject("result", result);
 
 		return mv;
 	}
