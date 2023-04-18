@@ -137,7 +137,7 @@
 	            <button class="btn btn-outline-secondary" name="phoneCheck" type="button" id="phoneChk" style="font-size: 15px; width: 100px;">인증번호 보내기</button>
             </div>
             
-            <div class="d-flex">
+             <div class="d-flex">
 	            <input
 	              class="form-control"
 	              type="text"
@@ -149,7 +149,7 @@
 	            />
 	            <button class="btn btn-outline-secondary" name="phoneCheck2" type="button" id="phoneChk2" style="font-size: 15px; width: 100px;">본인 인증</button>
             </div>
-            <div class="point successPhoneChk">휴대폰 번호 입력후 인증번호 보내기를 해주십시오.</div>
+            <div class="point successPhoneChk">휴대폰 번호 입력후 인증번호 보내기를 해주십시오.</div> 
             <input
             	type="hidden"
             	id="phoneDoubleCheck"
@@ -229,21 +229,27 @@
     		});
     	};
     	
+    	//회원가입 버튼 + 회원탈퇴여부 확인
     	$("button[name='userJoin']").on("click", function(e) { 
     		e.preventDefault();
     		fn_delCheck();
     	});
 
-    	function fn_delCheck() { 
+    	function fn_delCheck() {
+    		var MEM_EMAIL = $('#MEM_EMAIL').val();
     		var MEM_NAME = $('#MEM_NAME').val();
+    		var MEM_PW = $('#MEM_PW').val();
     		var MEM_PHONE = $('#MEM_PHONE').val();
-    		alert(MEM_NAME);
-    		alert(MEM_PHONE);
+    		var MEM_DEL_GB = $('#MEM_DEL_GB').val();
+    	
     		
     		var formData = new FormData();
     		
+    		formData.append("MEM_EMAIL", MEM_EMAIL);
     		formData.append("MEM_NAME", MEM_NAME);
+    		formData.append("MEM_PW", MEM_PW);
     		formData.append("MEM_PHONE", MEM_PHONE);
+    		formData.append("MEM_DEL_GB", MEM_DEL_GB);
     		
 	    	$.ajax({
 	            url: '/sk/memberJoin/joinAvailable',
@@ -254,6 +260,7 @@
 	            success:function(data) {
 	            	if(data == "success") {
 	            		alert("회원가입에 성공하였습니다.");
+	            		location.href="/sk/main"
 	            	} else if (data == "fail") {
 	            		alert("회원탈퇴 후 7일이 지나지 않았습니다.");
 	            	}
@@ -266,8 +273,8 @@
     	
     });
    
-   //휴대폰 번호 인증
-     var code2 = "";
+   //휴대폰 번호 인증 coolsms (https://unknown-coding.tistory.com/16)
+      var code2 = "";
      $("#phoneChk").click(function(){
      	alert("인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호 확인을 해주십시오.");
      	var phone = $("#MEM_PHONE").val();
@@ -295,7 +302,7 @@
    
      
    //휴대폰 인증번호 대조
-     $("#phoneChk2").click(function(){
+      $("#phoneChk2").click(function(){
      	if($("#phone2").val() == code2){
      		$(".successPhoneChk").text("인증번호가 일치합니다.");
      		$(".successPhoneChk").css("color","green");
@@ -307,7 +314,7 @@
      		$("#phoneDoubleChk").val("false");
      		$(this).attr("autofocus",true);
      	}
-     });
+     }); 
    
    	/* //가입여부
      var name = $("#MEM_NAME").val();
