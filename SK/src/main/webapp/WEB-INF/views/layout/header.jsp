@@ -163,7 +163,7 @@ function onMessage(evt){
                   <input
                     class="header-input"
                     style="
-                      height: 37px;
+                      height: 39px;
                       border-style: none;
                       border: solid 1px black;
                       border-right: none;

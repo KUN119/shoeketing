@@ -94,6 +94,7 @@ public class LoginController {
 					session.setAttribute("session_MEM_ID", map.get("MEM_EMAIL"));
 					session.setAttribute("session_MEM_PW", map.get("MEM_PW"));
 					session.setAttribute("session_MEM_INFO", member);
+					session.setAttribute("session_MEM_GRADE", member.get("MEM_GRADE"));
 
 					// 로그인 유지 체크했을 경우
 					if (map.get("useCookie") != null) {

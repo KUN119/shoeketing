@@ -34,7 +34,9 @@ public class CommonService {
 
 			} else if (key.equals("MEM_PICKUP_COUNT")) {
 				info = sessionMap.get("MEM_PICKUP_COUNT").toString();
-
+				
+			} else if(key.equals("MEM_GRADE")) {
+				info = (String) sessionMap.get("MEM_GRADE");
 			}
 		}
 		return info;
