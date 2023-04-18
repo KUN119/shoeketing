@@ -39,8 +39,8 @@
                         class="author-test"
                         style="margin-left: 80px; margin-right: 80px"
                       >
-                        <a href="#"
-                          ><img
+                        <a href="/sk/brand/main?BRAND_NUM=1">
+                          <img
                             src="<%=request.getContextPath() %>/assets/img/nikeLogo.jpg"
                             alt=""
                             class="rounded-circle b-shadow-a brandLogo"
@@ -56,8 +56,8 @@
                         class="author-test"
                         style="margin-left: 80px; margin-right: 80px"
                       >
-                        <a href="#"
-                          ><img
+                        <a href="/sk/brand/main?BRAND_NUM=2">
+                        <img
                             src="<%=request.getContextPath() %>/assets/img/adidasLogo.jpg"
                             alt=""
                             class="rounded-circle b-shadow-a brandLogo"
@@ -73,7 +73,7 @@
                         class="author-test"
                         style="margin-left: 80px; margin-right: 80px"
                       >
-                        <a href="#"
+                        <a href="/sk/brand/main?BRAND_NUM=3"
                           ><img
                             src="<%=request.getContextPath() %>/assets/img/newbalanceLogo.jpg"
                             alt=""
@@ -90,7 +90,7 @@
                         class="author-test"
                         style="margin-left: 80px; margin-right: 80px"
                       >
-                        <a href="#"
+                        <a href="/sk/brand/main?BRAND_NUM=4"
                           ><img
                             src="<%=request.getContextPath() %>/assets/img/pumaLogo.jpg"
                             alt=""
@@ -113,7 +113,7 @@
                         class="author-test"
                         style="margin-left: 80px; margin-right: 80px"
                       >
-                        <a href="#"
+                        <a href="/sk/brand/main?BRAND_NUM=5"
                           ><img
                             src="<%=request.getContextPath() %>/assets/img/converseLogo.jpg"
                             alt=""
@@ -130,7 +130,7 @@
                         class="author-test"
                         style="margin-left: 80px; margin-right: 80px"
                       >
-                        <a href="#"
+                        <a href="/sk/brand/main?BRAND_NUM=6"
                           ><img
                             src="<%=request.getContextPath() %>/assets/img/vansLogo.jpg"
                             alt=""
@@ -147,7 +147,7 @@
                         class="author-test"
                         style="margin-left: 80px; margin-right: 80px"
                       >
-                        <a href="#"
+                        <a href="/sk/brand/main?BRAND_NUM=7"
                           ><img
                             src="<%=request.getContextPath() %>/assets/img/asicsLogo.jpg"
                             alt=""
@@ -164,7 +164,7 @@
                         class="author-test"
                         style="margin-left: 80px; margin-right: 80px"
                       >
-                        <a href="#"
+                        <a href="/sk/brand/main?BRAND_NUM=8"
                           ><img
                             src="<%=request.getContextPath() %>/assets/img/reebokLogo.jpg"
                             alt=""
@@ -187,7 +187,7 @@
                         class="author-test"
                         style="margin-left: 80px; margin-right: 80px"
                       >
-                        <a href="#"
+                        <a href="/sk/brand/main?BRAND_NUM=9"
                           ><img
                             src="<%=request.getContextPath() %>/assets/img/folderLogo.jpg"
                             alt=""
@@ -204,7 +204,7 @@
                         class="author-test"
                         style="margin-left: 80px; margin-right: 80px"
                       >
-                        <a href="#"
+                        <a href="/sk/brand/main?BRAND_NUM=10"
                           ><img
                             src="<%=request.getContextPath() %>/assets/img/discoveryLogo.jpg"
                             alt=""
@@ -221,7 +221,7 @@
                         class="author-test"
                         style="margin-left: 80px; margin-right: 80px"
                       >
-                        <a href="#"
+                        <a href="/sk/brand/main?BRAND_NUM=11"
                           ><img
                             src="<%=request.getContextPath() %>/assets/img/filaLogo.jpg"
                             alt=""
@@ -238,7 +238,7 @@
                         class="author-test"
                         style="margin-left: 80px; margin-right: 80px"
                       >
-                        <a href="#"
+                        <a href="/sk/brand/main?BRAND_NUM=1"
                           ><img
                             src="<%=request.getContextPath() %>/assets/img/nikeLogo.jpg"
                             alt=""
@@ -247,7 +247,7 @@
                           <span
                             class="author"
                             style="font-size: 18px; margin-bottom: 0; color: black;"
-                            >닥터마틴</span
+                            >나이키</span
                           ></a
                         >
                       </div>

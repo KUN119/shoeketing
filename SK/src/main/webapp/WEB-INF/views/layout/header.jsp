@@ -158,10 +158,11 @@ function onMessage(evt){
 	        </c:if>
         </li>
         <li>
-          <form action="/sk/totalSearch">
+          <form action="/sk/totalSearch" class="needs-validation">
                 <div class="input-group">
+                <label for="validationCustom01" class="form_label"></label>
                   <input
-                    class="header-input"
+                    class="form_control"
                     style="
                       height: 37px;
                       border-style: none;
@@ -170,9 +171,10 @@ function onMessage(evt){
                       border-top-left-radius: 5px;
                       border-bottom-left-radius: 5px;
                     "
-                    type="search"
+                    type="text"
                     name='keyword'
-                    <%-- value="<c:out value="${search}"/>" --%>
+                    id = "validationCustom01"
+                    required
                   />
                   <button
                     class="btn"
@@ -196,7 +198,7 @@ function onMessage(evt){
                       />
                     </svg>
                   </button>
-                </div>
+                </div>      
               </form>
         </li>
       </ul>
