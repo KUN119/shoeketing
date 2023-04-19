@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import sk.common.dao.InformDAO;
 import sk.common.service.CommonService;
@@ -273,10 +274,21 @@ public class ReservationServiceImpl implements ReservationService {
 		map.put("RESERVATION_PICKUP_DATE", map.get("RESERVATION_PICKUP_DATE"));
 		
 
-		
 		return resultMap;
 	}
 	
-	
-	
+	// 매장이 픽업 완료버튼 클릭시, 픽업 상태변경 + 회원 픽업 횟수 변경_트랜잭션
+	@Transactional 
+	@Override
+	public Map<String, Object> shopPickUpSuccess(Map<String, Object> map) throws Exception{
+		Map<String, Object> resultMap = new HashMap<>();
+		
+		reservationDAO.updateReservationStatusAfterPickUp(map);
+		reservationDAO.updateMemberPickupCountAfterPickUp(map);
+		
+		resultMap.put("result", "pass");
+		
+		return resultMap;
+		
+	}
 }

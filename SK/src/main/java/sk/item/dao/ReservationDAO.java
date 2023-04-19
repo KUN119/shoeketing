@@ -101,4 +101,18 @@ public class ReservationDAO extends AbstractDAO{
 		return (int) insert("reservation.insertReservation", map);
 	}
 	
+	// 매장이 픽업 완료버튼 클릭시, 픽업 상태변경
+	public int updateReservationStatusAfterPickUp(Map<String, Object> map) throws Exception {
+		System.out.println("updateReservationStatusAfterPickUp 파라미터 : " + map);
+
+		return (int) update("reservation.updateReservationStatusAfterPickUp", map);
+	}
+	
+	// 매장이 픽업 완료버튼 클릭시, 회원 픽업 횟수 변경
+	public int updateMemberPickupCountAfterPickUp(Map<String, Object> map) throws Exception {
+		System.out.println("updateMemberPickupCountAfterPickUp 파라미터 : " + map);
+
+		return (int) update("reservation.updateMemberPickupCountAfterPickUp", map);
+	}
+	
 }

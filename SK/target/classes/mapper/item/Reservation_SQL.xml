@@ -213,6 +213,30 @@
 		)
 	]]>
 	</insert>
+	
+	<!-- 픽업 완료 -->
+	<!-- 매장이 픽업 완료버튼 클릭시, 픽업 상태변경 -->
+	<update id="updateReservationStatusAfterPickUp" parameterType="hashmap">
+	    <![CDATA[
+	        UPDATE 
+	                    RESERVATION
+	        SET 
+	                    RESERVATION_STATUS = '픽업 완료'
+	        WHERE 
+	                    RESERVATION_NUM = #{RESERVATION_NUM}
+	    ]]>
+	</update>
 
+	<!-- 매장이 픽업 완료버튼 클릭시, 회원 픽업 횟수 변경 -->
+	<update id="updateMemberPickupCountAfterPickUp" parameterType="hashmap">
+	    <![CDATA[
+	        UPDATE 
+	                    MEMBER
+	        SET 
+	                    MEM_PICKUP_COUNT = MEM_PICKUP_COUNT + 1
+	        WHERE 
+	                    MEM_NUM = #{MEM_NUM}
+	    ]]>
+	</update>
 
 </mapper>
