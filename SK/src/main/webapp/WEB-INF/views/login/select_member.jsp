@@ -131,7 +131,7 @@
                         </label>
                     </div>
                     <div class="form-group mt-5 mb-5">
-                        <button type="button" name="login" class="btn btn-dark" style="width: 300px;">로그인</button>
+                        <button type="submit" name="login" class="btn btn-dark" style="width: 300px; background-color:black;">로그인</button>
                     </div>
                     <div class="form-group mt-4 mb-3">
                         <button type="button" class="btn btn-dark" style="width: 100px;" data-bs-toggle="modal" data-bs-target="#findIdModal">ID찾기</button>
@@ -147,7 +147,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	
-	$("button[name='login']").on("click", function(e) {
+	$("#loginForm").on("submit", function(e) {
 		e.preventDefault();
 		fn_loginForm();
 	});
@@ -168,7 +168,6 @@ $(document).ready(function() {
 			processData: false,
 			contentType: false,
 			success: function(data) {
-				alert(data);
 				if(data == "emailfail"){
 					alert("존재하지 않는 아이디입니다.");
 				}else if(data == "pwfail"){

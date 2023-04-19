@@ -39,7 +39,7 @@
                   <tr>
                     <th scope="row" style="width: 15%; text-align: center;">등급 혜택</th>
                     <td style="text-align: center;">X</td>
-                    <td style="text-align: center;">예약금 3000원 할인</td>
+                    <td style="text-align: center;">예약금 3천원 할인</td>
                     <td style="text-align: center;">예약금 5천원 할인</td>
                   </tr>
                 </tbody>
@@ -47,7 +47,7 @@
               <br>
               <br>
               <h4 style="margin-left: 30px; color: black; font-weight: bolder;">멤버쉽 안내</h4>
-              <h6 style="margin-left: 30px; color: rgb(83, 83, 83);">최근 1년 동안 픽업 완료 횟수 기준으로 매월 1일에 멤버십 등급에 반영됩니다.</h6>
+              <h6 style="margin-left: 30px; color: rgb(83, 83, 83);">최근 6개월 동안 픽업 완료 횟수 기준으로 매월 1일에 멤버십 등급에 반영됩니다.</h6>
             </div>
 </body>
 </html>

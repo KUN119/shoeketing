@@ -106,6 +106,9 @@ $(document).ready(function() {
 				} else if(data.result == "fail") {
 					alert("상품을 삭제하는 과정에서 오류가 발생했습니다.");
 				}
+			},
+			error : function() {
+				alert("상품 삭제 실패");
 			}
 		});
 	};
@@ -158,6 +161,7 @@ $(document).ready(function() {
 							"<td colspan='4'>조회된 결과가 없습니다.</td>" + 
 						"</tr>";
 			body.append(str);
+			$("#PAGE_NAVI").empty();
 		} else { // 결과가 있을 경우
 			var params = {
 				divId : "PAGE_NAVI",

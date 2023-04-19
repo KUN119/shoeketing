@@ -33,227 +33,44 @@
                 data-aos-delay="100"
               >
                 <div class="swiper-wrapper">
-                  <div class="swiper-slide">
-                    <div class="testimonial-box d-flex justify-content-between">
-                      <div
-                        class="author-test"
-                        style="margin-left: 80px; margin-right: 80px"
-                      >
-                        <a href="/sk/brand/main?BRAND_NUM=1">
-                          <img
-                            src="<%=request.getContextPath() %>/assets/img/nikeLogo.jpg"
-                            alt=""
-                            class="rounded-circle b-shadow-a brandLogo"
-                          />
-                          <span
-                            class="author"
-                            style="font-size: 18px; margin-bottom: 0; color: black;"
-                            >나이키</span
-                          ></a
-                        >
-                      </div>
-                      <div
-                        class="author-test"
-                        style="margin-left: 80px; margin-right: 80px"
-                      >
-                        <a href="/sk/brand/main?BRAND_NUM=2">
-                        <img
-                            src="<%=request.getContextPath() %>/assets/img/adidasLogo.jpg"
-                            alt=""
-                            class="rounded-circle b-shadow-a brandLogo"
-                          />
-                          <span
-                            class="author"
-                            style="font-size: 18px; margin-bottom: 0; color: black;"
-                            >아디다스</span
-                          ></a
-                        >
-                      </div>
-                      <div
-                        class="author-test"
-                        style="margin-left: 80px; margin-right: 80px"
-                      >
-                        <a href="/sk/brand/main?BRAND_NUM=3"
-                          ><img
-                            src="<%=request.getContextPath() %>/assets/img/newbalanceLogo.jpg"
-                            alt=""
-                            class="rounded-circle b-shadow-a brandLogo"
-                          />
-                          <span
-                            class="author"
-                            style="font-size: 18px; margin-bottom: 0; color: black;"
-                            >뉴발란스</span
-                          ></a
-                        >
-                      </div>
-                      <div
-                        class="author-test"
-                        style="margin-left: 80px; margin-right: 80px"
-                      >
-                        <a href="/sk/brand/main?BRAND_NUM=4"
-                          ><img
-                            src="<%=request.getContextPath() %>/assets/img/pumaLogo.jpg"
-                            alt=""
-                            class="rounded-circle b-shadow-a brandLogo"
-                          />
-                          <span
-                            class="author"
-                            style="font-size: 18px; margin-bottom: 0; color: black;"
-                            >푸마</span
-                          ></a
-                        >
-                      </div>
-                    </div>
-                  </div>
-                  <!-- End testimonial item -->
-
-                  <div class="swiper-slide">
-                    <div class="testimonial-box d-flex justify-content-between">
-                      <div
-                        class="author-test"
-                        style="margin-left: 80px; margin-right: 80px"
-                      >
-                        <a href="/sk/brand/main?BRAND_NUM=5"
-                          ><img
-                            src="<%=request.getContextPath() %>/assets/img/converseLogo.jpg"
-                            alt=""
-                            class="rounded-circle b-shadow-a brandLogo"
-                          />
-                          <span
-                            class="author"
-                            style="font-size: 18px; margin-bottom: 0; color: black;"
-                            >컨버스</span
-                          ></a
-                        >
-                      </div>
-                      <div
-                        class="author-test"
-                        style="margin-left: 80px; margin-right: 80px"
-                      >
-                        <a href="/sk/brand/main?BRAND_NUM=6"
-                          ><img
-                            src="<%=request.getContextPath() %>/assets/img/vansLogo.jpg"
-                            alt=""
-                            class="rounded-circle b-shadow-a brandLogo"
-                          />
-                          <span
-                            class="author"
-                            style="font-size: 18px; margin-bottom: 0; color: black;"
-                            >반스</span
-                          ></a
-                        >
-                      </div>
-                      <div
-                        class="author-test"
-                        style="margin-left: 80px; margin-right: 80px"
-                      >
-                        <a href="/sk/brand/main?BRAND_NUM=7"
-                          ><img
-                            src="<%=request.getContextPath() %>/assets/img/asicsLogo.jpg"
-                            alt=""
-                            class="rounded-circle b-shadow-a brandLogo"
-                          />
-                          <span
-                            class="author"
-                            style="font-size: 18px; margin-bottom: 0; color: black;"
-                            >아식스</span
-                          ></a
-                        >
-                      </div>
-                      <div
-                        class="author-test"
-                        style="margin-left: 80px; margin-right: 80px"
-                      >
-                        <a href="/sk/brand/main?BRAND_NUM=8"
-                          ><img
-                            src="<%=request.getContextPath() %>/assets/img/reebokLogo.jpg"
-                            alt=""
-                            class="rounded-circle b-shadow-a brandLogo"
-                          />
-                          <span
-                            class="author"
-                            style="font-size: 18px; margin-bottom: 0; color: black;"
-                            >리복</span
-                          ></a
-                        >
-                      </div>
-                    </div>
-                  </div>
-                  <!-- End testimonial item -->
-
-                  <div class="swiper-slide">
-                    <div class="testimonial-box d-flex justify-content-between">
-                      <div
-                        class="author-test"
-                        style="margin-left: 80px; margin-right: 80px"
-                      >
-                        <a href="/sk/brand/main?BRAND_NUM=9"
-                          ><img
-                            src="<%=request.getContextPath() %>/assets/img/folderLogo.jpg"
-                            alt=""
-                            class="rounded-circle b-shadow-a brandLogo"
-                          />
-                          <span
-                            class="author"
-                            style="font-size: 18px; margin-bottom: 0; color: black;"
-                            >폴더</span
-                          ></a
-                        >
-                      </div>
-                      <div
-                        class="author-test"
-                        style="margin-left: 80px; margin-right: 80px"
-                      >
-                        <a href="/sk/brand/main?BRAND_NUM=10"
-                          ><img
-                            src="<%=request.getContextPath() %>/assets/img/discoveryLogo.jpg"
-                            alt=""
-                            class="rounded-circle b-shadow-a brandLogo"
-                          />
-                          <span
-                            class="author"
-                            style="font-size: 18px; margin-bottom: 0; color: black;"
-                            >디스커버리</span
-                          ></a
-                        >
-                      </div>
-                      <div
-                        class="author-test"
-                        style="margin-left: 80px; margin-right: 80px"
-                      >
-                        <a href="/sk/brand/main?BRAND_NUM=11"
-                          ><img
-                            src="<%=request.getContextPath() %>/assets/img/filaLogo.jpg"
-                            alt=""
-                            class="rounded-circle b-shadow-a brandLogo"
-                          />
-                          <span
-                            class="author"
-                            style="font-size: 18px; margin-bottom: 0; color: black;"
-                            >휠라</span
-                          ></a
-                        >
-                      </div>
-                      <div
-                        class="author-test"
-                        style="margin-left: 80px; margin-right: 80px"
-                      >
-                        <a href="/sk/brand/main?BRAND_NUM=1"
-                          ><img
-                            src="<%=request.getContextPath() %>/assets/img/nikeLogo.jpg"
-                            alt=""
-                            class="rounded-circle b-shadow-a brandLogo"
-                          />
-                          <span
-                            class="author"
-                            style="font-size: 18px; margin-bottom: 0; color: black;"
-                            >나이키</span
-                          ></a
-                        >
-                      </div>
-                    </div>
-                  </div>
-                  <!-- End testimonial item -->
+                	<!-- 여기부터 시작 -->
+                	<c:if test="${fn:length(brandList) > 0}">
+	                	<c:forEach begin="1" end="${(fn:length(brandList)-1)/4+1 }" varStatus="num">
+	                		<div class="swiper-slide">
+			                    <div class="testimonial-box d-flex justify-content-between">
+					                 <c:forEach begin="${num.index*4-3 }" end="${num.index*4 }" varStatus="status">
+					                 	<c:choose>
+						                 	<c:when test="${status.current > fn:length(brandList)}">
+							                   	<div
+												  class="author-test"
+												  style="margin-left: 80px; margin-right: 80px; width: 150px; height: 120px;"
+												>
+												</div>
+											</c:when>
+											<c:otherwise>
+												<div
+												  class="author-test"
+												  style="margin-left: 80px; margin-right: 80px"
+												>
+												  <a href="/sk/brand/main?BRAND_NUM=${brandList[status.current-1].BRAND_NUM }"
+												    ><img
+												      src="/sk/image/display?fileName=${brandList[status.current-1].BRAND_LOGO_FILE }"
+												      class="rounded-circle b-shadow-a brandLogo"
+												    />
+												    <span
+												      class="author"
+												      style="font-size: 18px; margin-bottom: 0; color: black;"
+												      >${brandList[status.current-1].BRAND_NAME }</span
+												    ></a
+												  >
+												</div>
+											</c:otherwise>
+										</c:choose>
+					                 </c:forEach>
+			                    </div>
+		                    </div>
+	                	</c:forEach>
+                	</c:if>
                 </div>
                 <div class="swiper-pagination"></div>
               </div>
@@ -268,7 +85,10 @@
         
           <!--카테고리 시작-->
           <div class="mb-5">
-            <h5 style="margin-left: 13%; color: black">카테고리</h5>
+          	<div class="d-flex justify-content-between">
+            	<h5 style="margin-left: 13%; color: black">카테고리</h5>
+            	<a href="#" id="filterResetBtn" class="align-self-center" style="font-size:14px; color:rgba(0, 0, 0, 0.632); padding-right:2rem;"><i class="bi bi-arrow-clockwise"></i>전체해제</a>
+            </div>
             <hr
               style="
                 border: solid 1px rgb(73, 73, 73);
@@ -305,6 +125,7 @@
             <form>
               <div class="input-group mt-3" style="margin-left: 13%">
                 <input
+                  id="brandInput"
                   class="header-input"
                   style="
                     height: 30px;
@@ -318,6 +139,7 @@
                   type="text"
                 />
                 <button
+                  id="brandSearchBtn"
                   class="btn"
                   type="button"
                   style="
@@ -347,6 +169,7 @@
                 class="list-group-item d-flex justify-content-between lh-sm mt-3"
               >
                 <div
+                  id="brandListDiv"
                   class="categoryMenu"
                   style="
                     overflow: auto;
@@ -355,138 +178,7 @@
                     font-size: 14px;
                   "
                 >
-                  <div class="form-check mb-2">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="brandType"
-                      id="brandName1"
-                      value="나이키"
-                    />
-                    <label class="form-check-label" for="brandName1">
-                      나이키
-                    </label>
-                  </div>
-                  <div class="form-check mb-2">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="brandType"
-                      id="brandName2"
-                      value="아디다스"
-                    />
-                    <label class="form-check-label" for="brandName2">
-                      아디다스
-                    </label>
-                  </div>
-                  <div class="form-check mb-2">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="brandType"
-                      id="brandName3"
-                      value="뉴발란스"
-                    />
-                    <label class="form-check-label" for="brandName3">
-                      뉴발란스
-                    </label>
-                  </div>
-                  <div class="form-check mb-2">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="brandType"
-                      id="brandName4"
-                      value="푸마"
-                    />
-                    <label class="form-check-label" for="brandName4">
-                      푸마
-                    </label>
-                  </div>
-                  <div class="form-check mb-2">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="brandType"
-                      id="brandName5"
-                      value="컨버스"
-                    />
-                    <label class="form-check-label" for="brandName5">
-                      컨버스
-                    </label>
-                  </div>
-                  <div class="form-check mb-2">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="brandType"
-                      id="brandName6"
-                      value="반스"
-                    />
-                    <label class="form-check-label" for="brandName6">
-                      반스
-                    </label>
-                  </div>
-                  <div class="form-check mb-2">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="brandType"
-                      id="brandName7"
-                      value="아식스"
-                    />
-                    <label class="form-check-label" for="brandName7">
-                      아식스
-                    </label>
-                  </div>
-                  <div class="form-check mb-2">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="brandType"
-                      id="brandName8"
-                      value="리복"
-                    />
-                    <label class="form-check-label" for="brandName8">
-                      리복
-                    </label>
-                  </div>
-                  <div class="form-check mb-2">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="brandType"
-                      id="brandName9"
-                      value="폴더"
-                    />
-                    <label class="form-check-label" for="brandName9">
-                      폴더
-                    </label>
-                  </div>
-                  <div class="form-check mb-2">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="brandType"
-                      id="brandName10"
-                      value="디스커버리"
-                    />
-                    <label class="form-check-label" for="brandName10">
-                      디스커버리
-                    </label>
-                  </div>
-                  <div class="form-check mb-2">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="brandType"
-                      id="brandName11"
-                      value="휠라"
-                    />
-                    <label class="form-check-label" for="brandName11">
-                      휠라
-                    </label>
-                  </div>
+                  <!-- 브랜드 리스트 -->
                 </div>
               </li>
             </ul>
@@ -964,33 +656,20 @@
           <!--정렬 기준 nav 끝-->
 
           <div class="row" id="goodsListDiv">
-          <c:choose>
-          <c:when test="${fn:length(list)>0}">
-          	<c:forEach items="${list}" var="goods">
-          <div class="card" style="width: 14rem; margin-left: 10px; margin-right: 10px; margin-bottom: 80px; border-style: none;">
-              <a href="/sk/goods/goodsDetail?TOTAL_GOODS_NUM=${goods.TOTAL_GOODS_NUM}" name="title" data-num="${goods.TOTAL_GOODS_NUM }">
-                <img src='/sk/image/display?fileName=${goods.GOODS_IMAGE_STD}' style="width:13rem; height: 11rem" class="card-img-top" alt="<%=request.getContextPath() %>.">
-                <div class="card-body" style="height:6rem;">
-                  <h6 class="card-title" style="font-size: 15px; font-weight: 700;">${goods.BRAND_NAME}</h6>
-                  <p class="card-text" style="font-size: 13px;">${goods.TOTAL_GOODS_NAME} / ${goods.TOTAL_GOODS_MODEL}</p>
-                </div>
-                <div class="card-body">
-                  <h6 class="card-title mb-0" style="font-size: 18px; font-weight: 700;"><fmt:formatNumber value="${goods.TOTAL_GOODS_PRICE }" type="number"/>원</h6>
-                </div>
-              </a>
-            </div>
-           </c:forEach>
-          </c:when>
-          <c:otherwise>
-          등록된 상품이 없습니다.
-          </c:otherwise>
-         </c:choose> 
+          	<!-- 상품 리스트 -->
           </div>
           
           <div class="row">
       	<!-- 페이징 화면 처리 부분 시작 -->
       	<div id="PAGE_NAVI"></div>
-		<input type="hidden" id="PAGE_INDEX" name="PAGE_INDEX"/>
+			<input type="hidden" id="PAGE_INDEX" name="PAGE_INDEX"/>
+			<!-- 페이징 검색 조건 및 검색 키워드 input type hidden 시작 -->
+			<input type="hidden" id="PAGE_LISTTYPE" name="PAGE_LISTTYPE"/>
+			<input type="hidden" id="PAGE_CATEGORY" name="PAGE_CATEGORY"/>
+			<input type="hidden" id="PAGE_BRANDTYPE" name="PAGE_BRANDTYPE"/>
+			<input type="hidden" id="PAGE_SIZETYPE" name="PAGE_SIZETYPE"/>
+			<input type="hidden" id="PAGE_PRICETYPE" name="PAGE_PRICETYPE"/>
+			<!-- 페이징 검색 조건 및 검색 키워드 input type hidden 시작 -->
 		<!-- 페이징 화면 처리 부분 끝 -->
 		</div>
 		
@@ -1003,22 +682,69 @@ $(document).ready(function() {
 	
 	//페이지 로딩 시 자동으로 1페이지 가져오기
 	fn_totalGoodsList(1);
+	searchBrand('');
 	
-	$("a[name='title']").on("click", function(e) {  // 공지사항 상세보기
+	$("#goodsListDiv").on("click", "a[name='title']", function(e) {  // 공지사항 상세보기
 		e.preventDefault();
 		const num = $(this).attr("data-num");  //a태그 name이 title 부분 속성의 data-num값 가져와서 변수 num에 저장
-		fn_noticeDetail(num); //fn_noticeDetail()함수 매개변수로 num 전송
 		location.href="/sk/goods/goodsDetail?TOTAL_GOODS_NUM=" + num;
 	});
+	
+	$("#filterResetBtn").on("click", function(e) {
+		e.preventDefault();
+		$("#brandInput").val('');
+		$("input:radio[name='brandType']").prop("checked", false);
+		$("input:radio[name='sizeType']").prop("checked", false);
+		$("#priceType").find("option:eq(0)").prop("selected", true);
+		$("#PAGE_INDEX").val('');
+		$("#PAGE_LISTTYPE").val('');
+		$("#PAGE_CATEGORY").val('');
+		$("#PAGE_BRANDTYPE").val('');
+		$("#PAGE_SIZETYPE").val('');
+		$("#PAGE_PRICETYPE").val('');
+		fn_totalGoodsList(1);
+		searchBrand('');
+	});
+	
+	$("#brandSearchBtn").on("click", function(e) {
+		e.preventDefault();
+		var brandName = $("#brandInput").val();
+		searchBrand(brandName);
+	});
+	
+	function searchBrand(brandName) {
+		var formData = new FormData();
+		formData.append("BRAND_NAME", brandName);
+		
+		$.ajax({
+			url : '/sk/goods/totalList/brandList',
+			type : 'POST',
+			data : formData,
+			contentType : false,
+			processData : false,
+			success : function(data) {
+				$("#brandListDiv").empty();
+				var str = "";
+				
+				$.each(data.brandList, function(key, value){
+					str += "<div class='form-check mb-2'>";
+					str += "<input class='form-check-input' type='radio' name='brandType' id='brandName";
+					str += key;
+					str += "' value='";
+					str += value;
+					str += "'/>";
+					str += "<label class='form-check-label' for='brandName";
+					str += key;
+					str += "'>";
+					str += value;
+					str += "</label>";
+					str += "</div>";
+				});
+				$("#brandListDiv").append(str);
+			}
+		});
+	};
 });
-
-function fn_noticeDetail(num) {  //num 매개변수로 넣기
-	  
-	var formData = new FormData();
-    var TOTAL_GOODS_NUM = num;
-
-    formData.append("TOTAL_GOODS_NUM", TOTAL_GOODS_NUM);
-};
 
 let listType = null;
 let category = null;
@@ -1029,7 +755,9 @@ $("a[name='listType']").on("click", function(e) { // 정렬 검색
 	const bName = $("input[type=radio][name=brandType]:checked").val();
 	const size = $("input[type=radio][name=sizeType]:checked").val();
 	const selectedOption = $('#priceType').val();
-	fn_listType(listType, category, bName, size, selectedOption);
+	$("#PAGE_INDEX").val(1);
+	$('#PAGE_LISTTYPE').val(listType);
+	fn_totalGoodsList(1, '', '', listType, category, bName, size, selectedOption);
 });
 
 $("a[name='category']").on("click", function(e) { // 정렬 검색
@@ -1038,74 +766,55 @@ $("a[name='category']").on("click", function(e) { // 정렬 검색
 	const bName = $("input[type=radio][name=brandType]:checked").val();
 	const size = $("input[type=radio][name=sizeType]:checked").val();
 	const selectedOption = $('#priceType').val();
-	fn_listType(listType, category, bName, size, selectedOption);
+	$("#PAGE_INDEX").val(1);
+	$('#PAGE_CATEGORY').val(category);
+	fn_totalGoodsList(1, '', '', listType, category, bName, size, selectedOption);
 }); 
 
-$("input[name='brandType']").change(function(){
+$("#brandListDiv").on("change", "input[name='brandType']", function(){
 	const bName = $("input[type=radio][name=brandType]:checked").val();
 	const size = $("input[type=radio][name=sizeType]:checked").val();
 	const selectedOption = $('#priceType').val();
-	fn_listType(listType, category, bName, size, selectedOption);		
+	$("#PAGE_INDEX").val(1);
+	$('#PAGE_BRANDTYPE').val(bName);
+	fn_totalGoodsList(1, '', '', listType, category, bName, size, selectedOption);
 });
 
 $("input[name='sizeType']").change(function(){
 	const bName = $("input[type=radio][name=brandType]:checked").val();
 	const size = $("input[type=radio][name=sizeType]:checked").val();
 	const selectedOption = $('#priceType').val();
-	fn_listType(listType, category, bName, size, selectedOption);		
+	$("#PAGE_INDEX").val(1);
+	$('#PAGE_SIZETYPE').val(size);
+	fn_totalGoodsList(1, '', '', listType, category, bName, size, selectedOption);
 });
 
 $("select[name='priceType']").change(function(){
 	const bName = $("input[type=radio][name=brandType]:checked").val();
 	const size = $("input[type=radio][name=sizeType]:checked").val();
 	const selectedOption = $('#priceType').val();
-	fn_listType(listType, category, bName, size, selectedOption);		
+	$("#PAGE_INDEX").val(1);
+	$('#PAGE_PRICETYPE').val(selectedOption);
+	fn_totalGoodsList(1, '', '', listType, category, bName, size, selectedOption);
 });
 
-function fn_listType(listType, category, bName, size, selectedOption) {
-	var formData = new FormData();
-	formData.append("listType", listType);
-	formData.append("category", category);
-	formData.append("bName", bName);
-	formData.append("size", size);
-	formData.append("priceType", selectedOption);
-	
-	alert("listType: " + listType);
-	alert("category: " + category);
-	alert("bName: " + bName);
-	alert("size: " + size);
-	alert("priceType: " + selectedOption);
-	
-	console.log("listType: " + listType);
-	console.log("category: " + category);
-	console.log("bName: " + bName);
-	console.log("size: " + size);
-	console.log("priceType: " + selectedOption);
-	
-	$.ajax({
-		url: '/sk/goods/totalList_ajax',
-		type: 'POST',
-		data: formData,
-		processData: false,
-		contentType: false,
-		success: function(data) {
-			$('#goodsListDiv').empty();
-			$('#goodsListDiv')[0].innerHTML=data;
-		},
-		error: function(xhr, status, error) {
-			console.log('실패');
-		}
-	});
-}
-$('#priceType').on('change');
 
 //페이징 함수
-function fn_totalGoodsList(pageNo){
+function fn_totalGoodsList(pageNo, searchType, keyword, listType, category, bName, size, selectedOption){
 	var comAjax = new ComAjax();
 	comAjax.setUrl("/sk/goods/totalList/paging");
 	comAjax.setCallback("fn_totalGoodsListCallback");
 	comAjax.addParam("PAGE_INDEX",pageNo);
 	comAjax.addParam("PAGE_ROW", 10); //한 페이지에 보여줄 게시글 수 정하기
+	
+	/* 페이징 검색 조건 및 검색 키워드 파라미터 추가 시작 */
+	comAjax.addParam("listType", listType);
+	comAjax.addParam("categoryType", category);
+	comAjax.addParam("brandType", bName);
+	comAjax.addParam("sizeType", size);
+	comAjax.addParam("priceType", selectedOption);
+	/* 페이징 검색 조건 및 검색 키워드 파라미터 추가 끝 */
+	
 	comAjax.ajax();
 }
 
@@ -1117,14 +826,20 @@ function fn_totalGoodsListCallback(data){ // 페이지 선택 시 화면에 보�
 	body.empty();
 	
 	if(total == 0){ // 결과가 없을 경우
-		var str = "<tr>" + 
-						"<td colspan='3'>등록된 상품이 없습니다.</td>" + 
-					"</tr>";
+		var str = "등록된 상품이 없습니다.";
 		body.append(str);
+		$("#PAGE_NAVI").empty();
 	} else { // 결과가 있을 경우
 		var params = {
 			divId : "PAGE_NAVI",
 			pageIndex : "PAGE_INDEX",
+			/* 페이징 검색 조건 및 검색 키워드 객체에 추가 시작 */
+			listType : "PAGE_LISTTYPE",
+			category : "PAGE_CATEGORY",
+			brandType : "PAGE_BRANDTYPE",
+			sizeType : "PAGE_SIZETYPE",
+			priceType : "PAGE_PRICETYPE",
+			/* 페이징 검색 조건 및 검색 키워드 객체에 추가 끝 */
 			totalCount : total,
 			recordCount : 10,
 			eventName : "fn_totalGoodsList" // 페이징 함수이름 동일하게
@@ -1147,13 +862,6 @@ function fn_totalGoodsListCallback(data){ // 페이지 선택 시 화면에 보�
         "</div>"
 		});
 		body.append(str);
-		
-		$("a[name='title']").on("click", function(e) {  // 공지사항 상세보기
-			e.preventDefault();
-			const num = $(this).attr("data-num");  //a태그 name이 title 부분 속성의 data-num값 가져와서 변수 num에 저장
-			fn_noticeDetail(num); //fn_noticeDetail()함수 매개변수로 num 전송
-			location.href="/sk/goods/goodsDetail?TOTAL_GOODS_NUM=" + num;
-		});
 	}
 }
 </script>	

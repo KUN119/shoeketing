@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.web.multipart.MultipartFile;
 
 import sk.common.dao.AbstractDAO;
 
@@ -104,6 +103,12 @@ public class GoodsDAO extends AbstractDAO {
 	public List<Map<String, Object>> selectAllBrandList(Map<String, Object> map) throws Exception {
 		System.out.println("selectAllBrandList : " + map);
 		return (List<Map<String, Object>>) selectList("goods.selectAllBrandList", map);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<String> selectBrandList(Map<String, Object> map) throws Exception {
+		System.out.println("selectBrandList : " + map);
+		return (List<String>) selectList("goods.selectBrandList", map);
 	}
 
 	public int selectGoodsLike(Map<String, Object> map) throws Exception {
