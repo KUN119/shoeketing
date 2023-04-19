@@ -1,5 +1,6 @@
 package sk.item.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -308,6 +310,37 @@ public class GoodsController {
 		System.out.println("goodsWrite Map 확인 : " + goodsWrite);
 
 		return goodsWrite;
+	}
+
+	// 상품 수정 폼
+	@GetMapping(value = "/brandPage/goodsModifyForm")
+	public ModelAndView goodsModifyForm(Map<String, Object> map) throws Exception {
+		log.debug("###### 브랜드관 상품 수정 폼 ######");
+		ModelAndView mv = new ModelAndView("goodsModifyForm");
+		
+		return mv;
+	}
+	
+	// 상품 수정
+	@PostMapping(value = "/brandPage/goodsModify")
+	public Map<String, Object> goodsModify(MultipartFile[] uploadGoodsImg, @RequestParam Map<String, Object> map) throws Exception {
+		log.debug("###### 브랜드관 상품 수정 ######");
+	
+		Map<String, Object> goodsModifyResultMap = goodsService.updateGoods(uploadGoodsImg, map);
+
+		// 추후 FileUtils 구현하고 작성
+		return goodsModifyResultMap;
+	}
+	
+	// 상품 삭제
+	@PostMapping(value = "/brandPage/goodsDelete")
+	public Map<String, Object> goodsDelete(@RequestParam Map<String, Object> map) throws Exception {
+		log.debug("###### 브랜드관 상품 삭제 ######");
+		log.debug("###### map 확인 ###### : " + map);
+		
+		Map<String, Object> goodsDeleteResultMap = goodsService.deleteGoods(map);
+		
+		return goodsDeleteResultMap;
 	}
 
 }

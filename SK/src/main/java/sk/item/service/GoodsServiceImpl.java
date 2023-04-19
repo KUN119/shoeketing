@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import sk.common.service.CommonService;
@@ -113,33 +114,46 @@ public class GoodsServiceImpl implements GoodsService {
 		return (int)goodsDAO.insertShopGoodsAddByBrand(map);
 	}
 	
-	// 상품 이미지 삭제 deleteGoodsImage
+	// 상품 이미지 삭제 (상품, 상품 이미지, 사이즈 같이 삭제. 트랜잭션)
+	@Transactional
 	@Override
-	public int deleteGoodsImage(Map<String, Object> map) throws Exception{
+	public Map<String, Object> deleteGoods(Map<String, Object> map) throws Exception{
+		Map<String, Object> deleteGoodsResultMap = new HashMap<>();
 		
-		return (int)goodsDAO.deleteGoodsImage(map);
-	}
-	
-	// 상품 이미지 수정 
-	@Override
-	public int updateGoodsImageModify(Map<String, Object> map) throws Exception{
+		goodsDAO.deleteGoods(map);
+		goodsDAO.deleteGoodsImage(map);
+		goodsDAO.deleteGoodsDetail(map);
+		deleteGoodsResultMap.put("result", "pass");
 		
-		return (int)goodsDAO.updateGoodsImageModify(map);
+		return deleteGoodsResultMap;
 	}
 	
-	// 상품 수정 (상품 상세정보 수정,사이즈만 따로)
+	// 상품 이미지 수정 (상품 이미지, 사이즈 같이 수정. 트랜잭션)
+	@Transactional
 	@Override
-	public int updateGoodsModify(Map<String, Object> map) throws Exception{
+	public Map<String, Object> updateGoods(MultipartFile[] uploadGoodsImg, Map<String, Object> map) throws Exception{
+		Map<String, Object> updateGoodsResultMap = new HashMap<>();
 		
-		return (int)goodsDAO.updateGoodsModify(map);
+		goodsDAO.updateGoodsImageModify(map);
+		goodsDAO.updateGoodsModify(map);
+		updateGoodsResultMap.put("result", "pass");
+		
+		return updateGoodsResultMap;
 	}
 	
-	// 상품 상세 삭제(상품 수정시, 원래 선택되어 있던 사이즈 전체 삭제) 
-	@Override
-	public int deleteGoodsDetail(Map<String, Object> map) throws Exception{
-	
-		return (int)goodsDAO.deleteGoodsDetail(map);
-	}
+//	// 상품 수정 (상품 상세정보 수정,사이즈만 따로)
+//	@Override
+//	public int updateGoodsModify(Map<String, Object> map) throws Exception{
+//		
+//		return (int)goodsDAO.updateGoodsModify(map);
+//	}
+//	
+//	// 상품 상세 삭제(상품 수정시, 원래 선택되어 있던 사이즈 전체 삭제) 
+//	@Override
+//	public int deleteGoodsDetail(Map<String, Object> map) throws Exception{
+//	
+//		return (int)goodsDAO.deleteGoodsDetail(map);
+//	}
 
 	@Override
 	public List<Map<String, Object>> selectAllGoodsList(Map<String, Object> map) throws Exception {

@@ -168,6 +168,15 @@
 	    ]]>
 	</select>
 
+	<!-- 상품 삭제(실제 삭제X. DEL_GB만 Y로 변경) -->
+	<update id="deleteGoods" parameterType="hashmap">
+		<![CDATA[
+			UPDATE TOTAL_GOODS
+			SET TOTAL_GOODS_DEL_GB = 'Y'
+			WHERE TOTAL_GOODS_NUM = #{TOTAL_GOODS_NUM}
+		]]>
+	</update>
+
 	<!-- 상품 이미지 삭제 (실제 삭제X. DEL_GB만 Y로 변경) -->
 	<update id="deleteGoodsImage" parameterType="hashmap">
 		<![CDATA[

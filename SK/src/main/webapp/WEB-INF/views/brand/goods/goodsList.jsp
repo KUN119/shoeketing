@@ -137,13 +137,54 @@ $(document).ready(function() {
    
    fn_selectGoodsList(1);
    
-      $("a[name='goodsImg']").on("click", function(e) { //상품 이미지를 클릭하면 상품 디테일로 이동
-       e.preventDefault();
-      const brandName = $("#brandName").text();
-      const goodsNum = $(this).attr("data-num");
+   $("a[name='goodsImg']").on("click", function(e) { //상품 이미지를 클릭하면 상품 디테일로 이동
+   	   e.preventDefault();
+	   const brandName = $("#brandName").text();
+	   const goodsNum = $(this).attr("data-num");
 
-      location.href="/sk/goods/goodsDetail?TOTAL_GOODS_NUM="+goodsNum;
+   	   location.href="/sk/goods/goodsDetail?TOTAL_GOODS_NUM=" + goodsNum;
    });  
+   
+   $("button[name='updateGoods']").on("click", function(e) { // 상품 수정
+   	   e.preventDefault();
+	   const goodsNum = $(this).attr("data-goodsNum");
+
+   	   location.href="/sk/brandPage/goodsModifyForm?TOTAL_GOODS_NUM=" + goodsNum;
+   });  
+   
+   $("button[name='deleteGoods']").on("click", function(e) { // 상품 삭제
+   	   e.preventDefault();
+	   const goodsNum = $(this).attr("data-goodsNum");
+
+   	   fn_deleteGoods(goodsNum);
+   });  
+   
+   function fn_deleteGoods(goodsNum){
+	   var formData = new FormData();
+	   
+	   formData.append("TOTAL_GOODS_NUM", goodsNum);
+	   
+	   $.ajax({
+		 type : 'post',
+		 url : "/sk/brandPage/goodsDelete",
+		 data : formData ,
+		 processData : false,
+		 contentType : false,
+		 success : function(data){
+			if(data.result == "pass"){
+				alert("상품이 정상적으로 삭제되었습니다.");
+				fn_selectGoodsList(1);
+			};
+		 },
+		 error : function(request, status, error){
+			console.log("code: " + request.status);
+	        console.log("message: " + request.responseText);
+	        console.log("error: " + error);
+			alert("오류 발생");
+		 }
+		   
+	   });
+   }
       
 });
 
@@ -185,15 +226,18 @@ $(document).ready(function() {
           str +=     "<div class='card' style='width: 14rem; margin-left: 10px; margin-right: 10px; margin-bottom: 80px; border-style: none;'>";
           str +=     "<a href='#' name='goodsImg' data-num='"+ value.TOTAL_GOODS_NUM +"' >";
           str +=     "<img src='/sk/image/display?fileName="+value.GOODS_IMAGE_STD + "' class='card-img-top' style='width:13rem; height: 11rem' />";
+          str +=     "</a>";
           str +=     "<div class='card-body' style='height:6rem;'>";
           str +=     "<h6 class='card-title' id='brandName' style='font-size: 15px; font-weight: 700;'>"+value.BRAND_NAME+"</h6>";
           str +=     "<p class='card-text' style='font-size: 13px;'>"+value.TOTAL_GOODS_NAME+"</p>";
           str +=     "<p class='card-text' style='font-size: 13px;'>"+value.TOTAL_GOODS_MODEL+"</p>";
           str +=     "</div>";
           str +=     "<div class='card-body'>";
-          str +=     "<h6 class='card-title mb-0' style='font-size: 18px; font-weight: 700;'>"+value.TOTAL_GOODS_PRICE+"원</h6>";
-          str +=     "</div>";
-          str +=     "</a>";
+          str +=     "<div class='row'>";
+          str += 	 "<div class='col-6 align-self-center'><h6 class='card-title mb-0' style='font-size: 18px; font-weight: 700;'>"+value.TOTAL_GOODS_PRICE+"원</h6></div>";
+          str += 	 "<div class='col-6 ps-0 pe-0'><button type='button' class='btn btn-primary btn-sm me-1' name='updateGoods' data-goodsNum='"+ value.TOTAL_GOODS_NUM +"'>수정</button>";
+          str +=	 "<button type='button' class='btn btn-danger btn-sm' name='deleteGoods' data-goodsNum='"+ value.TOTAL_GOODS_NUM +"'>삭제</button></div>";
+          str +=     "</div></div>";
           str +=     "</div>";
           
          });
