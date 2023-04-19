@@ -255,11 +255,11 @@
 	</select>
 
 	<sql id="orderOption">
-			<if test="listType == null">
+			<if test="listType == null || listType == 'undefined'.toString() || listType == ''">
 				ROW_NUMBER() OVER (ORDER BY TOTAL_GOODS_NUM DESC) AS NUM,
 			</if>
-<!-- jsp에서 listType 기본 값을 null로 줘서 바로 위<if test="listType == null">문이 실행될 수가 없음 -->
-			<if test="listType != null">
+<!-- jsp에서 listType 기본 값을 null로 줘서 바로 위<if test="listType == null"[>문이 실행될 수가 없음 -->
+			<if test="listType != null and listType != 'undefined'.toString()">
 			<if test="listType == 'null'.toString()">ROW_NUMBER() OVER (ORDER BY TOTAL_GOODS_NUM DESC) AS NUM,</if>
 			<if test="listType == '최신순'.toString()">ROW_NUMBER() OVER (ORDER BY TOTAL_GOODS_NUM DESC) AS NUM,</if>
 			<if test="listType == '낮은가격순'.toString()">ROW_NUMBER() OVER (ORDER BY TOTAL_GOODS_PRICE) AS NUM,</if>
@@ -270,7 +270,7 @@
 	</sql>
 
 	<sql id="categoryOption">
-			<if test="categoryType != null">
+			<if test="categoryType != null and categoryType != 'undefined'.toString()">
 			<if test="categoryType == 'S'.toString()">AND TG.TOTAL_GOODS_CATEGORY = '스니커즈'</if>
 			<if test="categoryType == 'C'.toString()">AND TG.TOTAL_GOODS_CATEGORY = '캔버스화'</if>
 			<if test="categoryType == 'R'.toString()">AND TG.TOTAL_GOODS_CATEGORY = '러닝화'</if>
@@ -278,7 +278,7 @@
 	</sql>
 
 	<sql id="brandOption">
-			<if test="brandType != null">
+			<if test="brandType != null and brandType != 'undefined'.toString()">
 			<if test="brandType == '나이키'.toString()">AND B.BRAND_NAME = '나이키'</if>
 			<if test="brandType == '아디다스'.toString()">AND B.BRAND_NAME = '아디다스'</if>
 			<if test="brandType == '뉴발란스'.toString()">AND B.BRAND_NAME = '뉴발란스'</if>
@@ -294,7 +294,7 @@
 	</sql>
 
 	<sql id="sizeOption">
-			<if test="sizeType != null">
+			<if test="sizeType != null and sizeType != 'undefined'.toString()">
 			<if test="sizeType == '200'.toString()">AND GD.GOODS_DETAIL_SIZE = 200</if>
 			<if test="sizeType == '205'.toString()">AND GD.GOODS_DETAIL_SIZE = 205</if>
 			<if test="sizeType == '210'.toString()">AND GD.GOODS_DETAIL_SIZE = 210</if>
@@ -319,7 +319,7 @@
 	</sql>
 
 	<sql id="priceOption">
-			<if test="priceType != null">
+			<if test="priceType != null and priceType != 'undefined'.toString()">
 			<if test="priceType == 'A'.toString()">AND TG.TOTAL_GOODS_PRICE BETWEEN 0 AND 99999</if>
 			<if test="priceType == 'B'.toString()">AND TG.TOTAL_GOODS_PRICE BETWEEN 100000 AND 199999</if>
 			<if test="priceType == 'C'.toString()">AND TG.TOTAL_GOODS_PRICE BETWEEN 200000 AND 299999</if>
@@ -347,13 +347,14 @@
 			  <include refid="sizeOption"></include>
 			  <include refid="priceOption"></include>
 	<![CDATA[
-			GROUP BY TG.TOTAL_GOODS_NAME))
+			GROUP BY TG.TOTAL_GOODS_NUM))
 	]]>
 	</select>
 
 	<select id="selectAllBrandList" parameterType="hashmap" resultType="hashmap">
 		<![CDATA[
 			SELECT	
+					BRAND_NUM,
     				BRAND_NAME,
     				BRAND_LOGO_FILE
 			FROM BRAND
@@ -362,6 +363,16 @@
 		]]>
 	</select>
 	
+	<select id="selectBrandList" parameterType="hashmap" resultType="string">
+		<![CDATA[
+			SELECT	
+    				BRAND_NAME
+			FROM BRAND
+			WHERE BRAND_DEL_GB = 'N'
+			AND BRAND_NAME LIKE '%' || #{BRAND_NAME} ||'%'
+			ORDER BY BRAND_NUM
+		]]>
+	</select>
 	
 	<select id="selectGoodsLike" parameterType="hashmap" resultType="int"> 
 		<![CDATA[
