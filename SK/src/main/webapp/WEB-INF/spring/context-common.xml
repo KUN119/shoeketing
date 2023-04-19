@@ -87,4 +87,11 @@
         <beans:constructor-arg index="0" ref="sqlSession"/>
     </beans:bean>
     
+    <beans:bean id="transactionManager"
+      class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+      <beans:property name="dataSource" ref="dataSourceSpied"/>
+   </beans:bean>
+   
+   <tx:annotation-driven />
+    
 </beans:beans>

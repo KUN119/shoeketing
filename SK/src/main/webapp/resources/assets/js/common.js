@@ -100,6 +100,11 @@ var gfv_eventName = null;
 /* 페이징 검색 조건 및 검색 키워드 변수 선언 시작 */
 var gfv_searchType = null;
 var gfv_keyword = null;
+var gfv_listType = null;
+var gfv_category = null;
+var gfv_brandType = null;
+var gfv_sizeType = null;
+var gfv_priceType = null;
 /* 페이징 검색 조건 및 검색 키워드 변수 선언 끝 */
 
 function gfn_renderPaging(params){
@@ -109,6 +114,11 @@ function gfn_renderPaging(params){
 	/* 페이징 검색 조건 및 검색 키워드 변수 초기화 시작 */
 	gfv_searchType = params.searchType; //검색 조건이 저장될 input 태그
 	gfv_keyword = params.keyword; //검색 키워드가 저장될 input 태그
+	gfv_listType = params.listType; //전체 상품리스트에서 정렬 조건이 저장될 input 태그
+	gfv_category = params.category; //전체 상품리스트에서 카테고리가 저장될 input 태그
+	gfv_brandType = params.brandType; //전체 상품리스트에서 브랜드가 저장될 input 태그
+	gfv_sizeType = params.sizeType; //전체 상품리스트에서 사이즈가 저장될 input 태그
+	gfv_priceType = params.priceType; //전체 상품리스트에서 가격이 저장될 input 태그
 	/* 페이징 검색 조건 및 검색 키워드 변수 초기화 끝 */
 	
 	var totalCount = params.totalCount; //전체 조회 건수
@@ -171,14 +181,19 @@ function _movePage(value){
 	/* 페이징 검색 조건 및 검색 키워드 값 가져오기 시작 */
 	var searchType = $("#"+gfv_searchType).val();
 	var keyword = $("#"+gfv_keyword).val();
+	var listType = $("#"+gfv_listType).val();
+	var category = $("#"+gfv_category).val();
+	var brandType = $("#"+gfv_brandType).val();
+	var sizeType = $("#"+gfv_sizeType).val();
+	var priceType = $("#"+gfv_priceType).val();
 	/* 페이징 검색 조건 및 검색 키워드 값 가져오기 끝 */
 	
 	if(typeof(gfv_eventName) == "function"){
 		/* 매개변수 순서에 맞게 추가하기!! */
-		gfv_eventName(value, searchType, keyword);
+		gfv_eventName(value, searchType, keyword, listType, category, brandType, sizeType, priceType);
 	}
 	else {
 		/* 매개변수 순서에 맞게 추가하기!! */
-		eval(gfv_eventName + "(value, searchType, keyword);");
+		eval(gfv_eventName + "(value, searchType, keyword, listType, category, brandType, sizeType, priceType);");
 	}
 }

@@ -20,125 +20,126 @@ public class GoodsServiceImpl implements GoodsService {
 
 	@Resource(name = "goodsDAO")
 	private GoodsDAO goodsDAO;
-	
+
 	@Resource(name = "sessionService")
 	private CommonService sessionService;
-	
+
 	@Resource(name = "fileUtils")
 	private FileUtils fileUtils;
-	
-	// 브랜드 전체 상품 리스트 
+
+	// 브랜드 전체 상품 리스트
 	@Override
-	public List<Map<String, Object>> selectBrandGoodsList(Map<String, Object> map) throws Exception{
-		
+	public List<Map<String, Object>> selectBrandGoodsList(Map<String, Object> map) throws Exception {
+
 		return goodsDAO.selectBrandGoodsList(map);
 	}
-		
-	// 브랜드 전체 상품 토탈 개수 
+
+	// 브랜드 전체 상품 토탈 개수
 	@Override
-	public int selectBrandGoodsCount(Map<String, Object> map) throws Exception{
-		
-		return (int)goodsDAO.selectBrandGoodsCount(map);
+	public int selectBrandGoodsCount(Map<String, Object> map) throws Exception {
+
+		return (int) goodsDAO.selectBrandGoodsCount(map);
 	}
-	
+
 	// 브랜드 상품 등록. ajax 구현
 	@Override
-	public Map<String, Object> insertGoods(Map<String, Object> map, HttpSession session, MultipartFile[] uploadGoodsImg) throws Exception{
+	public Map<String, Object> insertGoods(Map<String, Object> map, HttpSession session, MultipartFile[] uploadGoodsImg)
+			throws Exception {
 		System.out.println("map 확인 : " + map);
 		System.out.println("uploadFile 확인 : " + uploadGoodsImg);
-		
+
 		Map<String, Object> result = new HashMap<>();
 		List<Map<String, Object>> shopNumList = new ArrayList<>();
-		
+
 		// 필요한 파라미터 넣어주기 (BRAND_NUM 값)
 		map.put("BRAND_NUM", sessionService.getSessionBrand(session, "BRAND_NUM"));
 		map.put("BRAND_NAME", sessionService.getSessionBrand(session, "BRAND_NAME"));
-		
+
 		int insertGoods = goodsDAO.insertGoods(map);
-		
-		if(insertGoods == 1) {
+
+		if (insertGoods == 1) {
 			// 상품 정상 등록시, 상품 상세(사이즈) 및 이미지 삽입
 			insertGoodsDetail(map);
 			System.out.println("########TOTALGOODSNUM 확인 " + map.get("TOTAL_GOODS_NUM"));
 			insertGoodsImage(map, uploadGoodsImg);
-			
+
 			shopNumList = selectShopNumName(map);
 			System.out.println("shopNumList : " + shopNumList);
 			System.out.println("shopNumList 크기 : " + shopNumList.size());
-			
-			for(int i=0; i<shopNumList.size(); i++) {
+
+			for (int i = 0; i < shopNumList.size(); i++) {
 				Map<String, Object> shopNumMap = shopNumList.get(i);
 				map.put("SHOP_GOODS_SHOP_NUM", shopNumMap.get("SHOP_NUM"));
 				insertShopGoodsAddByBrand(map);
 			}
 			result.put("result", "pass");
 			result.put("TOTAL_GOODS_NUM", map.get("TOTAL_GOODS_NUM"));
-		}else {
+		} else {
 			result.put("result", "fail");
 		}
-		
+
 		return result;
 	}
-	
+
 	// 상품 등록시, 상품 상세(사이즈) 삽입
 	@Override
-	public int insertGoodsDetail(Map<String, Object> map) throws Exception{
-		
-		return (int)goodsDAO.insertGoodsDetail(map);
+	public int insertGoodsDetail(Map<String, Object> map) throws Exception {
+
+		return (int) goodsDAO.insertGoodsDetail(map);
 	}
-	
-	// 상품 등록시, 상품 이미지 삽입 
+
+	// 상품 등록시, 상품 이미지 삽입
 	@Override
-	public int insertGoodsImage(Map<String, Object> map, MultipartFile[] uploadGoodsImg) throws Exception{
-		
+	public int insertGoodsImage(Map<String, Object> map, MultipartFile[] uploadGoodsImg) throws Exception {
+
 		List<Map<String, Object>> insertImgList = fileUtils.parseInsertFileInfo(map, uploadGoodsImg);
 		System.out.println("####insertGoodsImage insertImgList 확인 : " + insertImgList);
-		
-		for(Map<String, Object> uploadImgMap : insertImgList) {
+
+		for (Map<String, Object> uploadImgMap : insertImgList) {
 			goodsDAO.insertGoodsImage(uploadImgMap);
 		}
-		
+
 		return 1;
 	}
-	
-	// 브랜드에 해당하는 매장 이름 및 매장번호 조회 
-	public List<Map<String, Object>> selectShopNumName(Map<String, Object> map) throws Exception{
-		
-		return (List<Map<String, Object>>)goodsDAO.selectShopNumName(map);
+
+	// 브랜드에 해당하는 매장 이름 및 매장번호 조회
+	public List<Map<String, Object>> selectShopNumName(Map<String, Object> map) throws Exception {
+
+		return (List<Map<String, Object>>) goodsDAO.selectShopNumName(map);
 	}
-	
+
 	// 브랜드가 상품 등록시, 해당 브랜드의 매장들도 상품 등록
-	public int insertShopGoodsAddByBrand(Map<String, Object> map) throws Exception{
-		
-		return (int)goodsDAO.insertShopGoodsAddByBrand(map);
+	public int insertShopGoodsAddByBrand(Map<String, Object> map) throws Exception {
+
+		return (int) goodsDAO.insertShopGoodsAddByBrand(map);
 	}
-	
+
 	// 상품 이미지 삭제 deleteGoodsImage
 	@Override
-	public int deleteGoodsImage(Map<String, Object> map) throws Exception{
-		
-		return (int)goodsDAO.deleteGoodsImage(map);
+	public int deleteGoodsImage(Map<String, Object> map) throws Exception {
+
+		return (int) goodsDAO.deleteGoodsImage(map);
 	}
-	
-	// 상품 이미지 수정 
+
+	// 상품 이미지 수정
 	@Override
-	public int updateGoodsImageModify(Map<String, Object> map) throws Exception{
-		
-		return (int)goodsDAO.updateGoodsImageModify(map);
+	public int updateGoodsImageModify(Map<String, Object> map) throws Exception {
+
+		return (int) goodsDAO.updateGoodsImageModify(map);
 	}
-	
+
 	// 상품 수정 (상품 상세정보 수정,사이즈만 따로)
 	@Override
-	public int updateGoodsModify(Map<String, Object> map) throws Exception{
-		
-		return (int)goodsDAO.updateGoodsModify(map);
+	public int updateGoodsModify(Map<String, Object> map) throws Exception {
+
+		return (int) goodsDAO.updateGoodsModify(map);
 	}
-	
-	// 상품 상세 삭제(상품 수정시, 원래 선택되어 있던 사이즈 전체 삭제) 
+
+	// 상품 상세 삭제(상품 수정시, 원래 선택되어 있던 사이즈 전체 삭제)
 	@Override
-	public int deleteGoodsDetail(Map<String, Object> map) throws Exception{
-	
-		return (int)goodsDAO.deleteGoodsDetail(map);
+	public int deleteGoodsDetail(Map<String, Object> map) throws Exception {
+
+		return (int) goodsDAO.deleteGoodsDetail(map);
 	}
 
 	@Override
@@ -154,6 +155,11 @@ public class GoodsServiceImpl implements GoodsService {
 	@Override
 	public List<Map<String, Object>> selectAllBrandList(Map<String, Object> map) throws Exception {
 		return goodsDAO.selectAllBrandList(map);
+	}
+
+	@Override
+	public List<String> selectBrandList(Map<String, Object> map) throws Exception {
+		return goodsDAO.selectBrandList(map);
 	}
 
 	@Override
