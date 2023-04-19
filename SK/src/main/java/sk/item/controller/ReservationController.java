@@ -150,6 +150,25 @@ public class ReservationController {
 		
 		return resultMap;
 	}
+	
+	// Ajax
+	@ResponseBody
+	@PostMapping(value = "/shopPage/pickUpSuccess")
+	public Map<String, Object> shopPickUpSuccess(@RequestParam Map<String, Object> map) throws Exception {
+		log.debug("###### 매장 픽업 완료 (회원 픽업 O) ######");
+		
+		// 픽업 완료 버튼 클릭시, 픽업 상태 변경 + 회원 픽업 횟수 변경
+		Map<String, Object> resultMap = reservationService.shopPickUpSuccess(map);
+		
+		// 픽업 예약 상태 '픽업 완료'로 변경
+		Map<String, Object> detailMap = reservationService.selectPickupDetail(map);
+		resultMap.put("RESERVATION_STATUS", detailMap.get("RESERVATION_STATUS"));
+		
+		System.out.println("resultMap 확인 : " + resultMap);
+		
+		return resultMap;
+	}
+	
 
 	// TossPaymentsController_reservationCancel()
 	// Ajax
