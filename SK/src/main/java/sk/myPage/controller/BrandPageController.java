@@ -255,14 +255,4 @@ public class BrandPageController {
 		return mv;
 	}
 
-	// 상품 등록
-	
-	// 상품 수정
-	@GetMapping(value = "/brandPage/goodsModifyForm")
-	public ModelAndView goodsModifyForm(Map<String, Object> map) throws Exception {
-		log.debug("###### 브랜드관 상품 수정 ######");
-		ModelAndView mv = new ModelAndView("goodsWriteForm"); // 추후 수정
-		
-		return mv;
-	}
 }
