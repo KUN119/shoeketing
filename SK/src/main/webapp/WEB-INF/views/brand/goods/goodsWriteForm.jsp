@@ -10,15 +10,17 @@
 <body>
         <div class="col-8" style="margin-top: 0px;">
             <h3 style="margin-left: 30px; color: black; font-weight: bolder;">상품 등록</h3>
+            
+            <form id="goodsWriteForm" class="needs-validation" method="post" novalidate >
             <div class="row g-2">
                 <div class="mb-3 mt-4" style="width: 70%; margin-left: 30px;">
                     <label for="TOTAL_GOODS_NAME" class="form-label" style="font-size: large; font-weight: bolder;">상품명</label>
-                    <input class="form-control" type="text" name="TOTAL_GOODS_NAME" id="TOTAL_GOODS_NAME" placeholder="상품명을 입력하세요." aria-label="Disabled input example">
+                    <input class="form-control" type="text" name="TOTAL_GOODS_NAME" id="TOTAL_GOODS_NAME" placeholder="상품명을 입력하세요." aria-label="Disabled input example" required>
                   </div>
                   <hr class="my-4">
                   <div class="mb-3" style="width: 70%; margin-left: 30px;">
                     <label for="TOTAL_GOODS_MODEL" class="form-label" style="font-size: large; font-weight: bolder;">모델 번호</label>
-                    <input type="email" name="TOTAL_GOODS_MODEL" id="TOTAL_GOODS_MODEL" class="form-control" placeholder="모델 번호를 입력하세요.">
+                    <input type="email" name="TOTAL_GOODS_MODEL" id="TOTAL_GOODS_MODEL" class="form-control" placeholder="모델 번호를 입력하세요." required>
                   </div>
                   <hr class="my-4">
                   <div class="mb-3" style="width: 70%; margin-left: 30px;">
@@ -37,7 +39,7 @@
                 <table>
                     <tr>
                         <td style="width: 70%; ">
-                    <input class="form-control" id="TOTAL_GOODS_PRICE" name="TOTAL_GOODS_PRICE" type="text" placeholder="가격을 입력하세요" aria-label="Disabled input example">
+                    <input class="form-control" id="TOTAL_GOODS_PRICE" name="TOTAL_GOODS_PRICE" type="text" placeholder="가격을 입력하세요" aria-label="Disabled input example" required>
                 </td>
                     <td>
                     <p style="margin-bottom: -15px; font-size: larger; margin-left: 5px;">원</p>
@@ -502,13 +504,14 @@
                                 <input class="form-control" type="file"  multiple="multiple" accept="image/jpg, image/jpeg, image/png" id="img_upload" name="img_upload"> <!-- onchange="preview()" -->
                               </div>
                         </tr>
-                    </div>
+                    
                     </table>
                 </div>  
                 
                 <hr class="my-4">
                 <button class="btn btn-primary btn-lg" style="margin-left: 30%; width: 45%;" type="submit" name="goodsWrite">상품 등록</button>
             </div>
+            </form>
         </div>
         
 </body>
@@ -518,9 +521,62 @@ $(document).ready(function(){
 	
 	$("button[name='goodsWrite']").on("click", function(e){	 // 상품 등록
 		e.preventDefault();
-		fn_goodsWrite();
+		if(validateForm()){
+			fn_goodsWrite();
+		}
 	
 	});
+	
+	function validateForm() {
+		  var goodsName = $("#TOTAL_GOODS_NAME").val();
+		  var goodsModel = $("#TOTAL_GOODS_MODEL").val();
+		  var category = document.getElementById("category");
+		  var goodsCategory = (category.options[category.selectedIndex].value);
+		  var goodsPrice = $("#TOTAL_GOODS_PRICE").val();
+		  var goodsSize = $('input[name="sizeType"]:checked').val();
+		  var uploadGoodsImg = $("input[name='img_upload']");
+		  
+		  
+		// 상품명이 2글자 미만인 경우
+		  if (goodsName.trim().length < 2) {
+		    alert("상품명은 2글자 이상 입력해주세요.");
+		    return false;
+		  }
+		
+		  if(goodsModel.length < 2) {
+				alert("모델번호는 2글자 이상 입력해주세요.");
+				return false;
+			}
+
+		  if (isNaN(goodsPrice)) {
+			    alert("가격은 숫자만 입력 가능합니다.");
+			    return false;
+			  }
+		  
+		  if (goodsPrice < 1000 || goodsPrice > 1000000) {
+			    alert("가격은 1000에서 1,000,000 사이여야 합니다.");
+			    return false;
+			  }
+		  
+		// 파일 유형 검증 (예시: jpg, png, gif 파일만 업로드 가능)
+		  var fileExtension = uploadGoodsImg.val().split('.').pop().toLowerCase();
+		  if ($.inArray(fileExtension, ['jpg', 'jpeg', 'png', 'gif']) == -1) {
+		    alert("jpg, png, gif 파일만 업로드 가능합니다.");
+		    return false;
+		  }
+
+			// 파일 크기 검증 (예시: 2MB 이하만 업로드 가능)
+		  if (uploadGoodsImg[0].files[0].size > 2000000) {
+		    alert("파일 크기는 2MB 이하로 업로드 가능합니다.");
+		    return false;
+		  }
+
+		
+
+		  return true;
+		}
+	
+	
 	
 	function fn_goodsWrite(){
 		var formData = new FormData();
@@ -572,6 +628,29 @@ $(document).ready(function(){
 	}
 });
 
+
+//유효성검증
+	// Example starter JavaScript for disabling form submissions if there are invalid fields
+(() => {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  const forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.from(forms).forEach(form => {
+    form.addEventListener('submit', event => {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+
+      form.classList.add('was-validated')
+      
+      
+    }, false)
+  });
+})()
 </script>
 
 </html>
