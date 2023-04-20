@@ -10,7 +10,7 @@
         <div class="col-8" style="margin-top: 0px;">
             <h3 style="margin-left: 30px; color: black; font-weight: bolder;">회원 정보 수정</h3>
             <br>
-
+			<form id="accountModifyForm" class="needs-validation" method="post" novalidate >
             <div class="row g-2">
                 <div class="mb-3" style="width: 45%; margin-left: 30%;">
                     <label for="BRAND_ID" class="form-label" style="font-size: large; font-weight: bolder;">아이디(이메일)</label>
@@ -19,12 +19,27 @@
 
                   <div class="mb-3" style="width: 45%; margin-left: 30%;">
                     <label for="BRAND_PW" class="form-label" style="font-size: large; font-weight: bolder;">비밀번호*</label>
-                    <input type="password" class="form-control" id="BRAND_PW" name="BRAND_PW">
+                    <input type="password" class="form-control" id="BRAND_PW" name="BRAND_PW" 
+                    pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,16}$"
+              		placeholder="특수문자, 문자, 숫자 포함 형태의 8~16자리 이내" required>
+              		<div id="pw-null" class="invalid-feedback">
+				      비밀번호를 입력해주세요
+				  	</div>
+				  	<div id="pw-type" class="invalid-feedback">
+				      비밀번호 형식이 올바르지 않습니다
+				  	</div>
                   </div>
 
                   <div class="mb-3" style="width: 45%; margin-left: 30%;">
                     <label for="BRAND_PW_CHECK" class="form-label" style="font-size: large; font-weight: bolder;">비밀번호 확인*</label>
-                    <input type="password" class="form-control" id="BRAND_PW_CHECK" name="BRAND_PW_CHECK">
+                    <input type="password" class="form-control" id="BRAND_PW_CHECK" name="BRAND_PW_CHECK"
+                    pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,16}$" required>
+              		<div id="pw2-null" class="invalid-feedback">
+				      비밀번호 확인이 필요합니다
+				  	</div>
+		            <div id="pw2-same" class="invalid-feedback">
+				      비밀번호가 일치하지 않습니다
+				  	</div>
                   </div>
 
                   <div class="mb-3" style="width: 45%; margin-left: 30%;">
@@ -62,14 +77,29 @@
                 <hr class="my-4">
                 <button class="btn btn-primary btn-lg" name="brandInfoModify" style="margin-left: 30%; width: 45%;" type="submit">회원 정보 수정하기</button>
             </div>
+            </form>
         </div>
       
 <script type="text/javascript">
 $(document).ready(function() {
 	$("button[name='brandInfoModify']").on("click", function(e){  // 브랜드 회원정보 수정
 		e.preventDefault();
+		if(isValidForm()){
 		fn_brandInfoModify();
+		}
 	});
+	
+	function isValidForm() {
+		var form = $(".needs-validation")[0];
+		if (form.checkValidity() === false) {
+			event.preventDefault();
+			event.stopPropagation();
+			form.classList.add('was-validated');
+			return false;
+		}
+		form.classList.add('was-validated');
+		return true;
+	}
 	
 	function fn_brandInfoModify(){
 		
@@ -120,6 +150,59 @@ $(document).ready(function() {
 	
 });
 
+//유효성검증
+// Example starter JavaScript for disabling form submissions if there are invalid fields
+(() => {
+'use strict'
+
+// Fetch all the forms we want to apply custom Bootstrap validation styles to
+const forms = document.querySelectorAll('.needs-validation')
+
+// Loop over them and prevent submission
+Array.from(forms).forEach(form => {
+form.addEventListener('submit', event => {
+  if (!form.checkValidity()) {
+    event.preventDefault()
+    event.stopPropagation()
+    form.classList.add('was-validated');
+  } else {
+    form.classList.add('was-validated');
+  }
+  
+//비밀번호
+  let pwdval = $('#BRAND_PW').val()
+   let pwdokval = $('#BRAND_PW_CHECK').val()
+   let pwdcheck = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,16}$/;
+   
+   if(pwdval == null || $.trim(pwdval) == "") {
+ 	  $("#pw-null").show();
+		  $("#pw-type").hide();
+	      $("#BRAND_PW").focus();
+   } else if(!pwdcheck.test(pwdval)) {
+ 	  $("#pw-null").hide();
+		  $("#pw-type").show();
+	      $("#BRAND_PW").focus();
+   } else {
+ 	  $("#pw-null").hide();
+		  $("#pw-type").hide();
+   }
+   
+   if(pwdokval == null || $.trim(pwdokval) == "") {
+ 	  $("#pw2-null").show();
+		  $("#pw2-same").hide();
+	      $("#BRAND_PW_CHECK").focus();
+   } else if(pwdval!==pwdokval) {
+ 	  $("#pw2-null").hide();
+		  $("#pw2-same").show();
+	      $("#BRAND_PW_CHECK").focus();
+   }
+
+  
+  
+  
+}, false)
+});
+})()
 
 </script>
 </body>

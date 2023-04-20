@@ -92,10 +92,11 @@
 
 </head>
 <body>
+
 <div class="col-8" style="margin-top: 0px;">
           <h3 style="margin-left: 30px; color: black; font-weight: bolder;">회원 정보 수정</h3>
           <br>
-
+			<form id="accountModifyForm" class="needs-validation" method="post" novalidate >
           <div class="row g-2">
               <div class="mb-3" style="width: 45%; margin-left: 30%;">
                   <label for="SHOP_ID" class="form-label" style="font-size: large; font-weight: bolder;">아이디</label>
@@ -104,12 +105,27 @@
 
                 <div class="mb-3" style="width: 45%; margin-left: 30%;">
                   <label for="SHOP_PW" class="form-label" style="font-size: large; font-weight: bolder;">비밀번호*</label>
-                  <input type="password" name="SHOP_PW" class="form-control" id="SHOP_PW" name="SHOP_PW" >
+                  <input type="password" name="SHOP_PW" class="form-control" id="SHOP_PW" name="SHOP_PW" 
+                  	pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,16}$"
+              		placeholder="특수문자, 문자, 숫자 포함 형태의 8~16자리 이내" required>
+              		<div id="pw-null" class="invalid-feedback">
+				      비밀번호를 입력해주세요
+				  	</div>
+				  	<div id="pw-type" class="invalid-feedback">
+				      비밀번호 형식이 올바르지 않습니다
+				  	</div>
                 </div>
 
                 <div class="mb-3" style="width: 45%; margin-left: 30%;">
                   <label for="SHOP_PW_CHECK" class="form-label" style="font-size: large; font-weight: bolder;">비밀번호 확인*</label>
-                  <input type="password" id="SHOP_PW_CHECK" name="SHOP_PW_CHECK" class="form-control" >
+                  <input type="password" id="SHOP_PW_CHECK" name="SHOP_PW_CHECK" class="form-control" 
+                  pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,16}$" required>
+                  <div id="pw2-null" class="invalid-feedback">
+				      비밀번호 확인이 필요합니다
+				  	</div>
+		            <div id="pw2-same" class="invalid-feedback">
+				      비밀번호가 일치하지 않습니다
+				  	</div>
                 </div>
 
                 <div class="mb-3" style="width: 45%; margin-left: 30%;">
@@ -152,6 +168,7 @@
 		      		<div id="map" style="margin-left: 10%; width: 450px; height: 500px"></div>
 		      	</div>
 		      </div>
+		      </form>
           </div>
 
               <hr class="my-4">
@@ -159,13 +176,56 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-	$("button[name='shopPageAccountModify']").on("click", function(e){  // 매장 회원정보 수정
-		e.preventDefault();
-		const shopNum = $(this).attr("data-shopNum");
+    // 매장 회원정보 수정 버튼 클릭 시 실행
+    $("button[name='shopPageAccountModify']").on("click", function(e){
+        e.preventDefault();
+        const shopNum = $(this).attr("data-shopNum");
+        if(isValidForm()){
+            // 유효성 검사를 통과한 경우 매장 정보 수정 함수 호출
+            fn_shopPageAccountModify(shopNum);    
+        }
+    });
 	
-		fn_shopPageAccountModify(shopNum);	
-	});
-	
+ // 유효성 검사 함수
+    function isValidForm() {
+        var form = $(".needs-validation")[0];
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+            form.classList.add('was-validated');
+            return false;
+        }
+        
+		form.classList.add('was-validated');
+		
+		// 비밀번호 검사
+        let pwdval = $('#SHOP_PW').val()
+        let pwdokval = $('#SHOP_PW_CHECK').val()
+        let pwdcheck = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,16}$/;
+        
+        if(pwdval == null || $.trim(pwdval) == "") {
+            alert("비밀번호를 입력해주세요.");
+            event.preventDefault();
+            event.stopPropagation();
+            return false;
+        }
+        
+        if(pwdokval == null || $.trim(pwdokval) == "") {
+            $("#pw2-null").show();
+            $("#pw2-same").hide();
+            $("#SHOP_PW_CHECK").focus();
+            return false;
+        } else if(pwdval!==pwdokval) {
+            $("#pw2-null").hide();
+            $("#pw2-same").show();
+            $("#SHOP_PW_CHECK").focus();
+            return false;
+        }
+        
+        return true;
+    }
+    
+ // 매장 정보 수정 함수
 	function fn_shopPageAccountModify(shopNum){
 		var formData = new FormData();
 		
@@ -207,6 +267,57 @@ $(document).ready(function(){
 	}
 	
 });
+
+
+		//유효성검증
+		//Example starter JavaScript for disabling form submissions if there are invalid fields
+		(() => {
+		'use strict'
+		
+		//Fetch all the forms we want to apply custom Bootstrap validation styles to
+		// 모든 폼에 유효성 검사 스타일 적용
+		const forms = document.querySelectorAll('.needs-validation')
+		
+		//Loop over them and prevent submission
+		forms.forEach(form => {
+		form.addEventListener('submit', event => {
+			// 폼이 유효하지 않으면 기본 이벤트를 막고 스타일을 적용합니다.
+		if (!form.checkValidity()) {
+		 event.preventDefault()
+		 event.stopPropagation()
+		 form.classList.add('was-validated');
+		} else {
+		 form.classList.add('was-validated');
+		}
+		
+		//비밀번호
+		let pwdval = $('#SHOP_PW').val()
+		let pwdokval = $('#SHOP_PW_CHECK').val()
+		let pwdcheck = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,16}$/;
+		
+		if(pwdval == null || $.trim(pwdval) == "") {
+			alert("비밀번호를 입력해주세요.");
+			event.preventDefault();
+			event.stopPropagation();
+			return false;
+			}
+		
+		if(pwdokval == null || $.trim(pwdokval) == "") {
+			  $("#pw2-null").show();
+				  $("#pw2-same").hide();
+			      $("#SHOP_PW_CHECK").focus();
+		} else if(pwdval!==pwdokval) {
+			  $("#pw2-null").hide();
+				  $("#pw2-same").show();
+			      $("#SHOP_PW_CHECK").focus();
+		}
+
+
+
+
+}, false);
+});
+})();
 
 </script>
 </body>
