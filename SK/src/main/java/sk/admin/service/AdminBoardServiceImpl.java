@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import sk.admin.dao.AdminBoardDAO;
 
@@ -60,17 +61,14 @@ public class AdminBoardServiceImpl implements AdminBoardService {
 		return adminBoardDAO.selectTotalGoodsListCount(map);
 	}
 
+	@Transactional
 	@Override
 	public int adminDeleteGoods(Map<String, Object> map) throws Exception {
-		int result = 0;
 
-		if ((int) adminBoardDAO.adminDeleteGoods(map) == 1) {
-			result = adminBoardDAO.adminDeleteGoodsImage(map);
-		} else {
-			result = 0;
-		}
+		adminBoardDAO.adminDeleteGoods(map);
+		adminBoardDAO.adminDeleteGoodsImage(map);
 
-		return result;
+		return 1;
 	}
 
 	@Override

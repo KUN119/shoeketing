@@ -539,6 +539,7 @@ $(document).ready(function() {
 	  <script src="https://js.tosspayments.com/v1/payment-widget"></script>
 	  
 	  <script>
+	  
 	  //토스 페이먼츠 결제  (추후 orderId, orderName, customerEmail, customerName 수정필요)
 	  const clientKey = 'test_ck_7XZYkKL4Mrjnv7vJl1ar0zJwlEWR';
 	  const customerKey = 'user123'; 
@@ -551,10 +552,18 @@ $(document).ready(function() {
 		var shopNum = $('#RESERVATION_SHOP_NUM').val();
 		var goodsSize = $('#RESERVATION_SIZE').val()
 		var pickupDate = $("#RESERVATION_PICKUP_DATE").val();
-	  	paymentWidget.renderPaymentMethods('#payment-method', 30000);
+		
+		// 등급별 픽업 예약금
+		if("<%=(String)session.getAttribute("session_MEM_GRADE")%>" === "골드"){
+			paymentWidget.renderPaymentMethods('#payment-method', 30000);
+		}else if("<%=(String)session.getAttribute("session_MEM_GRADE")%>" === "플래티넘"){
+			paymentWidget.renderPaymentMethods('#payment-method', 27000);
+		}else if("<%=(String)session.getAttribute("session_MEM_GRADE")%>" === "다이아"){
+			paymentWidget.renderPaymentMethods('#payment-method', 25000);
+		}
 	  	
 	  	paymentWidget.requestPayment({
-	    	  orderId: 5674238,   // selectKey로 max 예약번호 가져와서 가져다쓰기!!!!! 구현필요
+	    	  orderId: 5674262,   // selectKey로 max 예약번호 가져와서 가져다쓰기!!!!! 구현필요
 	    	  orderName: goodsName,
 	    	  successUrl: 'http://localhost:8080/sk/tossPaymentsSuccess?goodsNum=' + goodsNum + '&shopNum=' + shopNum + '&goodsSize=' + goodsSize + '&pickupDate=' + pickupDate,
 	    	  failUrl: 'http://localhost:8080/sk',

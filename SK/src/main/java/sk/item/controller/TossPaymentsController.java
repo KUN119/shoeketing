@@ -62,7 +62,7 @@ public class TossPaymentsController {
 		// 로그인 한 회원 정보 세션에서 가져와서 map에 넣어주기
 		map.put("RESERVATION_USER", sessionService.getSession(session, "MEM_NUM"));
 		map.put("RESERVATION_PHONE", sessionService.getSession(session, "MEM_PHONE"));
-		
+
 		// 픽업 예약 관련 파라미터들 map에 넣어주기
 		map.put("RESERVATION_PICKUP_DATE", map.get("pickupDate"));
 		map.put("RESERVATION_PRONUM", map.get("goodsNum"));
@@ -72,8 +72,17 @@ public class TossPaymentsController {
 		mv.addObject("paymentKey", map.get("paymentKey"));
 		mv.addObject("orderId", map.get("orderId"));
 		
-		// Request (픽업 예약금 30000원)
-		int amount = 30000;
+		System.out.println("session mem_grade 확인 : " + sessionService.getSession(session, "MEM_GRADE"));
+		
+		int amount = 0;
+		// 등급별 픽업 예약금
+		if(sessionService.getSession(session, "MEM_GRADE").equals("골드")) {
+			amount = 30000;
+		} else if(sessionService.getSession(session, "MEM_GRADE").equals("플래티넘")) {
+			amount = 27000;
+		} else if(sessionService.getSession(session, "MEM_GRADE").equals("다이아")) {
+			amount = 25000;
+		}
 		
 		log.debug("paymentKey 확인 :" + map.get("paymentKey"));
 		
@@ -158,7 +167,7 @@ public class TossPaymentsController {
 		log.debug("###### 픽업 예약금 결제 취소 ######");
 		log.debug("map 확인 : " + map);
 		
-		// Request
+		// Request)
 		String paymentKey = map.get("paymentKey").toString();
 		String cancelReason = "고객이 취소를 원함";
 		
