@@ -30,18 +30,24 @@ public interface GoodsService {
 
 	// 브랜드가 상품 등록시, 해당 브랜드의 매장들도 상품 등록
 	public int insertShopGoodsAddByBrand(Map<String, Object> map) throws Exception;
-
-	// 상품 이미지 삭제 deleteGoodsImage
-	public int deleteGoodsImage(Map<String, Object> map) throws Exception;
-
-	// 상품 이미지 수정
-	public int updateGoodsImageModify(Map<String, Object> map) throws Exception;
-
-	// 상품 수정 (상품 상세정보 수정,사이즈만 따로)
-	public int updateGoodsModify(Map<String, Object> map) throws Exception;
-
-	// 상품 상세 삭제(상품 수정시, 원래 선택되어 있던 사이즈 전체 삭제)
-	public int deleteGoodsDetail(Map<String, Object> map) throws Exception;
+	
+//	// 상품 이미지 삭제 deleteGoodsImage
+//	public int deleteGoodsImage(Map<String, Object> map) throws Exception;
+	
+	// 상품 삭제- 상품, 이미지, 사이즈 (deleteGoods + deleteGoodsImage + deleteGoodsDetail)
+	public Map<String, Object> deleteGoods(Map<String, Object> map) throws Exception;
+	
+	// 상품 수정- 이미지, 사이즈 (updateGoodsImageModify + updateGoodsModify)
+	public Map<String, Object> updateGoods(MultipartFile[] uploadGoodsImg, Map<String, Object> map) throws Exception;
+	
+//	// 상품 이미지 수정 
+//	public int updateGoodsImageModify(Map<String, Object> map) throws Exception;
+//	
+//	// 상품 수정 (상품 상세정보 수정,사이즈만 따로)
+//	public int updateGoodsModify(Map<String, Object> map) throws Exception;
+	
+//	// 상품 상세 삭제(상품 수정시, 원래 선택되어 있던 사이즈 전체 삭제) 
+//	public int deleteGoodsDetail(Map<String, Object> map) throws Exception;
 
 	public List<Map<String, Object>> selectAllGoodsList(Map<String, Object> map) throws Exception;
 

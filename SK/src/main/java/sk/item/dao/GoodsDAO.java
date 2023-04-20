@@ -59,6 +59,12 @@ public class GoodsDAO extends AbstractDAO {
 
 		return (int) insert("goods.insertShopGoodsAddByBrand", map);
 	}
+	
+	public int deleteGoods(Map<String, Object> map) throws Exception {
+		System.out.println("deleteGoods : " + map);
+
+		return (int) update("goods.deleteGoods", map);
+	}
 
 	// 상품 이미지 삭제 deleteGoodsImage
 	public int deleteGoodsImage(Map<String, Object> map) throws Exception {
