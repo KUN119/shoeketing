@@ -1,5 +1,6 @@
 package sk.item.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +10,6 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -314,9 +314,35 @@ public class GoodsController {
 
 	// 상품 수정 폼
 	@GetMapping(value = "/brandPage/goodsModifyForm")
-	public ModelAndView goodsModifyForm(Map<String, Object> map) throws Exception {
+	public ModelAndView goodsModifyForm(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("###### 브랜드관 상품 수정 폼 ######");
 		ModelAndView mv = new ModelAndView("goodsModifyForm");
+		
+		// 해당 상품 상세정보, 이미지 정보 폼으로 넘기기
+		List<Map<String, Object>> goodsDetailMapList = goodsService.selectGoodsDetail(map);
+		List<Map<String, Object>> goodsImageMapList = goodsService.selectGoodsImage(map);
+		
+		Map<String, Object> goodsDetailMap = goodsDetailMapList.get(0);
+		List<Map<String, Object>> goodsImageList = new ArrayList<>();
+		List<Map<String, Object>> goodsSizeList = new ArrayList<>();
+		
+		
+		for(int i=0; i<goodsImageMapList.size(); i++) {
+			Map<String, Object> goodsImageMap = new HashMap<>();
+			goodsImageMap.put("GOODS_IMAGE_ORG", goodsImageMapList.get(i).get("GOODS_IMAGE_ORG"));
+			goodsImageList.add(goodsImageMap);
+		}
+		
+		for(int i=0; i<goodsDetailMapList.size(); i++) {
+			Map<String, Object> goodsSizeMap = new HashMap<>();
+			goodsSizeMap.put("GOODS_DETAIL_SIZE", goodsDetailMapList.get(i).get("GOODS_DETAIL_SIZE"));
+			goodsSizeList.add(goodsSizeMap);
+		}
+		log.debug("goodsSizeList 확인 : " + goodsSizeList);
+		
+		mv.addObject("goodsDetailMap", goodsDetailMap);
+		mv.addObject("goodsImageList", goodsImageList);
+		mv.addObject("goodsSizeList", goodsSizeList);
 		
 		return mv;
 	}

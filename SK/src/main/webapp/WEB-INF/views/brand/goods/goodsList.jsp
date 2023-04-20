@@ -206,7 +206,7 @@ $(document).ready(function() {
     body.empty(); //현재 페이지의 게시물을 지우고 알맞은 페이지의 내용을 집어넣기 위해
     
     if(total == 0) {
-       var str =  "<div class='row row-cols-5 g-5' style='margin-auto: 6px;'>" +
+       var str =  "<div class='row row-cols-12 g-5' style='margin-auto: 6px;'>" +
                 "<span>아직 등록된 상품이 없습니다. 상품을 등록해주세요.</span>";
        body.append(str);
     } else {

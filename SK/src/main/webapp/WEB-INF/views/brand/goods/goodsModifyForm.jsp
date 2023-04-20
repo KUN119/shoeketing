@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/views/include/include-taglib.jspf" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,21 +14,30 @@
             <div class="row g-2">
                 <div class="mb-3 mt-4" style="width: 70%; margin-left: 30px;">
                     <label for="TOTAL_GOODS_NAME" class="form-label" style="font-size: large; font-weight: bolder;">상품명</label>
-                    <input class="form-control" type="text" name="TOTAL_GOODS_NAME" id="TOTAL_GOODS_NAME" placeholder="상품명을 입력하세요." aria-label="Disabled input example">
+                    <input class="form-control" type="text" name="TOTAL_GOODS_NAME" id="TOTAL_GOODS_NAME" aria-label="Disabled input example" value="${goodsDetailMap.TOTAL_GOODS_NAME}">
                   </div>
                   <hr class="my-4">
                   <div class="mb-3" style="width: 70%; margin-left: 30px;">
                     <label for="TOTAL_GOODS_MODEL" class="form-label" style="font-size: large; font-weight: bolder;">모델 번호</label>
-                    <input type="email" name="TOTAL_GOODS_MODEL" id="TOTAL_GOODS_MODEL" class="form-control" placeholder="모델 번호를 입력하세요.">
+                    <input type="email" name="TOTAL_GOODS_MODEL" id="TOTAL_GOODS_MODEL" class="form-control" value="${goodsDetailMap.TOTAL_GOODS_MODEL}">
                   </div>
                   <hr class="my-4">
                   <div class="mb-3" style="width: 70%; margin-left: 30px;">
                     <label for="TOTAL_GOODS_CATEGORY" class="form-label" style="font-size: large; font-weight: bolder;">카테고리</label>
                     <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="category">
-                        <option selected>선택</option>
-                        <option value="스니커즈">스니커즈</option>
-                        <option value="캔버스화">캔버스화</option>
-                        <option value="러닝화">러닝화</option>
+                        <option selected>${goodsDetailMap.TOTAL_GOODS_CATEGORY}</option>
+                        <c:if test="${goodsDetailMap.TOTAL_GOODS_CATEGORY eq '스니커즈'}">
+	                        <option value="캔버스화">캔버스화</option>
+	                        <option value="러닝화">러닝화</option>
+						</c:if>
+						<c:if test="${goodsDetailMap.TOTAL_GOODS_CATEGORY eq '캔버스화'}">
+	                        <option value="스니커즈">스니커즈</option>
+	                        <option value="러닝화">러닝화</option>
+						</c:if>
+						<c:if test="${goodsDetailMap.TOTAL_GOODS_CATEGORY eq '러닝화'}">
+	                        <option value="스니커즈">스니커즈</option>
+	                        <option value="캔버스화">캔버스화</option>
+						</c:if> 
                       </select>
                   </div>
                   <hr class="my-4">
@@ -37,7 +47,7 @@
                 <table>
                     <tr>
                         <td style="width: 70%; ">
-                    <input class="form-control" id="TOTAL_GOODS_PRICE" name="TOTAL_GOODS_PRICE" type="text" placeholder="가격을 입력하세요" aria-label="Disabled input example">
+                    <input class="form-control" id="TOTAL_GOODS_PRICE" name="TOTAL_GOODS_PRICE" type="text" aria-label="Disabled input example" value="${goodsDetailMap.TOTAL_GOODS_PRICE}">
                 </td>
                     <td>
                     <p style="margin-bottom: -15px; font-size: larger; margin-left: 5px;">원</p>
@@ -54,7 +64,7 @@
                     <div class="form-check col-3 ps-0 pe-1 align-self-center">
                         
                         <input
-                          type="radio"
+                          type="checkbox"
                           class="btn-check"
                           name="sizeType"
                           id="size_200"
@@ -74,7 +84,7 @@
                       <td>
                       <div class="form-check col-3 ps-0 pe-1 align-self-center">
                         <input
-                          type="radio"
+                          type="checkbox"
                           class="btn-check"
                           name="sizeType"
                           id="size_205"
@@ -96,7 +106,7 @@
                       <td>
                         <div class="form-check col-3 ps-0 pe-1 align-self-center">
                           <input
-                            type="radio"
+                            type="checkbox"
                             class="btn-check"
                             name="sizeType"
                             id="size_210"
@@ -118,7 +128,7 @@
                         <td>
                           <div class="form-check col-3 ps-0 pe-1 align-self-center">
                             <input
-                              type="radio"
+                              type="checkbox"
                               class="btn-check"
                               name="sizeType"
                               id="size_215"
@@ -140,7 +150,7 @@
                           <td>
                             <div class="form-check col-3 ps-0 pe-1 align-self-center">
                               <input
-                                type="radio"
+                                type="checkbox"
                                 class="btn-check"
                                 name="sizeType"
                                 id="size_220"
@@ -162,7 +172,7 @@
                             <td>
                              <div class="form-check col-3 ps-0 pe-1 align-self-center">
                                <input
-                                 type="radio"
+                                 type="checkbox"
                                  class="btn-check"
                                  name="sizeType"
                                  id="size_225"
@@ -184,7 +194,7 @@
                            <td>
                              <div class="form-check col-3 ps-0 pe-1 align-self-center">
                                <input
-                                 type="radio"
+                                 type="checkbox"
                                  class="btn-check"
                                  name="sizeType"
                                  id="size_230"
@@ -206,7 +216,7 @@
                             <td>
                               <div class="form-check col-3 ps-0 pe-1 align-self-center">
                                <input
-                                 type="radio"
+                                 type="checkbox"
                                  class="btn-check"
                                  name="sizeType"
                                  id="size_235"
@@ -228,7 +238,7 @@
                              <td>
                               <div class="form-check col-3 ps-0 pe-1 align-self-center">
                                 <input
-                                  type="radio"
+                                  type="checkbox"
                                   class="btn-check"
                                   name="sizeType"
                                   id="size_240"
@@ -250,7 +260,7 @@
                               <td>
                                <div class="form-check col-3 ps-0 pe-1 align-self-center">
                                  <input
-                                   type="radio"
+                                   type="checkbox"
                                    class="btn-check"
                                    name="sizeType"
                                    id="size_245"
@@ -275,7 +285,7 @@
                     <div class="form-check col-3 ps-0 pe-1 align-self-center">
                     
                     <input
-                      type="radio"
+                      type="checkbox"
                       class="btn-check"
                       name="sizeType"
                       id="size_250"
@@ -295,7 +305,7 @@
                   <td>
                   <div class="form-check col-3 ps-0 pe-1 align-self-center">
                     <input
-                      type="radio"
+                      type="checkbox"
                       class="btn-check"
                       name="sizeType"
                       id="size_255"
@@ -317,7 +327,7 @@
                   <td>
                     <div class="form-check col-3 ps-0 pe-1 align-self-center">
                       <input
-                        type="radio"
+                        type="checkbox"
                         class="btn-check"
                         name="sizeType"
                         id="size_260"
@@ -339,7 +349,7 @@
                     <td>
                         <div class="form-check col-3 ps-0 pe-1 align-self-center">
                           <input
-                            type="radio"
+                            type="checkbox"
                             class="btn-check"
                             name="sizeType"
                             id="size_265"
@@ -361,7 +371,7 @@
                         <td>
                             <div class="form-check col-3 ps-0 pe-1 align-self-center">
                               <input
-                                type="radio"
+                                type="checkbox"
                                 class="btn-check"
                                 name="sizeType"
                                 id="size_270"
@@ -383,7 +393,7 @@
                             <td>
                                 <div class="form-check col-3 ps-0 pe-1 align-self-center">
                                   <input
-                                    type="radio"
+                                    type="checkbox"
                                     class="btn-check"
                                     name="sizeType"
                                     id="size_275"
@@ -405,7 +415,7 @@
                                 <td>
                                     <div class="form-check col-3 ps-0 pe-1 align-self-center">
                                       <input
-                                        type="radio"
+                                        type="checkbox"
                                         class="btn-check"
                                         name="sizeType"
                                         id="size_280"
@@ -427,7 +437,7 @@
                                     <td>
                                         <div class="form-check col-3 ps-0 pe-1 align-self-center">
                                           <input
-                                            type="radio"
+                                            type="checkbox"
                                             class="btn-check"
                                             name="sizeType"
                                             id="size_285"
@@ -449,7 +459,7 @@
                                         <td>
                                             <div class="form-check col-3 ps-0 pe-1 align-self-center">
                                               <input
-                                                type="radio"
+                                                type="checkbox"
                                                 class="btn-check"
                                                 name="sizeType"
                                                 id="size_290"
@@ -471,7 +481,7 @@
                                             <td>
                                                 <div class="form-check col-3 ps-0 pe-1 align-self-center">
                                                   <input
-                                                    type="radio"
+                                                    type="checkbox"
                                                     class="btn-check"
                                                     name="sizeType"
                                                     id="size_295"
@@ -497,15 +507,19 @@
                     <table>
                         <label for="exampleFormControlInput1" class="form-label" style="font-size: large; font-weight: bolder;">사진</label>
                         <tr>
-                        <td style="width: 70%;">
-                            <div class="mb-3">
-                                <input class="form-control" type="file"  multiple="multiple" accept="image/jpg, image/jpeg, image/png" id="img_upload" name="img_upload"> <!-- onchange="preview()" -->
-                              </div>
+	                        <td style="width: 70%;">
+	                            <div class="mb-3">
+	                                <input class="form-control" type="file"  multiple="multiple" accept="image/jpg, image/jpeg, image/png" id="img_upload" name="img_upload"> <!-- onchange="preview()" -->
+	                              </div>
+	                        </td>
                         </tr>
-                    </div>
                     </table>
+                            <div class="mb-3" style="font-size: small;">
+		                    <c:forEach items="${goodsImageList}" var="image">
+							  ${image.GOODS_IMAGE_ORG}<br>
+					    	</c:forEach>
+					    	</div>
                 </div>  
-                
                 <hr class="my-4">
                 <button class="btn btn-primary btn-lg" style="margin-left: 30%; width: 45%;" type="submit" name="goodsWrite">상품 수정</button>
             </div>
@@ -516,7 +530,13 @@
 <script>
 $(document).ready(function(){
 	
-	$("button[name='goodsWrite']").on("click", function(e){	 // 상품 등록
+	// 상품 사이즈 표시
+	<c:forEach items="${goodsSizeList}" var="size">
+		$("input:checkbox[value='${size.GOODS_DETAIL_SIZE}']").prop("checked", true);
+	</c:forEach>
+	
+	
+	$("button[name='goodsWrite']").on("click", function(e){	 // 상품 수정
 		e.preventDefault();
 		fn_goodsWrite();
 	
