@@ -19,22 +19,24 @@
         <div class="col-8">
           <h3 class="" style="font-weight: 700">공지사항</h3>
         </div>
-        <div class="col input-group">
-          <select class="form-select-sm" style="width: 4rem; border-color: rgba(0, 0, 0, 0.263);" id="searchType" name="searchType">
-            <option selected value="total" <c:out value="${searchType eq 'total' ? 'selected' :''}"/>>전체</option>
-            <option value="title" <c:out value="${searchType eq 'title' ? 'selected' :''}"/>>제목</option>
-            <option value="content" <c:out value="${searchType eq 'content' ? 'selected' :''}"/>>내용</option>
-          </select>
-          <input type="text" class="form-control" name="keyword" id="keyword" />
-          <button
-            class="btn btn-outline-secondary"
-            type="button"
-            id="button-addon2"
-            name="noticeSearch"
-          >
-            검색
-          </button>
-        </div>
+        <form id="noticeSearchForm">
+	        <div class="col input-group">
+	          <select class="form-select-sm" style="width: 4rem; border-color: rgba(0, 0, 0, 0.263);" id="searchType" name="searchType">
+	            <option selected value="total" <c:out value="${searchType eq 'total' ? 'selected' :''}"/>>전체</option>
+	            <option value="title" <c:out value="${searchType eq 'title' ? 'selected' :''}"/>>제목</option>
+	            <option value="content" <c:out value="${searchType eq 'content' ? 'selected' :''}"/>>내용</option>
+	          </select>
+	          <input type="text" class="form-control" name="keyword" id="keyword" />
+	          <button
+	            class="btn btn-outline-secondary"
+	            type="submit"
+	            id="button-addon2"
+	            name="noticeSearch"
+	          >
+	            검색
+	          </button>
+	        </div>
+        </form>
       </div>
 
       <div class="row">
@@ -80,28 +82,28 @@
 <script>
 $(document).ready(function() {
 	
+	$('#PAGE_INDEX').val(${page});
+	$('#PAGE_KEYWORD').val('${keyword}');
+	$('#PAGE_SEARCHTYPE').val('${searchType}');
+	
 	// 페이지 로딩 시 자동으로 1페이지 가져오기
-	fn_selectNoticeList(1);
+	fn_selectNoticeList(${page}, '${searchType}', '${keyword}');
 
-   $("a[name='title']").on("click", function(e) {  // 공지사항 상세보기
+
+	$("#noticeListBody").on("click", "a[name='title']", function(e) {  // 공지사항 상세보기
 		e.preventDefault();
 		const num = $(this).attr("data-num");  //a태그 name이 title 부분 속성의 data-num값 가져와서 변수 num에 저장
-		fn_noticeDetail(num); //fn_noticeDetail()함수 매개변수로 num 전송
-		location.href="/sk/noticeDetail?NOTICE_NUM=" + num;
+		var page = $('#PAGE_INDEX').val();
+		var keyword = $('#keyword').val();
+		var searchType = $('#searchType').val();
+		location.href="/sk/noticeDetail?NOTICE_NUM=" + num  + "&page=" + page + "&keyword=" + keyword + "&searchType=" + searchType;
 	});
   
   
 });
 
-function fn_noticeDetail(num) {  //num 매개변수로 넣기
-	  
-	var formData = new FormData();
-    var NOTICE_NUM = num;
-
-    formData.append("NOTICE_NUM", NOTICE_NUM);
-};
 	/* 검색버튼 이벤트에 기존 ajax 함수 제거하고 페이징 함수 연결하기 */
-	$("button[name='noticeSearch']").on("click", function(e){  //공지사항 검색
+	$("#noticeSearchForm").on("submit", function(e){  //공지사항 검색
 		e.preventDefault();
 		
 		/* 페이징 검색 조건 및 검색 키워드 변수 초기화 시작 */
@@ -120,30 +122,6 @@ function fn_noticeDetail(num) {  //num 매개변수로 넣기
 		fn_selectNoticeList(1, searchType, keyword)
 	});
 
-	/* function fn_noticeSearch(){
-		
-		var formData = new FormData();
-		var keyword = $('#keyword').val();
-		var searchType = $('#searchType').val();
-		
-		formData.append("keyword", keyword);
-		formData.append("searchType", searchType);
-		
-		$.ajax({
-			url: '/sk/noticeList_ajax',
-			type: 'POST',
-			data: formData,
-			processData: false,
-			contentType: false,
-			success: function(data) {
-				$("#noticeListBody").empty();
-				$('#noticeListBody')[0].innerHTML=data;
-			},
-			error: function(xhr, status, error) {
-				console.log('실패');
-			}
-		});
-	}; */
 	
 	// 페이징 함수
 	function fn_selectNoticeList(pageNo, searchType, keyword){ /* 매개변수 순서에 맞게 추가하기!! */
@@ -199,13 +177,6 @@ function fn_noticeDetail(num) {  //num 매개변수로 넣기
 			});
 			body.append(str);
 			
-			// 게시글 클릭 시 작동될 함수 추가
-			$("a[name='title']").on("click", function(e){ //제목 
-				e.preventDefault();
-				const num = $(this).attr("data-num");  //a태그 name이 title 부분 속성의 data-num값 가져와서 변수 num에 저장
-				fn_noticeDetail(num); //fn_noticeDetail()함수 매개변수로 num 전송
-				location.href="/sk/noticeDetail?NOTICE_NUM=" + num;
-			});
 		}
 	}
 </script>

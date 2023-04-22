@@ -68,7 +68,7 @@
       <div id="bInfo" class="row ms-2 mb-5 d-flex">
       <c:forEach var="brand" items="${brandList}" varStatus="status">
            <div class="col-2 d-flex mb-2">
-           <a class="d-flex" name='bDetail' data-num="${brand.BRAND_NUM}">
+           <a href='#' class="d-flex" name='bDetail' data-num="${brand.BRAND_NUM}">
             <img
               src='/sk/image/display?fileName=${brand.BRAND_LOGO_FILE}'
               class="img-thumbnail"
@@ -277,7 +277,7 @@ $(document).ready(function() {
 					
 					var b = "";
 					b += "<div class='col-2 d-flex mb-2'>";
-					b += "<a class='d-flex' name='bDetail' data-num='"+ bNum +"'>";
+					b += "<a href='#' class='d-flex' name='bDetail' data-num='"+ bNum +"'>";
 					b += "<img src='/sk/image/display?fileName=" + bLogo + "' class='img-thumbnail' style='height: 5rem; width: 6rem'/>";
 					b += "<h6 class='ms-3 mb-0 align-self-center' style='font-weight: 700; font-size: 18px'>";
 					b +=  bName + "<i class='bi bi-chevron-right' style='font-weight: 700'></i>";

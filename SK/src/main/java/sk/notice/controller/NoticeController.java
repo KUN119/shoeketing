@@ -27,29 +27,20 @@ public class NoticeController {
 		log.debug("###### noticeList ######");
 		ModelAndView mv = new ModelAndView("noticeList");
 
-		// 페이징 되면 1번이 맨위로 올라가게 jsp에서 바꾸시오
-//		map.put("START", 1);
-//		map.put("END", 5);
-//		
-//		String searchType = (String) map.get("searchType");
-//		String keyword = "";
-//		
-//		if(map.get("keyword") != null) {
-//			keyword = (String) map.get("keyword");
-//		}
-//		
-//		if(searchType != null) {
-//			map.put("searchType", searchType);
-//		}
-//		
-//		if(keyword != null) {
-//			map.put("keyword", keyword);
-//		}
-//		
-//		List<Map<String, Object>> noticeList = noticeService.selectNoticeList(map);
-//		mv.addObject("noticeList", noticeList);
-//		
-//		System.out.println("map: " +map);
+		int page = 1;
+
+		if (map.get("page") != null && map.get("page") != "") {
+			page = Integer.parseInt(map.get("page").toString());
+		}
+		mv.addObject("page", page);
+
+		if (map.get("searchType") != null && map.get("searchType") != "") {
+			mv.addObject("searchType", map.get("searchType"));
+		}
+
+		if (map.get("keyword") != null && map.get("keyword") != "") {
+			mv.addObject("keyword", map.get("keyword"));
+		}
 
 		return mv;
 	}
@@ -57,21 +48,6 @@ public class NoticeController {
 	@RequestMapping(value = "/noticeList/paging")
 	public ModelAndView selectBoardList(@RequestParam Map<String, Object> map) throws Exception {
 		ModelAndView mv = new ModelAndView("jsonView");
-
-		String searchType = (String) map.get("searchType");
-		String keyword = "";
-
-		if (map.get("keyword") != null) {
-			keyword = (String) map.get("keyword");
-		}
-
-		if (searchType != null) {
-			map.put("searchType", searchType);
-		}
-
-		if (keyword != null) {
-			map.put("keyword", keyword);
-		}
 
 		List<Map<String, Object>> list = noticeService.selectNoticeList(map);
 		mv.addObject("list", list);
@@ -85,42 +61,25 @@ public class NoticeController {
 		return mv;
 	}
 
-	@RequestMapping(value = "/noticeList_ajax")
-	public ModelAndView noticeList_ajax(@RequestParam Map<String, Object> map) throws Exception {
-		log.debug("###### noticeList_ajax ######");
-		ModelAndView mv = new ModelAndView("noticeList_ajax");
-
-		// 페이징 되면 1번이 맨위로 올라가게 jsp에서 바꾸시오
-		map.put("START", 1);
-		map.put("END", 5);
-
-		String searchType = (String) map.get("searchType");
-		String keyword = "";
-
-		if (map.get("keyword") != null) {
-			keyword = (String) map.get("keyword");
-		}
-
-		if (searchType != null) {
-			map.put("searchType", searchType);
-		}
-
-		if (keyword != null) {
-			map.put("keyword", keyword);
-		}
-
-		List<Map<String, Object>> noticeList = noticeService.selectNoticeList(map);
-		mv.addObject("noticeList", noticeList);
-
-		System.out.println("map: " + map);
-
-		return mv;
-	}
-
 	@RequestMapping(value = "/noticeDetail")
 	public ModelAndView noticeDetail(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("###### noticeDetail ######");
 		ModelAndView mv = new ModelAndView("noticeDetail");
+
+		int page = 1;
+
+		if (map.get("page") != null && map.get("page") != "") {
+			page = Integer.parseInt(map.get("page").toString());
+		}
+		mv.addObject("page", page);
+
+		if (map.get("searchType") != null && map.get("searchType") != "") {
+			mv.addObject("searchType", map.get("searchType"));
+		}
+
+		if (map.get("keyword") != null && map.get("keyword") != "") {
+			mv.addObject("keyword", map.get("keyword"));
+		}
 
 		System.out.println("map: " + map);
 
