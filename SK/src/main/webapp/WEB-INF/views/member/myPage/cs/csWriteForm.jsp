@@ -65,18 +65,22 @@
         <div class="col-8" style="margin-top: 0px;">
             <h3 style="margin-left: 30px; color: black; font-weight: bolder;">문의 작성</h3>
             <hr style="border: solid 1px rgb(73, 73, 73); width: 100%; ">
+            <form class="needs-validation" novalidate method="post">
             <div class="row g-2">
                 <table style="width: 99%; margin-left: 10px; text-align: center;">
                   <div class="mt-3" style="width: 45%; margin-left: 30%;">
                     <tr class="mt-3 mb-3">
                         <td style="width: 20%; height: 100px;">
-                        <label for="exampleFormControlInput1" class="form-label" style="font-size: large; font-weight: bolder;">매장 선택</label>
+                        <label for="shopValid" class="form-label" style="font-size: large; font-weight: bolder;">매장 선택</label>
                         </td>
                         <td>
-                        <input type="text" name="searchbar" class="form-control" id="exampleFormControlInput1" readonly>
+                        <input type="text" name="searchbar" class="form-control" id="shopValid" readonly required>
                         </td>
                         <td style="width: 25%;">
                             <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#findShop" name="findShop">매장 찾기</button>
+                             <div class="invalid-feedback">
+						        매장 찾기를 이용해주세요.
+						     </div>
                         </td>
                     </tr>
 
@@ -84,10 +88,13 @@
 
                     <tr>
                         <td style="width: 20%; height: 100px;">
-                        <label for="exampleFormControlInput1" class="form-label" style="font-size: large; font-weight: bolder;">제  목</label>
+                        <label for="titleValid" class="form-label" style="font-size: large; font-weight: bolder;">제  목</label>
                         </td>
                         <td>
-                            <input type="text" name="title" class="form-control" id="exampleFormControlInput1">
+                            <input type="text" name="title" class="form-control" id="titleValid" required>
+                            <div class="invalid-feedback">
+					        	제목을 입력해주세요.
+					      	</div>
                         </td>
                      </tr>
 
@@ -95,16 +102,20 @@
 
                     <tr>
                             <td style="width: 20%; height: 100px;">
-                            <label for="exampleFormControlInput1" class="form-label" style="font-size: large; font-weight: bolder;">내  용</label>
+                            <label for="contentsValid" class="form-label" style="font-size: large; font-weight: bolder;">내  용</label>
                             </td>
                             <td style="width: 40%;">
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="10" name="content"></textarea>
+                                <textarea class="form-control" id="contentsValid" rows="10" name="content" required></textarea>
+                                <div class="invalid-feedback">
+						        	내용을 입력해주세요.
+						      	</div>
                             </td>
                     </tr>
                 </table>
                 <hr style="margin-left: 30px; border: solid 1px rgb(73, 73, 73); width: 100%; ">
-                <button style="margin-left: 78%; width: 25%; align-self: center;" type="button" class="btn btn-primary" name="register">등 록</button>
+                <button style="margin-left: 78%; width: 25%; align-self: center;" type="submit" class="btn btn-primary" name="register">등 록</button>
               </div>
+              </form>
       </div>
       
       
@@ -121,10 +132,42 @@ $(document).ready(function() {
 		 searchShop();
 	});
 	
-	$("button[name='register']").on("click", function(e) { //등록 버튼 누르면
-		 e.preventDefault();
-		fn_register();
-	});
+	//유효성 검사
+	 (() => {
+	 	  'use strict'
+	   // Fetch all the forms we want to apply custom Bootstrap validation styles to
+	   const form = document.querySelector('.needs-validation')
+	   // Loop over them and prevent submission
+	 $("button[name='register']").on("click", function(e) { //등록 버튼 누르면
+	 	 form.classList.add('was-validated')
+	 		
+	 	if (!form.checkValidity()) {
+	         event.preventDefault()
+	         event.stopPropagation()
+	         return false;
+	     }
+	 	//입력한 제목과 내용을 각각 변수에 저장
+	 	let titleValid = $('#titleValid').val();
+	 	let contentsValid = $('#contentsValid').val();
+	 	
+	 	//제목, 내용 글자 수 읽어와서 글자수 제한 alert창 띄워주기
+	 	//제목 최대 133글자 입력 가능 (title 최대 400byte (오라클 기준 한글 1글자당 3byte))
+	 	if(titleValid.length > 133){
+	 		alert("제목을 최대 133글자로 작성해주세요.")
+	 		$('#titleValid').focus()
+	 		return false;
+	 	}
+	 	
+	 	//내용 최대 1333글자 입력 가능 (content 최대 4000byte (오라클 기준 한글 1글자당 3byte))
+	 	if(contentsValid.length > 1333){
+	 		alert("내용을 최대 1333글자로 작성해주세요.")
+	 		$('#contentsValid').focus()
+	 		return false;
+	 	}
+	 	fn_register();
+	 	});
+	 })()
+	
 	
 });
 		const findShop = function() { //모든 매장 가져오기
@@ -211,6 +254,7 @@ $(document).ready(function() {
 			});
 	 	} 
 	 };
+	 
 </script>
 </body>
 </html>
