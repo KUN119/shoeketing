@@ -65,6 +65,7 @@
         <div class="col-8" style="margin-top: 0px;">
             <h3 style="margin-left: 30px; color: black; font-weight: bolder;">문의 작성</h3>
             <hr style="border: solid 1px rgb(73, 73, 73); width: 100%; ">
+            <form id="csWriteForm" class="needs-validation" method="post" novalidate >
             <div class="row g-2">
                 <table style="width: 99%; margin-left: 10px; text-align: center;">
                   <div class="mt-3" style="width: 45%; margin-left: 30%;">
@@ -87,7 +88,7 @@
                         <label for="exampleFormControlInput1" class="form-label" style="font-size: large; font-weight: bolder;">제  목</label>
                         </td>
                         <td>
-                            <input type="text" name="title" class="form-control" id="exampleFormControlInput1">
+                            <input type="text" name="title" class="form-control" id="exampleFormControlInput1" required>
                         </td>
                      </tr>
 
@@ -98,13 +99,14 @@
                             <label for="exampleFormControlInput1" class="form-label" style="font-size: large; font-weight: bolder;">내  용</label>
                             </td>
                             <td style="width: 40%;">
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="10" name="content"></textarea>
+                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="10" name="content" required></textarea>
                             </td>
                     </tr>
                 </table>
                 <hr style="margin-left: 30px; border: solid 1px rgb(73, 73, 73); width: 100%; ">
                 <button style="margin-left: 78%; width: 25%; align-self: center;" type="button" class="btn btn-primary" name="register">등 록</button>
               </div>
+              </form>
       </div>
       
       
@@ -187,6 +189,44 @@ $(document).ready(function() {
 	}
 	 
 	 function fn_register() {
+		 
+		 var title = $("input[name='title']").val();
+		    var content = $("textarea").val();
+
+		    // 제목이나 내용이 비어있는지 확인
+		    if (title.trim() === '') {
+		        alert('제목을 입력해주세요.');
+		        return;
+		    }
+
+		    if (content.trim() === '') {
+		        alert('내용을 입력해주세요.');
+		        return;
+		    }
+
+		    // 입력한 제목과 내용이 유효한지 확인
+		    var titleRegex = /^[a-zA-Z0-9ㄱ-ㅎ가-힣\s]{2,100}$/; // 제목은 영문,숫자,한글,공백 1~100자
+		    var contentRegex = /^[a-zA-Z0-9ㄱ-ㅎ가-힣\s]{2,500}$/; // 내용은 영문,숫자,한글,공백 1~500자
+		    
+		    if (!titleRegex.test(title)) {
+		        alert('제목은 영문,숫자,한글,공백 2~100자로 입력해주세요.');
+		        return;
+		    }
+
+		    if (!contentRegex.test(content)) {
+		        alert('내용은 영문,숫자,한글,공백 2~500자로 입력해주세요.');
+		        return;
+		    }
+
+		    // 매장 번호가 선택되었는지 확인
+		    var shopNum = $("input[name='searchbar']").attr("data-num");
+		    if (!shopNum) {
+		        alert('매장을 선택해주세요.');
+		        return;
+		    }
+
+		 
+		 
 		var formData = new FormData();
 		formData.append("CS_TITLE", $("input[name='title']").val());
 		formData.append("CS_CONTENT", $("textarea").val());
@@ -211,6 +251,30 @@ $(document).ready(function() {
 			});
 	 	} 
 	 };
+	 
+
+	//유효성검증
+		// Example starter JavaScript for disabling form submissions if there are invalid fields
+	(() => {
+	  'use strict'
+
+	  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+	  const forms = document.querySelectorAll('.needs-validation')
+
+	  // Loop over them and prevent submission
+	  Array.from(forms).forEach(form => {
+	    form.addEventListener('submit', event => {
+	      if (!form.checkValidity()) {
+	        event.preventDefault()
+	        event.stopPropagation()
+	      }
+
+	      form.classList.add('was-validated')
+	      
+	      
+	    }, false)
+	  });
+	})()
 </script>
 </body>
 </html>
