@@ -8,8 +8,10 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.apache.maven.doxia.logging.Log;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import sk.common.service.CommonService;
@@ -44,7 +46,7 @@ public class GoodsServiceImpl implements GoodsService {
 
 	// 브랜드 상품 등록. ajax 구현
 	@Override
-	public Map<String, Object> insertGoods(Map<String, Object> map, HttpSession session, MultipartFile[] uploadGoodsImg)
+	public Map<String, Object> insertGoods(Map<String, Object> map, HttpSession session, MultipartFile[] uploadGoodsImg, List<String> goodsSizeList)
 			throws Exception {
 		System.out.println("map 확인 : " + map);
 		System.out.println("uploadFile 확인 : " + uploadGoodsImg);
@@ -60,7 +62,13 @@ public class GoodsServiceImpl implements GoodsService {
 
 		if (insertGoods == 1) {
 			// 상품 정상 등록시, 상품 상세(사이즈) 및 이미지 삽입
-			insertGoodsDetail(map);
+			if(goodsSizeList.size() > 0) {
+				for(int i=0; i<goodsSizeList.size(); i++) {
+					map.put("GOODS_DETAIL_SIZE", goodsSizeList.get(i));
+					insertGoodsDetail(map);
+					System.out.println("GOODS_DETAIL_SIZE 확인 ### : " + map.get("GOODS_DETAIL_SIZE"));
+				}
+			}
 			System.out.println("########TOTALGOODSNUM 확인 " + map.get("TOTAL_GOODS_NUM"));
 			insertGoodsImage(map, uploadGoodsImg);
 
@@ -132,11 +140,24 @@ public class GoodsServiceImpl implements GoodsService {
 	// 상품 이미지 수정 (상품 이미지, 사이즈 같이 수정. 트랜잭션)
 	@Transactional
 	@Override
-	public Map<String, Object> updateGoods(MultipartFile[] uploadGoodsImg, Map<String, Object> map) throws Exception{
+	public Map<String, Object> updateGoods(MultipartFile[] uploadGoodsImg, Map<String, Object> map, List<String> goodsSizeList) throws Exception{
 		Map<String, Object> updateGoodsResultMap = new HashMap<>();
 		
-		goodsDAO.updateGoodsImageModify(map);
+		System.out.println("map 확인## : " + map);
+		System.out.println("goodsSizeList 확인## : " + goodsSizeList);
+		//map.put("GOODS_DETAIL_SIZE", map.get("GOODS_DETAIL_SIZE")); // 기존 등록되어 있던 사이즈 삭제하기 위함
+		goodsDAO.deleteGoodsDetail(map);
+
+		if(goodsSizeList.size() > 0) {
+			for(int i=0; i<goodsSizeList.size(); i++) {
+				map.put("GOODS_DETAIL_SIZE", goodsSizeList.get(i));
+				System.out.println("map 확인#### : " + map);
+				goodsDAO.insertGoodsDetail(map);
+			}
+		}
+		
 		goodsDAO.updateGoodsModify(map);
+		//goodsDAO.updateGoodsImageModify(map);
 		updateGoodsResultMap.put("result", "pass");
 		
 		return updateGoodsResultMap;
@@ -155,6 +176,18 @@ public class GoodsServiceImpl implements GoodsService {
 //	
 //		return (int)goodsDAO.deleteGoodsDetail(map);
 //	}
+	
+	// 해당 제품에 해당하는 사이즈 재고가 있는 매장 총 개수
+	public int selectShopCountFromStockOfSize(Map<String, Object> map) throws Exception{
+		
+		return (int) goodsDAO.selectShopCountFromStockOfSize(map);
+	}
+		
+	// 해당 제품에 해당하는 사이즈 재고 총 개수
+	public int selectGoodsAmountFromStockOfSize(Map<String, Object> map) throws Exception{
+		
+		return (int) goodsDAO.selectGoodsAmountFromStockOfSize(map);
+	}
 
 	@Override
 	public List<Map<String, Object>> selectAllGoodsList(Map<String, Object> map) throws Exception {

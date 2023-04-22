@@ -93,6 +93,21 @@ public class GoodsDAO extends AbstractDAO {
 
 		return (int) delete("goods.deleteGoodsDetail", map);
 	}
+	
+	// 해당 제품에 해당하는 사이즈 재고 1개라도 있는 매장 총 개수
+	public int selectShopCountFromStockOfSize(Map<String, Object> map) throws Exception {
+		System.out.println("selectShopCountFromStockOfSize : " + map);
+
+		return (int) selectOne("goods.selectShopCountFromStockOfSize", map);
+	}
+	
+	// 해당 제품에 해당하는 사이즈 재고 총 개수
+	public int selectGoodsAmountFromStockOfSize(Map<String, Object> map) throws Exception {
+		System.out.println("selectGoodsAmountFromStockOfSize : " + map);
+
+		return (int) selectOne("goods.selectGoodsAmountFromStockOfSize", map);
+	}
+
 
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> selectAllGoodsList(Map<String, Object> map) throws Exception {

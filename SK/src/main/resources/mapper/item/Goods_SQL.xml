@@ -216,6 +216,41 @@
 	        WHERE GOODS_DETAIL_NUM = #{TOTAL_GOODS_NUM}
 	    ]]>
 	</delete>
+	
+  	<!--  해당 제품에 해당하는 사이즈 재고 1개라도 있는 매장 총 개수 -->
+    <select id="selectShopCountFromStockOfSize" parameterType="hashmap" resultType="int"> 
+	    <![CDATA[
+            SELECT 
+                    NVL(SHOP_NUM_COUNT, 0) AS SHOP_NUM
+            FROM(
+                 SELECT 
+                         COUNT(SHOP_GOODS_SHOP_NUM) AS SHOP_NUM_COUNT
+                 FROM 
+                     	SHOP_GOODS
+                 WHERE 
+                         SHOP_GOODS_SIZE =  #{GOODS_DETAIL_SIZE}
+                     AND SHOP_GOODS_AMOUNT > 0
+                     AND SHOP_GOODS_GOODS_NUM = #{TOTAL_GOODS_NUM}
+        )        
+	    ]]>
+	</select>
+    
+    <!-- 해당 제품에 해당하는 사이즈 재고 총 개수 -->
+    <select id="selectGoodsAmountFromStockOfSize" parameterType="hashmap" resultType="int"> 
+	    <![CDATA[
+            SELECT 
+                  NVL(SHOP_GOODS_AMOUNT, 0) AS SHOP_GOODS_AMOUNT
+            FROM(
+                 SELECT 
+                       	SUM(SHOP_GOODS_AMOUNT) AS SHOP_GOODS_AMOUNT
+                 FROM 
+                        SHOP_GOODS
+                 WHERE 
+                        SHOP_GOODS_SIZE = #{GOODS_DETAIL_SIZE}
+                    AND SHOP_GOODS_GOODS_NUM = #{TOTAL_GOODS_NUM}
+        )
+	    ]]>
+	</select>
 
 
 	<select id="selectAllGoodsList" parameterType="hashmap" resultType="hashmap"> 
