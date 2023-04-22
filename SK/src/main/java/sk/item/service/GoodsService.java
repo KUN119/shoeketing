@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface GoodsService {
@@ -16,7 +17,7 @@ public interface GoodsService {
 	public int selectBrandGoodsCount(Map<String, Object> map) throws Exception;
 
 	// 브랜드 상품 등록
-	public Map<String, Object> insertGoods(Map<String, Object> map, HttpSession session, MultipartFile[] uploadFile)
+	public Map<String, Object> insertGoods(Map<String, Object> map, HttpSession session, MultipartFile[] uploadFile, List<String> goodsSizeList)
 			throws Exception;
 
 	// 상품 등록시, 상품 상세(사이즈) 삽입
@@ -38,7 +39,7 @@ public interface GoodsService {
 	public Map<String, Object> deleteGoods(Map<String, Object> map) throws Exception;
 	
 	// 상품 수정- 이미지, 사이즈 (updateGoodsImageModify + updateGoodsModify)
-	public Map<String, Object> updateGoods(MultipartFile[] uploadGoodsImg, Map<String, Object> map) throws Exception;
+	public Map<String, Object> updateGoods(MultipartFile[] uploadGoodsImg, Map<String, Object> map, List<String> goodsSizeList) throws Exception;
 	
 //	// 상품 이미지 수정 
 //	public int updateGoodsImageModify(Map<String, Object> map) throws Exception;
@@ -49,6 +50,12 @@ public interface GoodsService {
 //	// 상품 상세 삭제(상품 수정시, 원래 선택되어 있던 사이즈 전체 삭제) 
 //	public int deleteGoodsDetail(Map<String, Object> map) throws Exception;
 
+	// 해당 제품에 해당하는 사이즈 재고 1개라도 있는 매장 총 개수
+	public int selectShopCountFromStockOfSize(Map<String, Object> map) throws Exception;
+	
+	// 해당 제품에 해당하는 사이즈 재고 총 개수
+	public int selectGoodsAmountFromStockOfSize(Map<String, Object> map) throws Exception;
+	
 	public List<Map<String, Object>> selectAllGoodsList(Map<String, Object> map) throws Exception;
 
 	int selectAllGoodsCount(Map<String, Object> map) throws Exception;

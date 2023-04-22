@@ -57,10 +57,13 @@
                   </div>
  				<hr class="my-4">
                   <div class="mb-3" style="width: 70%; margin-left: 30px;">
-                    <label for="GOODS_DETAIL_SIZE" class="form-label" style="font-size: large; font-weight: bolder;">사이즈</label>
-                    <table>
+					<div class="d-flex mb-2">
+                       <label for="GOODS_DETAIL_SIZE" class="form-label align-self-center mb-0" style="font-size: large; font-weight: bolder;">사이즈</label>
+                       <p id="stockCheckP" class="ms-5 align-self-center mb-0" style="color: rgba(0, 0, 0, 0.490);">사이즈에 마우스를 올리면 재고가 있는 매장 수 및 총 재고 개수가 표시됩니다.</p>
+                   </div>                    
+                   <table>
                         <tr>
-                            <td>
+                            <td class="sizeTd">
                     <div class="form-check col-3 ps-0 pe-1 align-self-center">
                         
                         <input
@@ -81,7 +84,7 @@
                         >
                       </div>
                       </td>
-                      <td>
+                      <td class="sizeTd">
                       <div class="form-check col-3 ps-0 pe-1 align-self-center">
                         <input
                           type="checkbox"
@@ -103,7 +106,7 @@
                       </div>
                       </td>
 
-                      <td>
+                      <td class="sizeTd">
                         <div class="form-check col-3 ps-0 pe-1 align-self-center">
                           <input
                             type="checkbox"
@@ -125,7 +128,7 @@
                         </div>
                         </td>
 
-                        <td>
+                        <td class="sizeTd">
                           <div class="form-check col-3 ps-0 pe-1 align-self-center">
                             <input
                               type="checkbox"
@@ -147,7 +150,7 @@
                           </div>
                           </td>
 
-                          <td>
+                          <td class="sizeTd">
                             <div class="form-check col-3 ps-0 pe-1 align-self-center">
                               <input
                                 type="checkbox"
@@ -169,7 +172,7 @@
                             </div>
                           </td>
 
-                            <td>
+                            <td class="sizeTd">
                              <div class="form-check col-3 ps-0 pe-1 align-self-center">
                                <input
                                  type="checkbox"
@@ -191,7 +194,7 @@
                              </div>
                            </td>
 
-                           <td>
+                           <td class="sizeTd">
                              <div class="form-check col-3 ps-0 pe-1 align-self-center">
                                <input
                                  type="checkbox"
@@ -213,7 +216,7 @@
                              </div>
                             </td>
 
-                            <td>
+                            <td class="sizeTd">
                               <div class="form-check col-3 ps-0 pe-1 align-self-center">
                                <input
                                  type="checkbox"
@@ -235,7 +238,7 @@
                               </div>
                             </td>
 
-                             <td>
+                             <td class="sizeTd">
                               <div class="form-check col-3 ps-0 pe-1 align-self-center">
                                 <input
                                   type="checkbox"
@@ -257,7 +260,7 @@
                               </div>
                               </td>
 
-                              <td>
+                              <td class="sizeTd">
                                <div class="form-check col-3 ps-0 pe-1 align-self-center">
                                  <input
                                    type="checkbox"
@@ -281,7 +284,7 @@
                     </tr>
 
                     <tr>
-                        <td>
+                        <td class="sizeTd">
                     <div class="form-check col-3 ps-0 pe-1 align-self-center">
                     
                     <input
@@ -302,7 +305,7 @@
                     >
                   </div>
                   </td>
-                  <td>
+                  <td class="sizeTd">
                   <div class="form-check col-3 ps-0 pe-1 align-self-center">
                     <input
                       type="checkbox"
@@ -324,7 +327,7 @@
                   </div>
                   </td>
 
-                  <td>
+                  <td class="sizeTd">
                     <div class="form-check col-3 ps-0 pe-1 align-self-center">
                       <input
                         type="checkbox"
@@ -346,7 +349,7 @@
                     </div>
                     </td>
 
-                    <td>
+                    <td class="sizeTd">
                         <div class="form-check col-3 ps-0 pe-1 align-self-center">
                           <input
                             type="checkbox"
@@ -368,7 +371,7 @@
                         </div>
                         </td>
 
-                        <td>
+                        <td class="sizeTd">
                             <div class="form-check col-3 ps-0 pe-1 align-self-center">
                               <input
                                 type="checkbox"
@@ -390,7 +393,7 @@
                             </div>
                             </td>
 
-                            <td>
+                            <td class="sizeTd">
                                 <div class="form-check col-3 ps-0 pe-1 align-self-center">
                                   <input
                                     type="checkbox"
@@ -412,7 +415,7 @@
                                 </div>
                                 </td>
 
-                                <td>
+                                <td class="sizeTd">
                                     <div class="form-check col-3 ps-0 pe-1 align-self-center">
                                       <input
                                         type="checkbox"
@@ -434,7 +437,7 @@
                                     </div>
                                     </td>
 
-                                    <td>
+                                    <td class="sizeTd">
                                         <div class="form-check col-3 ps-0 pe-1 align-self-center">
                                           <input
                                             type="checkbox"
@@ -456,7 +459,7 @@
                                         </div>
                                         </td>
 
-                                        <td>
+                                        <td class="sizeTd">
                                             <div class="form-check col-3 ps-0 pe-1 align-self-center">
                                               <input
                                                 type="checkbox"
@@ -478,7 +481,7 @@
                                             </div>
                                             </td>
 
-                                            <td>
+                                            <td class="sizeTd">
                                                 <div class="form-check col-3 ps-0 pe-1 align-self-center">
                                                   <input
                                                     type="checkbox"
@@ -516,12 +519,12 @@
                     </table>
                             <div class="mb-3" style="font-size: small;">
 		                    <c:forEach items="${goodsImageList}" var="image">
-							  ${image.GOODS_IMAGE_ORG}<br>
+							  ${image.GOODS_IMAGE_STD}<br>
 					    	</c:forEach>
 					    	</div>
                 </div>  
                 <hr class="my-4">
-                <button class="btn btn-primary btn-lg" style="margin-left: 30%; width: 45%;" type="submit" name="goodsWrite">상품 수정</button>
+                <button class="btn btn-primary btn-lg" style="margin-left: 30%; width: 45%;" type="button" name="goodsModify">상품 수정</button>
             </div>
         </div>
         
@@ -532,17 +535,18 @@ $(document).ready(function(){
 	
 	// 상품 사이즈 표시
 	<c:forEach items="${goodsSizeList}" var="size">
+		console.log('${size.GOODS_DETAIL_SIZE}');
 		$("input:checkbox[value='${size.GOODS_DETAIL_SIZE}']").prop("checked", true);
 	</c:forEach>
 	
 	
-	$("button[name='goodsWrite']").on("click", function(e){	 // 상품 수정
+	$("button[name='goodsModify']").on("click", function(e){	 // 상품 수정
 		e.preventDefault();
-		fn_goodsWrite();
+		fn_goodsModify();
 	
 	});
 	
-	function fn_goodsWrite(){
+	function fn_goodsModify(){
 		var formData = new FormData();
 		
 		var goodsName = $("#TOTAL_GOODS_NAME").val();
@@ -550,7 +554,12 @@ $(document).ready(function(){
 		var category = document.getElementById("category");
 		var goodsCategory = (category.options[category.selectedIndex].value);
 		var goodsPrice = $("#TOTAL_GOODS_PRICE").val();
-		var goodsSize = $('input[name="sizeType"]:checked').val();
+		
+		var goodsSizeValues = [];
+		$('input[name="sizeType"]:checked').each(function(i){
+			goodsSizeValues.push($(this).val());
+		});
+		//var goodsSize = $('input[name="sizeType"]:checked').val();
 			
 		var uploadGoodsImg = $("input[name='img_upload']");
 		var files = uploadGoodsImg[0].files;
@@ -564,21 +573,22 @@ $(document).ready(function(){
 		formData.append("TOTAL_GOODS_MODEL", goodsModel);
 		formData.append("TOTAL_GOODS_CATEGORY", goodsCategory);
 		formData.append("TOTAL_GOODS_PRICE", goodsPrice);
-		formData.append("GOODS_DETAIL_SIZE", goodsSize);
+		formData.append("GOODS_DETAIL_SIZE_new", goodsSizeValues);
+		formData.append("TOTAL_GOODS_NUM", ${goodsDetailMap.TOTAL_GOODS_NUM});
 		//formData.append("img_upload", uploadGoodsImg);
 		
 		$.ajax({
 			type : 'post',
-			url : '/sk/brandPage/goodsWrite',
+			url : '/sk/brandPage/goodsModify',
 			data : formData,
 			processData : false,
 			contentType : false,
 			success : function(data){
 				if(data.result == "pass"){
-					alert("상품이 정상적으로 등록되었습니다.");
-					location.href='/sk/goods/goodsDetail?TOTAL_GOODS_NUM=' + data.TOTAL_GOODS_NUM;
+					alert("상품이 정상적으로 수정되었습니다.");
+					location.href='/sk/brandPage/goodsList';
 				} else if(data.result == "fail") {
-					alert("상품 등록에 실패하였습니다.");
+					alert("상품 수정에 실패하였습니다.");
 				}
 			},
 			error : function(request, status, error) {
@@ -590,6 +600,35 @@ $(document).ready(function(){
 			
 		});
 	}
+	
+	$(".sizeTd").mouseover(function() {
+	      var stockCheckP = $("#stockCheckP");
+	      stockCheckP.empty();
+	      
+	      var goodsSize = $(this).find('input:checkbox').attr('value');
+	      var formData = new FormData();
+	      formData.append("TOTAL_GOODS_NUM", ${goodsDetailMap.TOTAL_GOODS_NUM});
+	      formData.append("GOODS_DETAIL_SIZE", goodsSize);
+	      
+	      $.ajax({
+	         url : '/sk/brandPage/goodsModifyForm/sizeCheck',
+	         type : 'POST',
+	         data : formData,
+	         processData : false,
+	         contentType : false,
+	         success : function(data) {
+	            var str = "";
+	            str += goodsSize + "(매장 수 : " + data.shopCount + "개 / 재고 : " + data.goodsAmount + "개)";
+	            stockCheckP.append(str);
+	         }
+	      });
+	   })
+	   
+	   $(".sizeTd").mouseleave(function() {
+		  var stockCheckP = $("#stockCheckP");
+	      stockCheckP.empty();
+	      stockCheckP.append("사이즈에 마우스를 올리면 재고가 있는 매장 수 및 총 재고 개수가 표시됩니다.");
+	   })
 });
 
 </script>

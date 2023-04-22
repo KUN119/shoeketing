@@ -56,7 +56,7 @@
                     <div class="form-check col-3 ps-0 pe-1 align-self-center">
                         
                         <input
-                          type="radio"
+                          type="checkbox"
                           class="btn-check"
                           name="sizeType"
                           id="size_200"
@@ -76,7 +76,7 @@
                       <td>
                       <div class="form-check col-3 ps-0 pe-1 align-self-center">
                         <input
-                          type="radio"
+                          type="checkbox"
                           class="btn-check"
                           name="sizeType"
                           id="size_205"
@@ -98,7 +98,7 @@
                       <td>
                         <div class="form-check col-3 ps-0 pe-1 align-self-center">
                           <input
-                            type="radio"
+                            type="checkbox"
                             class="btn-check"
                             name="sizeType"
                             id="size_210"
@@ -120,7 +120,7 @@
                         <td>
                           <div class="form-check col-3 ps-0 pe-1 align-self-center">
                             <input
-                              type="radio"
+                              type="checkbox"
                               class="btn-check"
                               name="sizeType"
                               id="size_215"
@@ -142,7 +142,7 @@
                           <td>
                             <div class="form-check col-3 ps-0 pe-1 align-self-center">
                               <input
-                                type="radio"
+                                type="checkbox"
                                 class="btn-check"
                                 name="sizeType"
                                 id="size_220"
@@ -164,7 +164,7 @@
                             <td>
                              <div class="form-check col-3 ps-0 pe-1 align-self-center">
                                <input
-                                 type="radio"
+                                 type="checkbox"
                                  class="btn-check"
                                  name="sizeType"
                                  id="size_225"
@@ -186,7 +186,7 @@
                            <td>
                              <div class="form-check col-3 ps-0 pe-1 align-self-center">
                                <input
-                                 type="radio"
+                                 type="checkbox"
                                  class="btn-check"
                                  name="sizeType"
                                  id="size_230"
@@ -208,7 +208,7 @@
                             <td>
                               <div class="form-check col-3 ps-0 pe-1 align-self-center">
                                <input
-                                 type="radio"
+                                 type="checkbox"
                                  class="btn-check"
                                  name="sizeType"
                                  id="size_235"
@@ -230,7 +230,7 @@
                              <td>
                               <div class="form-check col-3 ps-0 pe-1 align-self-center">
                                 <input
-                                  type="radio"
+                                  type="checkbox"
                                   class="btn-check"
                                   name="sizeType"
                                   id="size_240"
@@ -252,7 +252,7 @@
                               <td>
                                <div class="form-check col-3 ps-0 pe-1 align-self-center">
                                  <input
-                                   type="radio"
+                                   type="checkbox"
                                    class="btn-check"
                                    name="sizeType"
                                    id="size_245"
@@ -277,7 +277,7 @@
                     <div class="form-check col-3 ps-0 pe-1 align-self-center">
                     
                     <input
-                      type="radio"
+                      type="checkbox"
                       class="btn-check"
                       name="sizeType"
                       id="size_250"
@@ -297,7 +297,7 @@
                   <td>
                   <div class="form-check col-3 ps-0 pe-1 align-self-center">
                     <input
-                      type="radio"
+                      type="checkbox"
                       class="btn-check"
                       name="sizeType"
                       id="size_255"
@@ -319,7 +319,7 @@
                   <td>
                     <div class="form-check col-3 ps-0 pe-1 align-self-center">
                       <input
-                        type="radio"
+                        type="checkbox"
                         class="btn-check"
                         name="sizeType"
                         id="size_260"
@@ -341,7 +341,7 @@
                     <td>
                         <div class="form-check col-3 ps-0 pe-1 align-self-center">
                           <input
-                            type="radio"
+                            type="checkbox"
                             class="btn-check"
                             name="sizeType"
                             id="size_265"
@@ -363,7 +363,7 @@
                         <td>
                             <div class="form-check col-3 ps-0 pe-1 align-self-center">
                               <input
-                                type="radio"
+                                type="checkbox"
                                 class="btn-check"
                                 name="sizeType"
                                 id="size_270"
@@ -385,7 +385,7 @@
                             <td>
                                 <div class="form-check col-3 ps-0 pe-1 align-self-center">
                                   <input
-                                    type="radio"
+                                    type="checkbox"
                                     class="btn-check"
                                     name="sizeType"
                                     id="size_275"
@@ -407,7 +407,7 @@
                                 <td>
                                     <div class="form-check col-3 ps-0 pe-1 align-self-center">
                                       <input
-                                        type="radio"
+                                        type="checkbox"
                                         class="btn-check"
                                         name="sizeType"
                                         id="size_280"
@@ -429,7 +429,7 @@
                                     <td>
                                         <div class="form-check col-3 ps-0 pe-1 align-self-center">
                                           <input
-                                            type="radio"
+                                            type="checkbox"
                                             class="btn-check"
                                             name="sizeType"
                                             id="size_285"
@@ -451,7 +451,7 @@
                                         <td>
                                             <div class="form-check col-3 ps-0 pe-1 align-self-center">
                                               <input
-                                                type="radio"
+                                                type="checkbox"
                                                 class="btn-check"
                                                 name="sizeType"
                                                 id="size_290"
@@ -473,7 +473,7 @@
                                             <td>
                                                 <div class="form-check col-3 ps-0 pe-1 align-self-center">
                                                   <input
-                                                    type="radio"
+                                                    type="checkbox"
                                                     class="btn-check"
                                                     name="sizeType"
                                                     id="size_295"
@@ -586,8 +586,13 @@ $(document).ready(function(){
 		var category = document.getElementById("category");
 		var goodsCategory = (category.options[category.selectedIndex].value);
 		var goodsPrice = $("#TOTAL_GOODS_PRICE").val();
-		var goodsSize = $('input[name="sizeType"]:checked').val();
-			
+		
+		var goodsSizeValues = [];
+		$('input[name="sizeType"]:checked').each(function(i){
+			goodsSizeValues.push($(this).val());
+		});
+		//var goodsSize = $('input[name="sizeType"]:checked').val();
+		
 		var uploadGoodsImg = $("input[name='img_upload']");
 		var files = uploadGoodsImg[0].files;
 		console.log(files);
@@ -600,7 +605,7 @@ $(document).ready(function(){
 		formData.append("TOTAL_GOODS_MODEL", goodsModel);
 		formData.append("TOTAL_GOODS_CATEGORY", goodsCategory);
 		formData.append("TOTAL_GOODS_PRICE", goodsPrice);
-		formData.append("GOODS_DETAIL_SIZE", goodsSize);
+		formData.append("GOODS_DETAIL_SIZE", goodsSizeValues);
 		//formData.append("img_upload", uploadGoodsImg);
 		
 		$.ajax({

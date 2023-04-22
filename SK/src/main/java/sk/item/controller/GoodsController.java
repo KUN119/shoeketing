@@ -192,12 +192,17 @@ public class GoodsController {
 
 	@PostMapping(value = "/brandPage/goodsWrite")
 	public Map<String, Object> goodsWrite(MultipartFile[] uploadGoodsImg, @RequestParam Map<String, Object> map,
-			HttpSession session) throws Exception {
+			@RequestParam(value="GOODS_DETAIL_SIZE") List<String> goodsSizeList, HttpSession session) throws Exception {
 		log.debug("###### 브랜드 상품 등록 ######");
+		log.debug("GOODS_DETAIL_SIZE 확인 : " + goodsSizeList);
 
-		Map<String, Object> goodsWrite = goodsService.insertGoods(map, session, uploadGoodsImg);
+		Map<String, Object> goodsWrite = new HashMap<>();
+
+		goodsWrite = goodsService.insertGoods(map, session, uploadGoodsImg, goodsSizeList);
 		System.out.println("goodsWrite Map 확인 : " + goodsWrite);
+			
 
+		//Map<String, Object> goodsWrite = goodsService.insertGoods(map, session, uploadGoodsImg);
 		return goodsWrite;
 	}
 
@@ -215,10 +220,9 @@ public class GoodsController {
 		List<Map<String, Object>> goodsImageList = new ArrayList<>();
 		List<Map<String, Object>> goodsSizeList = new ArrayList<>();
 		
-		
 		for(int i=0; i<goodsImageMapList.size(); i++) {
 			Map<String, Object> goodsImageMap = new HashMap<>();
-			goodsImageMap.put("GOODS_IMAGE_ORG", goodsImageMapList.get(i).get("GOODS_IMAGE_ORG"));
+			goodsImageMap.put("GOODS_IMAGE_STD", goodsImageMapList.get(i).get("GOODS_IMAGE_STD"));
 			goodsImageList.add(goodsImageMap);
 		}
 		
@@ -236,12 +240,39 @@ public class GoodsController {
 		return mv;
 	}
 	
+	// 상품 수정폼에서 사이즈 별 재고 있는 매장 수/재고개수 ajax로 표시 
+	@PostMapping(value = "/brandPage/goodsModifyForm/sizeCheck")
+	public ModelAndView goodsModifyFormSizeCheck(@RequestParam Map<String, Object> map) throws Exception {
+		log.debug("###### 브랜드관 상품 수정 폼 사이즈 ajax처리 ######");
+		ModelAndView mv = new ModelAndView("jsonView");
+	
+		// 해당 상품 사이즈가 있는 매장개수 + 총 재고개수 
+		int shopCount = goodsService.selectShopCountFromStockOfSize(map);
+		int goodsAmount = goodsService.selectGoodsAmountFromStockOfSize(map);
+		
+		log.debug("shopCount 확인 : " + shopCount);
+		log.debug("goodsAmount 확인 : " + goodsAmount);
+		
+		mv.addObject("shopCount", shopCount);
+		mv.addObject("goodsAmount", goodsAmount);
+		
+		return mv;
+	}
+	
+	
 	// 상품 수정
 	@PostMapping(value = "/brandPage/goodsModify")
-	public Map<String, Object> goodsModify(MultipartFile[] uploadGoodsImg, @RequestParam Map<String, Object> map) throws Exception {
+	public Map<String, Object> goodsModify(MultipartFile[] uploadGoodsImg, @RequestParam Map<String, Object> map, @RequestParam(value="GOODS_DETAIL_SIZE_new") List<String> goodsSizeList) throws Exception {
 		log.debug("###### 브랜드관 상품 수정 ######");
 	
-		Map<String, Object> goodsModifyResultMap = goodsService.updateGoods(uploadGoodsImg, map);
+		log.debug("GOODS_DETAIL_SIZE 확인 : " + map.get("GOODS_DETAIL_SIZE"));
+		
+		//log.debug("goodsSizeList_old 확인 : " + goodsSizeList_old);
+		log.debug("goodsSizeList 확인 : " + goodsSizeList);
+		
+		//if(map.get("GOODS_DETAIL_SIZE_old").equals("goodsSizeList"));
+		
+		Map<String, Object> goodsModifyResultMap = goodsService.updateGoods(uploadGoodsImg, map, goodsSizeList);
 
 		// 추후 FileUtils 구현하고 작성
 		return goodsModifyResultMap;
