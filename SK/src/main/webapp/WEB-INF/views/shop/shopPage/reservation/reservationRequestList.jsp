@@ -49,6 +49,14 @@
 			                        	        data-memNum="${reservation.MEM_NUM}"
 			                        	        data-goodsName="${reservation.TOTAL_GOODS_NAME}"
 			                        	        >픽업 취소</button>
+			                        	<button type="button"
+			                        			class="btn btn-success btn-sm"
+			                        			name="pickUpSuccess"
+			                        			data-reservationNum="${reservation.RESERVATION_NUM}"
+			                        	        data-reservationStatus="${reservation.RESERVATION_STATUS}"
+			                        	        data-memNum="${reservation.MEM_NUM}"
+			                        	        data-goodsName="${reservation.TOTAL_GOODS_NAME}"
+			                        	        >픽업 완료</button>
 			                        </div>
 		                        </c:if>
 		                        <c:if test="${reservation.RESERVATION_STATUS == '예약 대기중'}">
@@ -164,7 +172,14 @@ function fn_selectReservationRequestListCallback(data){ // 페이지 선택 시 
 				   			  " data-reservationStatus='" + value.RESERVATION_STATUS + "'" +
 				   			  " data-memNum='" + value.MEM_NUM + "'" +
 				   			  " data-goodsName='" + value.TOTAL_GOODS_NAME + "'" +
-				   			  ">픽업 취소</button></div>";
+				   			  ">픽업 취소</button> " + 
+				   			  "<button type='button' class='btn btn-success btn-sm'" +
+					   		  " name='pickUpSuccess'" +
+					   		  " data-reservationNum='" + value.RESERVATION_NUM + "'" +
+					   		  " data-reservationStatus='" + value.RESERVATION_STATUS + "'" +
+					   		  " data-memNum='" + value.MEM_NUM + "'" +
+					   		  " data-goodsName='" + value.TOTAL_GOODS_NAME + "'" +
+					   		  ">픽업 완료</button></div>";
 				   }
 				   if(value.RESERVATION_STATUS == '예약 대기중'){
 					   str += "<div id='approveBtnDiv_" + value.RESERVATION_NUM + "'>" +
@@ -247,6 +262,16 @@ function fn_selectReservationRequestListCallback(data){ // 페이지 선택 시 
 						str2 += '" data-goodsName="';
 						str2 += goodsName;
 						str2 += '">픽업 취소</button>';
+						str2 += '<button type="button" class="btn btn-success btn-sm" name="pickUpSuccess" ';
+						str2 += 'data-reservationNum="';
+						str2 += reservationNum;
+						str2 += '" data-reservationStatus="';
+						str2 += data.RESERVATION_STATUS;
+						str2 += '" data-memNum="';
+						str2 += memNum;
+						str2 += '" data-goodsName="';
+						str2 += goodsName;
+						str2 += '">픽업 완료</button>';
 						
 						$("#approveBtnDiv_"+reservationNum).append(str2);
 						
@@ -269,6 +294,17 @@ function fn_selectReservationRequestListCallback(data){ // 페이지 선택 시 
 				const goodsName = $(this).attr("data-goodsName");
 		 		
 				fn_reservationCancel(reservationNum, reservationStatus, memNum, goodsName);
+				
+			});
+			
+			$("#approveBtnDiv_"+reservationNum).on("click", "button[name='pickUpSuccess']", function(e){  // 픽업 완료 (예약 승인 후, 표시되는 픽업 완료버튼) 
+				e.preventDefault();
+		 		const reservationNum = $(this).attr("data-reservationNum");
+		 		const reservationStatus = $(this).attr("data-reservationStatus");
+		 		const memNum = $(this).attr("data-memNum");
+				const goodsName = $(this).attr("data-goodsName");
+		 		
+				fn_pickUpSuccess(reservationNum, reservationStatus, memNum, goodsName);
 				
 			});
 		}
@@ -373,6 +409,56 @@ function fn_selectReservationRequestListCallback(data){ // 페이지 선택 시 
 				});
 			}
 		} 
+		
+		$("button[name='pickUpSuccess']").on("click", function(e){  // 픽업 완료
+			e.preventDefault();
+	 	
+	 		const reservationNum = $(this).attr("data-reservationNum");
+	 		const reservationStatus = $(this).attr("data-reservationStatus");
+	 		const memNum = $(this).attr("data-memNum");
+			const goodsName = $(this).attr("data-goodsName");
+	 		
+			fn_pickUpSuccess(reservationNum, reservationStatus, memNum, goodsName);
+			
+		});
+		
+		function fn_pickUpSuccess(reservationNum, reservationStatus, memNum, goodsName){
+			var formData = new FormData();
+			
+			formData.append("RESERVATION_NUM", reservationNum);
+			formData.append("RESERVATION_STATUS", reservationStatus);
+			formData.append("MEM_NUM", memNum);
+			
+			if(confirm("픽업 완료 처리 하시겠습니까?")){
+				$.ajax({
+					type : 'post',
+					url : '/sk/shopPage/pickUpSuccess',
+					data : formData,
+					processData : false,
+					contentType : false,
+					success : function(data){
+						if(data.result == "pass"){
+							alert("픽업 완료 처리 되었습니다.");
+							$("#cancelBtnDiv_"+reservationNum).empty();
+							$("#approveBtnDiv_"+reservationNum).empty();
+							$("#statusDiv_"+reservationNum).empty();
+							str = '<p style="font-size: medium;">';
+							str += data.RESERVATION_STATUS;
+							str += '</p>';
+							
+							$("#statusDiv_"+reservationNum).append(str);
+							
+						 }else if(data.result == "fail"){
+							 alert("실패");
+						 }
+					},
+					error : function(){
+						alert("오류 발생");
+					}
+				});
+			}
+		} 
+		
 	}
 }
 

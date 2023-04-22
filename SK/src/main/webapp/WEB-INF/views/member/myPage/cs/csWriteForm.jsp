@@ -230,6 +230,44 @@ $(document).ready(function() {
 	}
 	 
 	 function fn_register() {
+		 
+		 var title = $("input[name='title']").val();
+		    var content = $("textarea").val();
+
+		    // 제목이나 내용이 비어있는지 확인
+		    if (title.trim() === '') {
+		        alert('제목을 입력해주세요.');
+		        return;
+		    }
+
+		    if (content.trim() === '') {
+		        alert('내용을 입력해주세요.');
+		        return;
+		    }
+
+		    // 입력한 제목과 내용이 유효한지 확인
+		    var titleRegex = /^[a-zA-Z0-9ㄱ-ㅎ가-힣\s]{2,100}$/; // 제목은 영문,숫자,한글,공백 1~100자
+		    var contentRegex = /^[a-zA-Z0-9ㄱ-ㅎ가-힣\s]{2,500}$/; // 내용은 영문,숫자,한글,공백 1~500자
+		    
+		    if (!titleRegex.test(title)) {
+		        alert('제목은 영문,숫자,한글,공백 2~100자로 입력해주세요.');
+		        return;
+		    }
+
+		    if (!contentRegex.test(content)) {
+		        alert('내용은 영문,숫자,한글,공백 2~500자로 입력해주세요.');
+		        return;
+		    }
+
+		    // 매장 번호가 선택되었는지 확인
+		    var shopNum = $("input[name='searchbar']").attr("data-num");
+		    if (!shopNum) {
+		        alert('매장을 선택해주세요.');
+		        return;
+		    }
+
+		 
+		 
 		var formData = new FormData();
 		formData.append("CS_TITLE", $("input[name='title']").val());
 		formData.append("CS_CONTENT", $("textarea").val());

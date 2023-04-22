@@ -164,7 +164,7 @@ function onMessage(evt){
                   <input
                     class="form_control"
                     style="
-                      height: 37px;
+                      height: 39px;
                       border-style: none;
                       border: solid 1px black;
                       border-right: none;

@@ -88,10 +88,11 @@
     </beans:bean>
     
     <beans:bean id="transactionManager"
-      class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-      <beans:property name="dataSource" ref="dataSourceSpied"/>
-   </beans:bean>
-   
-   <tx:annotation-driven />
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<beans:property name="dataSource" ref="dataSourceSpied"/>
+	</beans:bean>
+	
+	<tx:annotation-driven />
+    
     
 </beans:beans>

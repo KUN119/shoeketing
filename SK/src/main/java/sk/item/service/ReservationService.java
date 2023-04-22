@@ -39,6 +39,9 @@ public interface ReservationService {
 	
 	// 예약금 결제 성공
 	public Map<String, Object> insertReservation(Map<String, Object> map, HttpSession session) throws Exception; 
-		
+	
+	// 매장이 픽업 완료버튼 클릭시, 픽업 상태변경 + 회원 픽업 횟수 변경
+	public Map<String, Object> shopPickUpSuccess(Map<String, Object> map) throws Exception;
+
 	
 }
