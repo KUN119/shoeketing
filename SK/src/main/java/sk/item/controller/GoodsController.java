@@ -37,6 +37,22 @@ public class GoodsController {
 	public ModelAndView goodsList(@RequestParam Map<String, Object> map, HttpSession session) throws Exception {
 		log.debug("###### 브랜드회원 전체상품 리스트 ######");
 		ModelAndView mv = new ModelAndView("goodsList");
+
+		int page = 1;
+
+		if (map.get("page") != null && map.get("page") != "") {
+			page = Integer.parseInt(map.get("page").toString());
+		}
+		mv.addObject("page", page);
+
+		if (map.get("searchType") != null && map.get("searchType") != "") {
+			mv.addObject("searchType", map.get("searchType"));
+		}
+
+		if (map.get("keyword") != null && map.get("keyword") != "") {
+			mv.addObject("keyword", map.get("keyword"));
+		}
+
 		return mv;
 	}
 
@@ -211,32 +227,32 @@ public class GoodsController {
 	public ModelAndView goodsModifyForm(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("###### 브랜드관 상품 수정 폼 ######");
 		ModelAndView mv = new ModelAndView("goodsModifyForm");
-		
+
 		// 해당 상품 상세정보, 이미지 정보 폼으로 넘기기
 		List<Map<String, Object>> goodsDetailMapList = goodsService.selectGoodsDetail(map);
 		List<Map<String, Object>> goodsImageMapList = goodsService.selectGoodsImage(map);
-		
+
 		Map<String, Object> goodsDetailMap = goodsDetailMapList.get(0);
 		List<Map<String, Object>> goodsImageList = new ArrayList<>();
 		List<Map<String, Object>> goodsSizeList = new ArrayList<>();
-		
-		for(int i=0; i<goodsImageMapList.size(); i++) {
+
+		for (int i = 0; i < goodsImageMapList.size(); i++) {
 			Map<String, Object> goodsImageMap = new HashMap<>();
 			goodsImageMap.put("GOODS_IMAGE_STD", goodsImageMapList.get(i).get("GOODS_IMAGE_STD"));
 			goodsImageList.add(goodsImageMap);
 		}
-		
-		for(int i=0; i<goodsDetailMapList.size(); i++) {
+
+		for (int i = 0; i < goodsDetailMapList.size(); i++) {
 			Map<String, Object> goodsSizeMap = new HashMap<>();
 			goodsSizeMap.put("GOODS_DETAIL_SIZE", goodsDetailMapList.get(i).get("GOODS_DETAIL_SIZE"));
 			goodsSizeList.add(goodsSizeMap);
 		}
 		log.debug("goodsSizeList 확인 : " + goodsSizeList);
-		
+
 		mv.addObject("goodsDetailMap", goodsDetailMap);
 		mv.addObject("goodsImageList", goodsImageList);
 		mv.addObject("goodsSizeList", goodsSizeList);
-		
+
 		return mv;
 	}
 	
@@ -277,15 +293,15 @@ public class GoodsController {
 		// 추후 FileUtils 구현하고 작성
 		return goodsModifyResultMap;
 	}
-	
+
 	// 상품 삭제
 	@PostMapping(value = "/brandPage/goodsDelete")
 	public Map<String, Object> goodsDelete(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("###### 브랜드관 상품 삭제 ######");
 		log.debug("###### map 확인 ###### : " + map);
-		
+
 		Map<String, Object> goodsDeleteResultMap = goodsService.deleteGoods(map);
-		
+
 		return goodsDeleteResultMap;
 	}
 

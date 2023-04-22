@@ -88,7 +88,7 @@ function onMessage(evt){
           >
          </c:when>
          <c:otherwise>
-          <a class="nav-link scrollto" name="logout" style="font-size: 13px"
+          <a class="nav-link scrollto" href="#" name="logout" style="font-size: 13px"
             >로그아웃</a>
           </c:otherwise>
           </c:choose>

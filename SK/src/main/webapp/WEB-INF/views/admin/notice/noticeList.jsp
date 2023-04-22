@@ -9,29 +9,31 @@
 </head>
 <body>
 <div class="col-10" style="margin-top: 0px">
-	<div class="row d-flex mb-4">
-        <div class="col-8">
-	      <h3 style="margin-left: 30px; color: black; font-weight: bolder">
-	        공지사항
-	      </h3>
-      </div>
-      <div class="col input-group">
-          <select class="form-select-sm" style="width: 4rem; border-color: rgba(0, 0, 0, 0.263);" id="searchType" name="searchType">
-            <option selected value="total" <c:out value="${searchType eq 'total' ? 'selected' :''}"/>>전체</option>
-            <option value="title" <c:out value="${searchType eq 'title' ? 'selected' :''}"/>>제목</option>
-            <option value="content" <c:out value="${searchType eq 'content' ? 'selected' :''}"/>>내용</option>
-          </select>
-          <input type="text" class="form-control" name="keyword" id="keyword" value="${keyword }" />
-          <button
-            class="btn btn-outline-secondary"
-            type="button"
-            id="button-addon2"
-            name="noticeSearch"
-          >
-            검색
-          </button>
-        </div>
-      </div>
+	<form id="noticeSearchForm">
+		<div class="row d-flex mb-4">
+	        <div class="col-8">
+		      <h3 style="margin-left: 30px; color: black; font-weight: bolder">
+		        공지사항
+		      </h3>
+	      </div>
+		     <div class="col input-group">
+		         <select class="form-select-sm" style="width: 4rem; border-color: rgba(0, 0, 0, 0.263);" id="searchType" name="searchType">
+		           <option selected value="total" <c:out value="${searchType eq 'total' ? 'selected' :''}"/>>전체</option>
+		           <option value="title" <c:out value="${searchType eq 'title' ? 'selected' :''}"/>>제목</option>
+		           <option value="content" <c:out value="${searchType eq 'content' ? 'selected' :''}"/>>내용</option>
+		         </select>
+		         <input type="text" class="form-control" name="keyword" id="keyword" value="${keyword }" />
+		         <button
+		           class="btn btn-outline-secondary"
+		           type="button"
+		           id="button-addon2"
+		           name="noticeSearch"
+		         >
+		           검색
+		         </button>
+		     </div>
+	    </div>
+    </form>
 
       <table class="table" style="text-align: center">
         <thead>
@@ -79,7 +81,7 @@ $(document).ready(function() {
 });
   
   	/* 검색버튼 이벤트에 기존 ajax 함수 제거하고 페이징 함수 연결하기 */
-	$("button[name='noticeSearch']").on("click", function(e){  //공지사항 검색
+	$("#noticeSearchForm").on("submit", function(e){  //공지사항 검색
 		e.preventDefault();
 		
 		/* 페이징 검색 조건 및 검색 키워드 변수 초기화 시작 */

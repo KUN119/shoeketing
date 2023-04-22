@@ -52,9 +52,19 @@
 
       <div class="row text-end">
         <div class="col-12">
-          <button type="button" onclick="location.href='/sk/noticeList'" class="btn btn-secondary">목록</button>
+          <button type="button" class="btn btn-secondary" id="noticeListBtn" style="width:6rem">목록</button>
         </div>
       </div>
     </div>
   </body>
+<script>
+$(document).ready(function() {
+	$("#noticeListBtn").on("click", function(e) {
+		var page = ${page};
+		var searchType = '${searchType}';
+		var keyword = '${keyword}';
+		location.href = '/sk/noticeList?page=' + page + '&searchType=' + searchType + '&keyword=' + keyword;
+	});
+})
+</script>
 </html>

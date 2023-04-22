@@ -15,7 +15,7 @@
         <form id="searchForm" action="/sk/brandPage/goodsList">
         <div class="row mt-4">
         	<div class="col-8 align-self-center">
-        		<h5 style="margin-left: 30px;">전체 총 ${TOTAL } 개</h4>
+        		<h5 id="totalCount" style="margin-left: 30px;">전체 총 ${TOTAL } 개</h5>
         	</div>
 	        <div class="col-4 d-flex align-self-center">
 	            <div class="dropdown" style="width:10rem;">
@@ -40,6 +40,7 @@
 	                  border-top-left-radius: 5px;
 	                  border-bottom-left-radius: 5px;
 	                "
+	                id="keyword"
 	                name="keyword"
 	                type="text"
 	                value="${keyword}"
@@ -47,6 +48,7 @@
 	              <button
 	                class="btn"
 	                type="submit"
+	                name="goodsSearch"
 	                style="
 	                  background-color: white;
 	                  border: solid 1px black;
@@ -127,6 +129,10 @@
       	<!-- 페이징 화면 처리 부분 시작 -->
       	<div id="PAGE_NAVI"></div>
       	<input type="hidden" id="PAGE_INDEX" name="PAGE_INDEX" />
+      	<!-- 페이징 검색 조건 및 검색 키워드 input type hidden 시작 -->
+		<input type="hidden" id="PAGE_SEARCHTYPE" name="PAGE_SEARCHTYPE"/>
+		<input type="hidden" id="PAGE_KEYWORD" name="PAGE_KEYWORD"/>
+		<!-- 페이징 검색 조건 및 검색 키워드 input type hidden 시작 -->
       	<!--  페이징 화면 처리 부분 끝 -->
       	
       </div>
@@ -134,10 +140,34 @@
 <script type="text/javaScript">
 
 $(document).ready(function() {
+	
+	$('#PAGE_INDEX').val(${page});
+	$('#PAGE_KEYWORD').val('${keyword}');
+	$('#PAGE_SEARCHTYPE').val('${searchType}');
    
-   fn_selectGoodsList(1);
+   fn_selectGoodsList(${page}, '${searchType}', '${keyword}');
    
-   $("a[name='goodsImg']").on("click", function(e) { //상품 이미지를 클릭하면 상품 디테일로 이동
+   /* 검색버튼 이벤트에 기존 ajax 함수 제거하고 페이징 함수 연결하기 */
+	$("#searchForm").on("submit", function(e){  //공지사항 검색
+		e.preventDefault();
+		
+		/* 페이징 검색 조건 및 검색 키워드 변수 초기화 시작 */
+		var keyword = $('#keyword').val();
+		var searchType = $('#searchType').val();
+		/* 페이징 검색 조건 및 검색 키워드 변수 초기화 끝 */
+		
+		$('#PAGE_INDEX').val(1); /* 검색 시 1페이지로 */
+		
+		/* 페이징 검색 조건 및 검색 키워드 input type hidden에 값 넣어주기 시작 */
+		$('#PAGE_KEYWORD').val(keyword);
+		$('#PAGE_SEARCHTYPE').val(searchType);
+		/* 페이징 검색 조건 및 검색 키워드 input type hidden에 값 넣어주기 끝 */
+		
+		/* 페이징 함수 매개변수에 맞게 함수 호출(매개변수 순서 및 위치 주의!!) */
+		fn_selectGoodsList(1, searchType, keyword);
+	});
+   
+   $("#goodsListDiv").on("click", "a[name='goodsImg']", function(e) { //상품 이미지를 클릭하면 상품 디테일로 이동
    	   e.preventDefault();
 	   const brandName = $("#brandName").text();
 	   const goodsNum = $(this).attr("data-num");
@@ -145,14 +175,14 @@ $(document).ready(function() {
    	   location.href="/sk/goods/goodsDetail?TOTAL_GOODS_NUM=" + goodsNum;
    });  
    
-   $("button[name='updateGoods']").on("click", function(e) { // 상품 수정
+   $("#goodsListDiv").on("click", "button[name='updateGoods']", function(e) { // 상품 수정
    	   e.preventDefault();
 	   const goodsNum = $(this).attr("data-goodsNum");
 
    	   location.href="/sk/brandPage/goodsModifyForm?TOTAL_GOODS_NUM=" + goodsNum;
    });  
    
-   $("button[name='deleteGoods']").on("click", function(e) { // 상품 삭제
+   $("#goodsListDiv").on("click", "button[name='deleteGoods']", function(e) { // 상품 삭제
    	   e.preventDefault();
 	   const goodsNum = $(this).attr("data-goodsNum");
 
@@ -160,6 +190,11 @@ $(document).ready(function() {
    });  
    
    function fn_deleteGoods(goodsNum){
+	   
+	   var page = $('#PAGE_INDEX').val();
+	   var keyword = $('#keyword').val();
+	   var searchType = $('#searchType').val();
+	   
 	   var formData = new FormData();
 	   
 	   formData.append("TOTAL_GOODS_NUM", goodsNum);
@@ -173,7 +208,15 @@ $(document).ready(function() {
 		 success : function(data){
 			if(data.result == "pass"){
 				alert("상품이 정상적으로 삭제되었습니다.");
-				fn_selectGoodsList(1);
+				var numItems = $('.goodsDiv').length
+				if(numItems == 1) {
+					$('#PAGE_INDEX').val(page-1);
+					fn_selectGoodsList(page-1, searchType, keyword);
+				} else {
+					$('#PAGE_INDEX').val(page);
+					fn_selectGoodsList(page, searchType, keyword);
+				}
+				
 			};
 		 },
 		 error : function(request, status, error){
@@ -189,30 +232,43 @@ $(document).ready(function() {
 });
 
 
- function fn_selectGoodsList(pageNo) { //페이징 함수
+ function fn_selectGoodsList(pageNo, searchType, keyword) { //페이징 함수
     var comAjax = new ComAjax();
     comAjax.setUrl("/sk/brandPage/goodsList/paging");
     comAjax.setCallback("fn_selectGoodsListCallback");
     comAjax.addParam("PAGE_INDEX", pageNo);
     comAjax.addParam("PAGE_ROW", 10); //한 페이지에 보여줄 게시물의 개수
     comAjax.addParam("BRAND_NAME", $("#brandName").text());
+    
+    /* 페이징 검색 조건 및 검색 키워드 파라미터 추가 시작 */
+	comAjax.addParam("keyword", keyword);
+	comAjax.addParam("searchType", searchType);
+	/* 페이징 검색 조건 및 검색 키워드 파라미터 추가 끝 */
+    
     comAjax.ajax();
  }
  
  function fn_selectGoodsListCallback(data) {
     var total = data.TOTAL; //게시물의 개수
+    var totalDiv = $("#totalCount");
     var body = $("#goodsListDiv");
     
     body.empty(); //현재 페이지의 게시물을 지우고 알맞은 페이지의 내용을 집어넣기 위해
+    totalDiv.empty();
     
     if(total == 0) {
        var str =  "<div class='row row-cols-12 g-5' style='margin-auto: 6px;'>" +
                 "<span>아직 등록된 상품이 없습니다. 상품을 등록해주세요.</span>";
        body.append(str);
+       totalDiv.append('전체 총 0개');
     } else {
         var params = {
        divId : "PAGE_NAVI",
        pageIndex : "PAGE_INDEX",
+       /* 페이징 검색 조건 및 검색 키워드 객체에 추가 시작 */
+       searchType : "PAGE_SEARCHTYPE",
+       keyword : "PAGE_KEYWORD",
+       /* 페이징 검색 조건 및 검색 키워드 객체에 추가 끝 */
        totalCount : total,
        recordCount : 10,
        eventName : "fn_selectGoodsList"
@@ -223,7 +279,7 @@ $(document).ready(function() {
     
     $.each(data.list, function(key, value) {
        
-          str +=     "<div class='card' style='width: 14rem; margin-left: 10px; margin-right: 10px; margin-bottom: 80px; border-style: none;'>";
+          str +=     "<div class='card goodsDiv' style='width: 14rem; margin-left: 10px; margin-right: 10px; margin-bottom: 80px; border-style: none;'>";
           str +=     "<a href='#' name='goodsImg' data-num='"+ value.TOTAL_GOODS_NUM +"' >";
           str +=     "<img src='/sk/image/display?fileName="+value.GOODS_IMAGE_STD + "' class='card-img-top' style='width:13rem; height: 11rem' />";
           str +=     "</a>";
@@ -234,7 +290,7 @@ $(document).ready(function() {
           str +=     "</div>";
           str +=     "<div class='card-body'>";
           str +=     "<div class='row'>";
-          str += 	 "<div class='col-6 align-self-center'><h6 class='card-title mb-0' style='font-size: 18px; font-weight: 700;'>"+value.TOTAL_GOODS_PRICE+"원</h6></div>";
+          str += 	 "<div class='col-6 align-self-center'><h6 class='card-title mb-0' style='font-size: 16px; font-weight: 700;'>"+value.TOTAL_GOODS_PRICE+"원</h6></div>";
           str += 	 "<div class='col-6 ps-0 pe-0'><button type='button' class='btn btn-primary btn-sm me-1' name='updateGoods' data-goodsNum='"+ value.TOTAL_GOODS_NUM +"'>수정</button>";
           str +=	 "<button type='button' class='btn btn-danger btn-sm' name='deleteGoods' data-goodsNum='"+ value.TOTAL_GOODS_NUM +"'>삭제</button></div>";
           str +=     "</div></div>";
@@ -242,6 +298,7 @@ $(document).ready(function() {
           
          });
          body.append(str);
+         totalDiv.append('전체 총 ' + total + '개');
     }
     
  }
