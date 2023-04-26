@@ -83,4 +83,19 @@
    			AND MEM_DEL_GB = 'N'
 		]]>
 	</select>
+	
+	<!-- 재발급한 비밀번호로 업데이트 -->
+	<update id="updatePassword" parameterType="hashmap">
+		<![CDATA[
+			UPDATE 
+					MEMBER
+			SET 
+					MEM_PW = #{UPDATE_PASSWORD}
+			WHERE 
+					MEM_NAME = #{MEM_NAME}
+			AND 
+					MEM_EMAIL = #{MEM_EMAIL}
+		]]>
+</update>
+	
 </mapper>

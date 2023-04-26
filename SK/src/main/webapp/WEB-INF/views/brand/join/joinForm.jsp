@@ -295,7 +295,7 @@ $(document).ready(function() {
 				success : function(result) {
 					var success = result.data[0].b_stt_cd;
 					if(success == '01') {
-						alert('사업자 등록번호 확인 완료');
+						alert('사업자 등록번호 확인이 완료되었습니다.');
 						
 					} else{
 						alert('사업장 등록번호를 다시 확인해주세요.');

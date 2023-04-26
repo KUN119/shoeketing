@@ -33,6 +33,14 @@ public class LoginDAO extends AbstractDAO{
 		// 이름과 이메일에 해당하는 비밀번호 가져오기
 	}
 	
+	// 재발급한 비밀번호로 업데이트 updatePassword
+	public void updatePassword(Map<String, Object> map) throws Exception {
+		System.out.println("updatePassword : " + map);
+		
+		update("login.updatePassword", map);
+
+	}
+	
 	// 브랜드 로그인
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> selectIdBrand(Map<String, Object> map) throws Exception {
