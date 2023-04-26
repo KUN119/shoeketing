@@ -34,6 +34,7 @@
 	<!-- 재고리스트 검색조건 -->
 	<sql id="searchStockList">
 		<if test="searchType != null">
+			<if test="searchType == 'total'.toString()">AND ((T.TOTAL_GOODS_NAME LIKE '%' || #{keyword} || '%') OR (T.TOTAL_GOODS_MODEL LIKE '%' || #{keyword} || '%')) </if>
 			<if test="searchType == 'name'.toString()">AND T.TOTAL_GOODS_NAME LIKE '%' || #{keyword} || '%' </if>
 			<if test="searchType == 'model'.toString()">AND T.TOTAL_GOODS_MODEL LIKE '%' || #{keyword} || '%'</if>
 		</if>

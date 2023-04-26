@@ -36,41 +36,35 @@ public class StockController {
 		log.debug("###### 매장 상품 재고 리스트 ######");
 		ModelAndView mv = new ModelAndView("stockList");
 
-		// 재고 리스트 토탈개수 (Ex, 상품이 14줄이면 토탈개수 14)
-		int stockCount = stockService.selectStockCount(map, session);
-		List<Map<String, Object>> shopStockList = stockService.selectStockList(map, session);
+		int page = 1;
 
-		mv.addObject("shopStockList", shopStockList);
-		mv.addObject("stockCount", stockCount);
-		mv.addObject("SHOP_NUM", sessionService.getSessionShop(session, "SHOP_NUM"));
+		if (map.get("page") != null && map.get("page") != "") {
+			page = Integer.parseInt(map.get("page").toString());
+		}
+		mv.addObject("page", page);
+
+		if (map.get("searchType") != null && map.get("searchType") != "") {
+			mv.addObject("searchType", map.get("searchType"));
+		}
+
+		if (map.get("keyword") != null && map.get("keyword") != "") {
+			mv.addObject("keyword", map.get("keyword"));
+		}
 
 		return mv;
 	}
 
 	// 상품명/모델명 검색 시, ajax 구현
 	@ResponseBody
-	@PostMapping(value = "/shopPage/stockList_ajax")
+	@PostMapping(value = "/shopPage/stockList/paging")
 	public ModelAndView shopStockList_ajax(@RequestParam Map<String, Object> map, HttpSession session)
 			throws Exception {
 		log.debug("###### 매장 상품 재고 리스트 ######");
-		ModelAndView mv = new ModelAndView("stockList_ajax");
+		ModelAndView mv = new ModelAndView("jsonView");
 
 		// 재고 리스트 토탈개수 (Ex, 상품이 14줄이면 토탈개수 14)
 		int stockCount = stockService.selectStockCount(map, session);
 		List<Map<String, Object>> shopStockList = stockService.selectStockList(map, session);
-
-		String searchType = (String) map.get("searchType");
-		String keyword = (String) map.get("keyword");
-
-		System.out.println("searchType : " + searchType);
-		System.out.println("keyword : " + keyword);
-
-		if (searchType != null) {
-			mv.addObject("searchType", searchType);
-		}
-		if (keyword != null) {
-			mv.addObject("keyword", keyword);
-		}
 
 		mv.addObject("shopStockList", shopStockList);
 		mv.addObject("stockCount", stockCount);
