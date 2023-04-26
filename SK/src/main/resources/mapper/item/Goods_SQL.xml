@@ -252,6 +252,17 @@
 	    ]]>
 	</select>
 
+	<!-- 브랜드가 해당 상품 사이즈 삭제할경우 (매장재고 0이라는 가정 하) 매장별 상품 삭제 -->
+	<delete id="deleteShopGoodsFromDeleteByBrand" parameterType="hashmap">
+	    <![CDATA[
+	        DELETE 
+	        FROM 
+	              SHOP_GOODS
+	        WHERE 
+				  SHOP_GOODS_GOODS_NUM = #{TOTAL_GOODS_NUM}
+	    ]]>
+	</delete>
+
 
 	<select id="selectAllGoodsList" parameterType="hashmap" resultType="hashmap"> 
 		<![CDATA[    

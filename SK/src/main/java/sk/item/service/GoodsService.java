@@ -39,7 +39,7 @@ public interface GoodsService {
 	public Map<String, Object> deleteGoods(Map<String, Object> map) throws Exception;
 	
 	// 상품 수정- 이미지, 사이즈 (updateGoodsImageModify + updateGoodsModify)
-	public Map<String, Object> updateGoods(MultipartFile[] uploadGoodsImg, Map<String, Object> map, List<String> goodsSizeList) throws Exception;
+	public Map<String, Object> updateGoods(MultipartFile[] uploadGoodsImg, Map<String, Object> map, List<String> goodsSizeList, HttpSession session) throws Exception;
 	
 //	// 상품 이미지 수정 
 //	public int updateGoodsImageModify(Map<String, Object> map) throws Exception;
@@ -55,6 +55,9 @@ public interface GoodsService {
 	
 	// 해당 제품에 해당하는 사이즈 재고 총 개수
 	public int selectGoodsAmountFromStockOfSize(Map<String, Object> map) throws Exception;
+	
+	//브랜드가 해당 상품 사이즈 삭제할경우 (매장재고 0이라는 가정 하) 매장별 상품 삭제
+	public int deleteShopGoodsFromDeleteByBrand(Map<String, Object> map) throws Exception;
 	
 	public List<Map<String, Object>> selectAllGoodsList(Map<String, Object> map) throws Exception;
 
