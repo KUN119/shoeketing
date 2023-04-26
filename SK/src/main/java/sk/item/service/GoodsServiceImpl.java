@@ -8,10 +8,8 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
-import org.apache.maven.doxia.logging.Log;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import sk.common.service.CommonService;
@@ -79,7 +77,15 @@ public class GoodsServiceImpl implements GoodsService {
 			for (int i = 0; i < shopNumList.size(); i++) {
 				Map<String, Object> shopNumMap = shopNumList.get(i);
 				map.put("SHOP_GOODS_SHOP_NUM", shopNumMap.get("SHOP_NUM"));
-				insertShopGoodsAddByBrand(map);
+				
+				if(goodsSizeList.size() > 0) {
+					for(int j=0; j<goodsSizeList.size(); j++) {
+						map.put("GOODS_DETAIL_SIZE", goodsSizeList.get(j));
+						insertShopGoodsAddByBrand(map);
+						System.out.println("GOODS_DETAIL_SIZE 확인 ### : " + map.get("GOODS_DETAIL_SIZE"));
+					}
+				}
+				
 			}
 			result.put("result", "pass");
 			result.put("TOTAL_GOODS_NUM", map.get("TOTAL_GOODS_NUM"));
@@ -123,7 +129,7 @@ public class GoodsServiceImpl implements GoodsService {
 		return (int) goodsDAO.insertShopGoodsAddByBrand(map);
 	}
 	
-	// 상품 이미지 삭제 (상품, 상품 이미지, 사이즈 같이 삭제. 트랜잭션)
+	// 상품 삭제 (상품, 상품 이미지, 사이즈 같이 삭제. 트랜잭션)
 	@Transactional
 	@Override
 	public Map<String, Object> deleteGoods(Map<String, Object> map) throws Exception{
@@ -132,17 +138,22 @@ public class GoodsServiceImpl implements GoodsService {
 		goodsDAO.deleteGoods(map);
 		goodsDAO.deleteGoodsImage(map);
 		goodsDAO.deleteGoodsDetail(map);
+		deleteShopGoodsFromDeleteByBrand(map); // 해당 매장 상품들 모두 삭제 
+		
 		deleteGoodsResultMap.put("result", "pass");
 		
 		return deleteGoodsResultMap;
 	}
 	
-	// 상품 이미지 수정 (상품 이미지, 사이즈 같이 수정. 트랜잭션)
+	// 상품 수정 (상품 이미지, 사이즈 같이 수정. 트랜잭션)
 	@Transactional
 	@Override
-	public Map<String, Object> updateGoods(MultipartFile[] uploadGoodsImg, Map<String, Object> map, List<String> goodsSizeList) throws Exception{
+	public Map<String, Object> updateGoods(MultipartFile[] uploadGoodsImg, Map<String, Object> map, List<String> goodsSizeList, HttpSession session) throws Exception{
 		Map<String, Object> updateGoodsResultMap = new HashMap<>();
 		
+		map.put("BRAND_NUM", sessionService.getSessionBrand(session, "BRAND_NUM"));
+		map.put("BRAND_NAME", sessionService.getSessionBrand(session, "BRAND_NAME"));
+
 		System.out.println("map 확인## : " + map);
 		System.out.println("goodsSizeList 확인## : " + goodsSizeList);
 		//map.put("GOODS_DETAIL_SIZE", map.get("GOODS_DETAIL_SIZE")); // 기존 등록되어 있던 사이즈 삭제하기 위함
@@ -156,7 +167,20 @@ public class GoodsServiceImpl implements GoodsService {
 			}
 		}
 		
-		goodsDAO.updateGoodsModify(map);
+		goodsDAO.updateGoodsModify(map);  // 상품 수정
+		deleteShopGoodsFromDeleteByBrand(map); // 해당 매장 상품들 모두 삭제 
+		
+		// 매장 수만큼 반복문 돌려서, 브랜드가 수정한 상품 매장에 사이즈별로 등록
+		List<Map<String, Object>> shopNumList = selectShopNumName(map);
+		System.out.println("shopNumList : " + shopNumList);
+		System.out.println("shopNumList 크기 : " + shopNumList.size());
+
+		for (int i = 0; i < shopNumList.size(); i++) {
+			Map<String, Object> shopNumMap = shopNumList.get(i);
+			map.put("SHOP_GOODS_SHOP_NUM", shopNumMap.get("SHOP_NUM"));
+			insertShopGoodsAddByBrand(map);
+		}
+		
 		//goodsDAO.updateGoodsImageModify(map);
 		updateGoodsResultMap.put("result", "pass");
 		
@@ -187,6 +211,12 @@ public class GoodsServiceImpl implements GoodsService {
 	public int selectGoodsAmountFromStockOfSize(Map<String, Object> map) throws Exception{
 		
 		return (int) goodsDAO.selectGoodsAmountFromStockOfSize(map);
+	}
+	
+	//브랜드가 해당 상품 사이즈 삭제할경우 (매장재고 0이라는 가정 하) 매장별 상품 삭제
+	public int deleteShopGoodsFromDeleteByBrand(Map<String, Object> map) throws Exception{
+		
+		return (int) goodsDAO.deleteShopGoodsFromDeleteByBrand(map);
 	}
 
 	@Override

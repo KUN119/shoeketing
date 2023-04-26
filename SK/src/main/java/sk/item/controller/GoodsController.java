@@ -278,7 +278,8 @@ public class GoodsController {
 	
 	// 상품 수정
 	@PostMapping(value = "/brandPage/goodsModify")
-	public Map<String, Object> goodsModify(MultipartFile[] uploadGoodsImg, @RequestParam Map<String, Object> map, @RequestParam(value="GOODS_DETAIL_SIZE_new") List<String> goodsSizeList) throws Exception {
+	public Map<String, Object> goodsModify(MultipartFile[] uploadGoodsImg, @RequestParam Map<String, Object> map, 
+			@RequestParam(value="GOODS_DETAIL_SIZE_new") List<String> goodsSizeList, HttpSession session) throws Exception {
 		log.debug("###### 브랜드관 상품 수정 ######");
 	
 		log.debug("GOODS_DETAIL_SIZE 확인 : " + map.get("GOODS_DETAIL_SIZE"));
@@ -288,7 +289,7 @@ public class GoodsController {
 		
 		//if(map.get("GOODS_DETAIL_SIZE_old").equals("goodsSizeList"));
 		
-		Map<String, Object> goodsModifyResultMap = goodsService.updateGoods(uploadGoodsImg, map, goodsSizeList);
+		Map<String, Object> goodsModifyResultMap = goodsService.updateGoods(uploadGoodsImg, map, goodsSizeList, session);
 
 		// 추후 FileUtils 구현하고 작성
 		return goodsModifyResultMap;

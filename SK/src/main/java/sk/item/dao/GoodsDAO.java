@@ -107,6 +107,13 @@ public class GoodsDAO extends AbstractDAO {
 
 		return (int) selectOne("goods.selectGoodsAmountFromStockOfSize", map);
 	}
+	
+	//브랜드가 해당 상품 사이즈 삭제할경우 (매장재고 0이라는 가정 하) 매장별 상품 삭제
+	public int deleteShopGoodsFromDeleteByBrand(Map<String, Object> map) throws Exception{
+		System.out.println("deleteShopGoodsFromDeleteByBrand : " + map);
+		
+		return (int) delete("goods.deleteShopGoodsFromDeleteByBrand", map);
+	}
 
 
 	@SuppressWarnings("unchecked")
