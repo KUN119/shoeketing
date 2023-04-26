@@ -103,7 +103,7 @@
   </div>
   <!-- 모달 끝 -->
   
-        <div class="col-8" style="margin-top: 0px;">
+        <div class="col-9" style="margin-top: 0px;">
             <h3 style="margin-left: 30px; color: black; font-weight: bolder;">픽업 예약 목록</h3>
               <table class="table" style="width: 100%; margin-left: 30px;">
                 <tbody id="pickupListTbody" class="table-group-divider">
@@ -158,12 +158,6 @@
             </div>
 </body>
 <script type="text/javascript">
-function AddComma(num) 
-{
-    var regexp = /\B(?=(\d{3})+(?!\d))/g;
-    return num.toString().replace(regexp, ',');
-}
-
 $(document).ready(function() {
 	// 페이지 로딩 시 자동으로 1페이지 가져오기
 	fn_selectReservationList(1);
@@ -214,8 +208,6 @@ $(document).ready(function() {
 		e.preventDefault();
 		goodsNum = $(this).attr("data-num");
 		$("button[name='write']").attr("data-num", goodsNum);
-		
-		alert("작동");
 		
 		checkReviewExists(goodsNum);
 	});
@@ -378,7 +370,7 @@ function fn_selectReservationListCallback(data){ // 페이지 선택 시 화면�
 		$.each(data.pickupList, function(key, value){  
 			str += "<tr><th scope='rowspan-3' style='width: 25%;'><a href='#' name='goodsDetail' " +
 				   "data-num='" + value.RESERVATION_NUM + "' data-status='" + value.RESERVATION_STATUS +
-				   "'><img src='/sk/image/display?fileName=" + value.GOODS_IMAGE_STD + "' height='120' width='120' /></a>" +
+				   "'><img src='/sk/image/display?fileName=" + value.GOODS_IMAGE_STD + "' height='120' width='180' /></a>" +
 				   "</th><td style='text-align: left; width: 45%; margin-left: 1;'><a href='#'><p style='font-size: small;'>" +
 				   value.BRAND_NAME + "</p></a><p style='font-weight: bolder; font-size: large;'>" +
 				   value.RESERVATION_SIZE + "</p><p style='font-weight: bolder;'>" + value.TOTAL_GOODS_NAME + " / " + value.TOTAL_GOODS_MODEL + "</p>" +
@@ -395,7 +387,7 @@ function fn_selectReservationListCallback(data){ // 페이지 선택 시 화면�
 				   }
 				   if(value.RESERVATION_STATUS == '픽업 완료') {
 					   str += "<div id='deleteBtnDiv_" + value.TOTAL_GOODS_NUM +
-					   "'><button type='button' class='btn btn-secondary btn-sm' name='openForm' data-num='" + value.TOTAL_GOODS_NUM + "'>리뷰<br/>작성</button>" +
+					   "'><button type='button' class='btn btn-secondary btn-sm' name='openForm' data-num='" + value.TOTAL_GOODS_NUM + "'>리뷰작성</button>" +
 					   "</div>";
 				   }
 				   str += "<br></td></tr>"

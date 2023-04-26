@@ -34,14 +34,14 @@ public class ShopPageController {
 
 	@Resource(name = "informService")
 	private InformService informService;
-	
+
 	@Resource(name = "sessionService")
 	private CommonService sessionService;
-	
+
 	@GetMapping(value = "/shopPage")
 	public ModelAndView shopPage(Map<String, Object> map) throws Exception {
 		log.debug("###### 매장 마이 페이지 메인 ######");
-		ModelAndView mv = new ModelAndView("shopPage"); 
+		ModelAndView mv = new ModelAndView("shopPage");
 
 		return mv;
 	}
@@ -49,17 +49,17 @@ public class ShopPageController {
 	@GetMapping(value = "/shopPage/accountModifyForm")
 	public ModelAndView shopModifyForm(Map<String, Object> map, HttpSession session) throws Exception {
 		log.debug("###### 매장 기본 정보 수정 폼 ######");
-		ModelAndView mv = new ModelAndView("accountModifyForm"); 
+		ModelAndView mv = new ModelAndView("shopModifyForm");
 
 		map.put("SHOP_NUM", sessionService.getSessionShop(session, "SHOP_NUM"));
-		
+
 		Map<String, Object> shopInfoMap = shopPageService.selectShopInfo(map);
 		mv.addObject("shopInfoMap", shopInfoMap);
-		
+
 		return mv;
 	}
 
-	// ajax 구현 
+	// ajax 구현
 	@ResponseBody
 	@PostMapping(value = "/shopPage/accountModify")
 	public Map<String, Object> shopModify(@RequestParam Map<String, Object> map) throws Exception {
@@ -73,7 +73,7 @@ public class ShopPageController {
 	@GetMapping(value = "/shopPage/csList")
 	public ModelAndView shopCSList(Map<String, Object> map, HttpSession session) throws Exception {
 		log.debug("###### 매장 문의 내역 리스트 ######");
-		ModelAndView mv = new ModelAndView("shopCSList"); 
+		ModelAndView mv = new ModelAndView("shopCSList");
 
 //		// 매장 문의내역 글 토탈 개수, 문의내역 리스트
 //		int shopCSCount = csService.selectShopCSCount(map, session);
@@ -118,24 +118,24 @@ public class ShopPageController {
 
 		return mv;
 	}
-	
+
 	@PostMapping(value = "/shopPage/csList/paging")
 	public ModelAndView shopCSList_paging(@RequestParam Map<String, Object> map, HttpSession session) throws Exception {
 		log.debug("###### 매장 문의 내역 리스트 ######");
-		ModelAndView mv = new ModelAndView("jsonView"); 
+		ModelAndView mv = new ModelAndView("jsonView");
 
 		// 매장 문의내역 글 토탈 개수, 문의내역 리스트
 		List<Map<String, Object>> shopCSList = csService.selectShopCSList(map, session);
 		mv.addObject("shopCSList", shopCSList);
-		
+
 		if (shopCSList.size() > 0) {
 			int shopCSCount = csService.selectShopCSCount(map, session); // 매장 문의글 토탈 개수
-			System.out.println("shopCSCount 확인 : " + shopCSCount); 
+			System.out.println("shopCSCount 확인 : " + shopCSCount);
 			mv.addObject("TOTAL", shopCSCount);
 		} else {
 			mv.addObject("TOTAL", 0);
 		}
-		
+
 		Map<String, Object> shopCSMap = new HashMap<>(); // shopCSList에서 꺼낸 맵 저장해줄 shopCSMap
 		List<Map<String, Object>> csReplyStatusList = new ArrayList<>(); // 답변이 있는지 여부 리턴해서 리스트로 묶어주기
 
@@ -172,12 +172,11 @@ public class ShopPageController {
 
 		return mv;
 	}
-	
 
 	@PostMapping(value = "/shopPage/csDetail_ajax")
 	public ModelAndView shopCSDetail(@RequestParam Map<String, Object> map) throws Exception {
 		log.debug("###### 매장 문의 내역 상세 보기 ######");
-		ModelAndView mv = new ModelAndView("shopCSDetail_ajax"); 
+		ModelAndView mv = new ModelAndView("shopCSDetail_ajax");
 
 		Map<String, Object> csDetailMap = csService.selectCSDetail(map);
 		Map<String, Object> csReplyMap = csService.selectCSReply(map);

@@ -18,6 +18,14 @@
 <!-- ComAjax -->
 <script src="<%=request.getContextPath() %>/assets/js/common.js"></script>
 
+<script>
+function AddComma(num) 
+{
+    var regexp = /\B(?=(\d{3})+(?!\d))/g;
+    return num.toString().replace(regexp, ',');
+}
+</script>
+
 <!-- Favicons -->
 <link href="<%=request.getContextPath() %>/assets/img/favicon.png" rel="icon" />
 <link href="<%=request.getContextPath() %>/assets/img/apple-touch-icon.png" rel="apple-touch-icon" />

@@ -856,7 +856,7 @@ function fn_totalGoodsListCallback(data){ // 페이지 선택 시 화면에 보�
               "<p class='card-text' style='font-size: 13px;'>" + value.TOTAL_GOODS_NAME + "/" +  value.TOTAL_GOODS_MODEL + "</p>" +
             "</div>" +
             "<div class='card-body'>" +
-              "<h6 class='card-title mb-0' style='font-size: 18px; font-weight: 700;'>" + value.TOTAL_GOODS_PRICE + "원" +"</h6>" +
+              "<h6 class='card-title mb-0' style='font-size: 18px; font-weight: 700;'>" + AddComma(value.TOTAL_GOODS_PRICE) + "원" +"</h6>" +
             "</div>" +
           "</a>" +
         "</div>"

@@ -69,7 +69,7 @@ function onMessage(evt){
       	</li>
         <li>
           <c:choose>
-          	<c:when test="${session_MEM_ID != null}">
+          	<c:when test="${session_MEM_ID != null and session_MEM_ADMIN == 'N'}">
           		<a class="nav-link scrollto" href="/sk/myPage" style="font-size: 13px">마이페이지</a>
 			</c:when>
 			<c:when test="${session_BRAND_ID != null}">
