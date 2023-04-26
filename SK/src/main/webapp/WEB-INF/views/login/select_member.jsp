@@ -255,8 +255,8 @@ $(document).ready(function() {
 	       findData.append('MEM_NAME', MEM_NAME);
 	       findData.append('MEM_EMAIL', MEM_EMAIL);
 	       
-	       alert(MEM_NAME);
-	       alert(MEM_EMAIL);
+	       //alert(MEM_NAME);
+	       //alert(MEM_EMAIL);
 	         
 	        $.ajax({
 	            url: '/sk/join/emailAuth',
@@ -267,8 +267,8 @@ $(document).ready(function() {
 	            success:function(data) {
 	            	if(data == "success") {
 	            		$(".findPwResultDiv").empty();
-	            		$(".findPwResultDiv").append("입력하신 이메일을 확인해주세요.");
-	            		alert("입력하신 이메일을 확인해주세요.");
+	            		$(".findPwResultDiv").append("임시 비밀번호로 로그인해주세요.");
+	            		alert("입력하신 이메일으로 비밀번호가 재발급 되었습니다.");
 	            		$("#findPwModal").modal("hide");
 	            		$("#findPwResultModal").modal("show");
 	            	} else if (data == "fail") {
