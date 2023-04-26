@@ -172,6 +172,7 @@ public class LoginController {
 				session.setAttribute("session_BRAND_ID", map.get("BRAND_ID"));
 				session.setAttribute("session_BRAND_PW", map.get("BRAND_PW"));
 				session.setAttribute("session_BRAND_LOGO_FILE", brand.get("BRAND_LOGO_FILE"));
+				session.setAttribute("session_BRAND_NAME", brand.get("BRAND_NAME"));
 				session.setAttribute("session_BRNAD_INFO", brand);
 
 				result = "success";

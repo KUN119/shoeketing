@@ -18,12 +18,12 @@ public class FileUtils {
 
 		// String filePath_temp =
 		// request.getServletContext().getRealPath("/resources/uploadImage/");
-		// String filePath_temp = "C:\\uploadImage\\"; // 로컬 경로에 업로드
-		String filePath_temp = "/Users/book/uploadImage/"; // 맥북 경로 /Users/macbook-id/uploadImage/
+		String filePath_temp = "C:\\goods_image\\"; // 로컬 경로에 업로드
+//		String filePath_temp = "/Users/book/uploadImage/"; // 맥북 경로 /Users/macbook-id/uploadImage/
 
 		System.out.println(filePath_temp);
 		System.out.println("map : " + map);
-		
+
 		MultipartFile multipartFile = request.getFile("BRAND_LOGO_FILE");
 		System.out.println("multipartFile 확인 : " + multipartFile);
 		String originalFileName = null;
@@ -103,7 +103,7 @@ public class FileUtils {
 
 		// 파일 여러개일 때, uploadImgMap 담아줄 리스트 생성
 		List<Map<String, Object>> uploadImgList = new ArrayList<>();
-		
+
 		String filePath_temp = "C:\\goods_image\\"; // 로컬 경로에 업로드
 		System.out.println(filePath_temp);
 		System.out.println("map : " + map);
@@ -123,32 +123,32 @@ public class FileUtils {
 
 		// 업로드된 상품 이미지 개수만큼 반복문 실행해서 multipartFile 객체 생성
 		for (MultipartFile multipartFile : uploadGoodsImg) {
-			if (uploadGoodsImg!= null) {
-			imgNum++; // 상품 이미지 순서 1씩 증가시키고
+			if (uploadGoodsImg != null) {
+				imgNum++; // 상품 이미지 순서 1씩 증가시키고
 
-			Map<String, Object> uploadImgMap = new HashMap<>();
-			
-			originalFileName = multipartFile.getOriginalFilename();
-			originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
-			storedFileName = CommonUtils.getRandomString() + originalFileExtension;
-			file = new File(filePath_temp + storedFileName);
-			multipartFile.transferTo(file);
+				Map<String, Object> uploadImgMap = new HashMap<>();
 
-			System.out.println(" originalFileName : " + originalFileName);
-			System.out.println(" storedFileName: " + storedFileName);
-			System.out.println(" imgNum: " + imgNum);
+				originalFileName = multipartFile.getOriginalFilename();
+				originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
+				storedFileName = CommonUtils.getRandomString() + originalFileExtension;
+				file = new File(filePath_temp + storedFileName);
+				multipartFile.transferTo(file);
 
-			// Map에 파일 이름, 이미지 순서, 상품 번호 넣기
-			uploadImgMap.put("TOTAL_GOODS_NUM", map.get("TOTAL_GOODS_NUM"));
-			uploadImgMap.put("GOODS_IMAGE_ORG", originalFileName);
-			uploadImgMap.put("GOODS_IMAGE_STD", storedFileName);
-			uploadImgMap.put("GOODS_IMAGE_ORDER", imgNum);
+				System.out.println(" originalFileName : " + originalFileName);
+				System.out.println(" storedFileName: " + storedFileName);
+				System.out.println(" imgNum: " + imgNum);
 
-			System.out.println("uploadImgMap 확인 : " + uploadImgMap);
-			
-			// 리스트에 맵 하나씩 담아주기
-			uploadImgList.add(uploadImgMap);
-			
+				// Map에 파일 이름, 이미지 순서, 상품 번호 넣기
+				uploadImgMap.put("TOTAL_GOODS_NUM", map.get("TOTAL_GOODS_NUM"));
+				uploadImgMap.put("GOODS_IMAGE_ORG", originalFileName);
+				uploadImgMap.put("GOODS_IMAGE_STD", storedFileName);
+				uploadImgMap.put("GOODS_IMAGE_ORDER", imgNum);
+
+				System.out.println("uploadImgMap 확인 : " + uploadImgMap);
+
+				// 리스트에 맵 하나씩 담아주기
+				uploadImgList.add(uploadImgMap);
+
 			}
 		}
 
