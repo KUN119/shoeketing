@@ -9,6 +9,7 @@
 </head>
 <body>
     <div class="col-10" style="margin-top: 0px">
+    <form id="stockSearchForm">
      <div class="row d-flex">
         <div class="col-8">
 	      <h3 style="margin-left: 30px; color: black; font-weight: bolder">
@@ -16,18 +17,19 @@
 	      </h3>
       </div>
       
-      <div class="col input-group">
+      	<div class="col input-group">
               <select class="form-select-sm" style="width: 5rem; border-color: rgba(0, 0, 0, 0.263)"  id="searchType" name="searchType" value="${searchType}">
                 <option selected value="total">전체</option>
                 <option value="name" <c:out value="${searchType eq 'name' ? 'selected' : ''}"/>>상품명</option>
                 <option value="model" <c:out value="${searchType eq 'model' ? 'selected' : ''}"/>>모델명</option>
               </select>
               <input type="text" class="form-control" name="keyword1" id="keyword1" value="${keyword}"/>
-              <button class="btn btn-outline-secondary" type="button" id="stockSearch" name="stockSearch" data-shopNum="${SHOP_NUM}">
+              <button class="btn btn-outline-secondary" type="submit" id="stockSearch" name="stockSearch" data-shopNum="${SHOP_NUM}">
                 검색
               </button>
             </div>
-      </div>
+      	</div>
+      	</form>
       
       <hr class="mt-2" style="border: solid 1px rgb(73, 73, 73); width: 100%; ">
       <table class="table" style="width: 100%; margin-left: 30px">
@@ -102,14 +104,22 @@
 	      <!-- 페이징 화면 처리 부분 시작 -->
 		  <div id="PAGE_NAVI"></div>
 		  <input type="hidden" id="PAGE_INDEX" name="PAGE_INDEX"/>
+		  <!-- 페이징 검색 조건 및 검색 키워드 input type hidden 시작 -->
+	      <input type="hidden" id="PAGE_SEARCHTYPE" name="PAGE_SEARCHTYPE"/>
+	      <input type="hidden" id="PAGE_KEYWORD" name="PAGE_KEYWORD"/>
+	      <!-- 페이징 검색 조건 및 검색 키워드 input type hidden 시작 -->
 		  <!-- 페이징 화면 처리 부분 끝 -->
     </div>
     
 <script>
 $(document).ready(function(){
 	
+	$('#PAGE_INDEX').val(${page});
+	$('#PAGE_KEYWORD').val('${keyword}');
+	$('#PAGE_SEARCHTYPE').val('${searchType}');
+	
 	// 페이지 로딩 시 자동으로 1페이지 가져오기
-	fn_selectStockList(1);
+	fn_selectStockList(${page}, '${searchType}', '${keyword}');
 
 	$("#stockListBody").on("click", "button[name='goodsAmountModify']", function(e){  // 매장 재고 수량 업데이트
 		e.preventDefault();
@@ -157,40 +167,25 @@ $(document).ready(function(){
 	}
 	
 	
-	$("button[name='stockSearch']").on("click", function(e){  // 재고 검색 (상품명, 모델명)_ajax구현
+	$("#stockSearchForm").on("submit", function(e){  // 재고 검색 (상품명, 모델명)_ajax구현
 		e.preventDefault();
-		const shopNum = $(this).attr("data-shopNum");
-	
-		fn_stockSearch(shopNum);
+		
+		/* 페이징 검색 조건 및 검색 키워드 변수 초기화 시작 */
+		var keyword = $('#keyword1').val();
+		var searchType = $('#searchType').val();
+		/* 페이징 검색 조건 및 검색 키워드 변수 초기화 끝 */
+		
+		$('#PAGE_INDEX').val(1); /* 검색 시 1페이지로 */
+		
+		/* 페이징 검색 조건 및 검색 키워드 input type hidden에 값 넣어주기 시작 */
+		$('#PAGE_KEYWORD').val(keyword);
+		$('#PAGE_SEARCHTYPE').val(searchType);
+		/* 페이징 검색 조건 및 검색 키워드 input type hidden에 값 넣어주기 끝 */
+		
+		/* 페이징 함수 매개변수에 맞게 함수 호출(매개변수 순서 및 위치 주의!!) */
+		fn_selectStockList(1, searchType, keyword);
 		
 	});
-	
-	function fn_stockSearch(shopNum){
-		//var formData = new FormData();
-		
-		var searchType = $("#searchType").val();
-		var keyword = $("#keyword1").val();
-		
-/* 		formData.append("searchType", searchType);
-		formData.append("keyword", keyword);
-		
-		$.ajax({
-			type : 'post',
-			url : '/sk/shopPage/stockList_ajax',
-			data : formData,
-			processData : false,
-			contentType : false,
-			success : function(data){
-				$("#stockListBody").empty();
-				$('#stockListBody')[0].innerHTML=data;
-			},
-			error: function(xhr, status, error) {
-				console.log('실패');
-			}
-		}); */
-		
-		fn_selectStockList(1, searchType, keyword);
-	}
 	
 });
 
@@ -211,7 +206,7 @@ function fn_selectStockList(pageNo, searchType, keyword){
 
 // 페이징 콜백 함수
 function fn_selectStockListCallback(data){ // 페이지 선택 시 화면에 보여줄 결과 콜백함수
-	var total = data.TOTAL;
+	var total = data.stockCount;
 	var body = $("#stockListBody"); // 페이징 한 결과가 반영될 태그
 	
 	body.empty();
@@ -225,6 +220,10 @@ function fn_selectStockListCallback(data){ // 페이지 선택 시 화면에 보
 		var params = {
 			divId : "PAGE_NAVI",
 			pageIndex : "PAGE_INDEX",
+			/* 페이징 검색 조건 및 검색 키워드 객체에 추가 시작 */
+			searchType : "PAGE_SEARCHTYPE",
+			keyword : "PAGE_KEYWORD",
+			/* 페이징 검색 조건 및 검색 키워드 객체에 추가 끝 */
 			totalCount : total,
 			recordCount : 5,
 			eventName : "fn_selectStockList" // 페이징 함수이름 동일하게

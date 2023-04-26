@@ -547,6 +547,12 @@ $(document).ready(function() {
 	  
 	  $("#payment-button").on("click", function(e){
 		  
+		var orderId = null;
+		
+		$.ajax({
+			
+		});
+		  
 		var goodsNum = $('#RESERVATION_PRONUM').val();
 		var goodsName = $('#TOTAL_GOODS_NAME').val();
 		var shopNum = $('#RESERVATION_SHOP_NUM').val();

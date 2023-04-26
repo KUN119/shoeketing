@@ -249,7 +249,7 @@
     </definition>
    
     <!-- 매장 회원 마이페이지 shopAccountModifyForm-->
-   <definition name="accountModifyForm" extends="myPageTemplate">
+   <definition name="shopModifyForm" extends="myPageTemplate">
     	  <put-attribute name="myPage_header" value="/WEB-INF/views/layout/myPage/shop_myPage_header.jsp" />
     	  <put-attribute name="myPage_side" value="/WEB-INF/views/layout/myPage/shop_myPage_side.jsp" />
     	  <put-attribute name="myPage_main" value="/WEB-INF/views/shop/shopPage/account/accountModifyForm.jsp" />

@@ -186,6 +186,17 @@
 		]]>
 	</update>
 	
+	<!-- orderId 가져오기 -->
+	<select id="selectOrderId" parameterType="hashmap" resultType="long">
+		<![CDATA[
+			SELECT NVL(NUM, 0) AS RESERVATION_NUM
+			FROM (
+					SELECT MAX(RESERVATION_NUM) AS NUM
+					FROM RESERVATION
+				 )
+		]]>
+	</select>
+	
 	<!-- 예약금 결제 성공 -->
 	<insert id="insertReservation" parameterType="hashmap">
 	<![CDATA[

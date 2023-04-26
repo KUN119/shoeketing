@@ -30,7 +30,7 @@
             ${goodsDetailList[0].TOTAL_GOODS_NAME } / ${goodsDetailList[0].TOTAL_GOODS_MODEL }
           </h3>
           <div class="d-flex mt-4">
-            <h3 class="mb-0" style="font-weight: 700">${goodsDetailList[0].TOTAL_GOODS_PRICE }</h3>
+            <h3 class="mb-0" style="font-weight: 700"><fmt:formatNumber value="${goodsDetailList[0].TOTAL_GOODS_PRICE }" type="currency" currencySymbol="" /></h3>
             <p class="mb-0 ms-1 align-self-end">원</p>
           </div>
           <div class="d-flex mt-5">
