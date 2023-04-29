@@ -13,7 +13,7 @@
     <div class="container">
       <!--검색창 시작-->
       <div class="row mb-5 mt-5">
-        <form>
+        <form id="totalSearchForm">
           <div class="input-group" style="justify-content: center">
             <input
               class="header-input"
@@ -28,10 +28,12 @@
               type="search"
               name="keyword"
               id="keyword"
+              value="${keyword }"
+              required
             />
             <button
               class="btn"
-              type="button"
+              type="submit"
               style="
                 background-color: white;
                 border-style: none;
@@ -61,6 +63,7 @@
 
       <!--검색 키워드 시작-->
       <div class="row mb-3" id="searchKeyword">
+      	<h2 id='searchKeyword' style='font-weight: 700'>검색어: ${keyword }</h2>
       </div>
       <!--검색 키워드 끝-->
 
@@ -230,7 +233,7 @@ $(document).ready(function() {
 	      formData.append("TOTAL_GOODS_NUM", TOTAL_GOODS_NUM);
 	}; 
 	
-	$("button[name='searchBtn']").on("click", function(e) {
+	$("#totalSearchForm").on("submit", function(e) {
 		e.preventDefault();
 		fn_searchBtn();
 	});

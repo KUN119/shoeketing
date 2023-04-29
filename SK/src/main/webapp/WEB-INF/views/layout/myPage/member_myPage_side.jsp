@@ -45,7 +45,7 @@
           </li>
 
           <li
-            class="list-group-item d-flex justify-content-between bg-light mt-4"
+            class="list-group-item d-flex justify-content-between mt-4"
           >
             <div class="text-success">
               <h5 class="my-0"><a href="/sk/basket/basketList">장바구니</a></h5>

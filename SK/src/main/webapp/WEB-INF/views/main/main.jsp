@@ -24,9 +24,9 @@
         </div>
         
         <div
-          style="z-index: 9999; position: relative; bottom: 12rem; left: 50rem"
+          class="justify-content-center text-center"
+          style="z-index: 9999; position: relative; bottom: 12rem;"
         >
-          <div class="col-auto" style="display: inline-block;">
             <a href="/sk/goods/stockSearchForm">
               <h1 style="color: white; display: inline-block;">실시간 재고검색</h1>
               <i
@@ -34,7 +34,6 @@
                 style="font-size: 30px; color: white"
               ></i>
             </a>
-          </div>
         </div>
         
       </div>
