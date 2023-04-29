@@ -223,6 +223,8 @@
   <script>
  
     $(document).ready(function () {
+      $("input[name='starPoint']").css('cursor','default');
+    
       const starPoint = $("input[name='starPoint']").val() * 10;
       $(".starView").css('width', starPoint + '%');
       

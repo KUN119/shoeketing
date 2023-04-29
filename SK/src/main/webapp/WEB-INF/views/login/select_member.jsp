@@ -119,22 +119,16 @@
                 <form id="loginForm" class="php-email-form needs-validation" novalidate>
                     <div class="form-group mt-3 mb-3">
                         <input type="email" class="form-control" id="MEM_EMAIL" name="MEM_EMAIL" placeholder="email" required/>
+                        <div class="invalid-feedback text-start">
+				      		이메일을 입력해주세요
+				    	</div>
                     </div>
-                    <div class="invalid-feedback text-start">
-				      please input your email
-				    </div>
-				    <div class="valid-feedback text-start">
-				      good luck
-				    </div>
                     <div class="form-group mb-3">
                         <input type="password" class="form-control" id="MEM_PW" name="MEM_PW" placeholder="password" required/>
+                        <div class="invalid-feedback text-start">
+				      		비밀번호를 입력해주세요
+				    	</div>
                     </div>
-                    <div class="invalid-feedback text-start">
-				      please input your pw
-				    </div>
-				    <div class="valid-feedback text-start">
-				      good luck
-				    </div>
                     <div class="form-group mb-3 text-left">
                         <input type="checkbox" value="autoLogin" id="autoLogin">
                         <label class="form-check-label" for="autoLogin">
@@ -157,11 +151,29 @@
   
 <script type="text/javascript">
 $(document).ready(function() {
-	
-	$("#loginForm").on("submit", function(e) {
+	//유효성 검사
+	(() => {
+		  'use strict'
+	  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+	  const form = document.querySelector('.needs-validation')
+	  // Loop over them and prevent submission
+	$("#loginForm").on("submit", function(e) { //등록 버튼 누르면
 		e.preventDefault();
-		fn_loginForm();
-	});
+		$('#loginForm').addClass('was-validated');
+		let MEM_EMAIL = $("#MEM_EMAIL").val();
+		let MEM_PW = $("#MEM_PW").val();
+		
+		if($.trim(MEM_EMAIL) == '' || MEM_EMAIL == null) {
+			return false;
+		}
+		
+		if($.trim(MEM_PW) == '' || MEM_PW == null) {
+			return false;
+		}
+		
+		 fn_loginForm();
+		});
+	})()
 	
 	function fn_loginForm() {
 		var formData = new FormData();
@@ -285,5 +297,6 @@ $(document).ready(function() {
 	       }); 
 	};
 });
+
 </script>
 </html>

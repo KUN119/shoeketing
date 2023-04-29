@@ -13,7 +13,9 @@
         </div>
         <div class="col text-end" style="margin-right: 100px;">
             <h1 class="mb-0 fs-1" style="color: rgb(255, 255, 255);">${session_MEM_INFO.MEM_GRADE}</h2>
-            <h1 class="mb-0 fs-5" style="color: rgb(255, 255, 255);">등급혜택</h2>
+            <h1 class="mb-0 fs-5" style="color: rgb(255, 255, 255);">
+            	<a style="color: rgb(255, 255, 255);" href="/sk/myPage">등급혜택</a>
+            </h2>
         </div>
        </div>
 </body>
