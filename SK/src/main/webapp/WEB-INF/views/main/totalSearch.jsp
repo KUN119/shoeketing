@@ -111,18 +111,14 @@
 
         <!--상품 검색결과 더보기 시작-->
         <div class="row">
-        	<c:choose>
-	        	<c:when test="${fn:length(goodsList) > 4}">
 		          <a href="#" class="ms-4" style="font-weight: 500" id="goodsMore">
 		          	<p>검색결과 더보기<i class="bi bi-chevron-down ms-2"></i></p>
 		          </a>
-		        </c:when>
-		        <c:when test="${fn:length(goodsList) == 0 }">
-				    <class="ms-4" style="font-weight: 500" >
-				        <p>해당 상품 검색결과가 없습니다.</p>
-				    </class>
-				</c:when>
-			</c:choose>
+		        <div id="goodsNotFoundDiv">
+			        <c:if test="${fn:length(goodsList) == 0 }">
+					    <p class="ms-4" style="font-weight: 500">해당 상품 검색결과가 없습니다.</p>
+					</c:if>
+				</div>
           <hr/>
         </div>
         <!--상품 검색결과 더보기 끝-->
@@ -178,18 +174,14 @@
 
         <!--매장 검색결과 더보기 시작-->
         <div class="row">
-        	<c:choose>
-		        <c:when test="${fn:length(shopList) > 4 }">
 			       <a href="#" class="ms-4" style="font-weight: 500" id='shopMore'>
 			          <p>검색결과 더보기<i class="bi bi-chevron-down ms-2"></i></p>
 			       </a>
-			     </c:when>
-			     <c:when test="${fn:length(shopList) == 0 }">
-			       <class="ms-4" style="font-weight: 500" >
-			          <p>해당 매장 검색결과가 없습니다.</p>
-			       </class>
-			     </c:when>
-			 </c:choose>
+			     <div id="shopNotFoundDiv">
+			     	<c:if test="${fn:length(shopList) == 0 }">
+			     	     <p class="ms-4" style="font-weight: 500">해당 매장 검색결과가 없습니다.</p>
+			     	</c:if>
+			     </div>
           <hr />
         </div>
         <!--매장 검색결과 더보기 끝-->
@@ -206,6 +198,17 @@ $(document).ready(function() {
 	
 	console.log(values2);
 	console.log(values3);
+	
+	var goodsLength = ${fn:length(goodsList)};
+	var shopLength = ${fn:length(shopList)};
+	
+	if(goodsLength <= 4) {
+		$("#goodsMore").hide();
+	}
+	
+	if(shopLength <= 4) {
+		$("#shopMore").hide();
+	}
 	
 	$("a[name='bDetail']").on("click", function(e) {  //브랜드관으로 넘어가기
 		e.preventDefault();
@@ -307,46 +310,55 @@ $(document).ready(function() {
 					$("#goodsMore").show();
 				}
 				
+				
+				if(values2.length == 0) {
+					$("#goodsNotFoundDiv").empty();
+					var strp = '<p class="ms-4" style="font-weight: 500">해당 상품 검색결과가 없습니다.</p>';
+					$("#goodsNotFoundDiv").append(strp);
+				} else {
+					$("#goodsNotFoundDiv").empty();
+					$.each(values2, function(index, value) {
+		                console.log("GOODS " + index + " : " + value); //로그 한번 찍어주고 근데 값이 Object로 나옴..
+		                
+		                //value값에 맞는 변수명 설정해주고..
+		                var gNum = value.TOTAL_GOODS_NUM;
+						var bName = value.BRAND_NAME;
+						var gImg = value.GOODS_IMAGE_STD;
+						var gName = value.TOTAL_GOODS_NAME;
+						var gModel = value.TOTAL_GOODS_MODEL;
+						var gPrice = value.TOTAL_GOODS_PRICE;
+						
+						//위 변수 넣고 돌려
+				        var g = "";
+				            g +="<div class='col-6 mt-4 mb-4 d-flex goodsCnt'>";
+				            g +=  "<a href='#' class='d-flex' name='gDetail' data-num='"+ gNum +"'>";
+				            g += "<img src='/sk/image/display?fileName=" + gImg + "'";
+				            g +=    "style='width: 14rem'/>";
+				            g +=  "<div class='ms-5 align-self-center'>";
+				            g +=   "<p style='font-weight: 700'>" + bName + "</p>";
+				            g +=  "<p>" + gName + "/" + gModel + "</p>";
+				            g +=  "<p style='font-weight: 700; font-size: large'>" + gPrice + "</p>";
+				            g += "</div>";
+				            g += "</a>";
+				            g +="</div>";
+				                
+				            $("#gInfo").prepend(g);
+				           	
+				            //index가 0,1,2,3해서 4개만 출력하고 이 반복문이 빠져나오고 아래서 계속
+				            if(index == 3) {
+				                return false;
+				             }
+				            
+				            $("#gInfo").on("click", "a[name='gDetail']", function(e) {  //상품 상세보기 페이지로 넘어가기
+			            		e.preventDefault();
+			            		const num = $(this).attr("data-num");  //a태그 name이 title 부분 속성의 data-num값 가져와서 변수 num에 저장
+			            		fn_gDetail(num); //fn_gDetail()함수 매개변수로 num 전송
+			            		location.href="/sk/goods/goodsDetail?TOTAL_GOODS_NUM=" + num;
+			            	});
+					});
+				}
 				//index[0]부터 value 넣어서 반복문 돌려주기
-	            $.each(values2, function(index, value) {
-	                console.log("GOODS " + index + " : " + value); //로그 한번 찍어주고 근데 값이 Object로 나옴..
-	                
-	                //value값에 맞는 변수명 설정해주고..
-	                var gNum = value.TOTAL_GOODS_NUM;
-					var bName = value.BRAND_NAME;
-					var gImg = value.GOODS_IMAGE_STD;
-					var gName = value.TOTAL_GOODS_NAME;
-					var gModel = value.TOTAL_GOODS_MODEL;
-					var gPrice = value.TOTAL_GOODS_PRICE;
-					
-					//위 변수 넣고 돌려
-			        var g = "";
-			            g +="<div class='col-6 mt-4 mb-4 d-flex goodsCnt'>";
-			            g +=  "<a href='#' class='d-flex' name='gDetail' data-num='"+ gNum +"'>";
-			            g += "<img src='/sk/image/display?fileName=" + gImg + "'";
-			            g +=    "style='width: 14rem'/>";
-			            g +=  "<div class='ms-5 align-self-center'>";
-			            g +=   "<p style='font-weight: 700'>" + bName + "</p>";
-			            g +=  "<p>" + gName + "/" + gModel + "</p>";
-			            g +=  "<p style='font-weight: 700; font-size: large'>" + gPrice + "</p>";
-			            g += "</div>";
-			            g += "</a>";
-			            g +="</div>";
-			                
-			            $("#gInfo").prepend(g);
-			           	
-			            //index가 0,1,2,3해서 4개만 출력하고 이 반복문이 빠져나오고 아래서 계속
-			            if(index == 3) {
-			                return false;
-			             }
-			            
-			            $("#gInfo").on("click", "a[name='gDetail']", function(e) {  //상품 상세보기 페이지로 넘어가기
-		            		e.preventDefault();
-		            		const num = $(this).attr("data-num");  //a태그 name이 title 부분 속성의 data-num값 가져와서 변수 num에 저장
-		            		fn_gDetail(num); //fn_gDetail()함수 매개변수로 num 전송
-		            		location.href="/sk/goods/goodsDetail?TOTAL_GOODS_NUM=" + num;
-		            	});
-				});
+	            
 	                
 				//위 처럼 똑같이 버튼 숨기고 보여주고 하기
 	            if(values3.length <= 4) {
@@ -355,60 +367,67 @@ $(document).ready(function() {
 					$("#shopMore").show();
 				}    
                 
-				
-                $.each(values3, function(index, value) {
-                	console.log("SHOP " + index + " : " + value);
-                	
-					var sBrand = value.SHOP_BRAND;
-					var sName = value.SHOP_NAME;
-					var sTel = value.SHOP_TEL;
-					var sAdd = value.SHOP_ADD;
-					var sOpen = value.SHOP_START_TIME;
-                    var sClose = value.SHOP_END_TIME;
+				if(values3.length == 0) {
+					$("#shopNotFoundDiv").empty();
+					var strp2 = '<p class="ms-4" style="font-weight: 500">해당 매장 검색결과가 없습니다.</p>';
+					$("#shopNotFoundDiv").append(strp2);
+				} else {
+					$("#shopNotFoundDiv").empty();
+					$.each(values3, function(index, value) {
+	                	console.log("SHOP " + index + " : " + value);
+	                	
+						var sBrand = value.SHOP_BRAND;
+						var sName = value.SHOP_NAME;
+						var sTel = value.SHOP_TEL;
+						var sAdd = value.SHOP_ADD;
+						var sOpen = value.SHOP_START_TIME;
+	                    var sClose = value.SHOP_END_TIME;
+	                
+	                var s = "";
+	                s+="<div class='row mt-2 mb-2 shopCnt'>";
+	                s+="  <div class='col-2 align-self-center text-center'>";
+	                s+="    <p class='fw-semibold' style='font-size: large'>"+sName+"</p>";
+	                s+=" </div>";
+	                s+="  <div class='col-10'>";
+	                s+="    <div class='row'>";
+	                s+="      <div class='col-2'>";
+	                s+="        <p style='font-weight: 500'>전화번호</p>";
+	                s+="   </div>";
+	                s+="   <div class='col-4'>";
+	                s+="     <p>"+sTel+"</p>";
+	                s+="   </div>";
+	                s+="   <div class='col-2'>";
+	                s+="  <p style='font-weight: 500'>영업시간</p>";
+	                s+="      </div>";
+	                s+="   <div class='col-4'>";
+	                s+="     <p>"+sOpen+ " ~ " +sClose+"</p>";
+	                s+="   </div>";
+	                s+="    </div>";
+	                s+="    <div class='row mt-3'>";
+	                s+="    <div class='col-2'>";
+	                s+="     <p style='font-weight: 500'>주소</p>";
+	                s+="   </div>";
+	                s+="   <div class='col-4'>";
+	                s+="     <p>"+sAdd+"</p>";
+	                s+="   </div>";
+	                s+="   <div class='col-2'>";
+	                s+="     <p style='font-weight: 500'>브랜드명</p>";
+	                s+="   </div>";
+	                s+="   <div class='col-4'>";
+	                s+="    <p>"+sBrand+"</p>";
+	                s+="      </div>";
+	                s+=" </div>";
+	                s+="  </div>";
+	                s+="</div>";
+	                s+="<hr />";
+	                
+	                $("#sInfo").prepend(s);
+		                if(index == 3) {
+		                	return false;
+		                }
+					});
+				}
                 
-                var s = "";
-                s+="<div class='row mt-2 mb-2 shopCnt'>";
-                s+="  <div class='col-2 align-self-center text-center'>";
-                s+="    <p class='fw-semibold' style='font-size: large'>"+sName+"</p>";
-                s+=" </div>";
-                s+="  <div class='col-10'>";
-                s+="    <div class='row'>";
-                s+="      <div class='col-2'>";
-                s+="        <p style='font-weight: 500'>전화번호</p>";
-                s+="   </div>";
-                s+="   <div class='col-4'>";
-                s+="     <p>"+sTel+"</p>";
-                s+="   </div>";
-                s+="   <div class='col-2'>";
-                s+="  <p style='font-weight: 500'>영업시간</p>";
-                s+="      </div>";
-                s+="   <div class='col-4'>";
-                s+="     <p>"+sOpen+ " ~ " +sClose+"</p>";
-                s+="   </div>";
-                s+="    </div>";
-                s+="    <div class='row mt-3'>";
-                s+="    <div class='col-2'>";
-                s+="     <p style='font-weight: 500'>주소</p>";
-                s+="   </div>";
-                s+="   <div class='col-4'>";
-                s+="     <p>"+sAdd+"</p>";
-                s+="   </div>";
-                s+="   <div class='col-2'>";
-                s+="     <p style='font-weight: 500'>브랜드명</p>";
-                s+="   </div>";
-                s+="   <div class='col-4'>";
-                s+="    <p>"+sBrand+"</p>";
-                s+="      </div>";
-                s+=" </div>";
-                s+="  </div>";
-                s+="</div>";
-                s+="<hr />";
-                
-                $("#sInfo").prepend(s);
-	                if(index == 3) {
-	                	return false;
-	                }
-				});
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
 		        console.log('Ajax request failed: ' + textStatus + ', ' + errorThrown);
