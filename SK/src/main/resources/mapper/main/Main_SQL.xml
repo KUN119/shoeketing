@@ -32,8 +32,7 @@
                             SHOP
                   WHERE SHOP_DEL_GB = 'N'
                   AND SHOP_JOIN_APPROVE = 'Y'
-                  AND SHOP_BRAND LIKE '%' || #{keyword} || '%')
-        	WHERE SHOP_NAME LIKE '%' || #{keyword} || '%'
+                  AND ((SHOP_BRAND LIKE '%' || #{keyword} || '%') OR (SHOP_NAME LIKE '%' || #{keyword} || '%') OR (SHOP_ADD LIKE '%' || #{keyword} || '%')))
         ]]>
 	</select>
 
@@ -43,7 +42,7 @@
         	FROM SHOP
         	WHERE SHOP_DEL_GB = 'N'
         	AND SHOP_JOIN_APPROVE = 'Y'
-        	(AND SHOP_BRAND = #{BRAND_NAME} OR SHOP_NAME LIKE '%' || #{keyword} || '%') 
+        	AND ((SHOP_BRAND LIKE '%' || #{keyword} || '%') OR (SHOP_NAME LIKE '%' || #{keyword} || '%') OR (SHOP_ADD LIKE '%' || #{keyword} || '%'))
     	]]>
 	</select>
 	
