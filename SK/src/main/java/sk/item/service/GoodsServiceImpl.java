@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.apache.maven.doxia.logging.Log;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -107,7 +108,7 @@ public class GoodsServiceImpl implements GoodsService {
 	@Override
 	public int insertGoodsImage(Map<String, Object> map, MultipartFile[] uploadGoodsImg) throws Exception {
 
-		List<Map<String, Object>> insertImgList = fileUtils.parseInsertFileInfo(map, uploadGoodsImg);
+		List<Map<String, Object>> insertImgList = fileUtils.parseInsertFileImage(map, uploadGoodsImg);
 		System.out.println("####insertGoodsImage insertImgList 확인 : " + insertImgList);
 
 		for (Map<String, Object> uploadImgMap : insertImgList) {
@@ -154,6 +155,19 @@ public class GoodsServiceImpl implements GoodsService {
 		map.put("BRAND_NUM", sessionService.getSessionBrand(session, "BRAND_NUM"));
 		map.put("BRAND_NAME", sessionService.getSessionBrand(session, "BRAND_NAME"));
 
+		List<Map<String, Object>> goodsDetailMapList = goodsDAO.selectGoodsDetail(map);
+		List<String> goodsSizeListOld = new ArrayList<>();
+		List<String> goodsSizeListOld_temp = new ArrayList<>();
+		for (int i = 0; i < goodsDetailMapList.size(); i++) {
+			goodsSizeListOld.add(goodsDetailMapList.get(i).get("GOODS_DETAIL_SIZE").toString());
+		}
+		System.out.println("goodsSizeListOld######" + goodsSizeListOld);
+		goodsSizeListOld_temp.addAll(goodsSizeListOld); //goodsSizeListOld 임시 저장
+		
+		// 삭제할 사이즈만 남기기(사이즈 체크 해제한거)
+		goodsSizeListOld.removeAll(goodsSizeList);
+		System.out.println("goodsSizeListDelete 후 ######" + goodsSizeListOld);
+		
 		System.out.println("map 확인## : " + map);
 		System.out.println("goodsSizeList 확인## : " + goodsSizeList);
 		//map.put("GOODS_DETAIL_SIZE", map.get("GOODS_DETAIL_SIZE")); // 기존 등록되어 있던 사이즈 삭제하기 위함
@@ -168,17 +182,40 @@ public class GoodsServiceImpl implements GoodsService {
 		}
 		
 		goodsDAO.updateGoodsModify(map);  // 상품 수정
-		deleteShopGoodsFromDeleteByBrand(map); // 해당 매장 상품들 모두 삭제 
+		
+		// 사이즈 별 상품 재고개수 = 0 일 경우에만 삭제
+		System.out.println("상품 재고 개수 확인 ##" + selectGoodsAmountFromStockOfSize(map));
+		
+		for(int i=0; i<goodsSizeListOld.size(); i++) {
+			Map<String, Object> deleteSize = new HashMap<>();
+			deleteSize.put("GOODS_DETAIL_SIZE", goodsSizeListOld.get(i));
+			deleteSize.put("TOTAL_GOODS_NUM", map.get("TOTAL_GOODS_NUM"));
+			
+			if(selectGoodsAmountFromStockOfSize(deleteSize) == 0) {
+				deleteShopGoodsFromDeleteByBrand(deleteSize); // 해당 매장 상품들 모두 삭제 
+			}
+		}
 		
 		// 매장 수만큼 반복문 돌려서, 브랜드가 수정한 상품 매장에 사이즈별로 등록
 		List<Map<String, Object>> shopNumList = selectShopNumName(map);
 		System.out.println("shopNumList : " + shopNumList);
 		System.out.println("shopNumList 크기 : " + shopNumList.size());
 
+		// 상품 수정시 기존 사이즈에 없던 사이즈만 남겨놓고 모두 삭제(차집합)
+		goodsSizeList.removeAll(goodsSizeListOld_temp);
+		System.out.println("goodsSizeList@@@ " + goodsSizeList);
+		
 		for (int i = 0; i < shopNumList.size(); i++) {
 			Map<String, Object> shopNumMap = shopNumList.get(i);
-			map.put("SHOP_GOODS_SHOP_NUM", shopNumMap.get("SHOP_NUM"));
-			insertShopGoodsAddByBrand(map);
+			
+			for(int j=0; j<goodsSizeList.size(); j++) {
+				Map<String, Object> insertSize = new HashMap<>();
+				insertSize.put("SHOP_GOODS_SHOP_NUM", shopNumMap.get("SHOP_NUM"));
+				insertSize.put("TOTAL_GOODS_NUM", map.get("TOTAL_GOODS_NUM"));
+				insertSize.put("GOODS_DETAIL_SIZE", goodsSizeList.get(j));
+				
+				insertShopGoodsAddByBrand(insertSize);
+			}
 		}
 		
 		//goodsDAO.updateGoodsImageModify(map);
