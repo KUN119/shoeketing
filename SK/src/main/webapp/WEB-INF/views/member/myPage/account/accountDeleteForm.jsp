@@ -12,7 +12,7 @@
             <br>                
               <h5 style="margin-left: 30%; margin-right: 25%; color: rgb(83, 83, 83); text-align: center;">그동안 SHOEKETING을 이용해주셔서 감사합니다.</h5>
               <h5 style="margin-left: 30%; margin-right: 25%; color: rgb(255, 2, 2); text-align: center;">회원탈퇴 전 다음 사항을 꼭 숙지하시기 바랍니다.</h5>
-              <hr class="my-4" style="margin-left: 15%;">
+              <hr class="my-4">
             <br>
   			<h5 style="margin-left: 30px; color: rgb(83, 83, 83); text-align: left;">1. 회원님이 기존에 작성하신 상품후기, 상품문의 게시물은 회원탈퇴 시에도 삭제되지 않습니다.</h5>
             <h6 style="margin-left: 8%; margin-right: 15%; color: rgb(83, 83, 83); text-align: left;">- 작성하신 게시물의 삭제를 원하실 경우에는 직접 삭제하신 후 탈퇴바라며, 삭제가 불가능한 경우 고객센터로 문의 바랍니다.</h6>
@@ -37,11 +37,13 @@
             </div>
 
             <br>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-start mt-4">
-                <form class="col-5 mb-3 mb-lg-0 me-lg-3" name="pwForm" role="search" style="width: 20%; margin-left:30px; margin-bottom:30px;">
-                <input type="search" class="form-control form-control-bright text-bg-bright" placeholder="비밀번호를 입력해 주세요." aria-label="Search" id="MEM_PW" name="MEM_PW">
-                <input type="hidden" id="MEM_NUM" name="MEM_NUM" value="2">
-                <button type="button" name="delete" class="btn btn-warning">회원 탈퇴</button>
+            <div class="text-start mt-2" style="width:20rem; margin-left: 30px">
+                <form name="pwForm" role="search">
+                	<div class="d-flex" style="height:3rem;">
+                		<input type="password" class="form-control form-control-bright text-bg-bright" placeholder="비밀번호를 입력해 주세요." aria-label="Search" id="MEM_PW" name="MEM_PW">
+                		<input type="hidden" id="MEM_NUM" name="MEM_NUM" value="2">
+                		<button style="width:8rem;" type="button" name="delete" class="btn btn-warning">회원 탈퇴</button>
+                	</div>
                 </form>   
             </div>
         </div>
