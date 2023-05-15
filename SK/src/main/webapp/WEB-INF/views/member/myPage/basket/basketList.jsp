@@ -472,32 +472,22 @@ function fn_pickupDates() {
 						$(".modal-body").append(str);
 						//여러개의 상품이 모달창에 계속 추가되어야 하기 때문에 append메소드 사용
 						
-							/* pickupInfo[i] = {
+							 pickupInfo[i] = {
 								goodsNum : d_num,
 								goodsName : d_name,
 								shopNum : d_shopnum,
 								goodsSize : d_size
-								}; */
+								}; 
 						
-						/* alert("goodsNum : " + pickupInfo[i]["goodsNum"]);
-						alert("goodsName : " + pickupInfo[i]["goodsName"]);
-						alert("shopNum : " + pickupInfo[i]["shopNum"]);
-						alert("goodsSize : " + pickupInfo[i]["goodsSize"]); */
-						
-						/* console.log("1 goodsNum : " + pickupInfo[i]["goodsNum"]);
-						console.log("1 goodsName : " + pickupInfo[i]["goodsName"]);
-						console.log("1 shopNum : " + pickupInfo[i]["shopNum"]);
-						console.log("1 goodsSize : " + pickupInfo[i]["goodsSize"]); */
+						 console.log("goodsNum : " + pickupInfo[i]["goodsNum"]);
+						console.log("goodsName : " + pickupInfo[i]["goodsName"]);
+						console.log("shopNum : " + pickupInfo[i]["shopNum"]);
+						console.log("goodsSize : " + pickupInfo[i]["goodsSize"]); 
 					} //if문
-					
-					/* console.log("1 goodsNum : " + pickupInfo[i]["goodsNum"]);
-					console.log("1 goodsName : " + pickupInfo[i]["goodsName"]);
-					console.log("1 shopNum : " + pickupInfo[i]["shopNum"]);
-					console.log("1 goodsSize : " + pickupInfo[i]["goodsSize"]);
-					console.log("1 pickupDate : " + pickupInfo[i]["pickupDate"]); */
 					
 				} //for문
 				
+					//객체에 상품 데이터가 담겼는지 확인하기 위해 객체의 길이를 출력
 				   	alert("length : " + Object.values(pickupInfo).length);
 				   	
 					$("#pickupDateModal").modal("show");
@@ -512,58 +502,46 @@ function fn_pickupDates() {
 						
 						var list = 	{};
 						
-						$("#modalRow").each(function(index, item) {
-							goodsNum = $(item "#num").val();
-							shopNum = $(item "#shopnum").val();
-							alert("아 " + goodsNum + ", " + shopNum);
-							
-							/* pickupInfo = {
-								goodsNum : $(item "#num").val(),
-								goodsName : d_name,
-								shopNum : d_shopnum,
-								goodsSize : d_size
-							} */
-						});
+						//$("#modalRow").each(function(index, item) {
 						
+							var dates = $("#modalRow #date");
+						//	var rows = $("#modalRow");
+						//	var children = rows.childNodes;
+						//	var modal = $("#pickupDateModal");
 						
-						//let dates = $("#modalRow #date");
-						/* var rows = $("#modalRow");
-						var children = rows.childNodes;
-						var modal = $("#pickupDateModal"); */
-						
-						
-						
-						/* for(var i=0; i<dates.length; i++) {
+						 for(var i=0; i<dates.length; i++) {
 							
 							var date = dates[i].value;
-							//객체에 프로퍼티 추가하는 방법 찾기 !!!
+							
 							alert("date : " + date);
 							
 							  	dateObj[i] = {
 									pickupDate : date
 								}
 							  	
-							  
-							alert("goodsNum : " + pickupInfo[i]["goodsNum"]);
+							/* alert("goodsNum : " + pickupInfo[i]["goodsNum"]);
 							alert("goodsName : " + pickupInfo[i]["goodsName"]);
 							alert("shopNum : " + pickupInfo[i]["shopNum"]);
 							alert("goodsSize : " + pickupInfo[i]["goodsSize"]);
-							alert("pickupDate : " + dateObj[i]["pickupDate"]); 
+							alert("pickupDate : " + dateObj[i]["pickupDate"]);  */
 					
-						} */
+						}
+						 
+						 var result = $.extend(pickupInfo, dateObj); //객체를 하나로 합치기
+						console.log("결과 : " + JSON.stringify(result)); //객체 합친 결과 출력
 						
-						var result = $.extend(pickupInfo, dateObj);
-						console.log("결과 : " + JSON.stringify(result));
+						//alert("goodsNum : " + pickupInfo[i]["goodsNum"]);
 						
-						alert("goodsNum : " + pickupInfo[i]["goodsNum"]);
-						
-						for(var i=0; i<Object.values(pickupInfo).length; i++) {
+						/* for(var i=0; i<Object.values(pickupInfo).length; i++) {
 							console.log("goodsNum : " + pickupInfo[i]["goodsNum"] + ", " + "goodsName : " + pickupInfo[i]["goodsName"] + ", " + "shopNum : " +
 										pickupInfo[i]["shopNum"] + ", " + "goodsSize : " + pickupInfo[i]["goodsSize"] + ", "
 										+ "goodsSize : " + pickupInfo[i]["goodsSize"] + ", " + "pickupDate : " + pickupInfo[i]["pickupDate"]);
 							
-						}
+						} */
+					//	});
 						
+						
+						 
 						/* for(var i=0; i<Object.values(pickupInfo).length; i++) {
 							
 							alert("goodsNum : " + pickupInfo[i]["goodsNum"]);
@@ -578,7 +556,7 @@ function fn_pickupDates() {
 						console.log("goodsSize : " + pickupInfo[i]["goodsSize"]);
 						console.log("pickupDate : " + pickupInfo[i]["pickupDate"]);  */
 							 
-						//fn_payment(pickupInfo); //결제 진행 함수
+						//fn_payment(pickupInfo); //결제 진행 함수 호출
 					});
 				}
 }
