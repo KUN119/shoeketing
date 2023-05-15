@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 @Component("fileUtils")
 public class FileUtils {
 
-	// 브랜드 기본 정보 로고 파일 수정
+	// 브랜드 기본 정보 로고 파일 업로드(회원가입시)
 	public String parseBrandLogoFile(Map<String, Object> map, MultipartHttpServletRequest request) throws Exception {
 
 		// String filePath_temp =
@@ -63,6 +63,7 @@ public class FileUtils {
 		return storedFileName;
 	}
 
+	// 브랜드 기본 정보 로고 파일 수정
 	public Map<String, Object> parseUpdateFileInfo(Map<String, Object> map, MultipartHttpServletRequest request)
 			throws Exception {
 		String filePath_temp = "C:\\goods_image\\"; // 로컬 경로에 업로드
@@ -98,7 +99,7 @@ public class FileUtils {
 	}
 
 	// 브랜드 상품 이미지 등록
-	public List<Map<String, Object>> parseInsertFileInfo(Map<String, Object> map, MultipartFile[] uploadGoodsImg)
+	public List<Map<String, Object>> parseInsertFileImage(Map<String, Object> map, MultipartFile[] uploadGoodsImg)
 			throws Exception {
 
 		// 파일 여러개일 때, uploadImgMap 담아줄 리스트 생성
@@ -154,4 +155,15 @@ public class FileUtils {
 
 		return uploadImgList;
 	}
+	
+	// 브랜드 상품 이미지 수정
+	public List<Map<String, Object>> parseUpdateFileImage(Map<String, Object> map, MultipartFile[] uploadGoodsImg)
+			throws Exception {
+		
+		List<Map<String, Object>> list = new ArrayList<>();
+		
+		return list;
+	}
+
+	
 }

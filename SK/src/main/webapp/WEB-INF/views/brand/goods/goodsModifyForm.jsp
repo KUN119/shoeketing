@@ -512,12 +512,12 @@
                         <tr>
 	                        <td style="width: 70%;">
 	                            <div class="mb-3">
-	                                <input class="form-control" type="file"  multiple="multiple" accept="image/jpg, image/jpeg, image/png" id="img_upload" name="img_upload"> <!-- onchange="preview()" -->
+	                                <input class="form-control" type="file"  multiple="multiple" accept="image/jpg, image/jpeg, image/png" id="img_upload" name="img_upload">
 	                              </div>
 	                        </td>
                         </tr>
                     </table>
-                            <div class="mb-3" style="font-size: small;">
+                            <div id="goodsImageDiv" class="mb-3" style="font-size: small;">
 		                    <c:forEach items="${goodsImageList}" var="image">
 							  ${image.GOODS_IMAGE_STD}<br>
 					    	</c:forEach>
@@ -533,6 +533,8 @@
 <script>
 $(document).ready(function(){
 	
+	var fileInfoArr=[];
+	
 	// 상품 사이즈 표시
 	<c:forEach items="${goodsSizeList}" var="size">
 		console.log('${size.GOODS_DETAIL_SIZE}');
@@ -545,6 +547,32 @@ $(document).ready(function(){
 		fn_goodsModify();
 	
 	});
+	
+	$("#img_upload").on("change", function(e) {
+		$("#goodsImageDiv").empty();
+		var fileInput = $("#img_upload");
+		
+		var files = fileInput[0].files;
+	    
+	    for ( var i = 0; i < files.length; i++) {
+	        var file = files[i];
+	        var str = file.name;
+	        $("#goodsImageDiv").append(str);
+	        $("#goodsImageDiv").append('<br/>');
+	    }
+	})
+	
+	/* function img_change(targetObj){
+		$("#goodsImageDiv").empty();
+		
+		var files = targetObj.files;
+	    
+	    for ( var i = 0; i < files.length; i++) {
+	        var file = files[i];
+	        var str = file.name;
+	        $("#goodsImageDiv").append(str);
+	    }
+	} */
 	
 	function fn_goodsModify(){
 		var formData = new FormData();

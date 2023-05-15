@@ -260,6 +260,7 @@
 	              SHOP_GOODS
 	        WHERE 
 				  SHOP_GOODS_GOODS_NUM = #{TOTAL_GOODS_NUM}
+			AND   SHOP_GOODS_SIZE = #{GOODS_DETAIL_SIZE}
 	    ]]>
 	</delete>
 
