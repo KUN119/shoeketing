@@ -26,12 +26,18 @@
                   </ul>
             </div>
             <div class="row">
-                <form class="php-email-form" id="loginForm">
+                <form class="php-email-form needs-validation" id="loginForm" novalidate>
                     <div class="form-group mt-3 mb-3">
                         <input type="text" class="form-control" id="BRAND_ID" name="BRAND_ID" placeholder="id" required/>
+                    	<div class="invalid-feedback text-start">
+				      		아이디를 입력해주세요
+				    	</div>
                     </div>
                     <div class="form-group mb-3">
                         <input type="password" class="form-control" id="BRAND_PW" name="BRAND_PW" placeholder="password" required/>
+                    	<div class="invalid-feedback text-start">
+				      		비밀번호를 입력해주세요
+				    	</div>
                     </div>
                     <div class="form-group mb-3 text-left">
                         <input type="checkbox" value="autoLogin" id="autoLogin">
@@ -54,10 +60,28 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	
-	$("#loginForm").on("submit", function(e) {
+	(() => {
+		  'use strict'
+	  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+	  const form = document.querySelector('.needs-validation')
+	  // Loop over them and prevent submission
+	$("#loginForm").on("submit", function(e) { //등록 버튼 누르면
 		e.preventDefault();
-		fn_loginForm();
-	});
+		$('#loginForm').addClass('was-validated');
+		let BRAND_ID = $("#BRAND_ID").val();
+		let BRAND_PW = $("#BRAND_PW").val();
+		
+		if($.trim(BRAND_ID) == '' || BRAND_ID == null) {
+			return false;
+		}
+		
+		if($.trim(BRAND_PW) == '' || BRAND_PW == null) {
+			return false;
+		}
+		
+		 fn_loginForm();
+		});
+	})()
 	
 	function fn_loginForm() {
 		

@@ -45,7 +45,15 @@
             <div id="email-type" class="invalid-feedback">
 		      이메일 형식을 확인해주세요
 		  	</div>
-           
+           	<div id="email-check" class="invalid-feedback">
+		      이메일 중복확인을 해주세요
+		  	</div>
+		  	<div id="email-fail" class="invalid-feedback">
+		      중복된 이메일입니다
+		  	</div>
+		  	<div id="email-success" class="valid-feedback">
+		      사용가능한 이메일입니다
+		  	</div>
              
           </div>
 
@@ -144,12 +152,21 @@
 	              id="phone2"
 	              name="phone2"
 	              placeholder="인증번호 입력"
-	              disabled
+	              readonly
 	              required
 	            />
-	            <button class="btn btn-outline-secondary" name="phoneCheck2" type="button" id="phoneChk2" style="font-size: 15px; width: 100px;">본인 인증</button>
+	            <button class="btn btn-outline-secondary" name="phoneCheck2" type="button" id="phoneChk2" style="font-size: 15px; width: 100px;" disabled>본인 인증</button>
             </div>
-            <div class="point successPhoneChk">휴대폰 번호 입력후 인증번호 보내기를 해주십시오.</div> 
+            <div id="phone-null" class="invalid-feedback">
+		      휴대전화 번호를 입력해주세요
+		  	</div>
+            <div id="phone-type" class="invalid-feedback">
+		      휴대전화 번호 형식을 확인해주세요
+		  	</div>
+            <div id="phone-auth" class="invalid-feedback">
+		      휴대전화 본인 인증이 필요합니다
+		  	</div>
+            <div class="point successPhoneChk"></div> 
             <input
             	type="hidden"
             	id="phoneDoubleCheck"
@@ -174,9 +191,9 @@
         
 
         <h6 style="color: rgb(83, 83, 83)">
-          네이버에서 제공하는 이벤트/혜택 등 다양한 정보를 휴대전화(네이버앱
+          SHOEKETING에서 제공하는 이벤트/혜택 등 다양한 정보를 휴대전화(SHOEKETING앱
           알림 또는 문자), 이메일로 받아보실 수 있습니다. 일부 서비스(별도 회원
-          체계로 운영하거나 네이버 가입 이후 추가 가입하여 이용하는 서비스 등)의
+          체계로 운영하거나 SHOEKETING 가입 이후 추가 가입하여 이용하는 서비스 등)의
           경우, 개별 서비스에 대해 별도 수신 동의를 받을 수 있으며, 이때에도
           수신 동의에 대해 별도로 안내하고 동의를 받습니다.
         </h6>
@@ -210,94 +227,112 @@
     	function fn_idCheck() { //함수를 ajax 형식으로 수정 필요
     		      
     	var MEM_EMAIL = $('#MEM_EMAIL').val();
-    	
-    	alert(MEM_EMAIL);
-    		         
-    		$.ajax({
-    			  url:'/sk/memberJoin/emailCheck?MEM_EMAIL=' + MEM_EMAIL,
-    			  type:'get',
-    			  success:function(data) {
-    			       if(data == 'fail') {
-    			            alert("아이디가 중복되었습니다.")
-    			       } else if(data == 'success') {
-    			            alert("success")
-    			       }
-    			  },
-    			  error:function() {
-    			        alert("에러입니다.");
-    			  }
-    		});
+        var emailRule = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+        
+        if (MEM_EMAIL == null || $.trim(MEM_EMAIL) == '') {
+            $("#MEM_EMAIL").addClass('is-invalid');
+            $("#email-null").show();
+            $("#email-type").hide();
+            $("#email-check").hide();
+            $("#MEM_EMAIL").focus();
+        } else if (!emailRule.test(MEM_EMAIL)){
+        	$("#MEM_EMAIL").addClass('is-invalid');
+            $("#email-null").hide();
+            $("#email-type").show();
+            $("#email-check").hide();
+            $("#MEM_EMAIL").focus();
+        } else {
+        	$.ajax({
+  			  url:'/sk/memberJoin/emailCheck?MEM_EMAIL=' + MEM_EMAIL,
+  			  type:'get',
+  			  success:function(data) {
+  			       if(data == 'fail') {
+  			          	$("#MEM_EMAIL").addClass('is-invalid');
+  		            	$("#email-null").hide();
+  		            	$("#email-type").hide();
+  		            	$("#email-check").hide();
+  		            	$("#email-fail").show();
+  		            	$("#MEM_EMAIL").focus();
+  			       } else if(data == 'success') {
+  			    	 	$("#MEM_EMAIL").removeClass('is-invalid');
+  			    	 	$("#MEM_EMAIL").addClass('is-valid');
+  			    	 	$("#button-addon2").attr("disabled", true);
+  		            	$("#email-null").hide();
+  		            	$("#email-type").hide();
+  		            	$("#email-check").hide();
+  		            	$("#email-fail").hide();
+  		            	$("#email-success").show();
+  			            $("#MEM_EMAIL").attr("disabled", true); 
+  			       }
+  			  },
+  			  error:function() {
+  			        alert("에러입니다.");
+  			  }
+  		});
+        }
+    		
     	};
     	
     	//회원가입 버튼 + 회원탈퇴여부 확인
-    	$("button[name='userJoin']").on("click", function(e) { 
+    	/* $("button[name='userJoin']").on("click", function(e) { 
     		e.preventDefault();
     		fn_delCheck();
-    	});
+    	}); */
 
-    	function fn_delCheck() {
-    		var MEM_EMAIL = $('#MEM_EMAIL').val();
-    		var MEM_NAME = $('#MEM_NAME').val();
-    		var MEM_PW = $('#MEM_PW').val();
-    		var MEM_PHONE = $('#MEM_PHONE').val();
-    		var MEM_DEL_GB = $('#MEM_DEL_GB').val();
     	
-    		
-    		var formData = new FormData();
-    		
-    		formData.append("MEM_EMAIL", MEM_EMAIL);
-    		formData.append("MEM_NAME", MEM_NAME);
-    		formData.append("MEM_PW", MEM_PW);
-    		formData.append("MEM_PHONE", MEM_PHONE);
-    		formData.append("MEM_DEL_GB", MEM_DEL_GB);
-    		
-	    	$.ajax({
-	            url: '/sk/memberJoin/joinAvailable',
-	            type:'POST',
-	            data:formData,
-	            processData: false,
-				contentType: false,
-	            success:function(data) {
-	            	if(data == "success") {
-	            		alert("회원가입에 성공하였습니다.");
-	            		location.href="/sk/main"
-	            	} else if (data == "fail") {
-	            		alert("회원탈퇴 후 7일이 지나지 않았습니다.");
-	            	}
-	            },
-	            error:function() {
-	            	alert("서버 오류");
-	            }
-	       }); 
-    	};
     	
     });
    
    //휴대폰 번호 인증 coolsms (https://unknown-coding.tistory.com/16)
       var code2 = "";
      $("#phoneChk").click(function(){
-     	alert("인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호 확인을 해주십시오.");
-     	var phone = $("#MEM_PHONE").val();
-     	$.ajax({
-             type:"GET",
-             url:"phoneCheck?phone=" + phone,
-             cache : false,
-             success:function(data){
-             	if(data == "error"){
-             		alert("휴대폰 번호가 올바르지 않습니다.")
-     				$(".successPhoneChk").text("유효한 번호를 입력해주세요.");
-     				$(".successPhoneChk").css("color","red");
-     				$("#MEM_PHONE").attr("autofocus",true);
-             	}else{	        		
-             		$("#phone2").attr("disabled",false);
-             		$("#phoneChk2").css("display","inline-block");
-             		$(".successPhoneChk").text("인증번호를 입력한 뒤 본인인증을 눌러주십시오.");
-             		$(".successPhoneChk").css("color","green");
-             		$("#MEM_PHONE").attr("readonly",true);
-             		code2 = data;
-             	}
-             }
-         });
+    	 var phone = $("#MEM_PHONE").val();
+	     var phoneCheck = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+	     
+	     if (phone == null || $.trim(phone) == '') {
+	            $("#MEM_PHONE").addClass('is-invalid');
+	            $("#phone-null").show();
+	            $("#phone-type").hide();
+	            $("#phone-auth").hide();
+	            $("#MEM_PHONE").focus();
+	     } else if (!phoneCheck.test(phone)) {
+	    	 	$("#MEM_PHONE").addClass('is-invalid');
+	            $("#phone-null").hide();
+	            $("#phone-type").show();
+	            $("#phone-auth").hide();
+	            $("#MEM_PHONE").focus();
+	     } else {
+	    	 $("#MEM_PHONE").removeClass('is-invalid');
+	    	 $("#MEM_PHONE").addClass('is-valid');
+	    	 $("#phone-null").hide();
+	         $("#phone-type").hide();
+	         $("#phone-auth").hide();
+	    	 alert("인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호 확인을 해주십시오.");
+	    	 
+	    	 $.ajax({
+	             type:"GET",
+	             url:"phoneCheck?phone=" + phone,
+	             cache : false,
+	             success:function(data){
+	             	if(data == "error"){
+	             		alert("휴대폰 번호가 올바르지 않습니다.")
+	     				$(".successPhoneChk").text("유효한 번호를 입력해주세요.");
+	     				$(".successPhoneChk").css("color","red");
+	     				$("#MEM_PHONE").attr("autofocus",true);
+	             	}else{	        		
+	             		$("#phone2").attr("readonly",false);
+	             		$("#phoneChk2").css("display","inline-block");
+	             		$("#phoneChk2").attr("disabled", false);
+	             		$(".successPhoneChk").text("인증번호를 입력한 뒤 본인인증을 눌러주십시오.");
+	             		$(".successPhoneChk").css("color","green");
+	             		$("#MEM_PHONE").attr("disabled",true);
+	             		$("#phoneChk").attr("disabled",true);
+	             		code2 = data;
+	             	}
+	             }
+	         });
+	     }
+     	
      });
    
      
@@ -308,6 +343,9 @@
      		$(".successPhoneChk").css("color","green");
      		$("#phoneDoubleChk").val("true");
      		$("#phone2").attr("disabled",true);
+     		$("#phone-null").hide();
+	        $("#phone-type").hide();
+	        $("#phone-auth").hide();
      	}else{
      		$(".successPhoneChk").text("인증번호가 일치하지 않습니다. 확인해주시기 바랍니다.");
      		$(".successPhoneChk").css("color","red");
@@ -353,33 +391,23 @@ Array.from(forms).forEach((form) => {
     form.addEventListener('submit', (event) => {
         var pass = true;
         
-        if (!form.checkValidity()) {
+        if (!form.checkValidity() || $('#phone2').attr('readonly')) {
             event.preventDefault();
             event.stopPropagation();
             pass = false;
         }
 
         form.classList.add('was-validated');
-
-        //이메일 
-        var memberEmail = $('#MEM_EMAIL').val();
-        var emailRule = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
         
-        if (memberEmail == null || $.trim(memberEmail) == '') {
-            $("#MEM_EMAIL").addClass('is-invalid');
-            $("#email-null").show();
+        if (!$('#MEM_EMAIL').attr('disabled')) {
+        	$("#email-null").hide();
             $("#email-type").hide();
-            $("#MEM_EMAIL").focus();
-            pass = false;
-        } else if (!emailRule.test(memberEmail)){
-            $("#email-null").hide();
-                $("#email-type").show();
-                $("#MEM_EMAIL").focus();
-                pass = false;
+            $("#email-check").show();
+          	$("#email-fail").hide();
+          	$("#email-success").hide();
+          	$("#MEM_EMAIL").focus();
+          	pass = false;
         }
-            else {
-                $("#email-type").hide();
-            }
         
         
         //비밀번호
@@ -391,10 +419,12 @@ Array.from(forms).forEach((form) => {
 	    	  $("#pw-null").show();
 			  $("#pw-type").hide();
 		      $("#MEM_PW").focus();
+		      pass= false;
 	      } else if(!pwdcheck.test(pwdval)) {
 	    	  $("#pw-null").hide();
 			  $("#pw-type").show();
 		      $("#MEM_PW").focus();
+		      pass= false;
 	      } else {
 	    	  $("#pw-null").hide();
 			  $("#pw-type").hide();
@@ -404,20 +434,68 @@ Array.from(forms).forEach((form) => {
 	    	  $("#pw2-null").show();
 			  $("#pw2-same").hide();
 		      $("#MEM_PW2").focus();
+		      pass= false;
 	      } else if(pwdval!==pwdokval) {
 	    	  $("#pw2-null").hide();
 			  $("#pw2-same").show();
 		      $("#MEM_PW2").focus();
-	      } 
+		      pass= false;
+	      } else {
+	    	  $("#pw2-null").hide();
+			  $("#pw2-same").hide();
+	      }
 	      
 	      //핸드폰
-	      var phoneNum = $('#MEM_PHONE').val();
-	      var phoneCheck = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+	      if ($('#phone2').attr('readonly')) {
+	        	$("#phone-null").hide();
+	            $("#phone-type").hide();
+	            $("#phone-auth").show();
+	          	$("#MEM_PHONE").focus();
+	          	pass = false;
+	      } else if (!$('#phone2').attr('disabled')) {
+	    	  	$("#phone-null").hide();
+	            $("#phone-type").hide();
+	            $("#phone-auth").show();
+	          	$("#MEM_PHONE").focus();
+	          	pass = false;
+	      }
 	      
-	      if(!phoneCheck.test(phoneNum)){
-	    	  alert('잘못된 휴대폰 번호입니다.');
-	    	  $('#MEM_PHONE').focus();
+	      if(pass) {
+	    	  event.preventDefault();
+	          event.stopPropagation();
 	    	  
+	      		var MEM_EMAIL = $('#MEM_EMAIL').val();
+	      		var MEM_NAME = $('#MEM_NAME').val();
+	      		var MEM_PW = $('#MEM_PW').val();
+	      		var MEM_PHONE = $('#MEM_PHONE').val();
+	      		var MEM_DEL_GB = $('#MEM_DEL_GB').val();
+	      		
+	      		var formData = new FormData();
+	      		
+	      		formData.append("MEM_EMAIL", MEM_EMAIL);
+	      		formData.append("MEM_NAME", MEM_NAME);
+	      		formData.append("MEM_PW", MEM_PW);
+	      		formData.append("MEM_PHONE", MEM_PHONE);
+	      		formData.append("MEM_DEL_GB", MEM_DEL_GB);
+	      		
+	  	    	$.ajax({
+	  	            url: '/sk/memberJoin/joinAvailable',
+	  	            type:'POST',
+	  	            data:formData,
+	  	            processData: false,
+	  				contentType: false,
+	  	            success:function(data) {
+	  	            	if(data == "success") {
+	  	            		alert("회원가입에 성공하였습니다.");
+	  	            		location.href="/sk/main"
+	  	            	} else if (data == "fail") {
+	  	            		alert("회원탈퇴 후 7일이 지나지 않았습니다.");
+	  	            	}
+	  	            },
+	  	            error:function() {
+	  	            	alert("서버 오류");
+	  	            }
+	  	       }); 
 	      }
 
     });
