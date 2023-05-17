@@ -318,6 +318,9 @@ function fn_pickupDate(name, model, size, shop, num) {
   
 <script type="text/javascript">
 
+let pickupInfo = [];
+let dateObj = [];
+
 $(document).ready(function() {
 	
 	checkAll();
@@ -414,8 +417,7 @@ function fn_pickupDates() {
 	let d_num = "";
 	let d_shopnum = "";
 	//let d_date = "";
-	let pickupInfo = {};
-	let dateObj = {};
+	
 
 	
 		//체크된 개수를 파악하기 위한 반복문
@@ -472,23 +474,22 @@ function fn_pickupDates() {
 						$(".modal-body").append(str);
 						//여러개의 상품이 모달창에 계속 추가되어야 하기 때문에 append메소드 사용
 						
-							 pickupInfo[i] = {
+							var pickupInfoObj = {
 								goodsNum : d_num,
 								goodsName : d_name,
 								shopNum : d_shopnum,
 								goodsSize : d_size
-								}; 
+								};
 						
-						 console.log("goodsNum : " + pickupInfo[i]["goodsNum"]);
-						console.log("goodsName : " + pickupInfo[i]["goodsName"]);
-						console.log("shopNum : " + pickupInfo[i]["shopNum"]);
-						console.log("goodsSize : " + pickupInfo[i]["goodsSize"]); 
+							 pickupInfo.push(pickupInfoObj);
+							 //객체의 인덱스가 비어있는 현상을 방지하기 위해 객체를 배열에 push하여 비어있는 인덱스가 없도록 함
+						
 					} //if문
 					
 				} //for문
 				
 					//객체에 상품 데이터가 담겼는지 확인하기 위해 객체의 길이를 출력
-				   	alert("length : " + Object.values(pickupInfo).length);
+				   //	alert("length : " + Object.values(pickupInfo).length);
 				   	
 					$("#pickupDateModal").modal("show");
 					//모달이 자동으로 띄워지는 속성을 사용했을 때, confirm창에서 아니오를 선택해도
@@ -498,99 +499,155 @@ function fn_pickupDates() {
 					$("#payment-button").on("click", function(e) { //예약하기 버튼을 클릭하면
 						e.preventDefault();
 						
-						//var length = Object.values(pickupInfo).length; 
+						var dates = $("#modalRow #date");
 						
-						var list = 	{};
-						
-						//$("#modalRow").each(function(index, item) {
-						
-							var dates = $("#modalRow #date");
-						//	var rows = $("#modalRow");
-						//	var children = rows.childNodes;
-						//	var modal = $("#pickupDateModal");
+						var finalInfo = [];
 						
 						 for(var i=0; i<dates.length; i++) {
 							
 							var date = dates[i].value;
 							
-							alert("date : " + date);
+							//alert("date : " + date);
 							
 							  	dateObj[i] = {
 									pickupDate : date
 								}
-							  	
-							/* alert("goodsNum : " + pickupInfo[i]["goodsNum"]);
-							alert("goodsName : " + pickupInfo[i]["goodsName"]);
-							alert("shopNum : " + pickupInfo[i]["shopNum"]);
-							alert("goodsSize : " + pickupInfo[i]["goodsSize"]);
-							alert("pickupDate : " + dateObj[i]["pickupDate"]);  */
-					
+							
+							//alert("pickupInfo : " + pickupInfo[i].goodsName);
+							//alert("dateObj : " + dateObj[i].pickupDate);
+							  	var result = {
+										...pickupInfo[i],
+										...dateObj[i]
+								}
+							finalInfo.push(result);
 						}
-						 
-						 var result = $.extend(pickupInfo, dateObj); //객체를 하나로 합치기
-						console.log("결과 : " + JSON.stringify(result)); //객체 합친 결과 출력
+						//console.log("결과 : " + JSON.stringify(finalInfo)); //객체 합친 결과 출력
 						
-						//alert("goodsNum : " + pickupInfo[i]["goodsNum"]);
-						
-						/* for(var i=0; i<Object.values(pickupInfo).length; i++) {
-							console.log("goodsNum : " + pickupInfo[i]["goodsNum"] + ", " + "goodsName : " + pickupInfo[i]["goodsName"] + ", " + "shopNum : " +
-										pickupInfo[i]["shopNum"] + ", " + "goodsSize : " + pickupInfo[i]["goodsSize"] + ", "
-										+ "goodsSize : " + pickupInfo[i]["goodsSize"] + ", " + "pickupDate : " + pickupInfo[i]["pickupDate"]);
-							
-						} */
-					//	});
-						
-						
-						 
-						/* for(var i=0; i<Object.values(pickupInfo).length; i++) {
-							
-							alert("goodsNum : " + pickupInfo[i]["goodsNum"]);
-							alert("goodsName : " + pickupInfo[i]["goodsName"]);
-							alert("shopNum : " + pickupInfo[i]["shopNum"]);
-							alert("goodsSize : " + pickupInfo[i]["goodsSize"]);
-							alert("pickupDate : " + pickupInfo[i]["pickupDate"]);
-						} */
-						 /* console.log("goodsNum : " + pickupInfo[i]["goodsNum"]);
-						console.log("goodsName : " + pickupInfo[i]["goodsName"]);
-						console.log("shopNum : " + pickupInfo[i]["shopNum"]);
-						console.log("goodsSize : " + pickupInfo[i]["goodsSize"]);
-						console.log("pickupDate : " + pickupInfo[i]["pickupDate"]);  */
-							 
-						//fn_payment(pickupInfo); //결제 진행 함수 호출
+						fn_payment(finalInfo); //결제 진행 함수 호출
 					});
 				}
 }
 </script>
 
 <!-- 토스 페이먼츠 API -->
-<!-- <script src="https://js.tosspayments.com/v1/payment-widget"></script>
+<script src="https://js.tosspayments.com/v1/payment-widget"></script>
 
 <script>
 
-function fn_payment(pickupInfo) {
+function fn_payment(finalInfo) {
 	//토스 페이먼츠 결제  (추후 orderId, orderName, customerEmail, customerName 수정필요)
 	const clientKey = 'test_ck_7XZYkKL4Mrjnv7vJl1ar0zJwlEWR';
 	const customerKey = 'user123'; 
 	const paymentWidget = PaymentWidget(clientKey, customerKey);  // 결제위젯 초기화
 	
-	for(var i=0; i<chksChecked; i++) {
-		var goodsNum = pickupInfo[i]["name"];
-		var goodsName = pickupInfo[i]["name"];
-		var shopNum = pickupInfo[i]["name"];
-		var goodsSize = pickupInfo[i]["name"]
-		var pickupDate = $("date").val();
-		paymentWidget.renderPaymentMethods('#payment-method', 30000);
-	
-	}
-	
-	paymentWidget.requestPayment({
-  	  orderId: 5633220,   // selectKey로 max 예약번호 가져와서 가져다쓰기!!!!! 구현필요
-  	  orderName: goodsName,
-  	  successUrl: 'http://localhost:8080/sk/tossPaymentsSuccess?goodsNum=' + goodsNum + '&shopNum=' + shopNum + '&goodsSize=' + goodsSize + '&pickupDate=' + pickupDate,
-  	  failUrl: 'http://localhost:8080/sk',
-  	  customerEmail: '${MEM_EMAIL}', 
-  	  customerName: '${MEM_NAME}'
-  	}
-
-</script> -->
+		var orderId = null;
+		
+		let amount = finalInfo.length;
+		
+		//let user = [{name:"손꽁쥐", id:"ggmouse"},{name:"우빙구", id:"bbing"}];
+		
+		var jsonArray = new Array();
+		var json = new Object();
+		
+		
+        
+		for (var i of finalInfo) {
+			var goodsNum = i.goodsNum;
+			var goodsName = i.goodsName;
+			var shopNum = i.shopNum;
+			var goodsSize = i.goodsSize;
+			var pickupDate = i.pickupDate;
+			
+			/* goodsArr.push({
+				goodsNum : goodsNum,
+				goodsName : goodsName,
+				shopNum : shopNum,
+				goodsSize : goodsSize,
+				pickupDate : pickupDate
+			}); */
+			
+			json.goodsNum = goodsNum;
+			json.goodsName = goodsName;
+			json.shopNum = shopNum;
+			json.goodsSize = goodsSize;
+			json.pickupDate = pickupDate;
+			jsonArray.push(json);
+		
+		} //반복문	
+		
+		// 등급별 픽업 예약금	
+			if(finalInfo.length > 1) {
+				if("<%=(String)session.getAttribute("session_MEM_GRADE")%>" === "골드"){
+					paymentWidget.renderPaymentMethods('#payment-method', 30000*amount);
+				}else if("<%=(String)session.getAttribute("session_MEM_GRADE")%>" === "플래티넘"){
+					paymentWidget.renderPaymentMethods('#payment-method', 27000*amount);
+				}else if("<%=(String)session.getAttribute("session_MEM_GRADE")%>" === "다이아"){
+					paymentWidget.renderPaymentMethods('#payment-method', 25000*amount);
+				}
+			} else {
+				if("<%=(String)session.getAttribute("session_MEM_GRADE")%>" === "골드"){
+					paymentWidget.renderPaymentMethods('#payment-method', 30000);
+				}else if("<%=(String)session.getAttribute("session_MEM_GRADE")%>" === "플래티넘"){
+					paymentWidget.renderPaymentMethods('#payment-method', 27000);
+				}else if("<%=(String)session.getAttribute("session_MEM_GRADE")%>" === "다이아"){
+					paymentWidget.renderPaymentMethods('#payment-method', 25000);
+				}
+			}
+		
+		var goodsInfo = {goods : JSON.stringify(jsonArray)};
+		
+		console.log(goodsInfo);
+		
+		let count = amount - 1;
+		
+		 /* paymentWidget.requestPayment({
+	  	  orderId: 5133383,   // selectKey로 max 예약번호 가져와서 가져다쓰기!!!!! 구현필요
+	  	  orderName: goodsName + "외 " + count + "건",
+	  	  successUrl: 'http://localhost:8080/sk/tossPaymentsSuccess?goodsInfo=' + goodsInfo,
+	  	  failUrl: 'http://localhost:8080/sk',
+	  	  customerEmail: '${MEM_EMAIL}', 
+	  	  customerName: '${MEM_NAME}'
+		});	 */
+		 
+		 
+		 paymentWidget
+		  .requestPayment({
+		    // 결제 정보 파라미터
+		    // successUrl, failUrl, windowTarget 파라미터를 넘기지 마세요.
+			  orderId: 5133383,   // selectKey로 max 예약번호 가져와서 가져다쓰기!!!!! 구현필요
+		  	  orderName: goodsName + "외 " + count + "건",
+		  	  customerEmail: '${MEM_EMAIL}', 
+		  	  customerName: '${MEM_NAME}'
+		  })
+		  .then(function (data) {
+		    // 성공 처리: 결제 승인 API를 호출하세요
+		    $.ajaxSettings.traditional = true;
+			  $.ajax({
+					type : 'post',
+					url : 'http://localhost:8080/sk/tossPaymentsSuccess',
+					data : goodsInfo,
+					processData : false,
+					contentType : false,
+					 success : function(data){
+						 alert("성공");
+					},
+					error : function(){
+						alert("잠시 후 다시 시도해주세요.");
+					}
+				});
+		  })
+		  .catch(function (error) {
+		    // 에러 처리: 에러 목록을 확인하세요 
+		    // https://docs.tosspayments.com/reference/error-codes#failurl로-전달되는-에러
+		    if (error.code === 'USER_CANCEL') {
+		      // 결제 고객이 결제창을 닫았을 때 에러 처리
+		    	 failUrl: 'http://localhost:8080/sk'
+		    } else if (error.code === 'INVALID_CARD_COMPANY') {
+		      // 유효하지 않은 카드 코드에 대한 에러 처리
+		    	 failUrl: 'http://localhost:8080/sk'
+		    }
+		  })
+				
+}
+</script>
 </html>
