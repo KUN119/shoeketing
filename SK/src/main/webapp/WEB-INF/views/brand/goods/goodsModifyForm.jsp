@@ -548,7 +548,7 @@ $(document).ready(function(){
 	
 	});
 	
-	$("#img_upload").on("change", function(e) {
+	$("#img_upload").on("change", function(e) {  // 상품 이미지 업로드시, 이미지 이름 출력
 		$("#goodsImageDiv").empty();
 		var fileInput = $("#img_upload");
 		
@@ -560,7 +560,7 @@ $(document).ready(function(){
 	        $("#goodsImageDiv").append(str);
 	        $("#goodsImageDiv").append('<br/>');
 	    }
-	})
+	});
 	
 	/* function img_change(targetObj){
 		$("#goodsImageDiv").empty();

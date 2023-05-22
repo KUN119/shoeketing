@@ -284,10 +284,7 @@ public class GoodsController {
 	
 		log.debug("GOODS_DETAIL_SIZE 확인 : " + map.get("GOODS_DETAIL_SIZE"));
 		
-		//log.debug("goodsSizeList_old 확인 : " + goodsSizeList_old);
 		log.debug("goodsSizeList 확인 : " + goodsSizeList);
-		
-		//if(map.get("GOODS_DETAIL_SIZE_old").equals("goodsSizeList"));
 		
 		Map<String, Object> goodsModifyResultMap = goodsService.updateGoods(uploadGoodsImg, map, goodsSizeList, session);
 

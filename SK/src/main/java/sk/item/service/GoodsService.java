@@ -38,7 +38,7 @@ public interface GoodsService {
 	// 상품 삭제- 상품, 이미지, 사이즈 (deleteGoods + deleteGoodsImage + deleteGoodsDetail)
 	public Map<String, Object> deleteGoods(Map<String, Object> map) throws Exception;
 	
-	// 상품 수정- 이미지, 사이즈 (updateGoodsImageModify + updateGoodsModify)
+	// 상품 수정- 이미지, 사이즈 (updateGoodsImageModify + updateGoodsModify + deleteGoodsImageFromGoodsModify)
 	public Map<String, Object> updateGoods(MultipartFile[] uploadGoodsImg, Map<String, Object> map, List<String> goodsSizeList, HttpSession session) throws Exception;
 	
 //	// 상품 이미지 수정 
