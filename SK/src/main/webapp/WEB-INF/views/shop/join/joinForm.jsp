@@ -31,6 +31,9 @@
                 name="SHOP_ID"
                 required
               />
+              <div id="id-null" class="invalid-feedback">
+		      	아이디를 입력해주세요
+		  	  </div>
             </div>
 
             <div class="mb-3">
@@ -49,6 +52,12 @@
               	placeholder="특수문자, 문자, 숫자 포함 형태의 8~16자리 이내"
                 required
               />
+              <div id="pw-null" class="invalid-feedback">
+		        비밀번호를 입력해주세요
+		  	  </div>
+		  	  <div id="pw-type" class="invalid-feedback">
+		        비밀번호 형식이 올바르지 않습니다
+		  	  </div>
             </div>
 
             <div class="mb-3">
@@ -66,6 +75,12 @@
                 pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,16}$"
                 required
               />
+              <div id="pw2-null" class="invalid-feedback">
+		        비밀번호 확인이 필요합니다
+		  	  </div>
+              <div id="pw2-same" class="invalid-feedback">
+		        비밀번호가 일치하지 않습니다
+		  	  </div> 
             </div>
 
 			<div class="mb-3">
@@ -82,6 +97,9 @@
                 name="SHOP_BRAND"
                 required
               />
+              <div class="invalid-feedback">
+		        브랜드이름을 입력해주세요
+		  	  </div>
             </div>
 			
             <div class="mb-3">
@@ -98,6 +116,9 @@
                 name="SHOP_NAME"
                 required
               />
+              <div class="invalid-feedback">
+		        지점명을 입력해주세요
+		  	  </div>
             </div>
 
             <div class="mb-3">
@@ -114,9 +135,14 @@
                 name="SHOP_TEL"
                 placeholder="전화번호입력"
                 pattern="^(02|0[3-9]{1}[0-9]{1})-[1-9]{1}[0-9]{2,3}-[0-9]{4}$"
-                
                 required
               />
+              <div id="phone-null" class="invalid-feedback">
+		        연락처를 입력해주세요
+		  	  </div>
+              <div id="phone-type" class="invalid-feedback">
+		        연락처 형식을 확인해주세요
+		  	  </div>
             </div>
 
             <div class="mb-3">
@@ -127,24 +153,30 @@
                 >매장 영업시간</label
               >
               <div class="d-flex">
-              <input
-                class="form-control me-3"
-                type="time"
-                id="SHOP_START_TIME"
-                name="SHOP_START_TIME"
-                placeholder="시작 시간"
-                required
-              />
-                ~
-              <input
-                class="form-control ms-3"
-                type="time"
-                id="SHOP_END_TIME"
-                name="SHOP_END_TIME"
-                placeholder="마감 시간"
-                required
-              />
-            </div>
+	              <input
+	                class="form-control me-3"
+	                type="time"
+	                id="SHOP_START_TIME"
+	                name="SHOP_START_TIME"
+	                placeholder="시작 시간"
+	                required
+	              />
+	                ~
+	              <input
+	                class="form-control ms-3"
+	                type="time"
+	                id="SHOP_END_TIME"
+	                name="SHOP_END_TIME"
+	                placeholder="마감 시간"
+	                required
+	              />
+              </div>
+              <div id="date-null" class="invalid-feedback">
+		        매장 영업시간을 입력해주세요.
+		  	  </div>
+		  	  <div id="date-err" class="invalid-feedback">
+		        매장 영업시간이 잘못 입력되었습니다. 다시 확인해주세요.
+		  	  </div>
             </div>
 
             <div class="mb-3">
@@ -160,10 +192,14 @@
 	                type="text"
 	                id="SHOP_ADD"
 	                name="SHOP_ADD"
+	                readonly
 	                required
 	              />
 	              <button type="button" class="btn btn-outline-primary" style="width:8rem;" onclick="sample6_execDaumPostcode()">주소찾기</button>
               </div>
+              <div id="add-null" class="invalid-feedback">
+		        	매장 주소를 입력해주세요.
+		  	  </div>
               <input type="hidden" id="SHOP_POS1" name="SHOP_POS1" value="" />
               <input type="hidden" id="SHOP_POS2" name="SHOP_POS2" value="" />
             </div>
@@ -277,68 +313,132 @@
         }).open();
     }
     
-    
-  //유효성검증
-	(() => {
+    (() => {
 		  'use strict'
 
 		  // Fetch all the forms we want to apply custom Bootstrap validation styles to
 		  const forms = document.querySelectorAll('.needs-validation');
 
-//Loop over them and prevent submission
-Array.from(forms).forEach((form) => {
-form.addEventListener('submit', (event) => {
-    var pass = true;
-    
-    if (!form.checkValidity()) {
-        event.preventDefault();
-        event.stopPropagation();
-        pass = false;
-    }
+  //Loop over them and prevent submission
+  Array.from(forms).forEach((form) => {
+  form.addEventListener('submit', (event) => {
+      var pass = true;
+      
+      if (!form.checkValidity() || $("#SHOP_ADD").val() == null || $("#SHOP_ADD").val() == '') {
+          event.preventDefault();
+          event.stopPropagation();
+          pass = false;
+      }
 
-    form.classList.add('was-validated');
-    
-  //비밀번호
-    let pwdval = $('#SHOP_PW').val()
-     let pwdokval = $('#SHOP_PW2').val()
-     let pwdcheck = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,16}$/;
-     
-     if(pwdval == null || $.trim(pwdval) == "") {
-   	  $("#pw-null").show();
-		  $("#pw-type").hide();
-	      $("#SHOP_PW").focus();
-     } else if(!pwdcheck.test(pwdval)) {
-   	  $("#pw-null").hide();
-		  $("#pw-type").show();
-	      $("#SHOP_PW").focus();
-     } else {
-   	  $("#pw-null").hide();
-		  $("#pw-type").hide();
-     }
-     
-     if(pwdokval == null || $.trim(pwdokval) == "") {
-   	  $("#pw2-null").show();
-		  $("#pw2-same").hide();
-	      $("#SHOP_PW2").focus();
-     } else if(pwdval!==pwdokval) {
-   	  $("#pw2-null").hide();
-		  $("#pw2-same").show();
-	      $("#SHOP_PW2").focus();
-     } 
-     
-   //전화번호
-     var shopTel = $('#SHOP_TEL').val();
-     var shopTelCheck = /^(02|0[3-9]{1}[0-9]{1})-[1-9]{1}[0-9]{2,3}-[0-9]{4}$/;
-     
-     if(!shopTelCheck.test(shopTel)){
-   	  alert('잘못된 전화 번호입니다.');
-   	  $('#SHOP_TEL').focus();
-   	  
-     }
-    
+      form.classList.add('was-validated');
+      
+      //비밀번호
+       let pwdval = $('#SHOP_PW').val()
+	      let pwdokval = $('#SHOP_PW2').val()
+	      let pwdcheck = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,16}$/;
+	      
+	      if(pwdval == null || $.trim(pwdval) == "") {
+	    	  $("#pw-null").show();
+			  $("#pw-type").hide();
+		      $("#SHOP_PW").focus();
+		      pass= false;
+	      } else if(!pwdcheck.test(pwdval)) {
+	    	  $("#pw-null").hide();
+			  $("#pw-type").show();
+		      $("#SHOP_PW").focus();
+		      pass= false;
+	      } else {
+	    	  $("#pw-null").hide();
+			  $("#pw-type").hide();
+	      }
+	      
+	      if(pwdokval == null || $.trim(pwdokval) == "") {
+	    	  $("#pw2-null").show();
+			  $("#pw2-same").hide();
+		      $("#SHOP_PW2").focus();
+		      pass= false;
+	      } else if(pwdval!==pwdokval) {
+	    	  $("#pw2-null").hide();
+			  $("#pw2-same").show();
+		      $("#SHOP_PW2").focus();
+		      pass= false;
+	      } else {
+	    	  $("#pw2-null").hide();
+			  $("#pw2-same").hide();
+	      }
+	      
+	      let shopTel = $("#SHOP_TEL").val();
+	      let telCheck = /^(02|0[3-9]{1}[0-9]{1})-[1-9]{1}[0-9]{2,3}-[0-9]{4}$/;
+	      //핸드폰
+	      if (shopTel == null || $.trim(shopTel) == "") {
+	    	    $("#SHOP_TEL").removeClass('is-valid');
+	    	    $("#SHOP_TEL").addClass('is-invalid');
+	        	$("#phone-null").show();
+	            $("#phone-type").hide();
+	          	$("#SHOP_TEL").focus();
+	          	pass = false;
+	      } else if (!telCheck.test(shopTel)) {
+	    	    $("#SHOP_TEL").removeClass('is-valid');
+	    	    $("#SHOP_TEL").addClass('is-invalid');
+	            $("#phone-null").hide();
+	            $("#phone-type").show();
+	            $("#SHOP_TEL").focus();
+	            pass = false;
+	      } else {
+	    	    $("#SHOP_TEL").addClass('is-valid');
+	    	    $("#SHOP_TEL").removeClass('is-invalid');
+	    	    $("#phone-null").hide();
+	            $("#phone-type").hide();
+	      }
+	      
+	      let shopAdd = $("#SHOP_ADD").val();
+	      if (shopAdd == null || $.trim(shopAdd) == "") {
+	    	    $("#SHOP_ADD").addClass('is-invalid');
+	        	$("#add-null").show();
+	          	$("#SHOP_ADD").focus();
+	          	pass = false;
+	      } else {
+	    	    $("#SHOP_ADD").addClass('is-valid');
+	    	    $("#SHOP_ADD").removeClass('is-invalid');
+	    	    $("#add-null").hide();
+	      }
+	      
+	      let shopStartDate = $("#SHOP_START_TIME").val();
+	      let shopEndDate = $("#SHOP_END_TIME").val();
+	      if (shopStartDate == null || $.trim(shopStartDate) == "" || shopEndDate == null || $.trim(shopEndDate) == "") {
+	    	   $("#SHOP_START_TIME").removeClass('is-valid');
+	    	    $("#SHOP_START_TIME").addClass('is-invalid');
+	    	    $("#SHOP_END_TIME").removeClass('is-valid');
+	    	    $("#SHOP_END_TIME").addClass('is-invalid');
+	        	$("#date-null").show();
+	        	$("#date-err").hide();
+	          	$("#SHOP_START_TIME").focus();
+	          	pass = false;
+	      } else if (shopStartDate >= shopEndDate) {
+	    	    $("#SHOP_START_TIME").removeClass('is-valid');
+	    	    $("#SHOP_START_TIME").addClass('is-invalid');
+	    	    $("#SHOP_END_TIME").removeClass('is-valid');
+	    	    $("#SHOP_END_TIME").addClass('is-invalid');
+	    	    $("#date-null").hide();
+	        	$("#date-err").show();
+	          	$("#SHOP_START_TIME").focus();
+	          	pass = false;
+	      } else {
+	    	    $("#date-null").hide();
+	        	$("#date-err").hide();
+	    	    $("#SHOP_START_TIME").addClass('is-valid');
+	    	    $("#SHOP_START_TIME").removeClass('is-invalid');
+	    	    $("#SHOP_END_TIME").addClass('is-valid');
+	    	    $("#SHOP_END_TIME").removeClass('is-invalid');
+	      }
+	      
+	      if(pass) {
+	    	  $("#shopJoinForm").submit();
+	      }
+
+  });
 });
-});
-})()
+	})()
 </script>
 
 </html>
