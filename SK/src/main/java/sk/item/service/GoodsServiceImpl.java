@@ -139,7 +139,7 @@ public class GoodsServiceImpl implements GoodsService {
 		goodsDAO.deleteGoods(map);
 		goodsDAO.deleteGoodsImage(map);
 		goodsDAO.deleteGoodsDetail(map);
-		deleteShopGoodsFromDeleteByBrand(map); // 해당 매장 상품들 모두 삭제 
+		goodsDAO.deleteShopGoods(map); // 해당 매장 상품들도 모두 삭제 
 		
 		deleteGoodsResultMap.put("result", "pass");
 		
@@ -218,7 +218,9 @@ public class GoodsServiceImpl implements GoodsService {
 			}
 		}
 		
-		//goodsDAO.updateGoodsImageModify(map);
+		// 기존 이미지 전체 삭제 후, 다시 이미지 삽입
+		goodsDAO.deleteGoodsImageFromGoodsModify(map);
+		insertGoodsImage(map, uploadGoodsImg);
 		updateGoodsResultMap.put("result", "pass");
 		
 		return updateGoodsResultMap;

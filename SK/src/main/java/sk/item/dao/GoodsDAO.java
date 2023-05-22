@@ -80,6 +80,13 @@ public class GoodsDAO extends AbstractDAO {
 		return (int) update("goods.updateGoodsImageModify", map);
 	}
 
+	// 상품 이미지 삭제_브랜드 상품 수정시
+	public int deleteGoodsImageFromGoodsModify(Map<String, Object> map) throws Exception {
+		System.out.println("deleteGoodsImageFromGoodsModify : " + map);
+
+		return (int) delete("goods.deleteGoodsImageFromGoodsModify", map);
+	}
+	
 	// 상품 수정 (상품 상세정보 수정,사이즈만 따로)
 	public int updateGoodsModify(Map<String, Object> map) throws Exception {
 		System.out.println("updateGoodsModify : " + map);
@@ -113,6 +120,13 @@ public class GoodsDAO extends AbstractDAO {
 		System.out.println("deleteShopGoodsFromDeleteByBrand : " + map);
 		
 		return (int) delete("goods.deleteShopGoodsFromDeleteByBrand", map);
+	}
+	
+	//브랜드가 상품을 삭제할경우 매장별 상품 모두 삭제
+	public int deleteShopGoods(Map<String, Object> map) throws Exception{
+		System.out.println("deleteShopGoods : " + map);
+		
+		return (int) delete("goods.deleteShopGoods", map);
 	}
 
 

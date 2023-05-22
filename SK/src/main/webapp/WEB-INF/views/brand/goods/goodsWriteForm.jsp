@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/views/include/include-taglib.jspf" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -506,6 +507,11 @@
                         </tr>
                     
                     </table>
+                    <div id="goodsImageDiv" class="mb-3" style="font-size: small;">
+		                    <c:forEach items="${goodsImageList}" var="image">
+							  ${image.GOODS_IMAGE_STD}<br>
+					    	</c:forEach>
+					    	</div>
                 </div>  
                 
                 <hr class="my-4">
@@ -525,6 +531,20 @@ $(document).ready(function(){
 			fn_goodsWrite();
 		}
 	
+	});
+	
+	$("#img_upload").on("change", function(e) {  // 상품 이미지 업로드시, 이미지 이름 출력
+		$("#goodsImageDiv").empty();
+		var fileInput = $("#img_upload");
+		
+		var files = fileInput[0].files;
+	    
+	    for ( var i = 0; i < files.length; i++) {
+	        var file = files[i];
+	        var str = file.name;
+	        $("#goodsImageDiv").append(str);
+	        $("#goodsImageDiv").append('<br/>');
+	    }
 	});
 	
 	function validateForm() {

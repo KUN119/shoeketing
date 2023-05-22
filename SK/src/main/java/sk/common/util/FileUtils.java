@@ -155,15 +155,6 @@ public class FileUtils {
 
 		return uploadImgList;
 	}
-	
-	// 브랜드 상품 이미지 수정
-	public List<Map<String, Object>> parseUpdateFileImage(Map<String, Object> map, MultipartFile[] uploadGoodsImg)
-			throws Exception {
-		
-		List<Map<String, Object>> list = new ArrayList<>();
-		
-		return list;
-	}
 
 	
 }
